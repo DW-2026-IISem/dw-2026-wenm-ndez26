@@ -16,4 +16,10 @@ chmod -R 755 backend-manual
 
 **Sugerencia de commit (issue):**
 
-Realizamos el primer comit
+Realizamos el primer commit
+
+git add .
+
+git commit -m "chore: prepare workspace folders for nest backend"
+
+![](images/clipboard-457057375.png)
