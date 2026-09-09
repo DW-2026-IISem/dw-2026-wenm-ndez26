@@ -218,15 +218,27 @@ git add .
 git commit -m "chore: wire free:port into nest start scripts"
 ```
 
+![](images/clipboard-2005532662.png)
+
+Desde Github
+
+![](images/clipboard-1017777081.png)
+
 #### 2.5 — Verificar arranque base
 
-Debe levantar el Hello World de Nest en el puerto del `.env`.
+En este paso se realizá el levantamiento del Hello World de Nest en el Puerto del `.env`.
 
 ``` bash
 npm run start:dev # Ctrl+C cuando veas el log de arranque curl -s http://localhost:3002 || true
 ```
 
+![](images/clipboard-1541841894.png)
+
+![](images/clipboard-268097221.png)
+
 **Sugerencia de commit (issue):**
+
+Ahora realizamos el commit desde la terminal de Ubuntu
 
 ``` bash
 git add . git commit -m "test: verify nest boots after dependency install"
@@ -234,4 +246,76 @@ git add . git commit -m "test: verify nest boots after dependency install"
 
 ------------------------------------------------------------------------
 
-## 
+![](images/clipboard-3784517063.png)
+
+Ahora verifficamos desde Github
+
+![](images/clipboard-1858926625.png)
+
+## FASE 3 — `02_BASE_ESTRUCTURA_CA`
+
+### Estructura de carpetas Clean Architecture
+
+> En esta fase se realizó la creación del mapa mental: config / common / infrastructure / features (business + auth).
+
+#### 3.1 — Crear árbol base de carpetas
+
+Aún no hay código de dominio. Solo directorios y módulos vacíos de features para anclar imports futuros.
+
+``` bash
+cd ~/ia-lab/projects/dw/pry-campusnube/app-CampusNube/backend-manual
+
+mkdir -p src/config/{app,database,environment,jwt,logger,swagger}
+
+mkdir -p src/common/{constants,decorators,enums,exceptions,filters,guards,interceptors,interfaces,pipes,types,utils,validators}
+
+mkdir -p src/infrastructure/database/{sequelize,migrations,seeders}
+
+mkdir -p src/infrastructure/{logging,security/hashing,security/tokens}
+```
+
+![](images/clipboard-2997080608.png)
+
+**Sugerencia de commit (issue):**
+
+Ahora realizamos el commit en la terminal de Ubuntu
+
+``` bash
+git add . 
+git commit -m "chore: create clean architecture folder tree and empty feature modules"
+```
+
+![](images/clipboard-2932937375.png)
+
+Ahora se verifica si se creo el commit correctamente en Github
+
+![](images/clipboard-996875215.png)
+
+#### 3.2 — Recordatorio de responsabilidades
+
+| Carpeta           | Responsabilidad                              |
+|-------------------|----------------------------------------------|
+| `config/`         | Cómo se configura la app (env, jwt, swagger) |
+| `common/`         | Piezas transversales reutilizables           |
+| `infrastructure/` | Detalles técnicos (Sequelize, bcrypt, JWT)   |
+| `features/*`      | Dominios (business/auth) con CA interna      |
+
+**Error típico:** poner `@Table` de Sequelize dentro de `domain/entities`.
+
+**Sugerencia de commit (issue):**
+
+Realizamos el commit
+
+``` bash
+git add . git commit -m "docs: note clean architecture folder responsibilities"
+```
+
+------------------------------------------------------------------------
+
+## FASE 4 — `03_BASE_ENTORNO_ENV`
+
+### Configuración del entorno tipado (multi-base)
+
+> **Objetivo de la fase:** Centralizar variables en `.env`: selector `DB_DIALECT` y un bloque de credenciales por motor (MySQL, PostgreSQL, SQL Server, Oracle). Validar antes del boot.
+
+#### 
