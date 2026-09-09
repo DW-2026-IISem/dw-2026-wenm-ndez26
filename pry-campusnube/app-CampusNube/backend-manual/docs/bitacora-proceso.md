@@ -61,4 +61,26 @@ git commit -m "chore: scaffold nestjs project backend_manual"
 git push origin main
 ```
 
-#### 
+#### ![](images/clipboard-2438337494.png)
+
+![](images/clipboard-1398865804.png)
+
+#### 1.4 — Crear `.env` mínimo (puerto)
+
+El puerto `3002` evita choques con el 3000. Más adelante el `.env` crecerá con BD y JWT.
+
+``` bash
+cat > .env <<'EOF_BACKEND_MANUAL' PORT=3002 NODE_ENV=development EOF_BACKEND_MANUAL
+```
+
+Evidenciamos
+
+![](images/clipboard-3000011176.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: add initial .env with PORT=3002"
+```
+
+#### 1.5 — Commit inicial del esqueleto
