@@ -34,4 +34,31 @@ El CLI generamos `main.ts`, `app.module.ts`, `tsconfig`, scripts npm entre otros
 
 **Sugerencia de commit (issue):**
 
-![](images/clipboard-2116112841.png)
+Realizamos el segundo commit
+
+![](images/clipboard-4173200926.png)
+
+#### 1.3 — Crear proyecto NestJS
+
+Usamos el nombre `backend_ia` (workspace didáctico). Responde las preguntas del CLI (package manager: npm).
+
+``` bash
+cd ~/ia-lab/projects/dw/pry-campusnube/app-CampusNube
+nest new backend-manual
+```
+
+Evidencia de que quedo creado el proyecto
+
+![](images/clipboard-2924490721.png)
+
+**Sugerencia de commit (issue):**
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "chore: scaffold nestjs project backend_manual"
+git push origin main
+```
+
+#### 
