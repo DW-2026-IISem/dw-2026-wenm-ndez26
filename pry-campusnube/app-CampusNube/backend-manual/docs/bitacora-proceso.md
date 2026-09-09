@@ -22,4 +22,16 @@ git add .
 
 git commit -m "chore: prepare workspace folders for nest backend"
 
-![](images/clipboard-457057375.png)
+![Verificamos que creo el Commit](images/clipboard-457057375.png)
+
+![](images/clipboard-1440777311.png)
+
+#### 1.2 — Instalar Nest CLI (si no existe)
+
+El CLI generamos `main.ts`, `app.module.ts`, `tsconfig`, scripts npm entre otros
+
+![](images/clipboard-160430891.png)
+
+**Sugerencia de commit (issue):**
+
+![](images/clipboard-2116112841.png)
