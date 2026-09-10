@@ -543,14 +543,23 @@ Módulo de configuración de BD (forFeature). Los providers quedan vacíos a pro
 **Archivo:** `src/config/database/database.module.ts`
 
 ``` bash
-mkdir -p src/config/database cat > src/config/database/database.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { databaseConfig } from './database.config';  @Module({   imports: [ConfigModule.forFeature(databaseConfig)],   exports: [ConfigModule], }) export class DatabaseConfigModule {} EOF_BACKEND_IA
+mkdir -p src/config/database cat > src/config/database/database.module.ts <<'EOF_BACKEND_MANUAL' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { databaseConfig } from './database.config';  @Module({   imports: [ConfigModule.forFeature(databaseConfig)],   exports: [ConfigModule], }) export class DatabaseConfigModule {} EOF_BACKEND_MANUAL
 ```
+
+![](images/clipboard-4149659638.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add DatabaseConfigModule"
+git add .
+git commit -m "feat: add DatabaseConfigModule"
 ```
+
+![](images/clipboard-2472240498.png)
+
+Se verifica en Github
+
+![](images/clipboard-1633714399.png)
 
 #### 5.5 — database.providers.ts
 
@@ -559,13 +568,16 @@ Placeholder de providers de config/database.
 **Archivo:** `src/config/database/database.providers.ts`
 
 ``` bash
-mkdir -p src/config/database cat > src/config/database/database.providers.ts <<'EOF_BACKEND_IA' export const DATABASE_PROVIDERS = []; EOF_BACKEND_IA
+mkdir -p src/config/database cat > src/config/database/database.providers.ts <<'EOF_BACKEND_MANULA' export const DATABASE_PROVIDERS = []; EOF_BACKEND_MANUAL
 ```
+
+![](images/clipboard-2526682909.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add empty DATABASE_PROVIDERS"
+git add .
+git commit -m "chore: add empty DATABASE_PROVIDERS"
 ```
 
 #### 5.6 — Opciones Sequelize por dialecto
