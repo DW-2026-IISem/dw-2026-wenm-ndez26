@@ -351,24 +351,40 @@ cp .env.example .env # Laboratorio: DB_DIALECT + un bloque por motor (MYSQL/POST
 Realizamos el commit correspondinete
 
 ``` bash
-git add . git commit -m "chore: add typed env template and local .env for tecnogua_ia"
+git add .
+git commit -m "chore: add typed env template and local .env for campusnube"
 ```
 
+![](images/clipboard-1746460580.png)
+
+Verificamos en Github
+
+![](images/clipboard-2236412612.png)
+
 #### 4.2 — Interface de entorno
+
+En este paso relaizamos lo siguiente
 
 Tipos TypeScript de las variables de entorno (APP, DB, JWT) y enum de dialectos.
 
 **Archivo:** `src/config/environment/env.interface.ts`
 
-``` bash
-mkdir -p src/config/environment cat > src/config/environment/env.interface.ts <<'EOF_BACKEND_IA' export enum Environment {   Development = 'development',   Production = 'production',   Test = 'test', }  export enum DatabaseDialect {   MySQL = 'mysql',   Postgres = 'postgres',   MSSQL = 'mssql',   Oracle = 'oracle', }  export interface AppConfig {   port: number;   nodeEnv: Environment; }  export interface DatabaseConfig {   dialect: DatabaseDialect;   host: string;   port: number;   username: string;   password: string;   database: string;   connectString?: string; }  export interface JwtConfig {   secret: string;   expiresIn: string;   refreshSecret: string;   refreshExpiresIn: string; }  export interface EnvironmentConfig {   app: AppConfig;   database: DatabaseConfig;   jwt: JwtConfig; } EOF_BACKEND_IA
-```
+![](images/clipboard-1564653549.png)
 
 **Sugerencia de commit (issue):**
 
+Realizamos el commit
+
 ``` bash
-git add . git commit -m "feat: add environment interfaces and DatabaseDialect enum"
+git add .
+git commit -m "feat: add environment interfaces and DatabaseDialect enum"
 ```
+
+![](images/clipboard-702265808.png)
+
+Verficamos en Github
+
+![](images/clipboard-2026949456.png)
 
 #### 4.3 — Validación de entorno con class-validator
 
@@ -377,14 +393,28 @@ Si falta JWT_SECRET o DB_DIALECT es inválido, o el bloque del motor activo est�
 **Archivo:** `src/config/environment/env.validation.ts`
 
 ``` bash
-mkdir -p src/config/environment cat > src/config/environment/env.validation.ts <<'EOF_BACKEND_IA' import { plainToInstance } from 'class-transformer'; import {   IsEnum,   IsNumber,   IsOptional,   IsString,   Max,   Min,   validateSync, } from 'class-validator'; import {   assertActiveDialectCredentials,   resolveDialectCredentials, } from './db-env'; import { DatabaseDialect, Environment } from './env.interface';  export class EnvironmentVariables {   @IsEnum(Environment)   @IsOptional()   NODE_ENV: Environment = Environment.Development;    @IsNumber()   @Min(0)   @Max(65535)   @IsOptional()   PORT: number = 3002;    @IsEnum(DatabaseDialect)   DB_DIALECT: DatabaseDialect;    @IsString()   @IsOptional()   DB_MYSQL_HOST?: string;    @IsNumber()   @IsOptional()   DB_MYSQL_PORT?: number;    @IsString()   @IsOptional()   DB_MYSQL_USERNAME?: string;    @IsString()   @IsOptional()   DB_MYSQL_PASSWORD?: string;    @IsString()   @IsOptional()   DB_MYSQL_NAME?: string;    @IsString()   @IsOptional()   DB_POSTGRES_HOST?: string;    @IsNumber()   @IsOptional()   DB_POSTGRES_PORT?: number;    @IsString()   @IsOptional()   DB_POSTGRES_USERNAME?: string;    @IsString()   @IsOptional()   DB_POSTGRES_PASSWORD?: string;    @IsString()   @IsOptional()   DB_POSTGRES_NAME?: string;    @IsString()   @IsOptional()   DB_MSSQL_HOST?: string;    @IsNumber()   @IsOptional()   DB_MSSQL_PORT?: number;    @IsString()   @IsOptional()   DB_MSSQL_USERNAME?: string;    @IsString()   @IsOptional()   DB_MSSQL_PASSWORD?: string;    @IsString()   @IsOptional()   DB_MSSQL_NAME?: string;    @IsString()   @IsOptional()   DB_ORACLE_HOST?: string;    @IsNumber()   @IsOptional()   DB_ORACLE_PORT?: number;    @IsString()   @IsOptional()   DB_ORACLE_USERNAME?: string;    @IsString()   @IsOptional()   DB_ORACLE_PASSWORD?: string;    @IsString()   @IsOptional()   DB_ORACLE_NAME?: string;    @IsString()   @IsOptional()   DB_ORACLE_CONNECT_STRING?: string;    @IsString()   JWT_SECRET: string;    @IsString()   @IsOptional()   JWT_EXPIRES_IN: string = '1d';    @IsString()   JWT_REFRESH_SECRET: string;    @IsString()   @IsOptional()   JWT_REFRESH_EXPIRES_IN: string = '7d'; }  function formatValidationErrors(   errors: ReturnType<typeof validateSync>, ): string {   return errors     .map((error) => {       const constraints = error.constraints         ? Object.values(error.constraints).join(', ')         : 'valor inválido';       return `${error.property}: ${constraints}`;     })     .join('; '); }  export function validate(config: Record<string, unknown>): EnvironmentVariables {   const validatedConfig = plainToInstance(EnvironmentVariables, config, {     enableImplicitConversion: true,     exposeDefaultValues: true,   });    const errors = validateSync(validatedConfig, {     skipMissingProperties: false,   });    if (errors.length > 0) {     throw new Error(       `Error de configuración: variable(s) crítica(s) inválida(s) o ausente(s). ${formatValidationErrors(errors)}. Copia .env.example a .env y completa el bloque del motor elegido (DB_DIALECT).`,     );   }    assertActiveDialectCredentials(resolveDialectCredentials(validatedConfig));    return validatedConfig; } EOF_BACKEND_IA
 ```
+
+![](images/clipboard-2871391334.png)
+
+![](images/clipboard-3521592807.png)
+
+![](images/clipboard-936575606.png)
+
+![](images/clipboard-3641610718.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: validate environment variables with class-validator"
+git add .
+git commit -m "feat: validate environment variables with class-validator"
 ```
+
+![](images/clipboard-4089399561.png)
+
+Verifacamos en Github
+
+![](images/clipboard-2580823397.png)
 
 #### 4.4 — Resolver de credenciales por motor
 
@@ -392,15 +422,24 @@ Lee el bloque DB_MYSQL\_\* / DB_POSTGRES\_\* / DB_MSSQL\_\* / DB_ORACLE\_\* seg�
 
 **Archivo:** `src/config/environment/db-env.ts`
 
-``` bash
-mkdir -p src/config/environment cat > src/config/environment/db-env.ts <<'EOF_BACKEND_IA' import { DatabaseConfig, DatabaseDialect } from './env.interface';  export const DEFAULT_DB_PORTS: Record<DatabaseDialect, number> = {   [DatabaseDialect.MySQL]: 3306,   [DatabaseDialect.Postgres]: 5432,   [DatabaseDialect.MSSQL]: 1433,   [DatabaseDialect.Oracle]: 1521, };  export type DialectEnvSource = {   DB_DIALECT: DatabaseDialect;   DB_MYSQL_HOST?: string;   DB_MYSQL_PORT?: string | number;   DB_MYSQL_USERNAME?: string;   DB_MYSQL_PASSWORD?: string;   DB_MYSQL_NAME?: string;   DB_POSTGRES_HOST?: string;   DB_POSTGRES_PORT?: string | number;   DB_POSTGRES_USERNAME?: string;   DB_POSTGRES_PASSWORD?: string;   DB_POSTGRES_NAME?: string;   DB_MSSQL_HOST?: string;   DB_MSSQL_PORT?: string | number;   DB_MSSQL_USERNAME?: string;   DB_MSSQL_PASSWORD?: string;   DB_MSSQL_NAME?: string;   DB_ORACLE_HOST?: string;   DB_ORACLE_PORT?: string | number;   DB_ORACLE_USERNAME?: string;   DB_ORACLE_PASSWORD?: string;   DB_ORACLE_NAME?: string;   DB_ORACLE_CONNECT_STRING?: string; };  function toPort(value: string | number | undefined, fallback: number): number {   if (typeof value === 'number' && Number.isFinite(value)) {     return value;   }   if (typeof value === 'string' && value.trim() !== '') {     const parsed = parseInt(value, 10);     if (Number.isFinite(parsed)) {       return parsed;     }   }   return fallback; }  function text(value: string | undefined): string {   return value?.trim() ?? ''; }  export function resolveDialectCredentials(   env: DialectEnvSource, ): DatabaseConfig {   const dialect = env.DB_DIALECT;   const port = DEFAULT_DB_PORTS[dialect];    switch (dialect) {     case DatabaseDialect.MySQL:       return {         dialect,         host: text(env.DB_MYSQL_HOST),         port: toPort(env.DB_MYSQL_PORT, port),         username: text(env.DB_MYSQL_USERNAME),         password: text(env.DB_MYSQL_PASSWORD),         database: text(env.DB_MYSQL_NAME),       };     case DatabaseDialect.Postgres:       return {         dialect,         host: text(env.DB_POSTGRES_HOST),         port: toPort(env.DB_POSTGRES_PORT, port),         username: text(env.DB_POSTGRES_USERNAME),         password: text(env.DB_POSTGRES_PASSWORD),         database: text(env.DB_POSTGRES_NAME),       };     case DatabaseDialect.MSSQL:       return {         dialect,         host: text(env.DB_MSSQL_HOST),         port: toPort(env.DB_MSSQL_PORT, port),         username: text(env.DB_MSSQL_USERNAME),         password: text(env.DB_MSSQL_PASSWORD),         database: text(env.DB_MSSQL_NAME),       };     case DatabaseDialect.Oracle:       return {         dialect,         host: text(env.DB_ORACLE_HOST),         port: toPort(env.DB_ORACLE_PORT, port),         username: text(env.DB_ORACLE_USERNAME),         password: text(env.DB_ORACLE_PASSWORD),         database: text(env.DB_ORACLE_NAME),         connectString: text(env.DB_ORACLE_CONNECT_STRING) || undefined,       };     default:       throw new Error(         `Error de configuración: DB_DIALECT inválido. Use mysql, postgres, mssql u oracle.`,       );   } }  export function assertActiveDialectCredentials(config: DatabaseConfig): void {   const prefix: Record<DatabaseDialect, string> = {     [DatabaseDialect.MySQL]: 'DB_MYSQL',     [DatabaseDialect.Postgres]: 'DB_POSTGRES',     [DatabaseDialect.MSSQL]: 'DB_MSSQL',     [DatabaseDialect.Oracle]: 'DB_ORACLE',   };   const tag = prefix[config.dialect];   const missing: string[] = [];    if (!config.host) missing.push(`${tag}_HOST`);   if (!config.username) missing.push(`${tag}_USERNAME`);   if (!config.database) missing.push(`${tag}_NAME`);   if (config.dialect === DatabaseDialect.Oracle && !config.connectString) {     missing.push('DB_ORACLE_CONNECT_STRING');   }    if (missing.length > 0) {     throw new Error(       `Error de configuración: variable(s) crítica(s) inválida(s) o ausente(s) para ${config.dialect}: ${missing.join(', ')}. Completa el bloque de ese motor en .env (no commitees secretos).`,     );   } } EOF_BACKEND_IA
-```
+![](images/clipboard-3859536938.png)
+
+![](images/clipboard-1227187629.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: resolve database credentials per dialect"
+git add . 
+git commit -m "feat: resolve database credentials per dialect"
 ```
+
+![](images/clipboard-2496631958.png)
+
+![](images/clipboard-2759011974.png)
+
+Verifacamos en Github
+
+![](images/clipboard-1212090738.png)
 
 #### 4.5 — Factory registerAs de entorno
 
@@ -408,14 +447,186 @@ Expone `environment.*` vía ConfigService (`registerAs`).
 
 **Archivo:** `src/config/environment/env.config.ts`
 
+![](images/clipboard-1069328555.png)
+
+**Sugerencia de commit (issue):**
+
 ``` bash
-mkdir -p src/config/environment cat > src/config/environment/env.config.ts <<'EOF_BACKEND_IA' import { registerAs } from '@nestjs/config'; import { resolveDialectCredentials } from './db-env'; import { Environment } from './env.interface'; import { validate } from './env.validation';  export const ENV_CONFIG_NAME = 'environment';  export const envConfig = registerAs(ENV_CONFIG_NAME, () => {   const validated = validate(process.env);    return {     app: {       port: validated.PORT,       nodeEnv: validated.NODE_ENV ?? Environment.Development,     },     database: resolveDialectCredentials(validated),     jwt: {       secret: validated.JWT_SECRET,       expiresIn: validated.JWT_EXPIRES_IN,       refreshSecret: validated.JWT_REFRESH_SECRET,       refreshExpiresIn: validated.JWT_REFRESH_EXPIRES_IN,     },   }; }); EOF_BACKEND_IA
+git add . 
+git commit -m "feat: register environment config factory"
+```
+
+![](images/clipboard-2349995675.png)
+
+Vereficamos en Github
+
+![](images/clipboard-1812688162.png)
+
+## FASE 5 — `04_BASE_DATABASE_SEQUELIZE`
+
+### Base de datos multi-dialecto (Sequelize)
+
+> Conectamos Sequelize al motor de `DB_DIALECT` usando el bloque `DB_MYSQL_*` / `DB_POSTGRES_*` / `DB_MSSQL_*` / `DB_ORACLE_*`. Aún sin features (ALL_MODELS vacío).
+
+#### 5.1 — Constante SEQUELIZE_TOKEN
+
+Token DI para inyectar la instancia Sequelize en repositorios.
+
+**Archivo:** `src/common/constants/database.constants.ts`
+
+``` bash
+mkdir -p src/common/constants cat > src/common/constants/database.constants.ts <<'EOF_BACKEND_MANUAL' export const SEQUELIZE_TOKEN = 'SEQUELIZE'; EOF_BACKEND_MANUAL
+```
+
+![](images/clipboard-762697150.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: add SEQUELIZE_TOKEN constant"
+```
+
+#### 5.2 — Tipos auxiliares de database confighk
+
+Tipos auxiliares del bloque config/database (legado/compat).
+
+**Archivo:** `src/config/database/database.types.ts`
+
+``` bash
+mkdir -p src/config/database cat > src/config/database/database.types.ts <<'EOF_BACKEND_IA' import { Options as SequelizeOptions } from 'sequelize';  export type DialectOptions =   | { dialect: 'mysql'; options?: SequelizeOptions }   | { dialect: 'postgres'; options?: SequelizeOptions }   | { dialect: 'mssql'; options?: SequelizeOptions }   | { dialect: 'oracle'; options?: SequelizeOptions }; EOF_BACKEND_IA
 ```
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: register environment config factory"
+git add . git commit -m "chore: add database.types helpers"
+```
+
+#### 5.3 — database.config.ts
+
+Factory registerAs opcional para namespace `database` (complementa environment).
+
+**Archivo:** `src/config/database/database.config.ts`
+
+``` bash
+mkdir -p src/config/database cat > src/config/database/database.config.ts <<'EOF_BACKEND_IA' import { registerAs } from '@nestjs/config'; import { resolveDialectCredentials } from '../environment/db-env'; import { DatabaseDialect } from '../environment/env.interface';  export const DATABASE_CONFIG_NAME = 'database';  const dialectModuleMap: Record<DatabaseDialect, string> = {   [DatabaseDialect.MySQL]: 'mysql2',   [DatabaseDialect.Postgres]: 'pg',   [DatabaseDialect.MSSQL]: 'tedious',   [DatabaseDialect.Oracle]: 'oracledb', };  export const databaseConfig = registerAs(DATABASE_CONFIG_NAME, () => {   const dialect =     (process.env.DB_DIALECT as DatabaseDialect) || DatabaseDialect.MySQL;   const credentials = resolveDialectCredentials({     DB_DIALECT: dialect,     ...process.env,   });    return {     ...credentials,     dialectModulePath: dialectModuleMap[dialect],     autoLoadModels: true,     synchronize: process.env.NODE_ENV !== 'production',     logging: process.env.NODE_ENV === 'development' ? console.log : false,   }; }); EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add database.config registerAs"
+```
+
+#### 5.4 — database.module.ts / providers
+
+Módulo de configuración de BD (forFeature). Los providers quedan vacíos a propósito.
+
+**Archivo:** `src/config/database/database.module.ts`
+
+``` bash
+mkdir -p src/config/database cat > src/config/database/database.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { databaseConfig } from './database.config';  @Module({   imports: [ConfigModule.forFeature(databaseConfig)],   exports: [ConfigModule], }) export class DatabaseConfigModule {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add DatabaseConfigModule"
+```
+
+#### 5.5 — database.providers.ts
+
+Placeholder de providers de config/database.
+
+**Archivo:** `src/config/database/database.providers.ts`
+
+``` bash
+mkdir -p src/config/database cat > src/config/database/database.providers.ts <<'EOF_BACKEND_IA' export const DATABASE_PROVIDERS = []; EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: add empty DATABASE_PROVIDERS"
+```
+
+#### 5.6 — Opciones Sequelize por dialecto
+
+Arma host/port/user/password/logging con el bloque del motor seleccionado por DB_DIALECT.
+
+**Archivo:** `src/infrastructure/database/sequelize/sequelize.options.ts`
+
+``` bash
+mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.options.ts <<'EOF_BACKEND_IA' import { SequelizeOptions } from 'sequelize-typescript'; import { resolveDialectCredentials } from '../../../config/environment/db-env'; import { DatabaseDialect } from '../../../config/environment/env.interface';  export function getSequelizeOptions(   dialect: DatabaseDialect, ): Partial<SequelizeOptions> {   const credentials = resolveDialectCredentials({     DB_DIALECT: dialect,     ...process.env,   });    const base: SequelizeOptions = {     dialect: dialect as SequelizeOptions['dialect'],     host: credentials.host,     port: credentials.port,     username: credentials.username,     password: credentials.password,     database: credentials.database,     logging: process.env.NODE_ENV === 'development' ? console.log : false,     define: {       underscored: false,       freezeTableName: true,     },   };    switch (dialect) {     case DatabaseDialect.MSSQL:       return {         ...base,         dialectOptions: {           options: {             encrypt: true,             trustServerCertificate: true,           },         },       };     case DatabaseDialect.Oracle:       return {         ...base,         dialectOptions: {           connectString: credentials.connectString,         },       };     default:       return base;   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add getSequelizeOptions multi-dialect"
+```
+
+#### 5.7 — Factory Sequelize (sin modelos aún)
+
+Crea la instancia Sequelize. `ALL_MODELS` empieza vacío: se llena al crear cada entidad.
+
+**Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
+
+``` bash
+mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.factory.ts <<'EOF_BACKEND_IA' import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { getSequelizeOptions } from './sequelize.options';   export const ALL_MODELS = [   // (aún sin modelos — se agregan por feature) ];  export async function createSequelizeInstance(   dialect: DatabaseDialect, ): Promise<Sequelize> {   const options = getSequelizeOptions(dialect);    let dialectModule: any;    switch (dialect) {     case DatabaseDialect.MySQL:       dialectModule = require('mysql2');       break;     case DatabaseDialect.Postgres:       dialectModule = require('pg');       break;     case DatabaseDialect.MSSQL:       dialectModule = require('tedious');       break;     case DatabaseDialect.Oracle:       dialectModule = require('oracledb');       break;     default:       throw new Error(`Dialecto no soportado: ${dialect}`);   }    const sequelize = new Sequelize({     ...options,     dialectModule,     models: ALL_MODELS,   } as any);    try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);   } catch (error: any) {     console.error(       `❌ Error conectando a ${dialect.toUpperCase()}:`,       error.message,     );     throw error;   }    if (process.env.NODE_ENV !== 'production') {     await sequelize.sync({ alter: false });     console.log('✅ Tablas sincronizadas');   }    return sequelize; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add createSequelizeInstance with empty ALL_MODELS"
+```
+
+#### 5.8 — DatabaseSeederService (sin seeders aún)
+
+Hook OnModuleInit para seeders. Todavía no llama a ningún seeder de feature.
+
+**Archivo:** `src/infrastructure/database/seeders/database-seeder.service.ts`
+
+``` bash
+mkdir -p src/infrastructure/database/seeders cat > src/infrastructure/database/seeders/database-seeder.service.ts <<'EOF_BACKEND_IA' import { Injectable, Logger, OnModuleInit } from '@nestjs/common';   /**  * Ejecuta seeders en orden de dependencias.  * Solo en entornos no productivos.  */ @Injectable() export class DatabaseSeederService implements OnModuleInit {   private readonly logger = new Logger(DatabaseSeederService.name);    async onModuleInit(): Promise<void> {     if (process.env.NODE_ENV === 'production') {       return;     }      try {       // sin seeders aún       this.logger.log('✅ Seeders ejecutados');     } catch (error: any) {       this.logger.error(`❌ Error en seeders: ${error.message}`, error.stack);       throw error;     }   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add DatabaseSeederService scaffold"
+```
+
+#### 5.9 — Módulo global Sequelize
+
+Módulo `@Global()` que provee `SEQUELIZE_TOKEN` + ejecuta seeders.
+
+**Archivo:** `src/infrastructure/database/sequelize/sequelize.module.ts`
+
+``` bash
+mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.module.ts <<'EOF_BACKEND_IA' import { Module, Global } from '@nestjs/common'; import { ConfigService } from '@nestjs/config'; import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { SEQUELIZE_TOKEN } from '../../../common/constants/database.constants'; import { createSequelizeInstance } from './sequelize.factory'; import { DatabaseSeederService } from '../seeders/database-seeder.service';  @Global() @Module({   providers: [     {       provide: SEQUELIZE_TOKEN,       useFactory: async (configService: ConfigService): Promise<Sequelize> => {         const dialect = configService.get<DatabaseDialect>(           'environment.database.dialect',           DatabaseDialect.MySQL,         );         return createSequelizeInstance(dialect);       },       inject: [ConfigService],     },     DatabaseSeederService,   ],   exports: [SEQUELIZE_TOKEN], }) export class SequelizeDatabaseModule {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add global SequelizeDatabaseModule"
+```
+
+#### 5.10 — Verificar conexión a BD
+
+Crea la BD vacía `tecnogua_ia` en el motor que indica `DB_DIALECT`. Aún no hay tablas de negocio. Si falla el authenticate, corrige el **bloque de ese motor** en `.env` (no el de otro).
+
+``` bash
+# mysql: # mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS tecnogua_ia;" # postgres: # createdb tecnogua_ia # mssql (sqlcmd): # sqlcmd -S localhost -U sa -Q "CREATE DATABASE tecnogua_ia;" # oracle: crea el schema/PDB que apunte DB_ORACLE_CONNECT_STRING npm run start:dev # Busca: ✅ Conexión exitosa a MYSQL (o POSTGRES / MSSQL / ORACLE según DB_DIALECT) # Ctrl+C
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "test: verify sequelize authenticates against tecnogua_ia"
 ```
 
 ------------------------------------------------------------------------
