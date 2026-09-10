@@ -508,6 +508,10 @@ git add . git commit -m "chore: add database.types helpers"
 
 ![](images/clipboard-3261062312.png)
 
+Verificamos si se creo en Github
+
+![](images/clipboard-3917405366.png)
+
 #### 5.3 — database.config.ts
 
 Factory registerAs opcional para namespace `database` (complementa environment).
@@ -522,8 +526,15 @@ Factory registerAs opcional para namespace `database` (complementa environment).
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add database.config registerAs"
+git add .
+git commit -m "feat: add database.config registerAs"
 ```
+
+![](images/clipboard-2054772370.png)
+
+Verificamos en Github
+
+![](images/clipboard-3391524224.png)
 
 #### 5.4 — database.module.ts / providers
 
