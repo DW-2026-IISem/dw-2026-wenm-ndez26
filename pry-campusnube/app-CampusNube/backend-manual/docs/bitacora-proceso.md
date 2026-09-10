@@ -599,8 +599,15 @@ Arma host/port/user/password/logging con el bloque del motor seleccionado por DB
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add getSequelizeOptions multi-dialect"
+git add .
+git commit -m "feat: add getSequelizeOptions multi-dialect"
 ```
+
+![](images/clipboard-698577788.png)
+
+Se verificó si se creo en Github
+
+![](images/clipboard-3653347044.png)
 
 #### 5.7 — Factory Sequelize (sin modelos aún)
 
@@ -608,9 +615,7 @@ Crea la instancia Sequelize. `ALL_MODELS` empieza vacío: se llena al crear cada
 
 **Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
 
-``` bash
-mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.factory.ts <<'EOF_BACKEND_IA' import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { getSequelizeOptions } from './sequelize.options';   export const ALL_MODELS = [   // (aún sin modelos — se agregan por feature) ];  export async function createSequelizeInstance(   dialect: DatabaseDialect, ): Promise<Sequelize> {   const options = getSequelizeOptions(dialect);    let dialectModule: any;    switch (dialect) {     case DatabaseDialect.MySQL:       dialectModule = require('mysql2');       break;     case DatabaseDialect.Postgres:       dialectModule = require('pg');       break;     case DatabaseDialect.MSSQL:       dialectModule = require('tedious');       break;     case DatabaseDialect.Oracle:       dialectModule = require('oracledb');       break;     default:       throw new Error(`Dialecto no soportado: ${dialect}`);   }    const sequelize = new Sequelize({     ...options,     dialectModule,     models: ALL_MODELS,   } as any);    try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);   } catch (error: any) {     console.error(       `❌ Error conectando a ${dialect.toUpperCase()}:`,       error.message,     );     throw error;   }    if (process.env.NODE_ENV !== 'production') {     await sequelize.sync({ alter: false });     console.log('✅ Tablas sincronizadas');   }    return sequelize; } EOF_BACKEND_IA
-```
+![](images/clipboard-1925825785.png)
 
 **Sugerencia de commit (issue):**
 
