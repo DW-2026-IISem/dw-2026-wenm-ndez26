@@ -487,15 +487,18 @@ git add .
 git commit -m "feat: add SEQUELIZE_TOKEN constant"
 ```
 
-#### 5.2 — Tipos auxiliares de database confighk
+![](images/clipboard-134448391.png)
+
+#### 5.2 — Tipos auxiliares de database config
 
 Tipos auxiliares del bloque config/database (legado/compat).
 
 **Archivo:** `src/config/database/database.types.ts`
 
 ``` bash
-mkdir -p src/config/database cat > src/config/database/database.types.ts <<'EOF_BACKEND_IA' import { Options as SequelizeOptions } from 'sequelize';  export type DialectOptions =   | { dialect: 'mysql'; options?: SequelizeOptions }   | { dialect: 'postgres'; options?: SequelizeOptions }   | { dialect: 'mssql'; options?: SequelizeOptions }   | { dialect: 'oracle'; options?: SequelizeOptions }; EOF_BACKEND_IA
 ```
+
+![](images/clipboard-1306153006.png)
 
 **Sugerencia de commit (issue):**
 
