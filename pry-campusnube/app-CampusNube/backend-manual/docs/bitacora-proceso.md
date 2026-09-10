@@ -580,15 +580,21 @@ git add .
 git commit -m "chore: add empty DATABASE_PROVIDERS"
 ```
 
+![](images/clipboard-3585471151.png)
+
+Se verifica en Github
+
+![](images/clipboard-416598359.png)
+
 #### 5.6 — Opciones Sequelize por dialecto
 
 Arma host/port/user/password/logging con el bloque del motor seleccionado por DB_DIALECT.
 
 **Archivo:** `src/infrastructure/database/sequelize/sequelize.options.ts`
 
-``` bash
-mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.options.ts <<'EOF_BACKEND_IA' import { SequelizeOptions } from 'sequelize-typescript'; import { resolveDialectCredentials } from '../../../config/environment/db-env'; import { DatabaseDialect } from '../../../config/environment/env.interface';  export function getSequelizeOptions(   dialect: DatabaseDialect, ): Partial<SequelizeOptions> {   const credentials = resolveDialectCredentials({     DB_DIALECT: dialect,     ...process.env,   });    const base: SequelizeOptions = {     dialect: dialect as SequelizeOptions['dialect'],     host: credentials.host,     port: credentials.port,     username: credentials.username,     password: credentials.password,     database: credentials.database,     logging: process.env.NODE_ENV === 'development' ? console.log : false,     define: {       underscored: false,       freezeTableName: true,     },   };    switch (dialect) {     case DatabaseDialect.MSSQL:       return {         ...base,         dialectOptions: {           options: {             encrypt: true,             trustServerCertificate: true,           },         },       };     case DatabaseDialect.Oracle:       return {         ...base,         dialectOptions: {           connectString: credentials.connectString,         },       };     default:       return base;   } } EOF_BACKEND_IA
-```
+![](images/clipboard-1966664587.png)
+
+![](images/clipboard-167231867.png)
 
 **Sugerencia de commit (issue):**
 
