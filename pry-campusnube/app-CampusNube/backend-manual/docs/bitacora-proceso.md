@@ -636,8 +636,15 @@ mkdir -p src/infrastructure/database/seeders cat > src/infrastructure/database/s
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add DatabaseSeederService scaffold"
+git add . 
+git commit -m "feat: add DatabaseSeederService scaffold"
 ```
+
+![](images/clipboard-2547784144.png)
+
+Se verifica en Github
+
+![](images/clipboard-3843440226.png)
 
 #### 5.9 — Módulo global Sequelize
 
