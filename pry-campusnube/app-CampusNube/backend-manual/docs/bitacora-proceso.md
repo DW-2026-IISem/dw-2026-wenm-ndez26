@@ -620,8 +620,13 @@ Crea la instancia Sequelize. `ALL_MODELS` empieza vacío: se llena al crear cada
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add createSequelizeInstance with empty ALL_MODELS"
+git add . 
+git commit -m "feat: add createSequelizeInstance with empty ALL_MODELS"
 ```
+
+![](images/clipboard-3129374122.png)
+
+![](images/clipboard-240286589.png)
 
 #### 5.8 — DatabaseSeederService (sin seeders aún)
 
@@ -629,9 +634,7 @@ Hook OnModuleInit para seeders. Todavía no llama a ningún seeder de feature.
 
 **Archivo:** `src/infrastructure/database/seeders/database-seeder.service.ts`
 
-``` bash
-mkdir -p src/infrastructure/database/seeders cat > src/infrastructure/database/seeders/database-seeder.service.ts <<'EOF_BACKEND_IA' import { Injectable, Logger, OnModuleInit } from '@nestjs/common';   /**  * Ejecuta seeders en orden de dependencias.  * Solo en entornos no productivos.  */ @Injectable() export class DatabaseSeederService implements OnModuleInit {   private readonly logger = new Logger(DatabaseSeederService.name);    async onModuleInit(): Promise<void> {     if (process.env.NODE_ENV === 'production') {       return;     }      try {       // sin seeders aún       this.logger.log('✅ Seeders ejecutados');     } catch (error: any) {       this.logger.error(`❌ Error en seeders: ${error.message}`, error.stack);       throw error;     }   } } EOF_BACKEND_IA
-```
+![](images/clipboard-110733854.png)
 
 **Sugerencia de commit (issue):**
 
