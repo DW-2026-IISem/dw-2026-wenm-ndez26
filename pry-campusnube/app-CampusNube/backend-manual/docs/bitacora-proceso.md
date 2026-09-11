@@ -1327,13 +1327,19 @@ git add .
 git commit -m "feat: add pagination.interface.ts"
 ```
 
-se verifcó en Github
+![](images/clipboard-994483392.png)
+
+Se verifcó en Github
+
+![](images/clipboard-4204956597.png)
 
 #### 6.31 — common/interfaces/api-response.interface.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interfaces/api-response.interface.ts`
+
+![](images/clipboard-227582684.png)
 
 **Sugerencia de commit (issue):**
 
