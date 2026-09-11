@@ -1390,13 +1390,19 @@ git add .
 git commit -m "feat: add optional.type.ts"
 ```
 
+![](images/clipboard-855685755.png)
+
 Se verificó en Github
+
+![](images/clipboard-2048282554.png)
 
 #### 6.34 — common/utils/pagination.util.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/utils/pagination.util.ts`
+
+![](images/clipboard-4162346816.png)
 
 **Sugerencia de commit (issue):**
 
