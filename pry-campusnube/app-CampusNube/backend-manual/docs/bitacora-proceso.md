@@ -1306,7 +1306,11 @@ git add .
 git commit -m "feat: add authenticated-user.interface.ts"
 ```
 
+![](images/clipboard-546381944.png)
+
 Verificamos en Github
+
+![](images/clipboard-307638452.png)
 
 #### 6.30 — common/interfaces/pagination.interface.ts
 
@@ -1314,15 +1318,16 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interfaces/pagination.interface.ts`
 
-``` bash
-mkdir -p src/common/interfaces cat > src/common/interfaces/pagination.interface.ts <<'EOF_BACKEND_IA' export interface PaginationMeta {   page: number;   limit: number;   total: number;   totalPages: number; }  export interface PaginatedResult<T> {   items: T[];   meta: PaginationMeta; } EOF_BACKEND_IA
-```
+![](images/clipboard-163125390.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add pagination.interface.ts"
+git add . 
+git commit -m "feat: add pagination.interface.ts"
 ```
+
+se verifcó en Github
 
 #### 6.31 — common/interfaces/api-response.interface.ts
 
@@ -1330,15 +1335,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interfaces/api-response.interface.ts`
 
-``` bash
-mkdir -p src/common/interfaces cat > src/common/interfaces/api-response.interface.ts <<'EOF_BACKEND_IA' export interface ApiResponseBody<T> {   statusCode: number;   message: string;   data: T;   timestamp: string; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add api-response.interface.ts"
+git add . 
+git commit -m "feat: add api-response.interface.ts"
 ```
+
+Se verificó en Github
 
 #### 6.32 — common/types/nullable.type.ts
 
