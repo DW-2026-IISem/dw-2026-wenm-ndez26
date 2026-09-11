@@ -1222,7 +1222,11 @@ git add .
 git commit -m "feat: add public.decorator.ts"
 ```
 
+![](images/clipboard-387514524.png)
+
 Verificamos en Github
+
+![](images/clipboard-2479595621.png)
 
 #### 6.26 — common/decorators/roles.decorator.ts
 
@@ -1230,15 +1234,20 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/decorators/roles.decorator.ts`
 
-``` bash
-mkdir -p src/common/decorators cat > src/common/decorators/roles.decorator.ts <<'EOF_BACKEND_IA' import { SetMetadata } from '@nestjs/common';  export const ROLES_KEY = 'roles'; export const Roles = (...roles: string[]) => SetMetadata(ROLES_KEY, roles); EOF_BACKEND_IA
-```
+![](images/clipboard-1493062435.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add roles.decorator.ts"
+git add . 
+git commit -m "feat: add roles.decorator.ts"
 ```
+
+![](images/clipboard-3037316332.png)
+
+Verificamos con Github
+
+![](images/clipboard-4232144685.png)
 
 #### 6.27 — common/decorators/current-user.decorator.ts
 
@@ -1246,15 +1255,16 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/decorators/current-user.decorator.ts`
 
-``` bash
-mkdir -p src/common/decorators cat > src/common/decorators/current-user.decorator.ts <<'EOF_BACKEND_IA' import { createParamDecorator, ExecutionContext } from '@nestjs/common';  export const CurrentUser = createParamDecorator(   (data: string | undefined, ctx: ExecutionContext) => {     const request = ctx.switchToHttp().getRequest();     const user = request.user;     return data ? user?.[data] : user;   }, ); EOF_BACKEND_IA
-```
+![](images/clipboard-3730600860.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add current-user.decorator.ts"
+git add . 
+git commit -m "feat: add current-user.decorator.ts"
 ```
+
+Verificamos en Github
 
 #### 6.28 — common/decorators/resource.decorator.ts
 
@@ -1262,15 +1272,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/decorators/resource.decorator.ts`
 
-``` bash
-mkdir -p src/common/decorators cat > src/common/decorators/resource.decorator.ts <<'EOF_BACKEND_IA' import { SetMetadata } from '@nestjs/common';  export const RESOURCE_KEY = 'resource'; export const ResourceMeta = (path: string, method: string) =>   SetMetadata(RESOURCE_KEY, { path, method }); EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add resource.decorator.ts"
+git add .
+git commit -m "feat: add resource.decorator.ts"
 ```
+
+Verificamos en Github
 
 #### 6.29 — common/interfaces/authenticated-user.interface.ts
 
@@ -1278,15 +1287,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interfaces/authenticated-user.interface.ts`
 
-``` bash
-mkdir -p src/common/interfaces cat > src/common/interfaces/authenticated-user.interface.ts <<'EOF_BACKEND_IA' export interface AuthenticatedUser {   id: number;   email: string;   username: string;   roles: string[]; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add authenticated-user.interface.ts"
+git add . 
+git commit -m "feat: add authenticated-user.interface.ts"
 ```
+
+Verificamos en Github
 
 #### 6.30 — common/interfaces/pagination.interface.ts
 
