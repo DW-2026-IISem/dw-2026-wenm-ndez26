@@ -1710,16 +1710,22 @@ Puerto (contrato) del repositorio. La aplicación depende de esta interface, no 
 
 ``` bash
 git add . 
-git commit -m "feat: add repository port client-repository.interface.ts"
+git commit -m "feat: add repository port course-repository.interface.ts"
 ```
 
+![](images/clipboard-2775699145.png)
+
 Verificamos en Github
+
+![](images/clipboard-4159430317.png)
 
 #### 7.5 — features/business/courses/domain/validators/course-email.validator.ts
 
 Validador de dominio reutilizable (reglas independientes del framework HTTP).
 
 **Archivo:** `src/features/business/courses/domain/validators/course-email.validator.ts`
+
+![](images/clipboard-4181516782.png)
 
 **Sugerencia de commit (issue):**
 
