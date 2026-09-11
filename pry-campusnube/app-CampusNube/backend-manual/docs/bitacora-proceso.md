@@ -1264,13 +1264,19 @@ git add .
 git commit -m "feat: add current-user.decorator.ts"
 ```
 
+![](images/clipboard-3276828138.png)
+
 Verificamos en Github
+
+![](images/clipboard-2495709006.png)
 
 #### 6.28 — common/decorators/resource.decorator.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/decorators/resource.decorator.ts`
+
+![](images/clipboard-1830493935.png)
 
 **Sugerencia de commit (issue):**
 
