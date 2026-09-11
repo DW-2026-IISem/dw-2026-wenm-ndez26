@@ -1784,26 +1784,29 @@ Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
 ``` bash
 git add . 
-git commit -m "feat: add sequelize repository client.repository.ts"
+git commit -m "feat: add sequelize repository course.repository.ts"
 ```
+
+![](images/clipboard-595658846.png)
 
 Verificamos en Github
 
-#### 7.9 — features/business/clients/infrastructure/persistence/migrations/create-clients-table.migration.ts
+![](images/clipboard-1083809229.png)
+
+#### 7.9 — create-course-table.migration.ts
 
 Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el esquema.
 
-**Archivo:** `src/features/business/clients/infrastructure/persistence/migrations/create-clients-table.migration.ts`
-
-``` bash
-mkdir -p src/features/business/clients/infrastructure/persistence/migrations cat > src/features/business/clients/infrastructure/persistence/migrations/create-clients-table.migration.ts <<'EOF_BACKEND_IA' export const createClientsTableMigration = {   name: 'create-clients-table',   async up(): Promise<void> {     // Sequelize sync handles table creation in development.     // Production: CREATE TABLE clients (id, name, address, phone, email, password, status, createdAt, updatedAt)   },   async down(): Promise<void> {     // Production: DROP TABLE clients   }, }; EOF_BACKEND_IA
-```
+![](images/clipboard-1406657345.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add migration create-clients-table.migration.ts"
+git add . 
+git commit -m "chore: add migration create-clients-table.migration.ts"
 ```
+
+Verificamos en Github
 
 #### 7.10 — features/business/clients/infrastructure/persistence/seeders/clients.seeder.ts
 
