@@ -844,20 +844,25 @@ git add .
 git commit -m "feat: add swagger.constants.ts"
 ```
 
+![](images/clipboard-2657632585.png)
+
+Verificamos en Github
+
+![](images/clipboard-313355500.png)
+
 #### 6.8 — config/swagger/swagger.config.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/config/swagger/swagger.config.ts`
 
-``` bash
-mkdir -p src/config/swagger cat > src/config/swagger/swagger.config.ts <<'EOF_BACKEND_IA' import { INestApplication } from '@nestjs/common'; import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'; import {   SWAGGER_DESCRIPTION,   SWAGGER_PATH,   SWAGGER_TITLE,   SWAGGER_VERSION, } from './swagger.constants';  export function setupSwagger(app: INestApplication): void {   const config = new DocumentBuilder()     .setTitle(SWAGGER_TITLE)     .setDescription(SWAGGER_DESCRIPTION)     .setVersion(SWAGGER_VERSION)     .addBearerAuth(       {         type: 'http',         scheme: 'bearer',         bearerFormat: 'JWT',         name: 'Authorization',         in: 'header',       },       'access-token',     )     .build();    const document = SwaggerModule.createDocument(app, config);   SwaggerModule.setup(SWAGGER_PATH, app, document); } EOF_BACKEND_IA
-```
+![](images/clipboard-2920590520.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add swagger.config.ts"
+git add .
+git commit -m "feat: add swagger.config.ts"
 ```
 
 #### 6.9 — common/enums/status.enum.ts
