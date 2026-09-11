@@ -1941,11 +1941,17 @@ git add .
 git commit -m "feat: add use case create-course.use-case.ts""
 ```
 
+![](images/clipboard-3871418216.png)
+
 Verificamos en Github
+
+![](images/clipboard-2919452926.png)
 
 #### 7.17 — delete-course.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-2296724994.png)
 
 **Sugerencia de commit (issue):**
 
