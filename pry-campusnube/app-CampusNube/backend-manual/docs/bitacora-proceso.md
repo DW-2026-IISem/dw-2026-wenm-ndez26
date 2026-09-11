@@ -942,15 +942,18 @@ Archivo del feature en Clean Architecture.
 
 ![](images/clipboard-3592659670.png)
 
-``` bash
-mkdir -p src/common/constants cat > src/common/constants/app.constants.ts <<'EOF_BACKEND_IA' export const APP_NAME = 'backend_ia'; export const GLOBAL_PREFIX = 'api'; EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add app.constants.ts"
+git add .
+git commit -m "feat: add app.constants.ts"
 ```
+
+![](images/clipboard-513106201.png)
+
+Se verfica en Github
+
+![](images/clipboard-1934031372.png)
 
 #### 6.13 — common/constants/pagination.constants.ts
 
@@ -958,15 +961,16 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/constants/pagination.constants.ts`
 
-``` bash
-mkdir -p src/common/constants cat > src/common/constants/pagination.constants.ts <<'EOF_BACKEND_IA' export const DEFAULT_PAGE = 1; export const DEFAULT_LIMIT = 10; export const MAX_LIMIT = 100; EOF_BACKEND_IA
-```
+![](images/clipboard-3370131502.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add pagination.constants.ts"
+git add .
+git commit -m "feat: add pagination.constants.ts"
 ```
+
+Verificamos en Github
 
 #### 6.14 — common/exceptions/application.exception.ts
 
