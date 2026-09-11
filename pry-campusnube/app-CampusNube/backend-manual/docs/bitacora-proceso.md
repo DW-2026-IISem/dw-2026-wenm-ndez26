@@ -928,11 +928,19 @@ git add .
 git commit -m "feat: add sort-order.enum.ts"
 ```
 
+![](images/clipboard-1670626337.png)
+
+Verificar en Github
+
+![](images/clipboard-827794231.png)
+
 #### 6.12 — common/constants/app.constants.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/constants/app.constants.ts`
+
+![](images/clipboard-3592659670.png)
 
 ``` bash
 mkdir -p src/common/constants cat > src/common/constants/app.constants.ts <<'EOF_BACKEND_IA' export const APP_NAME = 'backend_ia'; export const GLOBAL_PREFIX = 'api'; EOF_BACKEND_IA
