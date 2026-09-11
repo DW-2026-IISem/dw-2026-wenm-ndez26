@@ -1033,13 +1033,19 @@ git add .
 git commit -m "feat: add entity-not-found.exception.ts"
 ```
 
+![](images/clipboard-3968346537.png)
+
 Verificamos en Github
+
+![](images/clipboard-4048449594.png)
 
 #### 6.17 — common/exceptions/validation.exception.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/exceptions/validation.exception.ts`
+
+![](images/clipboard-1591262204.png)
 
 **Sugerencia de commit (issue):**
 
