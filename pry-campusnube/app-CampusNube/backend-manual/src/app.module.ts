@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
+import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/sequelize.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -11,6 +12,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+
+    SequelizeDatabaseModule,
 
     ObserveModule.forRoot({
       appKey: 'YOUR_APP_KEY',
