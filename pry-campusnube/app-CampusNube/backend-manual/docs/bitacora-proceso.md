@@ -1348,7 +1348,11 @@ git add .
 git commit -m "feat: add api-response.interface.ts"
 ```
 
+![](images/clipboard-1317956439.png)
+
 Se verificó en Github
+
+![](images/clipboard-2798167764.png)
 
 #### 6.32 — common/types/nullable.type.ts
 
@@ -1356,15 +1360,20 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/types/nullable.type.ts`
 
-``` bash
-mkdir -p src/common/types cat > src/common/types/nullable.type.ts <<'EOF_BACKEND_IA' export type Nullable<T> = T | null; EOF_BACKEND_IA
-```
+![](images/clipboard-3541257009.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add nullable.type.ts"
+git add . 
+git commit -m "feat: add nullable.type.ts"
 ```
+
+![](images/clipboard-1990913384.png)
+
+Se verificó en Github
+
+![](images/clipboard-3494142727.png)
 
 #### 6.33 — common/types/optional.type.ts
 
@@ -1372,15 +1381,16 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/types/optional.type.ts`
 
-``` bash
-mkdir -p src/common/types cat > src/common/types/optional.type.ts <<'EOF_BACKEND_IA' export type Optional<T> = T | undefined; EOF_BACKEND_IA
-```
+![](images/clipboard-291740963.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add optional.type.ts"
+git add . 
+git commit -m "feat: add optional.type.ts"
 ```
+
+Se verificó en Github
 
 #### 6.34 — common/utils/pagination.util.ts
 
@@ -1388,15 +1398,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/utils/pagination.util.ts`
 
-``` bash
-mkdir -p src/common/utils cat > src/common/utils/pagination.util.ts <<'EOF_BACKEND_IA' import {   DEFAULT_LIMIT,   DEFAULT_PAGE,   MAX_LIMIT, } from '../constants/pagination.constants'; import { PaginatedResult } from '../interfaces/pagination.interface';  export function normalizePagination(page?: number, limit?: number) {   const safePage = !page || page < 1 ? DEFAULT_PAGE : page;   const safeLimit = !limit || limit < 1 ? DEFAULT_LIMIT : Math.min(limit, MAX_LIMIT);   const offset = (safePage - 1) * safeLimit;   return { page: safePage, limit: safeLimit, offset }; }  export function buildPaginatedResult<T>(   items: T[],   total: number,   page: number,   limit: number, ): PaginatedResult<T> {   return {     items,     meta: {       page,       limit,       total,       totalPages: Math.ceil(total / limit) || 0,     },   }; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add pagination.util.ts"
+git add . 
+git commit -m "feat: add pagination.util.ts"
 ```
+
+Se verifcó en Github
 
 #### 6.35 — common/utils/date.util.ts
 
@@ -1404,31 +1413,29 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/utils/date.util.ts`
 
-``` bash
-mkdir -p src/common/utils cat > src/common/utils/date.util.ts <<'EOF_BACKEND_IA' export function addDays(date: Date, days: number): Date {   const result = new Date(date);   result.setDate(result.getDate() + days);   return result; }  export function parseDurationToMs(duration: string): number {   const match = /^(\d+)([smhd])$/.exec(duration);   if (!match) {     return 24 * 60 * 60 * 1000;   }    const value = parseInt(match[1], 10);   const unit = match[2];    switch (unit) {     case 's':       return value * 1000;     case 'm':       return value * 60 * 1000;     case 'h':       return value * 60 * 60 * 1000;     case 'd':       return value * 24 * 60 * 60 * 1000;     default:       return 24 * 60 * 60 * 1000;   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add date.util.ts"
+git add .
+git commit -m "feat: add date.util.ts"
 ```
+
+Se verificó en Github
 
 #### 6.36 — common/utils/string.util.ts
 
 Archivo del feature en Clean Architecture.
 
-**Archivo:** `src/common/utils/string.util.ts`
-
-``` bash
-mkdir -p src/common/utils cat > src/common/utils/string.util.ts <<'EOF_BACKEND_IA' export function normalizeEmail(email: string): string {   return email.trim().toLowerCase(); }  export function isBlank(value?: string | null): boolean {   return !value || value.trim().length === 0; } EOF_BACKEND_IA
-```
+**Archivo:** `src/common/utils/string.util.ts`¿
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add string.util.ts"
+git add . 
+git commit -m "feat: add string.util.ts"
 ```
+
+Verificamos en Github
 
 #### 6.37 — infrastructure/security/hashing/password-hasher.interface.ts
 
@@ -1436,15 +1443,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/infrastructure/security/hashing/password-hasher.interface.ts`
 
-``` bash
-mkdir -p src/infrastructure/security/hashing cat > src/infrastructure/security/hashing/password-hasher.interface.ts <<'EOF_BACKEND_IA' export const PASSWORD_HASHER = 'PASSWORD_HASHER';  export interface IPasswordHasher {   hash(plain: string): Promise<string>;   compare(plain: string, hashed: string): Promise<boolean>; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add password-hasher.interface.ts"
+git add . 
+git commit -m "feat: add password-hasher.interface.ts"
 ```
+
+Verficamos en Github
 
 #### 6.38 — infrastructure/security/hashing/bcrypt-password-hasher.service.ts
 
@@ -1452,15 +1458,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/infrastructure/security/hashing/bcrypt-password-hasher.service.ts`
 
-``` bash
-mkdir -p src/infrastructure/security/hashing cat > src/infrastructure/security/hashing/bcrypt-password-hasher.service.ts <<'EOF_BACKEND_IA' import { Injectable } from '@nestjs/common'; import * as bcrypt from 'bcrypt'; import { IPasswordHasher } from './password-hasher.interface';  @Injectable() export class BcryptPasswordHasherService implements IPasswordHasher {   private readonly rounds = 10;    async hash(plain: string): Promise<string> {     return bcrypt.hash(plain, this.rounds);   }    async compare(plain: string, hashed: string): Promise<boolean> {     return bcrypt.compare(plain, hashed);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add bcrypt-password-hasher.service.ts"
+git add . 
+git commit -m "feat: add bcrypt-password-hasher.service.ts"
 ```
+
+Verificamos en Github
 
 #### 6.39 — infrastructure/security/tokens/token.interface.ts
 
@@ -1468,15 +1473,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/infrastructure/security/tokens/token.interface.ts`
 
-``` bash
-mkdir -p src/infrastructure/security/tokens cat > src/infrastructure/security/tokens/token.interface.ts <<'EOF_BACKEND_IA' export const TOKEN_SERVICE = 'TOKEN_SERVICE';  export interface TokenPayload {   sub: number;   email: string;   username: string;   roles: string[]; }  export interface IssuedTokens {   accessToken: string;   refreshToken: string;   expiresIn: string; }  export interface ITokenService {   signAccessToken(payload: TokenPayload): Promise<string>;   signRefreshToken(payload: TokenPayload): Promise<string>;   verifyAccessToken(token: string): Promise<TokenPayload>;   verifyRefreshToken(token: string): Promise<TokenPayload>;   issueTokens(payload: TokenPayload): Promise<IssuedTokens>; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add token.interface.ts"
+git add . 
+git commit -m "feat: add token.interface.ts"
 ```
+
+Verficamos en Github
 
 #### 6.40 — infrastructure/security/tokens/token.service.ts
 
