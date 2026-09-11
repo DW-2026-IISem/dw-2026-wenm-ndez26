@@ -2,11 +2,12 @@ import { createRequire } from 'node:module';
 import { Sequelize } from 'sequelize-typescript';
 import { DatabaseDialect } from '../../../config/environment/env.interface.js';
 import { getSequelizeOptions } from './sequelize.options.js';
+import { CourseModel } from '../../../features/business/courses/infrastructure/persistence/models/course.model.js';
 
 const require = createRequire(import.meta.url);
 
 export const ALL_MODELS = [
-  // (aún sin modelos — se agregan por feature)
+  CourseModel,
 ];
 
 export async function createSequelizeInstance(
