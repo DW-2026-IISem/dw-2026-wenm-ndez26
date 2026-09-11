@@ -1474,13 +1474,19 @@ git add .
 git commit -m "feat: add password-hasher.interface.ts"
 ```
 
+![](images/clipboard-351648589.png)
+
 Verficamos en Github
+
+![](images/clipboard-86770805.png)
 
 #### 6.38 — infrastructure/security/hashing/bcrypt-password-hasher.service.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/infrastructure/security/hashing/bcrypt-password-hasher.service.ts`
+
+![](images/clipboard-3050107496.png)
 
 **Sugerencia de commit (issue):**
 
