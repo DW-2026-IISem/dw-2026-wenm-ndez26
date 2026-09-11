@@ -1824,14 +1824,20 @@ Seeder de datos iniciales para desarrollo y verificación física en BD.
 
 ``` bash
 git add .
-git commit -m "chore: add seeder clients.seeder.ts"
+git commit -m "chore: add seeder courses.seeder.ts"
 ```
 
+![](images/clipboard-3307244104.png)
+
 Verificamos en Github
+
+![](images/clipboard-2177129354.png)
 
 #### 7.11 — course-filter.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-2866554251.png)
 
 **Sugerencia de commit (issue):**
 
