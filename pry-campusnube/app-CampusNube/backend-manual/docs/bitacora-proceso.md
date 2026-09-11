@@ -1803,44 +1803,46 @@ Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el 
 
 ``` bash
 git add . 
-git commit -m "chore: add migration create-clients-table.migration.ts"
+git commit -m "chore: add migration create-courses-table.migration.ts"
+```
+
+![](images/clipboard-1103956373.png)
+
+Verificamos en Github
+
+![](images/clipboard-1061529710.png)
+
+#### 7.10 — courses.seeder.ts
+
+Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+**Archivo:**
+
+![](images/clipboard-2008341500.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "chore: add seeder clients.seeder.ts"
 ```
 
 Verificamos en Github
 
-#### 7.10 — features/business/clients/infrastructure/persistence/seeders/clients.seeder.ts
-
-Seeder de datos iniciales para desarrollo y verificación física en BD.
-
-**Archivo:** `src/features/business/clients/infrastructure/persistence/seeders/clients.seeder.ts`
-
-``` bash
-mkdir -p src/features/business/clients/infrastructure/persistence/seeders cat > src/features/business/clients/infrastructure/persistence/seeders/clients.seeder.ts <<'EOF_BACKEND_IA' import { ClientModel } from '../models/client.model'; import { BcryptPasswordHasherService } from '../../../../../../infrastructure/security/hashing/bcrypt-password-hasher.service'; import { Status } from '../../../../../../common/enums/status.enum';  export async function seedClients(): Promise<void> {   const count = await ClientModel.count();   if (count > 0) {     return;   }    const hasher = new BcryptPasswordHasherService();    await ClientModel.bulkCreate([     {       name: 'Juan Pérez',       address: 'Calle Principal 123',       phone: '+57 300 1234567',       email: 'juan.perez@example.com',       password: await hasher.hash('password123'),       status: Status.ACTIVE,     },     {       name: 'María García',       address: 'Av. Central 456',       phone: '+57 310 9876543',       email: 'maria.garcia@example.com',       password: await hasher.hash('password123'),       status: Status.ACTIVE,     },   ]); } EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "chore: add seeder clients.seeder.ts"
-```
-
-#### 7.11 — features/business/clients/application/dto/client-filter.dto.ts
+#### 7.11 — course-filter.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/clients/application/dto/client-filter.dto.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/dto cat > src/features/business/clients/application/dto/client-filter.dto.ts <<'EOF_BACKEND_IA' import { ApiPropertyOptional } from '@nestjs/swagger'; import { Type } from 'class-transformer'; import { IsInt, IsOptional, IsPositive, IsString, Min } from 'class-validator';  export class ClientFilterDto {   @ApiPropertyOptional({ example: 1, default: 1 })   @IsOptional()   @Type(() => Number)   @IsInt()   @Min(1)   page?: number;    @ApiPropertyOptional({ example: 10, default: 10 })   @IsOptional()   @Type(() => Number)   @IsInt()   @IsPositive()   limit?: number;    @ApiPropertyOptional({ example: 'juan' })   @IsOptional()   @IsString()   search?: string; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto client-filter.dto.ts"
+git add . 
+git commit -m "feat: add dto client-filter.dto.ts"
 ```
 
-#### 7.12 — features/business/clients/application/dto/client-response.dto.ts
+Verificamos en Github
+
+#### 7.12 — course-response.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
@@ -1856,21 +1858,18 @@ mkdir -p src/features/business/clients/application/dto cat > src/features/busine
 git add . git commit -m "feat: add dto client-response.dto.ts"
 ```
 
-#### 7.13 — features/business/clients/application/dto/create-client.dto.ts
+#### 7.13 — create-course.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
-
-**Archivo:** `src/features/business/clients/application/dto/create-client.dto.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/dto cat > src/features/business/clients/application/dto/create-client.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'; import {   IsEmail,   IsNotEmpty,   IsOptional,   IsString,   MaxLength,   MinLength, } from 'class-validator';  export class CreateClientDto {   @ApiProperty({ example: 'Juan Pérez' })   @IsString()   @IsNotEmpty()   @MaxLength(150)   name: string;    @ApiPropertyOptional({ example: 'Calle Principal 123' })   @IsOptional()   @IsString()   @MaxLength(255)   address?: string;    @ApiPropertyOptional({ example: '+57 300 1234567' })   @IsOptional()   @IsString()   @MaxLength(30)   phone?: string;    @ApiPropertyOptional({ example: 'juan.perez@example.com' })   @IsOptional()   @IsEmail()   @MaxLength(150)   email?: string;    @ApiPropertyOptional({ example: 'password123' })   @IsOptional()   @IsString()   @MinLength(6)   @MaxLength(255)   password?: string; } EOF_BACKEND_IA
-```
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto create-client.dto.ts"
+git add . 
+git commit -m "feat: add dto create-client.dto.ts"
 ```
+
+Verificamos en Github
 
 #### 7.14 — features/business/clients/application/dto/update-client.dto.ts
 
