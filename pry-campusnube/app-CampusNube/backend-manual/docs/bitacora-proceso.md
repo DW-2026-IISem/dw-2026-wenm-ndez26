@@ -1411,13 +1411,19 @@ git add .
 git commit -m "feat: add pagination.util.ts"
 ```
 
+![](images/clipboard-1955619530.png)
+
 Se verifcó en Github
+
+![](images/clipboard-1605797027.png)
 
 #### 6.35 — common/utils/date.util.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/utils/date.util.ts`
+
+![](images/clipboard-903510198.png)
 
 **Sugerencia de commit (issue):**
 
