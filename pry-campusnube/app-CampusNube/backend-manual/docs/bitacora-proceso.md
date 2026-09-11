@@ -1668,26 +1668,31 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 
 ``` bash
 git add . 
-git commit -m "feat: add domain exception client-email-already-exists.exception.ts"
+git commit -m "feat: add domain exception course-name-already-exists.exception.ts"
 ```
+
+![](images/clipboard-2681659607.png)
 
 Verificamos en Github
 
-#### 7.3 — features/business/clients/domain/exceptions/client-not-found.exception.ts
+![](images/clipboard-2704072215.png)
+
+#### 7.3 — features/business/courses/domain/exceptions/course-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-**Archivo:** `src/features/business/clients/domain/exceptions/client-not-found.exception.ts`
+**Archivo:** `src/features/business/courses/domain/exceptions/course-not-found.exception.ts`
 
-``` bash
-mkdir -p src/features/business/clients/domain/exceptions cat > src/features/business/clients/domain/exceptions/client-not-found.exception.ts <<'EOF_BACKEND_IA' import { EntityNotFoundException } from '../../../../../common/exceptions/entity-not-found.exception';  export class ClientNotFoundException extends EntityNotFoundException {   constructor(id: number) {     super('Cliente', id);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-1143009250.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception client-not-found.exception.ts"
+git add . 
+git commit -m "feat: add domain exception clien-not-found.exception.ts"
 ```
+
+Verificamos eh Github
 
 #### 7.4 — features/business/clients/domain/interfaces/client-repository.interface.ts
 
