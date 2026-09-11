@@ -1495,13 +1495,19 @@ git add .
 git commit -m "feat: add bcrypt-password-hasher.service.ts"
 ```
 
+![](images/clipboard-2494052433.png)
+
 Verificamos en Github
+
+![](images/clipboard-933804380.png)
 
 #### 6.39 — infrastructure/security/tokens/token.interface.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/infrastructure/security/tokens/token.interface.ts`
+
+![](images/clipboard-1016657769.png)
 
 **Sugerencia de commit (issue):**
 
@@ -1510,7 +1516,11 @@ git add .
 git commit -m "feat: add token.interface.ts"
 ```
 
+![](images/clipboard-2860025136.png)
+
 Verficamos en Github
+
+![](images/clipboard-3584995211.png)
 
 #### 6.40 — infrastructure/security/tokens/token.service.ts
 
@@ -1518,15 +1528,18 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/infrastructure/security/tokens/token.service.ts`
 
-``` bash
-mkdir -p src/infrastructure/security/tokens cat > src/infrastructure/security/tokens/token.service.ts <<'EOF_BACKEND_IA' import { Injectable } from '@nestjs/common'; import { ConfigService } from '@nestjs/config'; import { JwtService } from '@nestjs/jwt'; import {   ITokenService,   IssuedTokens,   TokenPayload, } from './token.interface';  @Injectable() export class TokenService implements ITokenService {   constructor(     private readonly jwtService: JwtService,     private readonly configService: ConfigService,   ) {}    async signAccessToken(payload: TokenPayload): Promise<string> {     return this.jwtService.signAsync(payload, {       secret: this.configService.get<string>('environment.jwt.secret'),       expiresIn: this.configService.get<string>('environment.jwt.expiresIn') as any,     });   }    async signRefreshToken(payload: TokenPayload): Promise<string> {     return this.jwtService.signAsync(payload, {       secret: this.configService.get<string>('environment.jwt.refreshSecret'),       expiresIn: this.configService.get<string>(         'environment.jwt.refreshExpiresIn',       ) as any,     });   }    async verifyAccessToken(token: string): Promise<TokenPayload> {     return this.jwtService.verifyAsync<TokenPayload>(token, {       secret: this.configService.get<string>('environment.jwt.secret'),     });   }    async verifyRefreshToken(token: string): Promise<TokenPayload> {     return this.jwtService.verifyAsync<TokenPayload>(token, {       secret: this.configService.get<string>('environment.jwt.refreshSecret'),     });   }    async issueTokens(payload: TokenPayload): Promise<IssuedTokens> {     const [accessToken, refreshToken] = await Promise.all([       this.signAccessToken(payload),       this.signRefreshToken(payload),     ]);      return {       accessToken,       refreshToken,       expiresIn:         this.configService.get<string>('environment.jwt.expiresIn') || '1d',     };   } } EOF_BACKEND_IA
-```
+![](images/clipboard-2955914265.png)
+
+![](images/clipboard-2862308736.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add token.service.ts"
+git add . 
+git commit -m "feat: add token.service.ts"
 ```
+
+Se verificó en Github
 
 #### 6.41 — infrastructure/security/security.module.ts
 
@@ -1534,15 +1547,14 @@ Módulo Nest del feature: cablea providers, tokens DI y controller.
 
 **Archivo:** `src/infrastructure/security/security.module.ts`
 
-``` bash
-mkdir -p src/infrastructure/security cat > src/infrastructure/security/security.module.ts <<'EOF_BACKEND_IA' import { Global, Module } from '@nestjs/common'; import { ConfigModule, ConfigService } from '@nestjs/config'; import { JwtModule } from '@nestjs/jwt'; import { PASSWORD_HASHER } from './hashing/password-hasher.interface'; import { BcryptPasswordHasherService } from './hashing/bcrypt-password-hasher.service'; import { TOKEN_SERVICE } from './tokens/token.interface'; import { TokenService } from './tokens/token.service';  @Global() @Module({   imports: [     JwtModule.registerAsync({       imports: [ConfigModule],       inject: [ConfigService],       useFactory: (configService: ConfigService) => ({         secret: configService.get<string>('environment.jwt.secret') ?? '',         signOptions: {           expiresIn: (configService.get<string>('environment.jwt.expiresIn') ??             '1d') as any,         },       }),     }),   ],   providers: [     BcryptPasswordHasherService,     {       provide: PASSWORD_HASHER,       useExisting: BcryptPasswordHasherService,     },     TokenService,     {       provide: TOKEN_SERVICE,       useExisting: TokenService,     },   ],   exports: [     JwtModule,     BcryptPasswordHasherService,     PASSWORD_HASHER,     TokenService,     TOKEN_SERVICE,   ], }) export class SecurityModule {} EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire nest module security.module.ts"
+git add . 
+git commit -m "feat: wire nest module security.module.ts"
 ```
+
+Se verificó en Github
 
 #### 6.42 — Actualizar main.ts (bootstrap completo)
 
@@ -1550,15 +1562,14 @@ Prefix global, filters, interceptors, pipes, Swagger y manejo amigable de EADDRI
 
 **Archivo:** `src/main.ts`
 
-``` bash
-mkdir -p src cat > src/main.ts <<'EOF_BACKEND_IA' import { NestFactory } from '@nestjs/core'; import { ConfigService } from '@nestjs/config'; import { AppModule } from './app.module'; import { getLoggerConfig } from './config/logger/logger.config'; import { GlobalExceptionFilter } from './common/filters/global-exception.filter'; import { ResponseInterceptor } from './common/interceptors/response.interceptor'; import { LoggingInterceptor } from './common/interceptors/logging.interceptor'; import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor'; import { CustomValidationPipe } from './common/pipes/validation.pipe'; import { setupSwagger } from './config/swagger/swagger.config'; import { GLOBAL_PREFIX } from './common/constants/app.constants';  async function bootstrap() {   const app = await NestFactory.create(AppModule, {     logger: getLoggerConfig().logLevels,   });    const configService = app.get(ConfigService);   const port = configService.get<number>('app.port', 3002);    app.setGlobalPrefix(GLOBAL_PREFIX);    app.useGlobalFilters(new GlobalExceptionFilter());    app.useGlobalInterceptors(     new ResponseInterceptor(),     new LoggingInterceptor(),     new TimeoutInterceptor(),   );    app.useGlobalPipes(new CustomValidationPipe());    setupSwagger(app);    try {     await app.listen(port);     console.log(`🚀 Application running on: http://localhost:${port}`);     console.log(`📘 Swagger: http://localhost:${port}/api/docs`);   } catch (error: any) {     if (error?.code === 'EADDRINUSE') {       console.error(         `❌ El puerto ${port} ya está en uso (EADDRINUSE).\n` +           `   Solución rápida:\n` +           `   1) npm run free:port\n` +           `   2) npm run start:dev\n` +           `   O cambia PORT en el archivo .env`,       );       await app.close();       process.exit(1);     }     throw error;   } } bootstrap(); EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: harden main.ts bootstrap with swagger and global pipes"
+git add . 
+git commit -m "feat: harden main.ts bootstrap with swagger and global pipes"
 ```
+
+Se verificó en Github
 
 #### 6.43 — Actualizar app.module.ts (base sin features ni guards)
 
@@ -1566,15 +1577,14 @@ Cablea Config + Sequelize + Security + Logger. Business/Auth y guards llegan en 
 
 **Archivo:** `src/app.module.ts`
 
-``` bash
-mkdir -p src cat > src/app.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { envConfig } from './config/environment/env.config'; import { appConfig } from './config/app/app.config'; import { jwtConfig } from './config/jwt/jwt.config'; import { LoggerModule } from './config/logger/logger.module'; import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/sequelize.module'; import { SecurityModule } from './infrastructure/security/security.module'; import { AppController } from './app.controller'; import { AppService } from './app.service';  @Module({   imports: [     ConfigModule.forRoot({       isGlobal: true,       load: [envConfig, appConfig, jwtConfig],       envFilePath: '.env',     }),     SequelizeDatabaseModule,     SecurityModule,     LoggerModule,   ],   controllers: [AppController],   providers: [     AppService,   ], }) export class AppModule {} EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire AppModule with config database security logger"
+git add . 
+git commit -m "feat: wire AppModule with config database security logger"
 ```
+
+Se verificó en Github
 
 #### 6.44 — Verificar bootstrap transversal
 
@@ -1587,8 +1597,11 @@ npm run start:dev # Abre http://localhost:3002/api/docs # Ctrl+C
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "test: verify base infrastructure bootstrap"
+git add . 
+git commit -m "test: verify base infrastructure bootstrap"
 ```
+
+Se verificó en Github
 
 ------------------------------------------------------------------------
 
