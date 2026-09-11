@@ -1096,13 +1096,19 @@ git add .
 git commit -m "feat: add sequelize-exception.filter.ts"
 ```
 
+![](images/clipboard-252837753.png)
+
 Verificamos en Github
+
+![](images/clipboard-1133720670.png)
 
 #### 6.20 — common/interceptors/response.interceptor.ts
 
 Archivo del feature en Clean Architecture.
 
-**Archivo:** `src/common/interceptors/response.interceptor.ts`¿
+**Archivo:** `src/common/interceptors/response.interceptor.ts`
+
+![](images/clipboard-267500423.png)
 
 **Sugerencia de commit (issue):**
 
