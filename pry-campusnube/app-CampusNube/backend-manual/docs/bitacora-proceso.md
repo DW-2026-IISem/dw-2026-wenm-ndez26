@@ -991,7 +991,11 @@ git add .
 git commit -m "feat: add application.exception.ts"
 ```
 
+![](images/clipboard-562312981.png)
+
 Verificamos en Github
+
+![](images/clipboard-3944420489.png)
 
 #### 6.15 — common/exceptions/domain.exception.ts
 
@@ -999,15 +1003,16 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/exceptions/domain.exception.ts`
 
-``` bash
-mkdir -p src/common/exceptions cat > src/common/exceptions/domain.exception.ts <<'EOF_BACKEND_IA' import { ApplicationException } from './application.exception';  export class DomainException extends ApplicationException {   constructor(message: string) {     super(message, 400);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-1101038658.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain.exception.ts"
+git add . 
+git commit -m "feat: add domain.exception.ts"
 ```
+
+Verificamos con Github
 
 #### 6.16 — common/exceptions/entity-not-found.exception.ts
 
