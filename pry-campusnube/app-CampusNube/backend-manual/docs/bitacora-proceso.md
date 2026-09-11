@@ -1641,8 +1641,6 @@ Se verificó en Github
 
 #### 7.1 — features/business/courses/domain/entities/couses.e
 
-Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
-
 ![](images/clipboard-3781788981.png)
 
 **Sugerencia de commit (issue):**
@@ -1658,7 +1656,7 @@ Verificamos en Github
 
 ![](images/clipboard-2729746398.png)
 
-#### 7.2 — features/business/courses/domain/exceptions/course-email-already-exists.exception.ts
+#### 7.2 — course-name-already-exists.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
@@ -1677,7 +1675,7 @@ Verificamos en Github
 
 ![](images/clipboard-2704072215.png)
 
-#### 7.3 — features/business/courses/domain/exceptions/course-not-found.exception.ts
+#### 7.3 — course-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
@@ -1689,7 +1687,7 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 
 ``` bash
 git add . 
-git commit -m "feat: add domain exception clien-not-found.exception.ts"
+git commit -m "feat: add domain exception course-not-found.exception.ts"
 ```
 
 ![](images/clipboard-3960129143.png)
@@ -1698,11 +1696,7 @@ Verificamos eh Github
 
 ![](images/clipboard-415491448.png)
 
-#### 7.4 — features/business/courses/domain/interfaces/course-repository.interface.ts
-
-Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
-
-**Archivo:** `src/features/business/courses/domain/interfaces/course-repository.interface.ts`
+#### 7.4 — course-repository.por.ts
 
 ![](images/clipboard-393142458.png)
 
@@ -1719,11 +1713,11 @@ Verificamos en Github
 
 ![](images/clipboard-4159430317.png)
 
-#### 7.5 — features/business/courses/domain/validators/course-email.validator.ts
+#### 7.5 — course-name.validator.ts
 
 Validador de dominio reutilizable (reglas independientes del framework HTTP).
 
-**Archivo:** `src/features/business/courses/domain/validators/course-email.validator.ts`
+**Archivo:** `src/features/business/courses/domain/validators/course-name.validator.ts`
 
 ![](images/clipboard-4181516782.png)
 
@@ -1731,26 +1725,31 @@ Validador de dominio reutilizable (reglas independientes del framework HTTP).
 
 ``` bash
 git add . 
-git commit -m "feat: add domain validator client-email.validator.ts"
+git commit -m "feat: add domain validator course-name.validator.ts"
 ```
+
+![](images/clipboard-2109479634.png)
 
 Verificamos en Github
 
-#### 7.6 — features/business/clients/domain/validators/client-phone.validator.ts
+![](images/clipboard-4012600575.png)
+
+#### 7.6 — course-descrition.validator.ts
 
 Validador de dominio reutilizable (reglas independientes del framework HTTP).
 
-**Archivo:** `src/features/business/clients/domain/validators/client-phone.validator.ts`
+**Archivo:** `src/features/business/courses/domain/validators/course.description.validator.ts`
 
-``` bash
-mkdir -p src/features/business/clients/domain/validators cat > src/features/business/clients/domain/validators/client-phone.validator.ts <<'EOF_BACKEND_IA' export function isValidPhone(phone: string): boolean {   const phoneRegex = /^[+]?[\d\s()-]{7,20}$/;   return phoneRegex.test(phone); } EOF_BACKEND_IA
-```
+![](images/clipboard-2432019979.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain validator client-phone.validator.ts"
+git add . 
+git commit -m "feat: add domain validator course-description.validator.ts"
 ```
+
+Verificamos en Github
 
 #### 7.7 — features/business/clients/infrastructure/persistence/models/client.model.ts
 
