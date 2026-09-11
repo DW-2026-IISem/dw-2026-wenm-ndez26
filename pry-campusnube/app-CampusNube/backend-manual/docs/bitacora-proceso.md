@@ -1180,13 +1180,19 @@ git add .
 git commit -m "feat: add validation.pipe.ts"
 ```
 
+![](images/clipboard-351218171.png)
+
 Verificamos en Github
+
+![](images/clipboard-3314660977.png)
 
 #### 6.24 — common/pipes/parse-positive-int.pipe.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/pipes/parse-positive-int.pipe.ts`
+
+![](images/clipboard-2572073584.png)
 
 **Sugerencia de commit (issue):**
 
