@@ -1957,14 +1957,20 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 
 ``` bash
 git add .
-git commit -m "feat: add use case delete-client.use-case.ts"
+git commit -m "feat: add use case delete-course.use-case.ts"
 ```
 
+![](images/clipboard-2971710898.png)
+
 Verifcamos eb Github
+
+![](images/clipboard-20313684.png)
 
 #### 7.18 — Get-course.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-1026117600.png)
 
 **Sugerencia de commit (issue):**
 
