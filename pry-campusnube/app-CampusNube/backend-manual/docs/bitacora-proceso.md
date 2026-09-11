@@ -2074,11 +2074,17 @@ git add .
 git commit -m "chore: add barrel export courses"
 ```
 
+![](images/clipboard-3943564554.png)
+
 Verficamos en Github
 
-#### 7.24 — features/business/clients/clients.module.ts
+![](images/clipboard-2217440401.png)
+
+#### 7.24 — courses.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
+
+![](images/clipboard-2796103532.png)
 
 **Sugerencia de commit (issue):**
 
