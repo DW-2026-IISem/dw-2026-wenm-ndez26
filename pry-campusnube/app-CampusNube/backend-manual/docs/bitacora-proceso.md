@@ -2093,9 +2093,15 @@ git add .
 git commit -m "feat: wire nest module courses.module.ts"
 ```
 
+Verificamos en Github
+
+![](images/clipboard-3677989963.png)
+
 #### 7.25 — Actualizar sequelize.factory.ts (registrar modelos)
 
 Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+![](images/clipboard-3909871866.png)
 
 **Sugerencia de commit (issue):**
 
@@ -2104,38 +2110,36 @@ git add .
 git commit -m "feat: register CourseModel in sequelize factory"
 ```
 
+![](images/clipboard-2025979513.png)
+
 Verificamos en Github
+
+![](images/clipboard-1855705044.png)
 
 #### 7.26 — Actualizar business.module.ts
 
 Agrega el feature module de negocio recién terminado.
 
-**Archivo:** `src/features/business/business.module.ts`
-
-``` bash
-mkdir -p src/features/business cat > src/features/business/business.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ClientsModule } from './clients/clients.module';  @Module({   imports: [ClientsModule],   exports: [ClientsModule], }) export class BusinessModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-2491985319.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: export ClientsModule from BusinessModule"
+git add . 
+git commit -m "feat: export ClientsModule from BusinessModule"
 ```
+
+Verificamos en Github
 
 #### 7.27 — Actualizar database-seeder.service.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
-**Archivo:** `src/infrastructure/database/seeders/database-seeder.service.ts`
-
-``` bash
-mkdir -p src/infrastructure/database/seeders cat > src/infrastructure/database/seeders/database-seeder.service.ts <<'EOF_BACKEND_IA' import { Injectable, Logger, OnModuleInit } from '@nestjs/common'; import { seedClients } from '../../../features/business/clients/infrastructure/persistence/seeders/clients.seeder';  /**  * Ejecuta seeders en orden de dependencias.  * Solo en entornos no productivos.  */ @Injectable() export class DatabaseSeederService implements OnModuleInit {   private readonly logger = new Logger(DatabaseSeederService.name);    async onModuleInit(): Promise<void> {     if (process.env.NODE_ENV === 'production') {       return;     }      try {       await seedClients();       this.logger.log('✅ Seeders ejecutados');     } catch (error: any) {       this.logger.error(`❌ Error en seeders: ${error.message}`, error.stack);       throw error;     }   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: run seedClients on bootstrap"
+git add . 
+git commit -m "chore: run seedClients on bootstrap"
 ```
 
 #### 7.28 — Actualizar app.module.ts
@@ -2144,17 +2148,16 @@ Importa BusinessModule y/o AuthModule según el avance. Los guards globales lleg
 
 **Archivo:** `src/app.module.ts`
 
-``` bash
-mkdir -p src cat > src/app.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { envConfig } from './config/environment/env.config'; import { appConfig } from './config/app/app.config'; import { jwtConfig } from './config/jwt/jwt.config'; import { LoggerModule } from './config/logger/logger.module'; import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/sequelize.module'; import { SecurityModule } from './infrastructure/security/security.module'; import { BusinessModule } from './features/business/business.module'; import { AppController } from './app.controller'; import { AppService } from './app.service';  @Module({   imports: [     ConfigModule.forRoot({       isGlobal: true,       load: [envConfig, appConfig, jwtConfig],       envFilePath: '.env',     }),     SequelizeDatabaseModule,     SecurityModule,     LoggerModule,     BusinessModule,   ],   controllers: [AppController],   providers: [     AppService,   ], }) export class AppModule {} EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: import BusinessModule into AppModule"
+git add . 
+git commit -m "feat: import BusinessModule into AppModule"
 ```
 
-#### 7.29 — Verificar tabla física `clients` y API
+Verificar en Github
+
+#### 7.29 — Verificar tabla física `courses` y API
 
 Arranca la app. Debe crear/sync tabla `clients`, correr seeder y exponer `/api/clients`. Prueba list/create en Swagger o curl.
 
@@ -2165,7 +2168,8 @@ npm run start:dev
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "test: verify clients table and crud endpoints"
+git add . 
+git commit -m "test: verify clients table and crud endpoints"
 ```
 
 ------------------------------------------------------------------------
