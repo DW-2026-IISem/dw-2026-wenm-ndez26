@@ -1759,33 +1759,35 @@ Verificamos en Github
 
 ![](images/clipboard-3413830347.png)
 
-**Archivo:** `src/features/business/clients/infrastructure/persistence/models/client.model.ts`
-
-``` bash
-mkdir -p src/features/business/clients/infrastructure/persistence/models cat > src/features/business/clients/infrastructure/persistence/models/client.model.ts <<'EOF_BACKEND_IA' import {   AutoIncrement,   Column,   CreatedAt,   DataType,   HasMany,   Model,   PrimaryKey,   Table,   UpdatedAt, } from 'sequelize-typescript'; import { Status } from '../../../../../../common/enums/status.enum';  @Table({ tableName: 'clients' }) export class ClientModel extends Model {   @PrimaryKey   @AutoIncrement   @Column(DataType.INTEGER)   declare id: number;    @Column({ type: DataType.STRING(150), allowNull: false })   declare name: string;    @Column({ type: DataType.STRING(255), allowNull: true })   declare address: string | null;    @Column({ type: DataType.STRING(30), allowNull: true })   declare phone: string | null;    @Column({ type: DataType.STRING(150), allowNull: true, unique: true })   declare email: string | null;    @Column({ type: DataType.STRING(255), allowNull: true })   declare password: string | null;    @Column({     type: DataType.ENUM(...Object.values(Status)),     allowNull: false,     defaultValue: Status.ACTIVE,   })   declare status: Status;    @CreatedAt   declare createdAt: Date;    @UpdatedAt   declare updatedAt: Date;    @HasMany(() => require('../../../../sales/infrastructure/persistence/models/sale.model').SaleModel)   declare sales: unknown[]; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize model client.model.ts"
+git add . 
+git commit -m "feat: add sequelize model course.model.ts"
 ```
 
-#### 7.8 — features/business/clients/infrastructure/persistence/repositories/client.repository.ts
+![](images/clipboard-4046701343.png)
+
+Verificamos en Github
+
+![](images/clipboard-2729173565.png)
+
+#### 7.8 —course.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
-**Archivo:** `src/features/business/clients/infrastructure/persistence/repositories/client.repository.ts`
+**Archivo:**
 
-``` bash
-mkdir -p src/features/business/clients/infrastructure/persistence/repositories cat > src/features/business/clients/infrastructure/persistence/repositories/client.repository.ts <<'EOF_BACKEND_IA' import { Injectable } from '@nestjs/common'; import { Op } from 'sequelize'; import {   buildPaginatedResult,   normalizePagination, } from '../../../../../../common/utils/pagination.util'; import { Client } from '../../../domain/entities/client.entity'; import {   ClientFindAllParams,   IClientRepository, } from '../../../domain/interfaces/client-repository.interface'; import { ClientMapper } from '../../../application/mappers/client.mapper'; import { ClientModel } from '../models/client.model';  @Injectable() export class ClientRepository implements IClientRepository {   async create(client: Client): Promise<Client> {     const model = await ClientModel.create(ClientMapper.toPersistence(client));     return ClientMapper.toDomain(model);   }    async update(client: Client): Promise<Client> {     await ClientModel.update(ClientMapper.toPersistence(client), {       where: { id: client.id },     });     const updated = await ClientModel.findByPk(client.id!);     return ClientMapper.toDomain(updated!);   }    async delete(id: number): Promise<void> {     await ClientModel.destroy({ where: { id } });   }    async findById(id: number): Promise<Client | null> {     const model = await ClientModel.findByPk(id);     return model ? ClientMapper.toDomain(model) : null;   }    async findByEmail(email: string): Promise<Client | null> {     const model = await ClientModel.findOne({ where: { email } });     return model ? ClientMapper.toDomain(model) : null;   }    async findAll(params: ClientFindAllParams) {     const { page, limit, offset } = normalizePagination(       params.page,       params.limit,     );      const where = params.search       ? {           [Op.or]: [             { name: { [Op.like]: `%${params.search}%` } },             { email: { [Op.like]: `%${params.search}%` } },           ],         }       : {};      const { rows, count } = await ClientModel.findAndCountAll({       where,       limit,       offset,       order: [['createdAt', 'DESC']],     });      return buildPaginatedResult(       rows.map((row) => ClientMapper.toDomain(row)),       count,       page,       limit,     );   } } EOF_BACKEND_IA
-```
+![](images/clipboard-605228531.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize repository client.repository.ts"
+git add . 
+git commit -m "feat: add sequelize repository client.repository.ts"
 ```
+
+Verificamos en Github
 
 #### 7.9 — features/business/clients/infrastructure/persistence/migrations/create-clients-table.migration.ts
 
