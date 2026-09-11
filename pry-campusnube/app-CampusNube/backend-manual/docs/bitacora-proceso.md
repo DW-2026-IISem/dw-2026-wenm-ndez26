@@ -1631,9 +1631,332 @@ git add .
 git commit -m "test: verify base infrastructure bootstrap"
 ```
 
+![](images/clipboard-1170036767.png)
+
 Se verificó en Github
 
-------------------------------------------------------------------------
+![](images/clipboard-1430959678.png)
+
+## FASE 7 — Courses
+
+#### 7.1 — features/business/courses/domain/entities/couses.e
+
+Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
+
+![](images/clipboard-3781788981.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add domain entity client.entity.ts"
+```
+
+#### 7.2 — features/business/clients/domain/exceptions/client-email-already-exists.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+**Archivo:** `src/features/business/clients/domain/exceptions/client-email-already-exists.exception.ts`
+
+``` bash
+mkdir -p src/features/business/clients/domain/exceptions cat > src/features/business/clients/domain/exceptions/client-email-already-exists.exception.ts <<'EOF_BACKEND_IA' import { DomainException } from '../../../../../common/exceptions/domain.exception';  export class ClientEmailAlreadyExistsException extends DomainException {   constructor(email: string) {     super(`El email '${email}' ya está registrado`);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add domain exception client-email-already-exists.exception.ts"
+```
+
+#### 7.3 — features/business/clients/domain/exceptions/client-not-found.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+**Archivo:** `src/features/business/clients/domain/exceptions/client-not-found.exception.ts`
+
+``` bash
+mkdir -p src/features/business/clients/domain/exceptions cat > src/features/business/clients/domain/exceptions/client-not-found.exception.ts <<'EOF_BACKEND_IA' import { EntityNotFoundException } from '../../../../../common/exceptions/entity-not-found.exception';  export class ClientNotFoundException extends EntityNotFoundException {   constructor(id: number) {     super('Cliente', id);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add domain exception client-not-found.exception.ts"
+```
+
+#### 7.4 — features/business/clients/domain/interfaces/client-repository.interface.ts
+
+Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
+
+**Archivo:** `src/features/business/clients/domain/interfaces/client-repository.interface.ts`
+
+``` bash
+mkdir -p src/features/business/clients/domain/interfaces cat > src/features/business/clients/domain/interfaces/client-repository.interface.ts <<'EOF_BACKEND_IA' import { PaginatedResult } from '../../../../../common/interfaces/pagination.interface'; import { Client } from '../entities/client.entity';  export const CLIENT_REPOSITORY = 'CLIENT_REPOSITORY';  export interface ClientFindAllParams {   page?: number;   limit?: number;   search?: string; }  export interface IClientRepository {   create(client: Client): Promise<Client>;   update(client: Client): Promise<Client>;   delete(id: number): Promise<void>;   findById(id: number): Promise<Client | null>;   findByEmail(email: string): Promise<Client | null>;   findAll(params: ClientFindAllParams): Promise<PaginatedResult<Client>>; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add repository port client-repository.interface.ts"
+```
+
+#### 7.5 — features/business/clients/domain/validators/client-email.validator.ts
+
+Validador de dominio reutilizable (reglas independientes del framework HTTP).
+
+**Archivo:** `src/features/business/clients/domain/validators/client-email.validator.ts`
+
+``` bash
+mkdir -p src/features/business/clients/domain/validators cat > src/features/business/clients/domain/validators/client-email.validator.ts <<'EOF_BACKEND_IA' export function isValidEmail(email: string): boolean {   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;   return emailRegex.test(email); } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add domain validator client-email.validator.ts"
+```
+
+#### 7.6 — features/business/clients/domain/validators/client-phone.validator.ts
+
+Validador de dominio reutilizable (reglas independientes del framework HTTP).
+
+**Archivo:** `src/features/business/clients/domain/validators/client-phone.validator.ts`
+
+``` bash
+mkdir -p src/features/business/clients/domain/validators cat > src/features/business/clients/domain/validators/client-phone.validator.ts <<'EOF_BACKEND_IA' export function isValidPhone(phone: string): boolean {   const phoneRegex = /^[+]?[\d\s()-]{7,20}$/;   return phoneRegex.test(phone); } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add domain validator client-phone.validator.ts"
+```
+
+#### 7.7 — features/business/clients/infrastructure/persistence/models/client.model.ts
+
+Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
+
+**Archivo:** `src/features/business/clients/infrastructure/persistence/models/client.model.ts`
+
+``` bash
+mkdir -p src/features/business/clients/infrastructure/persistence/models cat > src/features/business/clients/infrastructure/persistence/models/client.model.ts <<'EOF_BACKEND_IA' import {   AutoIncrement,   Column,   CreatedAt,   DataType,   HasMany,   Model,   PrimaryKey,   Table,   UpdatedAt, } from 'sequelize-typescript'; import { Status } from '../../../../../../common/enums/status.enum';  @Table({ tableName: 'clients' }) export class ClientModel extends Model {   @PrimaryKey   @AutoIncrement   @Column(DataType.INTEGER)   declare id: number;    @Column({ type: DataType.STRING(150), allowNull: false })   declare name: string;    @Column({ type: DataType.STRING(255), allowNull: true })   declare address: string | null;    @Column({ type: DataType.STRING(30), allowNull: true })   declare phone: string | null;    @Column({ type: DataType.STRING(150), allowNull: true, unique: true })   declare email: string | null;    @Column({ type: DataType.STRING(255), allowNull: true })   declare password: string | null;    @Column({     type: DataType.ENUM(...Object.values(Status)),     allowNull: false,     defaultValue: Status.ACTIVE,   })   declare status: Status;    @CreatedAt   declare createdAt: Date;    @UpdatedAt   declare updatedAt: Date;    @HasMany(() => require('../../../../sales/infrastructure/persistence/models/sale.model').SaleModel)   declare sales: unknown[]; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add sequelize model client.model.ts"
+```
+
+#### 7.8 — features/business/clients/infrastructure/persistence/repositories/client.repository.ts
+
+Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
+
+**Archivo:** `src/features/business/clients/infrastructure/persistence/repositories/client.repository.ts`
+
+``` bash
+mkdir -p src/features/business/clients/infrastructure/persistence/repositories cat > src/features/business/clients/infrastructure/persistence/repositories/client.repository.ts <<'EOF_BACKEND_IA' import { Injectable } from '@nestjs/common'; import { Op } from 'sequelize'; import {   buildPaginatedResult,   normalizePagination, } from '../../../../../../common/utils/pagination.util'; import { Client } from '../../../domain/entities/client.entity'; import {   ClientFindAllParams,   IClientRepository, } from '../../../domain/interfaces/client-repository.interface'; import { ClientMapper } from '../../../application/mappers/client.mapper'; import { ClientModel } from '../models/client.model';  @Injectable() export class ClientRepository implements IClientRepository {   async create(client: Client): Promise<Client> {     const model = await ClientModel.create(ClientMapper.toPersistence(client));     return ClientMapper.toDomain(model);   }    async update(client: Client): Promise<Client> {     await ClientModel.update(ClientMapper.toPersistence(client), {       where: { id: client.id },     });     const updated = await ClientModel.findByPk(client.id!);     return ClientMapper.toDomain(updated!);   }    async delete(id: number): Promise<void> {     await ClientModel.destroy({ where: { id } });   }    async findById(id: number): Promise<Client | null> {     const model = await ClientModel.findByPk(id);     return model ? ClientMapper.toDomain(model) : null;   }    async findByEmail(email: string): Promise<Client | null> {     const model = await ClientModel.findOne({ where: { email } });     return model ? ClientMapper.toDomain(model) : null;   }    async findAll(params: ClientFindAllParams) {     const { page, limit, offset } = normalizePagination(       params.page,       params.limit,     );      const where = params.search       ? {           [Op.or]: [             { name: { [Op.like]: `%${params.search}%` } },             { email: { [Op.like]: `%${params.search}%` } },           ],         }       : {};      const { rows, count } = await ClientModel.findAndCountAll({       where,       limit,       offset,       order: [['createdAt', 'DESC']],     });      return buildPaginatedResult(       rows.map((row) => ClientMapper.toDomain(row)),       count,       page,       limit,     );   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add sequelize repository client.repository.ts"
+```
+
+#### 7.9 — features/business/clients/infrastructure/persistence/migrations/create-clients-table.migration.ts
+
+Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el esquema.
+
+**Archivo:** `src/features/business/clients/infrastructure/persistence/migrations/create-clients-table.migration.ts`
+
+``` bash
+mkdir -p src/features/business/clients/infrastructure/persistence/migrations cat > src/features/business/clients/infrastructure/persistence/migrations/create-clients-table.migration.ts <<'EOF_BACKEND_IA' export const createClientsTableMigration = {   name: 'create-clients-table',   async up(): Promise<void> {     // Sequelize sync handles table creation in development.     // Production: CREATE TABLE clients (id, name, address, phone, email, password, status, createdAt, updatedAt)   },   async down(): Promise<void> {     // Production: DROP TABLE clients   }, }; EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: add migration create-clients-table.migration.ts"
+```
+
+#### 7.10 — features/business/clients/infrastructure/persistence/seeders/clients.seeder.ts
+
+Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+**Archivo:** `src/features/business/clients/infrastructure/persistence/seeders/clients.seeder.ts`
+
+``` bash
+mkdir -p src/features/business/clients/infrastructure/persistence/seeders cat > src/features/business/clients/infrastructure/persistence/seeders/clients.seeder.ts <<'EOF_BACKEND_IA' import { ClientModel } from '../models/client.model'; import { BcryptPasswordHasherService } from '../../../../../../infrastructure/security/hashing/bcrypt-password-hasher.service'; import { Status } from '../../../../../../common/enums/status.enum';  export async function seedClients(): Promise<void> {   const count = await ClientModel.count();   if (count > 0) {     return;   }    const hasher = new BcryptPasswordHasherService();    await ClientModel.bulkCreate([     {       name: 'Juan Pérez',       address: 'Calle Principal 123',       phone: '+57 300 1234567',       email: 'juan.perez@example.com',       password: await hasher.hash('password123'),       status: Status.ACTIVE,     },     {       name: 'María García',       address: 'Av. Central 456',       phone: '+57 310 9876543',       email: 'maria.garcia@example.com',       password: await hasher.hash('password123'),       status: Status.ACTIVE,     },   ]); } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: add seeder clients.seeder.ts"
+```
+
+#### 7.11 — features/business/clients/application/dto/client-filter.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+**Archivo:** `src/features/business/clients/application/dto/client-filter.dto.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/dto cat > src/features/business/clients/application/dto/client-filter.dto.ts <<'EOF_BACKEND_IA' import { ApiPropertyOptional } from '@nestjs/swagger'; import { Type } from 'class-transformer'; import { IsInt, IsOptional, IsPositive, IsString, Min } from 'class-validator';  export class ClientFilterDto {   @ApiPropertyOptional({ example: 1, default: 1 })   @IsOptional()   @Type(() => Number)   @IsInt()   @Min(1)   page?: number;    @ApiPropertyOptional({ example: 10, default: 10 })   @IsOptional()   @Type(() => Number)   @IsInt()   @IsPositive()   limit?: number;    @ApiPropertyOptional({ example: 'juan' })   @IsOptional()   @IsString()   search?: string; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add dto client-filter.dto.ts"
+```
+
+#### 7.12 — features/business/clients/application/dto/client-response.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+**Archivo:** `src/features/business/clients/application/dto/client-response.dto.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/dto cat > src/features/business/clients/application/dto/client-response.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'; import { Status } from '../../../../../common/enums/status.enum';  export class ClientResponseDto {   @ApiProperty({ example: 1 })   id: number;    @ApiProperty({ example: 'Juan Pérez' })   name: string;    @ApiPropertyOptional({ example: 'Calle Principal 123' })   address?: string;    @ApiPropertyOptional({ example: '+57 300 1234567' })   phone?: string;    @ApiPropertyOptional({ example: 'juan.perez@example.com' })   email?: string;    @ApiProperty({ enum: Status, example: Status.ACTIVE })   status: Status;    @ApiProperty()   createdAt: Date;    @ApiProperty()   updatedAt: Date; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add dto client-response.dto.ts"
+```
+
+#### 7.13 — features/business/clients/application/dto/create-client.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+**Archivo:** `src/features/business/clients/application/dto/create-client.dto.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/dto cat > src/features/business/clients/application/dto/create-client.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'; import {   IsEmail,   IsNotEmpty,   IsOptional,   IsString,   MaxLength,   MinLength, } from 'class-validator';  export class CreateClientDto {   @ApiProperty({ example: 'Juan Pérez' })   @IsString()   @IsNotEmpty()   @MaxLength(150)   name: string;    @ApiPropertyOptional({ example: 'Calle Principal 123' })   @IsOptional()   @IsString()   @MaxLength(255)   address?: string;    @ApiPropertyOptional({ example: '+57 300 1234567' })   @IsOptional()   @IsString()   @MaxLength(30)   phone?: string;    @ApiPropertyOptional({ example: 'juan.perez@example.com' })   @IsOptional()   @IsEmail()   @MaxLength(150)   email?: string;    @ApiPropertyOptional({ example: 'password123' })   @IsOptional()   @IsString()   @MinLength(6)   @MaxLength(255)   password?: string; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add dto create-client.dto.ts"
+```
+
+#### 7.14 — features/business/clients/application/dto/update-client.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+**Archivo:** `src/features/business/clients/application/dto/update-client.dto.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/dto cat > src/features/business/clients/application/dto/update-client.dto.ts <<'EOF_BACKEND_IA' import { PartialType } from '@nestjs/mapped-types'; import { CreateClientDto } from './create-client.dto';  export class UpdateClientDto extends PartialType(CreateClientDto) {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add dto update-client.dto.ts"
+```
+
+#### 7.15 — features/business/clients/application/mappers/client.mapper.ts
+
+Mapper entre entidad de dominio y DTO de respuesta.
+
+**Archivo:** `src/features/business/clients/application/mappers/client.mapper.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/mappers cat > src/features/business/clients/application/mappers/client.mapper.ts <<'EOF_BACKEND_IA' import { Status } from '../../../../../common/enums/status.enum'; import { Client } from '../../domain/entities/client.entity'; import { ClientResponseDto } from '../dto/client-response.dto'; import { ClientModel } from '../../infrastructure/persistence/models/client.model';  export class ClientMapper {   static toDomain(model: ClientModel): Client {     return Client.reconstitute({       id: model.id,       name: model.name,       address: model.address ?? undefined,       phone: model.phone ?? undefined,       email: model.email ?? undefined,       password: model.password ?? undefined,       status: model.status,       createdAt: model.createdAt,       updatedAt: model.updatedAt,     });   }    static toResponse(entity: Client): ClientResponseDto {     return {       id: entity.id!,       name: entity.name,       address: entity.address,       phone: entity.phone,       email: entity.email,       status: entity.status,       createdAt: entity.createdAt!,       updatedAt: entity.updatedAt!,     };   }    static toPersistence(entity: Client): Partial<ClientModel> {     return {       id: entity.id,       name: entity.name,       address: entity.address ?? null,       phone: entity.phone ?? null,       email: entity.email ?? null,       password: entity.password ?? null,       status: entity.status ?? Status.ACTIVE,     };   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add mapper client.mapper.ts"
+```
+
+#### 7.16 — features/business/clients/application/use-cases/create-client.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/clients/application/use-cases/create-client.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/create-client.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   type IPasswordHasher,   PASSWORD_HASHER, } from '../../../../../infrastructure/security/hashing/password-hasher.interface'; import { ClientEmailAlreadyExistsException } from '../../domain/exceptions/client-email-already-exists.exception'; import { Client } from '../../domain/entities/client.entity'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface'; import { CreateClientDto } from '../dto/create-client.dto'; import { ClientMapper } from '../mappers/client.mapper';  @Injectable() export class CreateClientUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,     @Inject(PASSWORD_HASHER)     private readonly passwordHasher: IPasswordHasher,   ) {}    async execute(dto: CreateClientDto) {     if (dto.email) {       const existing = await this.clientRepository.findByEmail(dto.email);       if (existing) {         throw new ClientEmailAlreadyExistsException(dto.email);       }     }      let password = dto.password;     if (password) {       password = await this.passwordHasher.hash(password);     }      const client = Client.create({       name: dto.name,       address: dto.address,       phone: dto.phone,       email: dto.email,       password,     });      const created = await this.clientRepository.create(client);     return ClientMapper.toResponse(created);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case create-client.use-case.ts"
+```
+
+#### 7.17 — features/business/clients/application/use-cases/delete-client.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/clients/application/use-cases/delete-client.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/delete-client.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ClientNotFoundException } from '../../domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface';  @Injectable() export class DeleteClientUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,   ) {}    async execute(id: number): Promise<void> {     const client = await this.clientRepository.findById(id);     if (!client) {       throw new ClientNotFoundException(id);     }      await this.clientRepository.delete(id);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case delete-client.use-case.ts"
+```
+
+#### 7.18 — features/business/clients/application/use-cases/get-client.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/clients/application/use-cases/get-client.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/get-client.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ClientNotFoundException } from '../../domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface'; import { ClientMapper } from '../mappers/client.mapper';  @Injectable() export class GetClientUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,   ) {}    async execute(id: number) {     const client = await this.clientRepository.findById(id);     if (!client) {       throw new ClientNotFoundException(id);     }      return ClientMapper.toResponse(client);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case get-client.use-case.ts"
+```
+
+#### 7.19 — features/business/clients/application/use-cases/list-clients.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/clients/application/use-cases/list-clients.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/list-clients.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface'; import { ClientFilterDto } from '../dto/client-filter.dto'; import { ClientMapper } from '../mappers/client.mapper';  @Injectable() export class ListClientsUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,   ) {}    async execute(filter: ClientFilterDto) {     const result = await this.clientRepository.findAll(filter);     return {       items: result.items.map((client) => ClientMapper.toResponse(client)),       meta: result.meta,     };   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case list-clients.use-case.ts"
+```
+
+#### 7.20 — features/business/clients/application/use-cases/update-client.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/clients/application/use-cases/update-client.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/update-client.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   type IPasswordHasher,   PASSWORD_HASHER, } from '../../../../../infrastructure/security/hashing/password-hasher.interface'; import { ClientEmailAlreadyExistsException } from '../../domain/exceptions/client-email-already-exists.exception'; import { ClientNotFoundException } from '../../domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface'; import { UpdateClientDto } from '../dto/update-client.dto'; import { ClientMapper } from '../mappers/client.mapper';  @Injectable() export class UpdateClientUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,     @Inject(PASSWORD_HASHER)     private readonly passwordHasher: IPasswordHasher,   ) {}    async execute(id: number, dto: UpdateClientDto) {     const client = await this.clientRepository.findById(id);     if (!client) {       throw new ClientNotFoundException(id);     }      if (dto.email && dto.email !== client.email) {       const existing = await this.clientRepository.findByEmail(dto.email);       if (existing) {         throw new ClientEmailAlreadyExistsException(dto.email);       }     }      const updateData = { ...dto };     if (dto.password) {       updateData.password = await this.passwordHasher.hash(dto.password);     }      client.update(updateData);     const updated = await this.clientRepository.update(client);     return ClientMapper.toResponse(updated);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case update-client.use-case.ts"
+```
+
+#### 
 
 ## 
 
