@@ -886,15 +886,19 @@ git add .
 git commit -m "feat: add status.enum.ts"
 ```
 
+![](images/clipboard-398594375.png)
+
+Verificamos en Github
+
+![](images/clipboard-1485257192.png)
+
 #### 6.10 — common/enums/http-method.enum.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/enums/http-method.enum.ts`
 
-``` bash
-mkdir -p src/common/enums cat > src/common/enums/http-method.enum.ts <<'EOF_BACKEND_IA' export enum HttpMethod {   GET = 'GET',   POST = 'POST',   PUT = 'PUT',   PATCH = 'PATCH',   DELETE = 'DELETE', } EOF_BACKEND_IA
-```
+![](images/clipboard-1675141145.png)
 
 **Sugerencia de commit (issue):**
 
