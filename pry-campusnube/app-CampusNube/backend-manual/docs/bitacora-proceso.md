@@ -1432,13 +1432,19 @@ git add .
 git commit -m "feat: add date.util.ts"
 ```
 
+![](images/clipboard-916499666.png)
+
 Se verificó en Github
+
+![](images/clipboard-171781475.png)
 
 #### 6.36 — common/utils/string.util.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/utils/string.util.ts`¿
+
+![](images/clipboard-1565378425.png)
 
 **Sugerencia de commit (issue):**
 
