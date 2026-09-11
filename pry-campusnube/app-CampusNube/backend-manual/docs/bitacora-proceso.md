@@ -1453,13 +1453,19 @@ git add .
 git commit -m "feat: add string.util.ts"
 ```
 
+![](images/clipboard-796932751.png)
+
 Verificamos en Github
+
+![](images/clipboard-1738490990.png)
 
 #### 6.37 — infrastructure/security/hashing/password-hasher.interface.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/infrastructure/security/hashing/password-hasher.interface.ts`
+
+![](images/clipboard-1672936880.png)
 
 **Sugerencia de commit (issue):**
 
