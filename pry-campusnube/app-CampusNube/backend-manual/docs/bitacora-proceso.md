@@ -1995,27 +1995,39 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 
 ``` bash
 git add . 
-git commit -m "feat: add use case list-clients.use-case.ts"
+git commit -m "feat: add use case list-courses.use-case.ts"
 ```
+
+![](images/clipboard-975783086.png)
 
 Verificamos en Github
 
-#### 7.20 — features/business/clients/application/use-cases/update-client.use-case.ts
+![](images/clipboard-369416427.png)
+
+#### 7.20 — update-course.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-1240007897.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add use case update-client.use-case.ts"
+git commit -m "feat: add use case update-course.use-case.ts"
 ```
 
+![](images/clipboard-2515358713.png)
+
 Verficamos en Github
+
+![](images/clipboard-1829711456.png)
 
 #### 7.21 — Course.serializer.ts
 
 Serializer de presentación (forma estable de la respuesta HTTP).
+
+![](images/clipboard-2239627157.png)
 
 **Sugerencia de commit (issue):**
 
