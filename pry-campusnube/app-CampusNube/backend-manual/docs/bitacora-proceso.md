@@ -865,20 +865,25 @@ git add .
 git commit -m "feat: add swagger.config.ts"
 ```
 
+![](images/clipboard-2556245500.png)
+
+Verificamos en Ghitub
+
+![](images/clipboard-3173562869.png)
+
 #### 6.9 — common/enums/status.enum.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/enums/status.enum.ts`
 
-``` bash
-mkdir -p src/common/enums cat > src/common/enums/status.enum.ts <<'EOF_BACKEND_IA' export enum Status {   ACTIVE = 'ACTIVE',   INACTIVE = 'INACTIVE', } EOF_BACKEND_IA
-```
+![](images/clipboard-735218179.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add status.enum.ts"
+git add . 
+git commit -m "feat: add status.enum.ts"
 ```
 
 #### 6.10 — common/enums/http-method.enum.ts
