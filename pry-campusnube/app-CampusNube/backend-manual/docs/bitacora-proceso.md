@@ -1159,13 +1159,19 @@ git add .
 git commit -m "feat: add timeout.interceptor.ts"
 ```
 
+![](images/clipboard-222877493.png)
+
 Verificamos en Github
+
+![](images/clipboard-3888839245.png)
 
 #### 6.23 — common/pipes/validation.pipe.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/pipes/validation.pipe.ts`
+
+![](images/clipboard-4109774225.png)
 
 **Sugerencia de commit (issue):**
 
