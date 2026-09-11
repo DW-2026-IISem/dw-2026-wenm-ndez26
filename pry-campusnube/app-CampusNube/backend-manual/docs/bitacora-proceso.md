@@ -1539,13 +1539,19 @@ git add .
 git commit -m "feat: add token.service.ts"
 ```
 
+![](images/clipboard-490750481.png)
+
 Se verificó en Github
+
+![](images/clipboard-2665161268.png)
 
 #### 6.41 — infrastructure/security/security.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
 
 **Archivo:** `src/infrastructure/security/security.module.ts`
+
+![](images/clipboard-1288504716.png)
 
 **Sugerencia de commit (issue):**
 
@@ -1554,13 +1560,21 @@ git add .
 git commit -m "feat: wire nest module security.module.ts"
 ```
 
+![](images/clipboard-3712680706.png)
+
 Se verificó en Github
+
+![](images/clipboard-552638182.png)
 
 #### 6.42 — Actualizar main.ts (bootstrap completo)
 
 Prefix global, filters, interceptors, pipes, Swagger y manejo amigable de EADDRINUSE.
 
 **Archivo:** `src/main.ts`
+
+![](images/clipboard-2394112310.png)
+
+![](images/clipboard-496215501.png)
 
 **Sugerencia de commit (issue):**
 
