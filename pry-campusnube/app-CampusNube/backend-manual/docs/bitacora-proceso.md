@@ -1117,13 +1117,19 @@ git add .
 git commit -m "feat: add response.interceptor.ts"
 ```
 
+![](images/clipboard-2654450952.png)
+
 Verificamos en Github
+
+![](images/clipboard-2005024850.png)
 
 #### 6.21 — common/interceptors/logging.interceptor.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interceptors/logging.interceptor.ts`
+
+![](images/clipboard-33823184.png)
 
 **Sugerencia de commit (issue):**
 
@@ -1132,7 +1138,11 @@ git add .
 git commit -m "feat: add logging.interceptor.ts"
 ```
 
+![](images/clipboard-1656535576.png)
+
 Verificamos en Github
+
+![](images/clipboard-1316247177.png)
 
 #### 6.22 — common/interceptors/timeout.interceptor.ts
 
@@ -1140,12 +1150,16 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interceptors/timeout.interceptor.ts`
 
+![](images/clipboard-3036777617.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add 
-. git commit -m "feat: add timeout.interceptor.ts"
+git add .
+git commit -m "feat: add timeout.interceptor.ts"
 ```
+
+Verificamos en Github
 
 #### 6.23 — common/pipes/validation.pipe.ts
 
@@ -1153,15 +1167,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/pipes/validation.pipe.ts`
 
-``` bash
-mkdir -p src/common/pipes cat > src/common/pipes/validation.pipe.ts <<'EOF_BACKEND_IA' import {   PipeTransform,   Injectable,   ArgumentMetadata,   BadRequestException, } from '@nestjs/common'; import { validate } from 'class-validator'; import { plainToInstance } from 'class-transformer';  @Injectable() export class CustomValidationPipe implements PipeTransform<any> {   async transform(value: any, { metatype }: ArgumentMetadata) {     if (!metatype || !this.toValidate(metatype)) {       return value;     }      const object = plainToInstance(metatype, value);     const errors = await validate(object);      if (errors.length > 0) {       const messages = errors.map(         (err) =>           `${err.property}: ${Object.values(err.constraints || {}).join(', ')}`,       );       throw new BadRequestException(messages);     }      return object;   }    private toValidate(metatype: any): boolean {     const types = [String, Boolean, Number, Array, Object];     return !types.includes(metatype);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add validation.pipe.ts"
+git add .
+git commit -m "feat: add validation.pipe.ts"
 ```
+
+Verificamos en Github
 
 #### 6.24 — common/pipes/parse-positive-int.pipe.ts
 
@@ -1169,15 +1182,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/pipes/parse-positive-int.pipe.ts`
 
-``` bash
-mkdir -p src/common/pipes cat > src/common/pipes/parse-positive-int.pipe.ts <<'EOF_BACKEND_IA' import {   PipeTransform,   Injectable,   BadRequestException, } from '@nestjs/common';  @Injectable() export class ParsePositiveIntPipe implements PipeTransform<string, number> {   transform(value: string): number {     const parsed = parseInt(value, 10);      if (isNaN(parsed) || parsed <= 0) {       throw new BadRequestException(         `El valor '${value}' no es un entero positivo`,       );     }      return parsed;   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add parse-positive-int.pipe.ts"
+git add . 
+git commit -m "feat: add parse-positive-int.pipe.ts"
 ```
+
+Verificamos en Github
 
 #### 6.25 — common/decorators/public.decorator.ts
 
@@ -1185,15 +1197,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/decorators/public.decorator.ts`
 
-``` bash
-mkdir -p src/common/decorators cat > src/common/decorators/public.decorator.ts <<'EOF_BACKEND_IA' import { SetMetadata } from '@nestjs/common';  export const IS_PUBLIC_KEY = 'isPublic'; export const Public = () => SetMetadata(IS_PUBLIC_KEY, true); EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add public.decorator.ts"
+git add . 
+git commit -m "feat: add public.decorator.ts"
 ```
+
+Verificamos en Github
 
 #### 6.26 — common/decorators/roles.decorator.ts
 
