@@ -2036,13 +2036,17 @@ git add .
 git commit -m "feat: add serializer course.serializer.ts"
 ```
 
+![](images/clipboard-3049130201.png)
+
 Verificamos en Github
+
+![](images/clipboard-3990477741.png)
 
 #### 7.22 — courses.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
-**Archivo:** `src/features/business/clients/presentation/http/controllers/clients.controller.ts`
+![](images/clipboard-3787678343.png)
 
 **Sugerencia de commit (issue):**
 
@@ -2051,53 +2055,50 @@ git add .
 git commit -m "feat: add controller courses.controller.ts"
 ```
 
-#### 7.23 — features/business/clients/index.ts
+![](images/clipboard-2951277148.png)
+
+Verficamos en Github
+
+![](images/clipboard-1814593610.png)
+
+#### 7.23 — courses/index.ts
 
 Barrel export del feature para imports limpios.
 
-**Archivo:** `src/features/business/clients/index.ts`
-
-``` bash
-mkdir -p src/features/business/clients cat > src/features/business/clients/index.ts <<'EOF_BACKEND_IA' export { ClientsModule } from './clients.module'; EOF_BACKEND_IA
-```
+![](images/clipboard-3429921026.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add barrel export clients"
+git add . 
+git commit -m "chore: add barrel export courses"
 ```
+
+Verficamos en Github
 
 #### 7.24 — features/business/clients/clients.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
 
-**Archivo:** `src/features/business/clients/clients.module.ts`
-
-``` bash
-mkdir -p src/features/business/clients cat > src/features/business/clients/clients.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { BcryptPasswordHasherService } from '../../../infrastructure/security/hashing/bcrypt-password-hasher.service'; import { PASSWORD_HASHER } from '../../../infrastructure/security/hashing/password-hasher.interface'; import { CLIENT_REPOSITORY } from './domain/interfaces/client-repository.interface'; import { ClientRepository } from './infrastructure/persistence/repositories/client.repository'; import { CreateClientUseCase } from './application/use-cases/create-client.use-case'; import { UpdateClientUseCase } from './application/use-cases/update-client.use-case'; import { DeleteClientUseCase } from './application/use-cases/delete-client.use-case'; import { GetClientUseCase } from './application/use-cases/get-client.use-case'; import { ListClientsUseCase } from './application/use-cases/list-clients.use-case'; import { ClientsController } from './presentation/http/controllers/clients.controller';  @Module({   controllers: [ClientsController],   providers: [     ClientRepository,     { provide: CLIENT_REPOSITORY, useExisting: ClientRepository },     BcryptPasswordHasherService,     { provide: PASSWORD_HASHER, useExisting: BcryptPasswordHasherService },     CreateClientUseCase,     UpdateClientUseCase,     DeleteClientUseCase,     GetClientUseCase,     ListClientsUseCase,   ],   exports: [CLIENT_REPOSITORY], }) export class ClientsModule {} EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire nest module clients.module.ts"
+git add . 
+git commit -m "feat: wire nest module courses.module.ts"
 ```
 
 #### 7.25 — Actualizar sequelize.factory.ts (registrar modelos)
 
 Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-**Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
-
-``` bash
-mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.factory.ts <<'EOF_BACKEND_IA' import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { getSequelizeOptions } from './sequelize.options';  import { ClientModel } from '../../../features/business/clients/infrastructure/persistence/models/client.model';  export const ALL_MODELS = [   ClientModel, ];  export async function createSequelizeInstance(   dialect: DatabaseDialect, ): Promise<Sequelize> {   const options = getSequelizeOptions(dialect);    let dialectModule: any;    switch (dialect) {     case DatabaseDialect.MySQL:       dialectModule = require('mysql2');       break;     case DatabaseDialect.Postgres:       dialectModule = require('pg');       break;     case DatabaseDialect.MSSQL:       dialectModule = require('tedious');       break;     case DatabaseDialect.Oracle:       dialectModule = require('oracledb');       break;     default:       throw new Error(`Dialecto no soportado: ${dialect}`);   }    const sequelize = new Sequelize({     ...options,     dialectModule,     models: ALL_MODELS,   } as any);    try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);   } catch (error: any) {     console.error(       `❌ Error conectando a ${dialect.toUpperCase()}:`,       error.message,     );     throw error;   }    if (process.env.NODE_ENV !== 'production') {     await sequelize.sync({ alter: false });     console.log('✅ Tablas sincronizadas');   }    return sequelize; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: register ClientModel in sequelize factory"
+git add .
+git commit -m "feat: register CourseModel in sequelize factory"
 ```
+
+Verificamos en Github
 
 #### 7.26 — Actualizar business.module.ts
 
