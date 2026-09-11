@@ -1649,24 +1649,29 @@ Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven
 
 ``` bash
 git add . 
-git commit -m "feat: add domain entity client.entity.ts"
+git commit -m "feat: add domain entity course.entity.ts"
 ```
 
-#### 7.2 — features/business/clients/domain/exceptions/client-email-already-exists.exception.ts
+![](images/clipboard-2207989503.png)
+
+Verificamos en Github
+
+![](images/clipboard-2729746398.png)
+
+#### 7.2 — features/business/courses/domain/exceptions/course-email-already-exists.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-**Archivo:** `src/features/business/clients/domain/exceptions/client-email-already-exists.exception.ts`
-
-``` bash
-mkdir -p src/features/business/clients/domain/exceptions cat > src/features/business/clients/domain/exceptions/client-email-already-exists.exception.ts <<'EOF_BACKEND_IA' import { DomainException } from '../../../../../common/exceptions/domain.exception';  export class ClientEmailAlreadyExistsException extends DomainException {   constructor(email: string) {     super(`El email '${email}' ya está registrado`);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-2534191220.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception client-email-already-exists.exception.ts"
+git add . 
+git commit -m "feat: add domain exception client-email-already-exists.exception.ts"
 ```
+
+Verificamos en Github
 
 #### 7.3 — features/business/clients/domain/exceptions/client-not-found.exception.ts
 
