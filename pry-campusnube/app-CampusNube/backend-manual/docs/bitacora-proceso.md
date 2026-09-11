@@ -1285,13 +1285,19 @@ git add .
 git commit -m "feat: add resource.decorator.ts"
 ```
 
+![](images/clipboard-2709924808.png)
+
 Verificamos en Github
+
+![](images/clipboard-2781890254.png)
 
 #### 6.29 — common/interfaces/authenticated-user.interface.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interfaces/authenticated-user.interface.ts`
+
+![](images/clipboard-3777900467.png)
 
 **Sugerencia de commit (issue):**
 
