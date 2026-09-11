@@ -1012,7 +1012,11 @@ git add .
 git commit -m "feat: add domain.exception.ts"
 ```
 
+![](images/clipboard-3612606435.png)
+
 Verificamos con Github
+
+![](images/clipboard-1642691339.png)
 
 #### 6.16 — common/exceptions/entity-not-found.exception.ts
 
@@ -1020,15 +1024,16 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/exceptions/entity-not-found.exception.ts`
 
-``` bash
-mkdir -p src/common/exceptions cat > src/common/exceptions/entity-not-found.exception.ts <<'EOF_BACKEND_IA' import { ApplicationException } from './application.exception';  export class EntityNotFoundException extends ApplicationException {   constructor(entityName: string, identifier: string | number) {     super(`${entityName} con ID ${identifier} no encontrado`, 404);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-561050270.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add entity-not-found.exception.ts"
+git add .
+git commit -m "feat: add entity-not-found.exception.ts"
 ```
+
+Verificamos en Github
 
 #### 6.17 — common/exceptions/validation.exception.ts
 
@@ -1036,15 +1041,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/exceptions/validation.exception.ts`
 
-``` bash
-mkdir -p src/common/exceptions cat > src/common/exceptions/validation.exception.ts <<'EOF_BACKEND_IA' import { ApplicationException } from './application.exception';  export class ValidationException extends ApplicationException {   constructor(message: string = 'Error de validación') {     super(message, 422);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add validation.exception.ts"
+git add .
+git commit -m "feat: add validation.exception.ts"
 ```
+
+Verificar en Github
 
 #### 6.18 — common/filters/global-exception.filter.ts
 
