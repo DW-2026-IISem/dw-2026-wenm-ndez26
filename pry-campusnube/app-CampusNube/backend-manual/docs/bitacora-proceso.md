@@ -760,21 +760,32 @@ git add .
 git commit -m "feat: add logger.config.ts"
 ```
 
+![](images/clipboard-237023111.png)
+
+Verificamos en Github
+
+![](images/clipboard-1773170203.png)
+
 #### 6.4 — config/logger/logger.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
 
 **Archivo:** `src/config/logger/logger.module.ts`
 
-``` bash
-mkdir -p src/config/logger cat > src/config/logger/logger.module.ts <<'EOF_BACKEND_IA' import { Module, Global, Logger } from '@nestjs/common';  @Global() @Module({   providers: [Logger],   exports: [Logger], }) export class LoggerModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-1856056513.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire nest module logger.module.ts"
+git add . 
+git commit -m "feat: wire nest module logger.module.ts"
 ```
+
+![](images/clipboard-2900901802.png)
+
+Verficamos en Github
+
+![](images/clipboard-2071533306.png)
 
 #### 6.5 — config/jwt/jwt.constants.ts
 
@@ -782,15 +793,20 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/config/jwt/jwt.constants.ts`
 
-``` bash
-mkdir -p src/config/jwt cat > src/config/jwt/jwt.constants.ts <<'EOF_BACKEND_IA' export const JWT_CONFIG_NAME = 'jwt';  export const JWT_DEFAULTS = {   EXPIRES_IN: '1d',   REFRESH_EXPIRES_IN: '7d', }; EOF_BACKEND_IA
-```
+![](images/clipboard-2453647593.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add jwt.constants.ts"
+git add .
+git commit -m "feat: add jwt.constants.ts"
 ```
+
+![](images/clipboard-292292539.png)
+
+Verificamos Github
+
+![](images/clipboard-2480430459.png)
 
 #### 6.6 — config/jwt/jwt.config.ts
 
@@ -798,15 +814,20 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/config/jwt/jwt.config.ts`
 
-``` bash
-mkdir -p src/config/jwt cat > src/config/jwt/jwt.config.ts <<'EOF_BACKEND_IA' import { registerAs } from '@nestjs/config'; import { JWT_CONFIG_NAME, JWT_DEFAULTS } from './jwt.constants';  export const jwtConfig = registerAs(JWT_CONFIG_NAME, () => ({   secret: process.env.JWT_SECRET || '',   expiresIn: process.env.JWT_EXPIRES_IN || JWT_DEFAULTS.EXPIRES_IN,   refreshSecret: process.env.JWT_REFRESH_SECRET || '',   refreshExpiresIn:     process.env.JWT_REFRESH_EXPIRES_IN || JWT_DEFAULTS.REFRESH_EXPIRES_IN, })); EOF_BACKEND_IA
-```
+![](images/clipboard-3269858430.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add jwt.config.ts"
+git add . 
+git commit -m "feat: add jwt.config.ts"
 ```
+
+![](images/clipboard-4048400864.png)
+
+Verificamos en Github
+
+![](images/clipboard-3318526835.png)
 
 #### 6.7 — config/swagger/swagger.constants.ts
 
@@ -814,14 +835,13 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/config/swagger/swagger.constants.ts`
 
-``` bash
-mkdir -p src/config/swagger cat > src/config/swagger/swagger.constants.ts <<'EOF_BACKEND_IA' export const SWAGGER_TITLE = 'Backend NestJS + Sequelize API'; export const SWAGGER_DESCRIPTION =   'API profesional con Clean Architecture / DDD, JWT y RBAC'; export const SWAGGER_VERSION = '1.0'; export const SWAGGER_PATH = 'api/docs'; EOF_BACKEND_IA
-```
+![](images/clipboard-2202211041.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add swagger.constants.ts"
+git add .
+git commit -m "feat: add swagger.constants.ts"
 ```
 
 #### 6.8 — config/swagger/swagger.config.ts
