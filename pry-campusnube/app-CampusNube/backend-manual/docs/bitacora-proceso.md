@@ -1201,13 +1201,19 @@ git add .
 git commit -m "feat: add parse-positive-int.pipe.ts"
 ```
 
+![](images/clipboard-3418214076.png)
+
 Verificamos en Github
+
+![](images/clipboard-1926906940.png)
 
 #### 6.25 — common/decorators/public.decorator.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/decorators/public.decorator.ts`
+
+![](images/clipboard-1441355997.png)
 
 **Sugerencia de commit (issue):**
 
