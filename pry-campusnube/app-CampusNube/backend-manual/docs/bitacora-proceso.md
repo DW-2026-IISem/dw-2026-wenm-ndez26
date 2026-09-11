@@ -1843,25 +1843,26 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
 ``` bash
 git add . 
-git commit -m "feat: add dto client-filter.dto.ts"
+git commit -m "feat: add dto course-filter.dto.ts"
 ```
 
-Verificamos en Github
+![](images/clipboard-1141417486.png)
+
+Verificar en github
+
+![](images/clipboard-838827318.png)
 
 #### 7.12 — course-response.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/clients/application/dto/client-response.dto.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/dto cat > src/features/business/clients/application/dto/client-response.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'; import { Status } from '../../../../../common/enums/status.enum';  export class ClientResponseDto {   @ApiProperty({ example: 1 })   id: number;    @ApiProperty({ example: 'Juan Pérez' })   name: string;    @ApiPropertyOptional({ example: 'Calle Principal 123' })   address?: string;    @ApiPropertyOptional({ example: '+57 300 1234567' })   phone?: string;    @ApiPropertyOptional({ example: 'juan.perez@example.com' })   email?: string;    @ApiProperty({ enum: Status, example: Status.ACTIVE })   status: Status;    @ApiProperty()   createdAt: Date;    @ApiProperty()   updatedAt: Date; } EOF_BACKEND_IA
-```
+![](images/clipboard-685106936.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto client-response.dto.ts"
+git add . 
+git commit -m "feat: add dto client-response.dto.ts"
 ```
 
 #### 7.13 — create-course.dto.ts
@@ -1877,20 +1878,15 @@ git commit -m "feat: add dto create-client.dto.ts"
 
 Verificamos en Github
 
-#### 7.14 — features/business/clients/application/dto/update-client.dto.ts
+#### 7.14 — update-course.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
-
-**Archivo:** `src/features/business/clients/application/dto/update-client.dto.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/dto cat > src/features/business/clients/application/dto/update-client.dto.ts <<'EOF_BACKEND_IA' import { PartialType } from '@nestjs/mapped-types'; import { CreateClientDto } from './create-client.dto';  export class UpdateClientDto extends PartialType(CreateClientDto) {} EOF_BACKEND_IA
-```
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto update-client.dto.ts"
+git add . 
+git commit -m "feat: add dto update-client.dto.ts"
 ```
 
 #### 7.15 — features/business/clients/application/mappers/client.mapper.ts
