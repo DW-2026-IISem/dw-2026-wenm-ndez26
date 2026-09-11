@@ -1881,27 +1881,39 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
 ``` bash
 git add . 
-git commit -m "feat: add dto create-client.dto.ts"
+git commit -m "feat: add dto course-create.dto.ts"
 ```
 
+![](images/clipboard-2217397064.png)
+
 Verificamos en Github
+
+![](images/clipboard-1100291139.png)
 
 #### 7.14 — update-course.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
+![](images/clipboard-2138110224.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add dto update-client.dto.ts"
+git commit -m "feat: add dto course-update.dto.ts"
 ```
 
+![](images/clipboard-1482834958.png)
+
 Verificamos en Github
+
+![](images/clipboard-1080601658.png)
 
 #### 7.15 — course.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
+
+![](images/clipboard-3090479312.png)
 
 **Sugerencia de commit (issue):**
 
