@@ -1976,14 +1976,20 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 
 ``` bash
 git add . 
-git commit -m "feat: add use case get-client.use-case.ts"
+git commit -m "feat: add use case get-course.use-case.ts"
 ```
 
+![](images/clipboard-181074642.png)
+
 Verificamos en Github
+
+![](images/clipboard-2783424423.png)
 
 #### 7.19 — List-clients.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-1583008270.png)
 
 **Sugerencia de commit (issue):**
 
@@ -2006,3 +2012,143 @@ git commit -m "feat: add use case update-client.use-case.ts"
 ```
 
 Verficamos en Github
+
+#### 7.21 — Course.serializer.ts
+
+Serializer de presentación (forma estable de la respuesta HTTP).
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add serializer course.serializer.ts"
+```
+
+Verificamos en Github
+
+#### 7.22 — courses.controller.ts
+
+Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+**Archivo:** `src/features/business/clients/presentation/http/controllers/clients.controller.ts`
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add controller courses.controller.ts"
+```
+
+#### 7.23 — features/business/clients/index.ts
+
+Barrel export del feature para imports limpios.
+
+**Archivo:** `src/features/business/clients/index.ts`
+
+``` bash
+mkdir -p src/features/business/clients cat > src/features/business/clients/index.ts <<'EOF_BACKEND_IA' export { ClientsModule } from './clients.module'; EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: add barrel export clients"
+```
+
+#### 7.24 — features/business/clients/clients.module.ts
+
+Módulo Nest del feature: cablea providers, tokens DI y controller.
+
+**Archivo:** `src/features/business/clients/clients.module.ts`
+
+``` bash
+mkdir -p src/features/business/clients cat > src/features/business/clients/clients.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { BcryptPasswordHasherService } from '../../../infrastructure/security/hashing/bcrypt-password-hasher.service'; import { PASSWORD_HASHER } from '../../../infrastructure/security/hashing/password-hasher.interface'; import { CLIENT_REPOSITORY } from './domain/interfaces/client-repository.interface'; import { ClientRepository } from './infrastructure/persistence/repositories/client.repository'; import { CreateClientUseCase } from './application/use-cases/create-client.use-case'; import { UpdateClientUseCase } from './application/use-cases/update-client.use-case'; import { DeleteClientUseCase } from './application/use-cases/delete-client.use-case'; import { GetClientUseCase } from './application/use-cases/get-client.use-case'; import { ListClientsUseCase } from './application/use-cases/list-clients.use-case'; import { ClientsController } from './presentation/http/controllers/clients.controller';  @Module({   controllers: [ClientsController],   providers: [     ClientRepository,     { provide: CLIENT_REPOSITORY, useExisting: ClientRepository },     BcryptPasswordHasherService,     { provide: PASSWORD_HASHER, useExisting: BcryptPasswordHasherService },     CreateClientUseCase,     UpdateClientUseCase,     DeleteClientUseCase,     GetClientUseCase,     ListClientsUseCase,   ],   exports: [CLIENT_REPOSITORY], }) export class ClientsModule {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: wire nest module clients.module.ts"
+```
+
+#### 7.25 — Actualizar sequelize.factory.ts (registrar modelos)
+
+Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+**Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
+
+``` bash
+mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.factory.ts <<'EOF_BACKEND_IA' import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { getSequelizeOptions } from './sequelize.options';  import { ClientModel } from '../../../features/business/clients/infrastructure/persistence/models/client.model';  export const ALL_MODELS = [   ClientModel, ];  export async function createSequelizeInstance(   dialect: DatabaseDialect, ): Promise<Sequelize> {   const options = getSequelizeOptions(dialect);    let dialectModule: any;    switch (dialect) {     case DatabaseDialect.MySQL:       dialectModule = require('mysql2');       break;     case DatabaseDialect.Postgres:       dialectModule = require('pg');       break;     case DatabaseDialect.MSSQL:       dialectModule = require('tedious');       break;     case DatabaseDialect.Oracle:       dialectModule = require('oracledb');       break;     default:       throw new Error(`Dialecto no soportado: ${dialect}`);   }    const sequelize = new Sequelize({     ...options,     dialectModule,     models: ALL_MODELS,   } as any);    try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);   } catch (error: any) {     console.error(       `❌ Error conectando a ${dialect.toUpperCase()}:`,       error.message,     );     throw error;   }    if (process.env.NODE_ENV !== 'production') {     await sequelize.sync({ alter: false });     console.log('✅ Tablas sincronizadas');   }    return sequelize; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: register ClientModel in sequelize factory"
+```
+
+#### 7.26 — Actualizar business.module.ts
+
+Agrega el feature module de negocio recién terminado.
+
+**Archivo:** `src/features/business/business.module.ts`
+
+``` bash
+mkdir -p src/features/business cat > src/features/business/business.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ClientsModule } from './clients/clients.module';  @Module({   imports: [ClientsModule],   exports: [ClientsModule], }) export class BusinessModule {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: export ClientsModule from BusinessModule"
+```
+
+#### 7.27 — Actualizar database-seeder.service.ts
+
+Ejecuta seeders en orden de dependencias al arrancar (dev).
+
+**Archivo:** `src/infrastructure/database/seeders/database-seeder.service.ts`
+
+``` bash
+mkdir -p src/infrastructure/database/seeders cat > src/infrastructure/database/seeders/database-seeder.service.ts <<'EOF_BACKEND_IA' import { Injectable, Logger, OnModuleInit } from '@nestjs/common'; import { seedClients } from '../../../features/business/clients/infrastructure/persistence/seeders/clients.seeder';  /**  * Ejecuta seeders en orden de dependencias.  * Solo en entornos no productivos.  */ @Injectable() export class DatabaseSeederService implements OnModuleInit {   private readonly logger = new Logger(DatabaseSeederService.name);    async onModuleInit(): Promise<void> {     if (process.env.NODE_ENV === 'production') {       return;     }      try {       await seedClients();       this.logger.log('✅ Seeders ejecutados');     } catch (error: any) {       this.logger.error(`❌ Error en seeders: ${error.message}`, error.stack);       throw error;     }   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: run seedClients on bootstrap"
+```
+
+#### 7.28 — Actualizar app.module.ts
+
+Importa BusinessModule y/o AuthModule según el avance. Los guards globales llegan en la fase RBAC.
+
+**Archivo:** `src/app.module.ts`
+
+``` bash
+mkdir -p src cat > src/app.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { envConfig } from './config/environment/env.config'; import { appConfig } from './config/app/app.config'; import { jwtConfig } from './config/jwt/jwt.config'; import { LoggerModule } from './config/logger/logger.module'; import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/sequelize.module'; import { SecurityModule } from './infrastructure/security/security.module'; import { BusinessModule } from './features/business/business.module'; import { AppController } from './app.controller'; import { AppService } from './app.service';  @Module({   imports: [     ConfigModule.forRoot({       isGlobal: true,       load: [envConfig, appConfig, jwtConfig],       envFilePath: '.env',     }),     SequelizeDatabaseModule,     SecurityModule,     LoggerModule,     BusinessModule,   ],   controllers: [AppController],   providers: [     AppService,   ], }) export class AppModule {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: import BusinessModule into AppModule"
+```
+
+#### 7.29 — Verificar tabla física `clients` y API
+
+Arranca la app. Debe crear/sync tabla `clients`, correr seeder y exponer `/api/clients`. Prueba list/create en Swagger o curl.
+
+``` bash
+npm run start:dev
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "test: verify clients table and crud endpoints"
+```
+
+------------------------------------------------------------------------
+
+## 
