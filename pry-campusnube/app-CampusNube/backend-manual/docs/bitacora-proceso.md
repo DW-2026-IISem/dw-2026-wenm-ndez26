@@ -1075,13 +1075,19 @@ git add .
 git commit -m "feat: add global-exception.filter.ts"
 ```
 
+![](images/clipboard-1556505652.png)
+
 Verificamos en Github
+
+![](images/clipboard-3196154934.png)
 
 #### 6.19 — common/filters/sequelize-exception.filter.ts
 
 Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/filters/sequelize-exception.filter.ts`
+
+![](images/clipboard-1186664963.png)
 
 **Sugerencia de commit (issue):**
 
