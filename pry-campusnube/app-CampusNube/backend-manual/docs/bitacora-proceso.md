@@ -1862,12 +1862,20 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
 ``` bash
 git add . 
-git commit -m "feat: add dto client-response.dto.ts"
+git commit -m "feat: add dto course-response.dto.ts"
 ```
+
+![](images/clipboard-1861155961.png)
+
+Verificamos en Github
+
+![](images/clipboard-1497291592.png)
 
 #### 7.13 — create-course.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-1529303010.png)
 
 **Sugerencia de commit (issue):**
 
@@ -1889,21 +1897,20 @@ git add .
 git commit -m "feat: add dto update-client.dto.ts"
 ```
 
-#### 7.15 — features/business/clients/application/mappers/client.mapper.ts
+Verificamos en Github
+
+#### 7.15 — course.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
-
-**Archivo:** `src/features/business/clients/application/mappers/client.mapper.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/mappers cat > src/features/business/clients/application/mappers/client.mapper.ts <<'EOF_BACKEND_IA' import { Status } from '../../../../../common/enums/status.enum'; import { Client } from '../../domain/entities/client.entity'; import { ClientResponseDto } from '../dto/client-response.dto'; import { ClientModel } from '../../infrastructure/persistence/models/client.model';  export class ClientMapper {   static toDomain(model: ClientModel): Client {     return Client.reconstitute({       id: model.id,       name: model.name,       address: model.address ?? undefined,       phone: model.phone ?? undefined,       email: model.email ?? undefined,       password: model.password ?? undefined,       status: model.status,       createdAt: model.createdAt,       updatedAt: model.updatedAt,     });   }    static toResponse(entity: Client): ClientResponseDto {     return {       id: entity.id!,       name: entity.name,       address: entity.address,       phone: entity.phone,       email: entity.email,       status: entity.status,       createdAt: entity.createdAt!,       updatedAt: entity.updatedAt!,     };   }    static toPersistence(entity: Client): Partial<ClientModel> {     return {       id: entity.id,       name: entity.name,       address: entity.address ?? null,       phone: entity.phone ?? null,       email: entity.email ?? null,       password: entity.password ?? null,       status: entity.status ?? Status.ACTIVE,     };   } } EOF_BACKEND_IA
-```
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add mapper client.mapper.ts"
+git add .
+git commit -m "feat: add mapper client.mapper.ts"
 ```
+
+Verificamos en Github
 
 #### 7.16 — features/business/clients/application/use-cases/create-client.use-case.ts
 
