@@ -1054,7 +1054,11 @@ git add .
 git commit -m "feat: add validation.exception.ts"
 ```
 
+![](images/clipboard-135362351.png)
+
 Verificar en Github
+
+![](images/clipboard-407095430.png)
 
 #### 6.18 — common/filters/global-exception.filter.ts
 
@@ -1062,15 +1066,16 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/filters/global-exception.filter.ts`
 
-``` bash
-mkdir -p src/common/filters cat > src/common/filters/global-exception.filter.ts <<'EOF_BACKEND_IA' import {   ExceptionFilter,   Catch,   ArgumentsHost,   HttpException,   HttpStatus, } from '@nestjs/common'; import { Request, Response } from 'express'; import { ApplicationException } from '../exceptions/application.exception';  @Catch() export class GlobalExceptionFilter implements ExceptionFilter {   catch(exception: unknown, host: ArgumentsHost): void {     const ctx = host.switchToHttp();     const response = ctx.getResponse<Response>();     const request = ctx.getRequest<Request>();      let status = HttpStatus.INTERNAL_SERVER_ERROR;     let message: string | string[] = 'Error interno del servidor';      if (exception instanceof ApplicationException) {       status = exception.statusCode;       message = exception.message;     } else if (exception instanceof HttpException) {       status = exception.getStatus();       const res = exception.getResponse();       message = typeof res === 'string' ? res : (res as any).message;     }      response.status(status).json({       statusCode: status,       message,       timestamp: new Date().toISOString(),       path: request.url,     });   } } EOF_BACKEND_IA
-```
+![](images/clipboard-3084385529.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add global-exception.filter.ts"
+git add .
+git commit -m "feat: add global-exception.filter.ts"
 ```
+
+Verificamos en Github
 
 #### 6.19 — common/filters/sequelize-exception.filter.ts
 
@@ -1078,31 +1083,29 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/filters/sequelize-exception.filter.ts`
 
-``` bash
-mkdir -p src/common/filters cat > src/common/filters/sequelize-exception.filter.ts <<'EOF_BACKEND_IA' import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common'; import { Response } from 'express';  @Catch() export class SequelizeExceptionFilter implements ExceptionFilter {   catch(exception: any, host: ArgumentsHost): void {     const ctx = host.switchToHttp();     const response = ctx.getResponse<Response>();      const sequelizeErrors = [       'SequelizeUniqueConstraintError',       'SequelizeForeignKeyConstraintError',       'SequelizeConnectionError',       'SequelizeValidationError',       'SequelizeDatabaseError',     ];      if (!exception?.name || !sequelizeErrors.includes(exception.name)) {       throw exception;     }      let status = 500;     let message = 'Error de base de datos';      if (exception.name === 'SequelizeUniqueConstraintError') {       status = 409;       message = 'El recurso ya existe (violación de unicidad)';     } else if (exception.name === 'SequelizeForeignKeyConstraintError') {       status = 400;       message = 'Violación de clave foránea';     } else if (exception.name === 'SequelizeConnectionError') {       status = 503;       message = 'No se pudo conectar a la base de datos';     } else if (exception.name === 'SequelizeValidationError') {       status = 422;       message = exception.message || 'Error de validación en base de datos';     }      response.status(status).json({       statusCode: status,       message,       timestamp: new Date().toISOString(),     });   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize-exception.filter.ts"
+git add . 
+git commit -m "feat: add sequelize-exception.filter.ts"
 ```
+
+Verificamos en Github
 
 #### 6.20 — common/interceptors/response.interceptor.ts
 
 Archivo del feature en Clean Architecture.
 
-**Archivo:** `src/common/interceptors/response.interceptor.ts`
-
-``` bash
-mkdir -p src/common/interceptors cat > src/common/interceptors/response.interceptor.ts <<'EOF_BACKEND_IA' import {   Injectable,   NestInterceptor,   ExecutionContext,   CallHandler, } from '@nestjs/common'; import { Observable } from 'rxjs'; import { map } from 'rxjs/operators';  export interface ApiResponse<T> {   statusCode: number;   message: string;   data: T;   timestamp: string; }  @Injectable() export class ResponseInterceptor<T>   implements NestInterceptor<T, ApiResponse<T>> {   intercept(     context: ExecutionContext,     next: CallHandler,   ): Observable<ApiResponse<T>> {     const response = context.switchToHttp().getResponse();     const statusCode = response.statusCode;      return next.handle().pipe(       map((data) => ({         statusCode,         message: 'Operación exitosa',         data,         timestamp: new Date().toISOString(),       })),     );   } } EOF_BACKEND_IA
-```
+**Archivo:** `src/common/interceptors/response.interceptor.ts`¿
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add response.interceptor.ts"
+git add . 
+git commit -m "feat: add response.interceptor.ts"
 ```
+
+Verificamos en Github
 
 #### 6.21 — common/interceptors/logging.interceptor.ts
 
@@ -1110,15 +1113,14 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interceptors/logging.interceptor.ts`
 
-``` bash
-mkdir -p src/common/interceptors cat > src/common/interceptors/logging.interceptor.ts <<'EOF_BACKEND_IA' import {   Injectable,   NestInterceptor,   ExecutionContext,   CallHandler,   Logger, } from '@nestjs/common'; import { Observable } from 'rxjs'; import { tap } from 'rxjs/operators';  @Injectable() export class LoggingInterceptor implements NestInterceptor {   private readonly logger = new Logger('HTTP');    intercept(context: ExecutionContext, next: CallHandler): Observable<any> {     const req = context.switchToHttp().getRequest();     const { method, url } = req;     const now = Date.now();      return next.handle().pipe(       tap(() => {         const res = context.switchToHttp().getResponse();         const delay = Date.now() - now;         this.logger.log(`${method} ${url} ${res.statusCode} - ${delay}ms`);       }),     );   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add logging.interceptor.ts"
+git add . 
+git commit -m "feat: add logging.interceptor.ts"
 ```
+
+Verificamos en Github
 
 #### 6.22 — common/interceptors/timeout.interceptor.ts
 
@@ -1126,14 +1128,11 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/interceptors/timeout.interceptor.ts`
 
-``` bash
-mkdir -p src/common/interceptors cat > src/common/interceptors/timeout.interceptor.ts <<'EOF_BACKEND_IA' import {   Injectable,   NestInterceptor,   ExecutionContext,   CallHandler,   RequestTimeoutException, } from '@nestjs/common'; import { Observable, throwError, TimeoutError } from 'rxjs'; import { catchError, timeout } from 'rxjs/operators';  @Injectable() export class TimeoutInterceptor implements NestInterceptor {   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {     return next.handle().pipe(       timeout(30000),       catchError((err) => {         if (err instanceof TimeoutError) {           return throwError(() => new RequestTimeoutException());         }         return throwError(() => err);       }),     );   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add timeout.interceptor.ts"
+git add 
+. git commit -m "feat: add timeout.interceptor.ts"
 ```
 
 #### 6.23 — common/pipes/validation.pipe.ts
