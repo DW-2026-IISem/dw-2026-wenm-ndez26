@@ -1749,11 +1749,15 @@ git add .
 git commit -m "feat: add domain validator course-description.validator.ts"
 ```
 
+![](images/clipboard-744772356.png)
+
 Verificamos en Github
 
-#### 7.7 — features/business/clients/infrastructure/persistence/models/client.model.ts
+![](images/clipboard-1705471064.png)
 
-Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
+#### 7.7 — Modelo Sequelize
+
+![](images/clipboard-3413830347.png)
 
 **Archivo:** `src/features/business/clients/infrastructure/persistence/models/client.model.ts`
 
