@@ -1583,13 +1583,21 @@ git add .
 git commit -m "feat: harden main.ts bootstrap with swagger and global pipes"
 ```
 
+![](images/clipboard-40916865.png)
+
 Se verificó en Github
+
+![](images/clipboard-2396666987.png)
 
 #### 6.43 — Actualizar app.module.ts (base sin features ni guards)
 
 Cablea Config + Sequelize + Security + Logger. Business/Auth y guards llegan en fases posteriores.
 
 **Archivo:** `src/app.module.ts`
+
+![](images/clipboard-3535158265.png)
+
+![](images/clipboard-2852822681.png)
 
 **Sugerencia de commit (issue):**
 
@@ -1598,7 +1606,11 @@ git add .
 git commit -m "feat: wire AppModule with config database security logger"
 ```
 
+![](images/clipboard-3952394356.png)
+
 Se verificó en Github
+
+![](images/clipboard-1986213562.png)
 
 #### 6.44 — Verificar bootstrap transversal
 
@@ -1607,6 +1619,10 @@ La app debe arrancar, mostrar Swagger en `/api/docs` y conectar a BD. Todavía n
 ``` bash
 npm run start:dev # Abre http://localhost:3002/api/docs # Ctrl+C
 ```
+
+![](images/clipboard-3865112499.png)
+
+![](images/clipboard-1082208095.png)
 
 **Sugerencia de commit (issue):**
 
