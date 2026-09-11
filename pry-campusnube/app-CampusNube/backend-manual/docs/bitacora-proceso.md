@@ -1919,93 +1919,78 @@ Mapper entre entidad de dominio y DTO de respuesta.
 
 ``` bash
 git add .
-git commit -m "feat: add mapper client.mapper.ts"
+git commit -m "feat: add mapper course.mapper.ts"
+```
+
+![](images/clipboard-2538749437.png)
+
+Verificamos en Github
+
+![](images/clipboard-2199841257.png)
+
+#### 7.16 — create-course.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-3105794817.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add use case create-course.use-case.ts""
 ```
 
 Verificamos en Github
 
-#### 7.16 — features/business/clients/application/use-cases/create-client.use-case.ts
+#### 7.17 — delete-course.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
-
-**Archivo:** `src/features/business/clients/application/use-cases/create-client.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/create-client.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   type IPasswordHasher,   PASSWORD_HASHER, } from '../../../../../infrastructure/security/hashing/password-hasher.interface'; import { ClientEmailAlreadyExistsException } from '../../domain/exceptions/client-email-already-exists.exception'; import { Client } from '../../domain/entities/client.entity'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface'; import { CreateClientDto } from '../dto/create-client.dto'; import { ClientMapper } from '../mappers/client.mapper';  @Injectable() export class CreateClientUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,     @Inject(PASSWORD_HASHER)     private readonly passwordHasher: IPasswordHasher,   ) {}    async execute(dto: CreateClientDto) {     if (dto.email) {       const existing = await this.clientRepository.findByEmail(dto.email);       if (existing) {         throw new ClientEmailAlreadyExistsException(dto.email);       }     }      let password = dto.password;     if (password) {       password = await this.passwordHasher.hash(password);     }      const client = Client.create({       name: dto.name,       address: dto.address,       phone: dto.phone,       email: dto.email,       password,     });      const created = await this.clientRepository.create(client);     return ClientMapper.toResponse(created);   } } EOF_BACKEND_IA
-```
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case create-client.use-case.ts"
+git add .
+git commit -m "feat: add use case delete-client.use-case.ts"
 ```
 
-#### 7.17 — features/business/clients/application/use-cases/delete-client.use-case.ts
+Verifcamos eb Github
+
+#### 7.18 — Get-course.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
-
-**Archivo:** `src/features/business/clients/application/use-cases/delete-client.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/delete-client.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ClientNotFoundException } from '../../domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface';  @Injectable() export class DeleteClientUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,   ) {}    async execute(id: number): Promise<void> {     const client = await this.clientRepository.findById(id);     if (!client) {       throw new ClientNotFoundException(id);     }      await this.clientRepository.delete(id);   } } EOF_BACKEND_IA
-```
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case delete-client.use-case.ts"
+git add . 
+git commit -m "feat: add use case get-client.use-case.ts"
 ```
 
-#### 7.18 — features/business/clients/application/use-cases/get-client.use-case.ts
+Verificamos en Github
+
+#### 7.19 — List-clients.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
-
-**Archivo:** `src/features/business/clients/application/use-cases/get-client.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/get-client.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ClientNotFoundException } from '../../domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface'; import { ClientMapper } from '../mappers/client.mapper';  @Injectable() export class GetClientUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,   ) {}    async execute(id: number) {     const client = await this.clientRepository.findById(id);     if (!client) {       throw new ClientNotFoundException(id);     }      return ClientMapper.toResponse(client);   } } EOF_BACKEND_IA
-```
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case get-client.use-case.ts"
+git add . 
+git commit -m "feat: add use case list-clients.use-case.ts"
 ```
 
-#### 7.19 — features/business/clients/application/use-cases/list-clients.use-case.ts
-
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
-
-**Archivo:** `src/features/business/clients/application/use-cases/list-clients.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/list-clients.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface'; import { ClientFilterDto } from '../dto/client-filter.dto'; import { ClientMapper } from '../mappers/client.mapper';  @Injectable() export class ListClientsUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,   ) {}    async execute(filter: ClientFilterDto) {     const result = await this.clientRepository.findAll(filter);     return {       items: result.items.map((client) => ClientMapper.toResponse(client)),       meta: result.meta,     };   } } EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "feat: add use case list-clients.use-case.ts"
-```
+Verificamos en Github
 
 #### 7.20 — features/business/clients/application/use-cases/update-client.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/business/clients/application/use-cases/update-client.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/clients/application/use-cases cat > src/features/business/clients/application/use-cases/update-client.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   type IPasswordHasher,   PASSWORD_HASHER, } from '../../../../../infrastructure/security/hashing/password-hasher.interface'; import { ClientEmailAlreadyExistsException } from '../../domain/exceptions/client-email-already-exists.exception'; import { ClientNotFoundException } from '../../domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../domain/interfaces/client-repository.interface'; import { UpdateClientDto } from '../dto/update-client.dto'; import { ClientMapper } from '../mappers/client.mapper';  @Injectable() export class UpdateClientUseCase {   constructor(     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,     @Inject(PASSWORD_HASHER)     private readonly passwordHasher: IPasswordHasher,   ) {}    async execute(id: number, dto: UpdateClientDto) {     const client = await this.clientRepository.findById(id);     if (!client) {       throw new ClientNotFoundException(id);     }      if (dto.email && dto.email !== client.email) {       const existing = await this.clientRepository.findByEmail(dto.email);       if (existing) {         throw new ClientEmailAlreadyExistsException(dto.email);       }     }      const updateData = { ...dto };     if (dto.password) {       updateData.password = await this.passwordHasher.hash(dto.password);     }      client.update(updateData);     const updated = await this.clientRepository.update(client);     return ClientMapper.toResponse(updated);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case update-client.use-case.ts"
+git add . 
+git commit -m "feat: add use case update-client.use-case.ts"
 ```
 
-#### 
-
-## 
-
-## 
+Verficamos en Github
