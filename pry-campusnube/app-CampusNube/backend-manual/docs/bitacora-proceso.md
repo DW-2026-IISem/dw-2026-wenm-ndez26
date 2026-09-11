@@ -903,8 +903,15 @@ Archivo del feature en Clean Architecture.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add http-method.enum.ts"
+git add .
+git commit -m "feat: add http-method.enum.ts"
 ```
+
+![](images/clipboard-216929513.png)
+
+Verificamos en Github
+
+![](images/clipboard-2987008073.png)
 
 #### 6.11 — common/enums/sort-order.enum.ts
 
@@ -912,14 +919,13 @@ Archivo del feature en Clean Architecture.
 
 **Archivo:** `src/common/enums/sort-order.enum.ts`
 
-``` bash
-mkdir -p src/common/enums cat > src/common/enums/sort-order.enum.ts <<'EOF_BACKEND_IA' export enum SortOrder {   ASC = 'ASC',   DESC = 'DESC', } EOF_BACKEND_IA
-```
+![](images/clipboard-3906864917.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sort-order.enum.ts"
+git add . 
+git commit -m "feat: add sort-order.enum.ts"
 ```
 
 #### 6.12 — common/constants/app.constants.ts
