@@ -1692,39 +1692,43 @@ git add .
 git commit -m "feat: add domain exception clien-not-found.exception.ts"
 ```
 
+![](images/clipboard-3960129143.png)
+
 Verificamos eh Github
 
-#### 7.4 — features/business/clients/domain/interfaces/client-repository.interface.ts
+![](images/clipboard-415491448.png)
+
+#### 7.4 — features/business/courses/domain/interfaces/course-repository.interface.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-**Archivo:** `src/features/business/clients/domain/interfaces/client-repository.interface.ts`
+**Archivo:** `src/features/business/courses/domain/interfaces/course-repository.interface.ts`
 
-``` bash
-mkdir -p src/features/business/clients/domain/interfaces cat > src/features/business/clients/domain/interfaces/client-repository.interface.ts <<'EOF_BACKEND_IA' import { PaginatedResult } from '../../../../../common/interfaces/pagination.interface'; import { Client } from '../entities/client.entity';  export const CLIENT_REPOSITORY = 'CLIENT_REPOSITORY';  export interface ClientFindAllParams {   page?: number;   limit?: number;   search?: string; }  export interface IClientRepository {   create(client: Client): Promise<Client>;   update(client: Client): Promise<Client>;   delete(id: number): Promise<void>;   findById(id: number): Promise<Client | null>;   findByEmail(email: string): Promise<Client | null>;   findAll(params: ClientFindAllParams): Promise<PaginatedResult<Client>>; } EOF_BACKEND_IA
-```
+![](images/clipboard-393142458.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add repository port client-repository.interface.ts"
+git add . 
+git commit -m "feat: add repository port client-repository.interface.ts"
 ```
 
-#### 7.5 — features/business/clients/domain/validators/client-email.validator.ts
+Verificamos en Github
+
+#### 7.5 — features/business/courses/domain/validators/course-email.validator.ts
 
 Validador de dominio reutilizable (reglas independientes del framework HTTP).
 
-**Archivo:** `src/features/business/clients/domain/validators/client-email.validator.ts`
-
-``` bash
-mkdir -p src/features/business/clients/domain/validators cat > src/features/business/clients/domain/validators/client-email.validator.ts <<'EOF_BACKEND_IA' export function isValidEmail(email: string): boolean {   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;   return emailRegex.test(email); } EOF_BACKEND_IA
-```
+**Archivo:** `src/features/business/courses/domain/validators/course-email.validator.ts`
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain validator client-email.validator.ts"
+git add . 
+git commit -m "feat: add domain validator client-email.validator.ts"
 ```
+
+Verificamos en Github
 
 #### 7.6 — features/business/clients/domain/validators/client-phone.validator.ts
 
