@@ -2900,7 +2900,7 @@ git commit -m "feat: add dto apprentice-response.dto.ts"
 
 ![](images/clipboard-3517586693.png)
 
-#### 9.15 — features/business/products/application/dto/update-product.dto.ts
+#### 9.15 —update-apprentice.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
@@ -2913,20 +2913,19 @@ git add .
 git commit -m "feat: add dto update-product.dto.ts"
 ```
 
-#### 9.16 — features/business/products/application/mappers/product.mapper.ts
+![](images/clipboard-1304883153.png)
+
+#### 9.16 — apprentice.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
-**Archivo:** `src/features/business/products/application/mappers/product.mapper.ts`
-
-``` bash
-mkdir -p src/features/business/products/application/mappers cat > src/features/business/products/application/mappers/product.mapper.ts <<'EOF_BACKEND_IA' import { Status } from '../../../../../common/enums/status.enum'; import { Product } from '../../domain/entities/product.entity'; import { ProductResponseDto } from '../dto/product-response.dto'; import { ProductModel } from '../../infrastructure/persistence/models/product.model';  export class ProductMapper {   static toDomain(model: ProductModel): Product {     return Product.reconstitute({       id: model.id,       name: model.name,       brand: model.brand,       price: Number(model.price),       minStock: model.minStock,       quantity: model.quantity,       productTypeId: model.productTypeId,       status: model.status,       createdAt: model.createdAt,       updatedAt: model.updatedAt,     });   }    static toResponse(entity: Product): ProductResponseDto {     return {       id: entity.id!,       name: entity.name,       brand: entity.brand,       price: entity.price,       minStock: entity.minStock,       quantity: entity.quantity,       productTypeId: entity.productTypeId,       status: entity.status,       createdAt: entity.createdAt!,       updatedAt: entity.updatedAt!,     };   }    static toPersistence(entity: Product): Partial<ProductModel> {     return {       id: entity.id,       name: entity.name,       brand: entity.brand,       price: entity.price,       minStock: entity.minStock,       quantity: entity.quantity,       productTypeId: entity.productTypeId,       status: entity.status ?? Status.ACTIVE,     };   } } EOF_BACKEND_IA
-```
+![](images/clipboard-563938771.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add mapper product.mapper.ts"
+git add . 
+git commit -m "feat: add mapper product.mapper.ts"
 ```
 
 #### 9.17 — features/business/products/application/use-cases/create-product.use-case.ts
