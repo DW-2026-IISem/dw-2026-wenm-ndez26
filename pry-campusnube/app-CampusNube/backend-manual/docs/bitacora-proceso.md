@@ -3962,6 +3962,8 @@ git add .
 git commit -m "feat: add sequelize model role.model.ts without cross associations"
 ```
 
+![](images/clipboard-1856817789.png)
+
 #### 12.6 — features/auth/roles/infrastructure/persistence/repositories/sequelize-role.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
