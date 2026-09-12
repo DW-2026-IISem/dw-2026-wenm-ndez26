@@ -10,6 +10,7 @@ import { ApprenticeModel } from '../../../features/business/apprentices/infrastr
 import { EnrollmentModel } from '../../../features/business/enrollment/infrastructure/persistence/models/enrollment.model.js';
 import { ModuleModel } from '../../../features/business/learning-content/infrastructure/persistence/models/module.model.js';
 import { LessonModel } from '../../../features/business/learning-content/infrastructure/persistence/models/lesson.model.js';
+import { RoleModel } from '../../../features/auth/roles/infrastructure/persistence/models/role.model.js';
 
 const require = createRequire(import.meta.url);
 
@@ -19,6 +20,7 @@ export const ALL_MODELS = [
   EnrollmentModel,
   ModuleModel,
   LessonModel,
+  RoleModel,
 ];
 
 export async function createSequelizeInstance(

@@ -4129,36 +4129,32 @@ git commit -m "feat: add controller roles.controller.ts"
 
 ![](images/clipboard-1528583353.png)
 
-#### 12.17 — features/auth/roles/roles.module.ts
+#### 12.17 — roles.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
 
-**Archivo:** `src/features/auth/roles/roles.module.ts`
-
-``` bash
-mkdir -p src/features/auth/roles cat > src/features/auth/roles/roles.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { CreateRoleUseCase } from './application/use-cases/create-role.use-case'; import { DeleteRoleUseCase } from './application/use-cases/delete-role.use-case'; import { GetRoleUseCase } from './application/use-cases/get-role.use-case'; import { ListRolesUseCase } from './application/use-cases/list-roles.use-case'; import { UpdateRoleUseCase } from './application/use-cases/update-role.use-case'; import { roleRepositoryProvider } from './infrastructure/persistence/repositories/sequelize-role.repository'; import { RolesController } from './presentation/http/controllers/roles.controller';  @Module({   controllers: [RolesController],   providers: [     roleRepositoryProvider,     CreateRoleUseCase,     GetRoleUseCase,     ListRolesUseCase,     UpdateRoleUseCase,     DeleteRoleUseCase,   ],   exports: [roleRepositoryProvider], }) export class RolesModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-1305764012.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire nest module roles.module.ts"
+git add . 
+git commit -m "feat: wire nest module roles.module.ts"
 ```
+
+![](images/clipboard-4139461895.png)
 
 #### 12.18 — Actualizar sequelize.factory.ts (registrar modelos)
 
 Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-**Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
-
-``` bash
-mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.factory.ts <<'EOF_BACKEND_IA' import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { getSequelizeOptions } from './sequelize.options';  import { ClientModel } from '../../../features/business/clients/infrastructure/persistence/models/client.model'; import { ProductTypeModel } from '../../../features/business/product-types/infrastructure/persistence/models/product-type.model'; import { ProductModel } from '../../../features/business/products/infrastructure/persistence/models/product.model'; import { SaleModel } from '../../../features/business/sales/infrastructure/persistence/models/sale.model'; import { ProductSaleModel } from '../../../features/business/sales/infrastructure/persistence/models/product-sale.model'; import { UserModel } from '../../../features/auth/users/infrastructure/persistence/models/user.model'; import { RoleModel } from '../../../features/auth/roles/infrastructure/persistence/models/role.model';  export const ALL_MODELS = [   ClientModel,   ProductTypeModel,   ProductModel,   SaleModel,   ProductSaleModel,   UserModel,   RoleModel, ];  export async function createSequelizeInstance(   dialect: DatabaseDialect, ): Promise<Sequelize> {   const options = getSequelizeOptions(dialect);    let dialectModule: any;    switch (dialect) {     case DatabaseDialect.MySQL:       dialectModule = require('mysql2');       break;     case DatabaseDialect.Postgres:       dialectModule = require('pg');       break;     case DatabaseDialect.MSSQL:       dialectModule = require('tedious');       break;     case DatabaseDialect.Oracle:       dialectModule = require('oracledb');       break;     default:       throw new Error(`Dialecto no soportado: ${dialect}`);   }    const sequelize = new Sequelize({     ...options,     dialectModule,     models: ALL_MODELS,   } as any);    try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);   } catch (error: any) {     console.error(       `❌ Error conectando a ${dialect.toUpperCase()}:`,       error.message,     );     throw error;   }    if (process.env.NODE_ENV !== 'production') {     await sequelize.sync({ alter: false });     console.log('✅ Tablas sincronizadas');   }    return sequelize; } EOF_BACKEND_IA
-```
+![](images/clipboard-1986494474.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: register auth models up to role"
+git add . 
+git commit -m "feat: register auth models up to role"
 ```
 
 #### 12.19 — Actualizar auth.module.ts
