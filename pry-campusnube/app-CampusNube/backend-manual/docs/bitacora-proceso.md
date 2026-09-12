@@ -3192,12 +3192,16 @@ git commit -m "feat: add domain exception lesson-not-found.exception.ts"
 
 ``` bash
 git add .
-git commit -m "feat: add repository port sale-repository.interface.ts"
+git commit -m "feat: add repository port lesson-repository.interface.ts"
 ```
 
-#### 10.5 — features/business/sales/domain/services/sale-calculator.domain-service.ts
+![](images/clipboard-3178060510.png)
+
+#### 10.5 — learning-content.domain-service.ts
 
 Servicio de dominio (lógica pura sin I/O).
+
+![](images/clipboard-4249485061.png)
 
 **Sugerencia de commit (issue):**
 
