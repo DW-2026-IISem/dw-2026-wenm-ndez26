@@ -2288,25 +2288,26 @@ Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
 ``` bash
 git add .
-git commit -m "feat: add sequelize repository product-type.repository.ts"
+git commit -m "feat: add sequelize repository enrollment.repository.ts"
 ```
 
+![](images/clipboard-3737952456.png)
+
 Verificamos en Github
+
+![](images/clipboard-3196723666.png)
 
 #### 8.6 —table.migration.ts
 
 Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el esquema.
 
-**Archivo:** `src/features/business/product-types/infrastructure/persistence/migrations/create-product-types-table.migration.ts`
-
-``` bash
-mkdir -p src/features/business/product-types/infrastructure/persistence/migrations cat > src/features/business/product-types/infrastructure/persistence/migrations/create-product-types-table.migration.ts <<'EOF_BACKEND_IA' export const createProductTypesTableMigration = {   name: 'create-product-types-table',   async up(): Promise<void> {     // Sequelize sync handles table creation in development.     // Production: CREATE TABLE product_types (id, name, description, status, createdAt, updatedAt)   },   async down(): Promise<void> {     // Production: DROP TABLE product_types   }, }; EOF_BACKEND_IA
-```
+![](images/clipboard-2945129076.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add migration create-product-types-table.migration.ts"
+git add . 
+git commit -m "chore: add migration create-enrollments-table.migration.ts"
 ```
 
 #### 8.7 — features/business/product-types/infrastructure/persistence/seeders/product-types.seeder.ts
