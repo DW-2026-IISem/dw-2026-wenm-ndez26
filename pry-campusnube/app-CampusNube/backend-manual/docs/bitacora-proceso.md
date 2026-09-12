@@ -2535,20 +2535,26 @@ Serializer de presentación (forma estable de la respuesta HTTP).
 
 ``` bash
 git add .
-git commit -m "feat: add serializer product-type.serializer.ts"
+git commit -m "feat: add serializer enrollment.serializer.ts"
 ```
 
+![](images/clipboard-1406145217.png)
+
 Verificar en Github
+
+![](images/clipboard-1523520867.png)
 
 #### 8.19 —contro.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
+![](images/clipboard-390007204.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add controller product-types.controller.ts"
+git commit -m "feat: add controller enrollments.controller.ts"
 ```
 
 Verificar en Github
