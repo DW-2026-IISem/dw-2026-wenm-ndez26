@@ -3964,31 +3964,26 @@ git commit -m "feat: add sequelize model role.model.ts without cross association
 
 ![](images/clipboard-1856817789.png)
 
-#### 12.6 — features/auth/roles/infrastructure/persistence/repositories/sequelize-role.repository.ts
+#### 12.6 — sequelize-role.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
-**Archivo:** `src/features/auth/roles/infrastructure/persistence/repositories/sequelize-role.repository.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/infrastructure/persistence/repositories cat > src/features/auth/roles/infrastructure/persistence/repositories/sequelize-role.repository.ts <<'EOF_BACKEND_IA' import { Injectable } from '@nestjs/common'; import { Op } from 'sequelize'; import { Role } from '../../../domain/entities/role.entity'; import { ROLE_REPOSITORY } from '../../../domain/interfaces/role-repository.interface'; import type { IRoleRepository } from '../../../domain/interfaces/role-repository.interface'; import { RoleModel } from '../models/role.model'; import { RoleMapper } from '../../../application/mappers/role.mapper';  @Injectable() export class SequelizeRoleRepository implements IRoleRepository {   async create(role: Role): Promise<Role> {     const model = await RoleModel.create(RoleMapper.toPersistence(role));     return RoleMapper.toDomain(model);   }    async findAll(): Promise<Role[]> {     const models = await RoleModel.findAll({ order: [['id', 'ASC']] });     return models.map(RoleMapper.toDomain);   }    async findById(id: number): Promise<Role | null> {     const model = await RoleModel.findByPk(id);     return model ? RoleMapper.toDomain(model) : null;   }    async findByName(name: string): Promise<Role | null> {     const model = await RoleModel.findOne({ where: { name } });     return model ? RoleMapper.toDomain(model) : null;   }    async findByIds(ids: number[]): Promise<Role[]> {     if (ids.length === 0) return [];     const models = await RoleModel.findAll({ where: { id: { [Op.in]: ids } } });     return models.map(RoleMapper.toDomain);   }    async update(id: number, data: Partial<Role>): Promise<Role> {     const model = await RoleModel.findByPk(id);     if (!model) {       throw new Error(`Role ${id} not found`);     }     await model.update(RoleMapper.toPersistence({ ...RoleMapper.toDomain(model), ...data }));     return RoleMapper.toDomain(model);   }    async delete(id: number): Promise<void> {     await RoleModel.destroy({ where: { id } });   } }  export const roleRepositoryProvider = {   provide: ROLE_REPOSITORY,   useClass: SequelizeRoleRepository, }; EOF_BACKEND_IA
-```
+![](images/clipboard-1478329677.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize repository sequelize-role.repository.ts"
+git add . 
+git commit -m "feat: add sequelize repository sequelize-role.repository.ts"
 ```
 
-#### 12.7 — features/auth/roles/infrastructure/persistence/seeders/roles.seeder.ts
+![](images/clipboard-1291854426.png)
+
+#### 12.7 — seeders/roles.seeder.ts
 
 Seeder de datos iniciales para desarrollo y verificación física en BD.
 
-**Archivo:** `src/features/auth/roles/infrastructure/persistence/seeders/roles.seeder.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/infrastructure/persistence/seeders cat > src/features/auth/roles/infrastructure/persistence/seeders/roles.seeder.ts <<'EOF_BACKEND_IA' /**  * Seeder de feature deshabilitado.  * El bootstrap central vive en:  * src/infrastructure/database/seeders/auth-bootstrap.seeder.ts  * para respetar el orden de dependencias Business → Auth.  */ export class FeatureSeederDisabled {} EOF_BACKEND_IA
-```
+![](images/clipboard-1898995142.png)
 
 **Sugerencia de commit (issue):**
 
