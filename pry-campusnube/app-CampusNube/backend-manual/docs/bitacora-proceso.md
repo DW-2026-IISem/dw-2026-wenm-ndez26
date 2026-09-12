@@ -2383,27 +2383,39 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
 ``` bash
 git add . 
-git commit -m "feat: add dto product-type-response.dto.ts"
+git commit -m "feat: add dto enrollment-response.dto.ts"
 ```
 
+![](images/clipboard-2998661488.png)
+
 Verificar en Github
+
+![](images/clipboard-1455988708.png)
 
 #### 8.11 — Update-enrollment.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
+![](images/clipboard-1304645484.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add dto update-product-type.dto.ts"
+git commit -m "feat: add dto update-enrollment.dto.ts"
 ```
 
+![](images/clipboard-3933803857.png)
+
 Verificar en Github
+
+![](images/clipboard-3069103713.png)
 
 #### 8.12 — Enrollment.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
+
+![](images/clipboard-2796511788.png)
 
 **Sugerencia de commit (issue):**
 
