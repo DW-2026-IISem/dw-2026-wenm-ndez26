@@ -3798,28 +3798,26 @@ Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add controller users.controller.ts"
+git add . 
+git commit -m "feat: add controller modules.controller.ts"
 ```
 
-#### 11.18 — features/auth/users/users.module.ts
+![](images/clipboard-4281216756.png)
 
-Módulo Nest del feature: cablea providers, tokens DI y controller.
+#### 11.18 — Learning Content.module.ts
 
-**Archivo:** `src/features/auth/users/users.module.ts`
+Ahora conectamos los casos de uso y el repositorio con NestJS.
 
-``` bash
-mkdir -p src/features/auth/users cat > src/features/auth/users/users.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { CreateUserUseCase } from './application/use-cases/create-user.use-case'; import { DeleteUserUseCase } from './application/use-cases/delete-user.use-case'; import { GetUserUseCase } from './application/use-cases/get-user.use-case'; import { ListUsersUseCase } from './application/use-cases/list-users.use-case'; import { UpdateUserUseCase } from './application/use-cases/update-user.use-case'; import { userRepositoryProvider } from './infrastructure/persistence/repositories/sequelize-user.repository'; import { UsersController } from './presentation/http/controllers/users.controller';  @Module({   controllers: [UsersController],   providers: [     userRepositoryProvider,     CreateUserUseCase,     GetUserUseCase,     ListUsersUseCase,     UpdateUserUseCase,     DeleteUserUseCase,   ],   exports: [userRepositoryProvider], }) export class UsersModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-508633561.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire nest module users.module.ts"
+git add .
+git commit -m "feat: wire nest module users.module.ts"
 ```
 
-#### 11.19 — Actualizar sequelize.factory.ts (registrar modelos)
-
-Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
+#### 11.19 — Actualizar sequelize.factory.ts (registrar modeRegistra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
 **Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
 

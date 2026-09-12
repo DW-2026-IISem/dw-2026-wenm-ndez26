@@ -1,35 +1,24 @@
 import { Module } from '@nestjs/common';
-
-import {
-  LESSON_REPOSITORY,
-} from './domain/interfaces/lesson-repository.interface.js';
-
-import { LessonRepository } from './infrastructure/persistence/repositories/lesson.repository.js';
-
-import { CreateLessonUseCase } from './application/use-cases/create-lesson.use-case.js';
-import { DeleteLessonUseCase } from './application/use-cases/delete-lesson.use-case.js';
-import { GetLessonUseCase } from './application/use-cases/get-lesson.use-case.js';
-import { ListLessonsUseCase } from './application/use-cases/list-lessons.use-case.js';
-
-import { LessonsController } from './presentation/http/controllers/lessons.controller.js';
+import { CreateModuleUseCase } from './application/use-cases/create-module.use-case.js';
+import { DeleteModuleUseCase } from './application/use-cases/delete-module.use-case.js';
+import { GetModuleUseCase } from './application/use-cases/get-module.use-case.js';
+import { ListModulesUseCase } from './application/use-cases/list-modules.use-case.js';
+import { UpdateModuleUseCase } from './application/use-cases/update-module.use-case.js';
+import { ModuleDomainService } from './domain/services/module-domain.service.js';
+import { moduleRepositoryProvider } from './infrastructure/persistence/repositories/sequelize-module.repository.js';
+import { ModulesController } from './presentation/http/controllers/modules.controller.js';
 
 @Module({
-  controllers: [LessonsController],
-
+  controllers: [ModulesController],
   providers: [
-    LessonRepository,
-
-    {
-      provide: LESSON_REPOSITORY,
-      useExisting: LessonRepository,
-    },
-
-    CreateLessonUseCase,
-    DeleteLessonUseCase,
-    GetLessonUseCase,
-    ListLessonsUseCase,
+    moduleRepositoryProvider,
+    ModuleDomainService,
+    CreateModuleUseCase,
+    GetModuleUseCase,
+    ListModulesUseCase,
+    UpdateModuleUseCase,
+    DeleteModuleUseCase,
   ],
-
-  exports: [LESSON_REPOSITORY],
+  exports: [moduleRepositoryProvider],
 })
 export class LearningContentModule {}
