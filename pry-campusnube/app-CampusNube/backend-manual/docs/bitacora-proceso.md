@@ -3267,12 +3267,16 @@ Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el 
 
 ``` bash
 git add .
-git commit -m "chore: add migration create-sales-table.migration.ts"
+git commit -m "chore: add migration create-learning-content-tables.migration.ts"
 ```
+
+![](images/clipboard-2394284143.png)
 
 #### 10.10 — features/business/sales/infrastructure/persistence/seeders/sales.seeder.ts
 
 Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+![](images/clipboard-2986883922.png)
 
 **Sugerencia de commit (issue):**
 
