@@ -3252,12 +3252,16 @@ Adaptador del repositorio: implementa el puerto de dominio con Sequelize
 
 ``` bash
 git add .
-git commit -m "feat: add sequelize repository sale.repository.ts"
+git commit -m "feat: add sequelize repository lesson.repository.ts"
 ```
 
-#### 10.9 — features/business/sales/infrastructure/persistence/migrations/create-sales-table.migration.ts
+![](images/clipboard-3891167183.png)
+
+#### 10.9 — create-learning-content-table.migration.ts
 
 Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el esquema.
+
+![](images/clipboard-2360777693.png)
 
 **Sugerencia de commit (issue):**
 
