@@ -3003,9 +3003,13 @@ git add .
 git commit -m "feat: add use case update-product.use-case.ts"
 ```
 
+![](images/clipboard-3320097960.png)
+
 #### 9.22 — apprentice.serializer.ts
 
 Serializer de presentación (forma estable de la respuesta HTTP).
+
+![](images/clipboard-2744726155.png)
 
 **Sugerencia de commit (issue):**
 
