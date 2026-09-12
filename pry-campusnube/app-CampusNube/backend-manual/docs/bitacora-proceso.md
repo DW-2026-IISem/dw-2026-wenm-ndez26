@@ -3819,29 +3819,24 @@ git commit -m "feat: wire learning content module"
 
 ![](images/clipboard-4057666968.png)
 
-#### 11.19 — Actualizar sequelize.factory.ts (registrar modeRegistra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
+#### 11.19 — Actualizar sequelize.factory.ts 
 
-**Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
+#### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-``` bash
-mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.factory.ts <<'EOF_BACKEND_IA' import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { getSequelizeOptions } from './sequelize.options';  import { ClientModel } from '../../../features/business/clients/infrastructure/persistence/models/client.model'; import { ProductTypeModel } from '../../../features/business/product-types/infrastructure/persistence/models/product-type.model'; import { ProductModel } from '../../../features/business/products/infrastructure/persistence/models/product.model'; import { SaleModel } from '../../../features/business/sales/infrastructure/persistence/models/sale.model'; import { ProductSaleModel } from '../../../features/business/sales/infrastructure/persistence/models/product-sale.model'; import { UserModel } from '../../../features/auth/users/infrastructure/persistence/models/user.model';  export const ALL_MODELS = [   ClientModel,   ProductTypeModel,   ProductModel,   SaleModel,   ProductSaleModel,   UserModel, ];  export async function createSequelizeInstance(   dialect: DatabaseDialect, ): Promise<Sequelize> {   const options = getSequelizeOptions(dialect);    let dialectModule: any;    switch (dialect) {     case DatabaseDialect.MySQL:       dialectModule = require('mysql2');       break;     case DatabaseDialect.Postgres:       dialectModule = require('pg');       break;     case DatabaseDialect.MSSQL:       dialectModule = require('tedious');       break;     case DatabaseDialect.Oracle:       dialectModule = require('oracledb');       break;     default:       throw new Error(`Dialecto no soportado: ${dialect}`);   }    const sequelize = new Sequelize({     ...options,     dialectModule,     models: ALL_MODELS,   } as any);    try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);   } catch (error: any) {     console.error(       `❌ Error conectando a ${dialect.toUpperCase()}:`,       error.message,     );     throw error;   }    if (process.env.NODE_ENV !== 'production') {     await sequelize.sync({ alter: false });     console.log('✅ Tablas sincronizadas');   }    return sequelize; } EOF_BACKEND_IA
-```
+![](images/clipboard-1902184559.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: register auth models up to user"
+git add . 
+git commit -m "feat: register module model in sequelize"
 ```
 
-#### 11.20 — Actualizar auth.module.ts
+![](images/clipboard-134799775.png)
 
-Agrega el feature module de auth recién terminado.
+#### 11.20 — Actualizar learning-content.module.ts
 
-**Archivo:** `src/features/auth/auth.module.ts`
-
-``` bash
-mkdir -p src/features/auth cat > src/features/auth/auth.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { UsersModule } from './users/users.module';  @Module({   imports: [UsersModule],   exports: [UsersModule], }) export class AuthModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-41776159.png)
 
 **Sugerencia de commit (issue):**
 
