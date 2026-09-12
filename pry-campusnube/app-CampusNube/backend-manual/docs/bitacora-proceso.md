@@ -2250,14 +2250,20 @@ Puerto (contrato) del repositorio. La aplicación depende de esta interface, no 
 
 ``` bash
 git add . 
-git commit -m "feat: add repository port product-type-repository.interface.ts"
+git commit -m "feat: add repository port enrollment-repository.interface.ts"
 ```
 
+![](images/clipboard-4037356496.png)
+
 Verificar en Github
+
+![](images/clipboard-2030737078.png)
 
 #### 8.4 — Enrollment.model.ts
 
 Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
+
+![](images/clipboard-4146970544.png)
 
 **Sugerencia de commit (issue):**
 
