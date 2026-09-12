@@ -2576,22 +2576,23 @@ git add .
 git commit -m "chore: add barrel export enrollment"
 ```
 
+![](images/clipboard-2939723542.png)
+
 Verificar en Github
 
-#### 8.21 — features/business/product-types/product-types.module.ts
+![](images/clipboard-3143599113.png)
+
+#### 8.21 — Enrolllment.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
 
-**Archivo:** `src/features/business/product-types/product-types.module.ts`
-
-``` bash
-mkdir -p src/features/business/product-types cat > src/features/business/product-types/product-types.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { PRODUCT_TYPE_REPOSITORY } from './domain/interfaces/product-type-repository.interface'; import { ProductTypeRepository } from './infrastructure/persistence/repositories/product-type.repository'; import { CreateProductTypeUseCase } from './application/use-cases/create-product-type.use-case'; import { UpdateProductTypeUseCase } from './application/use-cases/update-product-type.use-case'; import { DeleteProductTypeUseCase } from './application/use-cases/delete-product-type.use-case'; import { GetProductTypeUseCase } from './application/use-cases/get-product-type.use-case'; import { ListProductTypesUseCase } from './application/use-cases/list-product-types.use-case'; import { ProductTypesController } from './presentation/http/controllers/product-types.controller';  @Module({   controllers: [ProductTypesController],   providers: [     ProductTypeRepository,     { provide: PRODUCT_TYPE_REPOSITORY, useExisting: ProductTypeRepository },     CreateProductTypeUseCase,     UpdateProductTypeUseCase,     DeleteProductTypeUseCase,     GetProductTypeUseCase,     ListProductTypesUseCase,   ],   exports: [PRODUCT_TYPE_REPOSITORY], }) export class ProductTypesModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-3583631017.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire nest module product-types.module.ts"
+git add . 
+git commit -m "feat: wire nest module product-types.module.ts"
 ```
 
 #### 8.22 — Actualizar sequelize.factory.ts (registrar modelos)
