@@ -4157,20 +4157,19 @@ git add .
 git commit -m "feat: register auth models up to role"
 ```
 
+![](images/clipboard-2613975985.png)
+
 #### 12.19 — Actualizar auth.module.ts
 
 Agrega el feature module de auth recién terminado.
 
-**Archivo:** `src/features/auth/auth.module.ts`
-
-``` bash
-mkdir -p src/features/auth cat > src/features/auth/auth.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { UsersModule } from './users/users.module'; import { RolesModule } from './roles/roles.module';  @Module({   imports: [UsersModule, RolesModule],   exports: [UsersModule, RolesModule], }) export class AuthModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-1594124723.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add roles to AuthModule"
+git add . 
+git commit -m "feat: add roles to AuthModule"
 ```
 
 #### 12.20 — Actualizar database-seeder.service.ts
