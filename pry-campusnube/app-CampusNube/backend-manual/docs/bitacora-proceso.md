@@ -2269,28 +2269,31 @@ Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
 
 ``` bash
 git add . 
-git commit -m "feat: add sequelize model product-type.model.ts"
+git commit -m "feat: add sequelize model enrollment.model.ts"
 ```
+
+![](images/clipboard-2392004184.png)
 
 Verificar en Github
 
-#### 8.5 — features/business/product-types/infrastructure/persistence/repositories/product-type.repository.ts
+![](images/clipboard-2955591794.png)
+
+#### 8.5 — Erollment.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
-**Archivo:** `src/features/business/product-types/infrastructure/persistence/repositories/product-type.repository.ts`
-
-``` bash
-mkdir -p src/features/business/product-types/infrastructure/persistence/repositories cat > src/features/business/product-types/infrastructure/persistence/repositories/product-type.repository.ts <<'EOF_BACKEND_IA' import { Injectable } from '@nestjs/common'; import { Op } from 'sequelize'; import {   buildPaginatedResult,   normalizePagination, } from '../../../../../../common/utils/pagination.util'; import { ProductType } from '../../../domain/entities/product-type.entity'; import {   IProductTypeRepository,   ProductTypeFindAllParams, } from '../../../domain/interfaces/product-type-repository.interface'; import { ProductTypeMapper } from '../../../application/mappers/product-type.mapper'; import { ProductTypeModel } from '../models/product-type.model';  @Injectable() export class ProductTypeRepository implements IProductTypeRepository {   async create(productType: ProductType): Promise<ProductType> {     const model = await ProductTypeModel.create(       ProductTypeMapper.toPersistence(productType),     );     return ProductTypeMapper.toDomain(model);   }    async update(productType: ProductType): Promise<ProductType> {     await ProductTypeModel.update(       ProductTypeMapper.toPersistence(productType),       { where: { id: productType.id } },     );     const updated = await ProductTypeModel.findByPk(productType.id!);     return ProductTypeMapper.toDomain(updated!);   }    async delete(id: number): Promise<void> {     await ProductTypeModel.destroy({ where: { id } });   }    async findById(id: number): Promise<ProductType | null> {     const model = await ProductTypeModel.findByPk(id);     return model ? ProductTypeMapper.toDomain(model) : null;   }    async findAll(params: ProductTypeFindAllParams) {     const { page, limit, offset } = normalizePagination(       params.page,       params.limit,     );      const where = params.search       ? {           [Op.or]: [             { name: { [Op.like]: `%${params.search}%` } },             { description: { [Op.like]: `%${params.search}%` } },           ],         }       : {};      const { rows, count } = await ProductTypeModel.findAndCountAll({       where,       limit,       offset,       order: [['createdAt', 'DESC']],     });      return buildPaginatedResult(       rows.map((row) => ProductTypeMapper.toDomain(row)),       count,       page,       limit,     );   } } EOF_BACKEND_IA
-```
+![](images/clipboard-2224296654.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize repository product-type.repository.ts"
+git add .
+git commit -m "feat: add sequelize repository product-type.repository.ts"
 ```
 
-#### 8.6 — features/business/product-types/infrastructure/persistence/migrations/create-product-types-table.migration.ts
+Verificamos en Github
+
+#### 8.6 —table.migration.ts
 
 Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el esquema.
 
