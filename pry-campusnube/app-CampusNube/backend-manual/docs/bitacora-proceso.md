@@ -3225,15 +3225,19 @@ git add .
 git commit -m "feat: add sequelize model lesson.model.ts"
 ```
 
-#### 10.7 — features/business/sales/infrastructure/persistence/models/sale.model.ts
+![](images/clipboard-4234574966.png)
+
+#### 10.7 — module.model.ts
 
 Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
+
+![](images/clipboard-3645803236.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add sequelize model sale.model.ts"
+git commit -m "feat: add sequelize model module.model.ts"
 ```
 
 #### 10.8 — features/business/sales/infrastructure/persistence/repositories/sale.repository.ts
