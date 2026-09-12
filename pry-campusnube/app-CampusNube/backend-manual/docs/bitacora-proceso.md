@@ -3885,7 +3885,7 @@ git commit -m "test: verify learning content module feature"
 
 ## FASE 12 
 
-#### 10.1 — teacher.entity.ts
+#### 12.1 — teacher.entity.ts
 
 Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
 
@@ -3894,34 +3894,17 @@ Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain entity sale.entity.ts"
+git add . 
+git commit -m "feat: add domain entity teacher.entity.ts"
 ```
 
-#### 10.2 — features/business/sales/domain/exceptions/insufficient-stock.exception.ts
+![](images/clipboard-3141099508.png)
+
+#### 12.2 — features/business/sales/domain/exceptions/sale-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-**Archivo:** `src/features/business/sales/domain/exceptions/insufficient-stock.exception.ts`
-
-``` bash
-mkdir -p src/features/business/sales/domain/exceptions cat > src/features/business/sales/domain/exceptions/insufficient-stock.exception.ts <<'EOF_BACKEND_IA' import { DomainException } from '../../../../../common/exceptions/domain.exception';  export class InsufficientStockException extends DomainException {   constructor(productName: string, available: number, requested: number) {     super(       `Stock insuficiente para '${productName}': disponible ${available}, solicitado ${requested}`,     );   } } EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "feat: add domain exception insufficient-stock.exception.ts"
-```
-
-#### 10.3 — features/business/sales/domain/exceptions/sale-not-found.exception.ts
-
-Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
-
-**Archivo:** `src/features/business/sales/domain/exceptions/sale-not-found.exception.ts`
-
-``` bash
-mkdir -p src/features/business/sales/domain/exceptions cat > src/features/business/sales/domain/exceptions/sale-not-found.exception.ts <<'EOF_BACKEND_IA' import { EntityNotFoundException } from '../../../../../common/exceptions/entity-not-found.exception';  export class SaleNotFoundException extends EntityNotFoundException {   constructor(id: number) {     super('Venta', id);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-3754891998.png)
 
 **Sugerencia de commit (issue):**
 
