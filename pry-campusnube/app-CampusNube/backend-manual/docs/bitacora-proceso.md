@@ -4037,31 +4037,28 @@ git add .
 git commit -m "feat: add mapper role.mapper.ts"
 ```
 
-#### 12.11 — features/auth/roles/application/use-cases/create-role.use-case.ts
+![](images/clipboard-438431188.png)
+
+#### 12.11 — create-role.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/auth/roles/application/use-cases/create-role.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/application/use-cases cat > src/features/auth/roles/application/use-cases/create-role.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { Status } from '../../../../../common/enums/status.enum'; import { Role } from '../../domain/entities/role.entity'; import { RoleNameExistsException } from '../../domain/exceptions/role-name-exists.exception'; import { ROLE_REPOSITORY } from '../../domain/interfaces/role-repository.interface'; import type { IRoleRepository } from '../../domain/interfaces/role-repository.interface'; import { CreateRoleDto } from '../dto/create-role.dto'; import { RoleMapper } from '../mappers/role.mapper';  @Injectable() export class CreateRoleUseCase {   constructor(     @Inject(ROLE_REPOSITORY)     private readonly roleRepository: IRoleRepository,   ) {}    async execute(dto: CreateRoleDto) {     const existing = await this.roleRepository.findByName(dto.name);     if (existing) {       throw new RoleNameExistsException(dto.name);     }      const role = new Role({       name: dto.name,       isActive: dto.isActive ?? Status.ACTIVE,     });      const created = await this.roleRepository.create(role);     return RoleMapper.toResponse(created);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-1715654986.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case create-role.use-case.ts"
+git add . 
+git commit -m "feat: add use case create-role.use-case.ts"
 ```
 
-#### 12.12 — features/auth/roles/application/use-cases/delete-role.use-case.ts
+![](images/clipboard-412554671.png)
+
+#### 12.12 — delete-role.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/auth/roles/application/use-cases/delete-role.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/application/use-cases cat > src/features/auth/roles/application/use-cases/delete-role.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ROLE_REPOSITORY } from '../../domain/interfaces/role-repository.interface'; import type { IRoleRepository } from '../../domain/interfaces/role-repository.interface'; import { RoleNotFoundException } from '../../domain/exceptions/role-not-found.exception';  @Injectable() export class DeleteRoleUseCase {   constructor(     @Inject(ROLE_REPOSITORY)     private readonly roleRepository: IRoleRepository,   ) {}    async execute(id: number): Promise<void> {     const existing = await this.roleRepository.findById(id);     if (!existing) {       throw new RoleNotFoundException(id);     }     await this.roleRepository.delete(id);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-3689143439.png)
 
 **Sugerencia de commit (issue):**
 
