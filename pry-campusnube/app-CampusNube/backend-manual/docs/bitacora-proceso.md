@@ -3841,42 +3841,28 @@ git commit -m "feat: register module model in sequelize"
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add users to AuthModule"
+git add . 
+git commit -m "feat: wire learning content module"
 ```
 
-#### 11.21 — Actualizar database-seeder.service.ts
+![](images/clipboard-2379392638.png)
+
+#### 11.21 — Actualizar database-seeder.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
-**Archivo:** `src/infrastructure/database/seeders/database-seeder.service.ts`
-
-``` bash
-mkdir -p src/infrastructure/database/seeders cat > src/infrastructure/database/seeders/database-seeder.service.ts <<'EOF_BACKEND_IA' import { Injectable, Logger, OnModuleInit } from '@nestjs/common'; import { seedClients } from '../../../features/business/clients/infrastructure/persistence/seeders/clients.seeder'; import { seedProductTypes } from '../../../features/business/product-types/infrastructure/persistence/seeders/product-types.seeder'; import { seedProducts } from '../../../features/business/products/infrastructure/persistence/seeders/products.seeder'; import { seedSales } from '../../../features/business/sales/infrastructure/persistence/seeders/sales.seeder';  /**  * Ejecuta seeders en orden de dependencias.  * Solo en entornos no productivos.  */ @Injectable() export class DatabaseSeederService implements OnModuleInit {   private readonly logger = new Logger(DatabaseSeederService.name);    async onModuleInit(): Promise<void> {     if (process.env.NODE_ENV === 'production') {       return;     }      try {       await seedClients();       await seedProductTypes();       await seedProducts();       await seedSales();       this.logger.log('✅ Seeders ejecutados');     } catch (error: any) {       this.logger.error(`❌ Error en seeders: ${error.message}`, error.stack);       throw error;     }   } } EOF_BACKEND_IA
-```
+![](images/clipboard-3561445569.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: update auth/business seeders bootstrap order"
+git add . 
+git commit -m "chore: update learning content seeders bootstrap order"
 ```
 
-#### 11.22 — Actualizar app.module.ts
+![](images/clipboard-3342095304.png)
 
-Importa BusinessModule y/o AuthModule según el avance. Los guards globales llegan en la fase RBAC.
-
-**Archivo:** `src/app.module.ts`
-
-``` bash
-mkdir -p src cat > src/app.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { envConfig } from './config/environment/env.config'; import { appConfig } from './config/app/app.config'; import { jwtConfig } from './config/jwt/jwt.config'; import { LoggerModule } from './config/logger/logger.module'; import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/sequelize.module'; import { SecurityModule } from './infrastructure/security/security.module'; import { BusinessModule } from './features/business/business.module'; import { AuthModule } from './features/auth/auth.module'; import { AppController } from './app.controller'; import { AppService } from './app.service';  @Module({   imports: [     ConfigModule.forRoot({       isGlobal: true,       load: [envConfig, appConfig, jwtConfig],       envFilePath: '.env',     }),     SequelizeDatabaseModule,     SecurityModule,     LoggerModule,     BusinessModule,     AuthModule,   ],   controllers: [AppController],   providers: [     AppService,   ], }) export class AppModule {} EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "feat: import AuthModule into AppModule"
-```
-
-#### 11.23 — Verificar feature auth (Auth — Users)
+#### 11.22 — Verificar feature 
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
 
@@ -3884,11 +3870,16 @@ Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes,
 npm run start:dev
 ```
 
+![](images/clipboard-2084413663.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "test: verify 10_auth_users auth feature"
+git add .
+git commit -m "test: verify learning content module feature"
 ```
+
+![](images/clipboard-3355450816.png)
 
 ------------------------------------------------------------------------
 
