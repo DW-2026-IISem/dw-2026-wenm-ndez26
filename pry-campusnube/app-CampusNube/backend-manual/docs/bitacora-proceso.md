@@ -2459,14 +2459,20 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 
 ``` bash
 git add . 
-git commit -m "feat: add use case delete-product-type.use-case.ts"
+git commit -m "feat: add use case delete-enrollment.use-case.ts"
 ```
+
+![](images/clipboard-3901970197.png)
 
 Verificamos en Github
 
-#### 8.15 — features/business/product-types/application/use-cases/get-enrollment.use-case.ts
+![](images/clipboard-3981949503.png)
+
+#### 8.15 —Get-enrollment.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-1518722062.png)
 
 **Sugerencia de commit (issue):**
 
