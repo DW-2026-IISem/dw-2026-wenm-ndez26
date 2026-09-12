@@ -3606,15 +3606,13 @@ git add .
 git commit -m "feat: add domain exception module-not-found.exception.ts"
 ```
 
-#### 11.4 — features/auth/users/domain/exceptions/user-username-exists.exception.ts
+![](images/clipboard-1359583684.png)
+
+#### 11.4 — module-repository.inteface.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-**Archivo:** `src/features/auth/users/domain/exceptions/user-username-exists.exception.ts`
-
-``` bash
-mkdir -p src/features/auth/users/domain/exceptions cat > src/features/auth/users/domain/exceptions/user-username-exists.exception.ts <<'EOF_BACKEND_IA' import { DomainException } from '../../../../../common/exceptions/domain.exception';  export class UserUsernameExistsException extends DomainException {   constructor(username: string) {     super(`El username ${username} ya está registrado`);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-2628358317.png)
 
 **Sugerencia de commit (issue):**
 
