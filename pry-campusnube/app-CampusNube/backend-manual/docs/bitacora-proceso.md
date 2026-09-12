@@ -3182,7 +3182,11 @@ git add .
 git commit -m "feat: add domain exception lesson-not-found.exception.ts"
 ```
 
-#### 10.4 — features/business/sales/domain/interfaces/sale-repository.interface.ts
+![](images/clipboard-3623484893.png)
+
+#### 10.4 — lesson-repository.interface.ts
+
+![](images/clipboard-3119791792.png)
 
 **Sugerencia de commit (issue):**
 
