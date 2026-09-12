@@ -3617,23 +3617,23 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception user-username-exists.exception.ts"
+git add . 
+git commit -m "feat: add module repository port"
 ```
 
-#### 11.5 — features/auth/users/domain/interfaces/user-repository.interface.ts
+![](images/clipboard-170304634.png)
+
+#### 11.5 — module-demain.service.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-**Archivo:** `src/features/auth/users/domain/interfaces/user-repository.interface.ts`
-
-``` bash
-mkdir -p src/features/auth/users/domain/interfaces cat > src/features/auth/users/domain/interfaces/user-repository.interface.ts <<'EOF_BACKEND_IA' import { User } from '../entities/user.entity';  export const USER_REPOSITORY = 'USER_REPOSITORY';  export interface IUserRepository {   create(user: User): Promise<User>;   findAll(): Promise<User[]>;   findById(id: number): Promise<User | null>;   findByEmail(email: string): Promise<User | null>;   findByUsername(username: string): Promise<User | null>;   update(id: number, data: Partial<User>): Promise<User>;   delete(id: number): Promise<void>; } EOF_BACKEND_IA
-```
+![](images/clipboard-2580613058.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add repository port user-repository.interface.ts"
+git add .
+git commit -m "feat: add repository port user-repository.interface.ts"
 ```
 
 #### 11.6 — features/auth/users/infrastructure/persistence/models/user.model.ts (sin asociaciones cruzadas aún)
