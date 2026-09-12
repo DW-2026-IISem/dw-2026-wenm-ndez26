@@ -3661,12 +3661,25 @@ Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
 ``` bash
 git add .
-git commit -m "feat: add sequelize repository sequelize-user.repository.ts"
+git commit -m "feat: add sequelize module repository"
 ```
 
-#### 11.8 — features/auth/users/infrastructure/persistence/seeders/users.seeder.ts
+![](images/clipboard-123631474.png)
 
-Seeder de datos iniciales para desarrollo y verificación física en BD.
+#### 11.8 — Migration.
+
+![](images/clipboard-300081319.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "chore: add modules table migration reference"
+```
+
+#### 
+
+#### 11.8 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
 **Archivo:** `src/features/auth/users/infrastructure/persistence/seeders/users.seeder.ts`
 
