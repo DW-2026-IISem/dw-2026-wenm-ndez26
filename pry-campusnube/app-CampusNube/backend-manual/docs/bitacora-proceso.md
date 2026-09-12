@@ -4063,18 +4063,17 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case delete-role.use-case.ts"
+git add . 
+git commit -m "feat: add use case delete-role.use-case.ts"
 ```
 
-#### 12.13 — features/auth/roles/application/use-cases/get-role.use-case.ts
+![](images/clipboard-4280891310.png)
+
+#### 12.13 — get-role.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/auth/roles/application/use-cases/get-role.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/application/use-cases cat > src/features/auth/roles/application/use-cases/get-role.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ROLE_REPOSITORY } from '../../domain/interfaces/role-repository.interface'; import type { IRoleRepository } from '../../domain/interfaces/role-repository.interface'; import { RoleNotFoundException } from '../../domain/exceptions/role-not-found.exception'; import { RoleMapper } from '../mappers/role.mapper';  @Injectable() export class GetRoleUseCase {   constructor(     @Inject(ROLE_REPOSITORY)     private readonly roleRepository: IRoleRepository,   ) {}    async execute(id: number) {     const role = await this.roleRepository.findById(id);     if (!role) {       throw new RoleNotFoundException(id);     }     return RoleMapper.toResponse(role);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-405437170.png)
 
 **Sugerencia de commit (issue):**
 
