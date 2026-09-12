@@ -3090,17 +3090,22 @@ Agrega el feature module de negocio recién terminado.
 
 ``` bash
 git add .
-git commit -m "feat: add ProductsModule to BusinessModule"
+git commit -m "feat: add ApprenticesModule to BusinessModule"
 ```
+
+![](images/clipboard-2167786575.png)
 
 #### 9.28 — Actualizar database-seeder.service.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
+![](images/clipboard-3378349625.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: run seedProducts on bootstrap"
+git add . 
+git commit -m "chore: run seedProducts on bootstrap"
 ```
 
 #### 9.29 — Actualizar app.module.ts
