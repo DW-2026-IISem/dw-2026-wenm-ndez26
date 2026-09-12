@@ -1,13 +1,17 @@
 import { createRequire } from 'node:module';
 import { Sequelize } from 'sequelize-typescript';
+
 import { DatabaseDialect } from '../../../config/environment/env.interface.js';
 import { getSequelizeOptions } from './sequelize.options.js';
+
 import { CourseModel } from '../../../features/business/courses/infrastructure/persistence/models/course.model.js';
+import { EnrollmentModel } from '../../../features/business/enrollment/infrastructure/persistence/models/enrollment.model.js';
 
 const require = createRequire(import.meta.url);
 
 export const ALL_MODELS = [
   CourseModel,
+  EnrollmentModel,
 ];
 
 export async function createSequelizeInstance(
@@ -59,3 +63,4 @@ export async function createSequelizeInstance(
 
   return sequelize;
 }
+
