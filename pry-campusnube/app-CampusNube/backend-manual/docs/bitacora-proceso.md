@@ -3281,12 +3281,17 @@ Seeder de datos iniciales para desarrollo y verificación física en BD.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add seeder sales.seeder.ts"
+git add . 
+git commit -m "chore: add seeder sales.seeder.ts"
 ```
 
-#### 10.11 — features/business/sales/application/dto/create-sale.dto.ts
+![](images/clipboard-81248873.png)
+
+#### 10.11 — create-lesson.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-2089365875.png)
 
 **Sugerencia de commit (issue):**
 
