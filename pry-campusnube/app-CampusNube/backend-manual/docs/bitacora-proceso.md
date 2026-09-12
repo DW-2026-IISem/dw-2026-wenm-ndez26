@@ -3152,9 +3152,13 @@ git add .
 git commit -m "feat: add domain entity lesson.entity.ts"
 ```
 
-#### 10.2 — features/business/sales/domain/exceptions/insufficient-stock.exception.ts
+![](images/clipboard-709383986.png)
+
+#### 10.2 — invalid-lesson.order.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-341029222.png)
 
 **Sugerencia de commit (issue):**
 
