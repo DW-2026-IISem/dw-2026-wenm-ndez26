@@ -3988,18 +3988,17 @@ Seeder de datos iniciales para desarrollo y verificación física en BD.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add seeder roles.seeder.ts"
+git add . 
+git commit -m "chore: add seeder roles.seeder.ts"
 ```
+
+![](images/clipboard-1475685363.png)
 
 #### 12.8 — features/auth/roles/application/dto/create-role.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/auth/roles/application/dto/create-role.dto.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/application/dto cat > src/features/auth/roles/application/dto/create-role.dto.ts <<'EOF_BACKEND_IA' import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator'; import { Status } from '../../../../../common/enums/status.enum';  export class CreateRoleDto {   @IsString()   @IsNotEmpty()   name: string;    @IsOptional()   @IsEnum(Status)   isActive?: Status; }  export class UpdateRoleDto {   @IsOptional()   @IsString()   @IsNotEmpty()   name?: string;    @IsOptional()   @IsEnum(Status)   isActive?: Status; } EOF_BACKEND_IA
-```
+![](images/clipboard-4214530469.png)
 
 **Sugerencia de commit (issue):**
 
