@@ -2557,17 +2557,23 @@ git add .
 git commit -m "feat: add controller enrollments.controller.ts"
 ```
 
+![](images/clipboard-533164685.png)
+
 Verificar en Github
+
+![](images/clipboard-1465965606.png)
 
 #### 8.20 — features/business/enrollment/index.ts
 
 Barrel export del feature para imports limpios.
 
+![](images/clipboard-2463387873.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "chore: add barrel export product-types"
+git commit -m "chore: add barrel export enrollment"
 ```
 
 Verificar en Github
