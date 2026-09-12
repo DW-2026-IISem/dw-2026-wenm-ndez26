@@ -3461,23 +3461,23 @@ Módulo Nest del feature: cablea providers, tokens DI y controller.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire nest module sales.module.ts"
+git add . 
+git commit -m "feat: wire nest module learning-content.module.ts"
 ```
 
-#### 10.23 — Barrel business/index.ts
+![](images/clipboard-3680975570.png)
+
+#### 10.23 — business/index.ts
 
 Exports públicos del bounded context business.
 
-**Archivo:** `src/features/business/index.ts`
-
-``` bash
-mkdir -p src/features/business cat > src/features/business/index.ts <<'EOF_BACKEND_IA' export { BusinessModule } from './business.module'; EOF_BACKEND_IA
-```
+![](images/clipboard-2118823203.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add business barrel exports"
+git add . 
+git commit -m "chore: add business barrel exports"
 ```
 
 #### 10.24 — Actualizar sequelize.factory.ts (registrar modelos)
