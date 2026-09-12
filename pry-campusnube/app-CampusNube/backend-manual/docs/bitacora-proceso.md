@@ -3677,15 +3677,11 @@ git add .
 git commit -m "chore: add modules table migration reference"
 ```
 
-#### 
+#### ![](images/clipboard-3781741137.png)
 
-#### 11.8 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+#### 11.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
-**Archivo:** `src/features/auth/users/infrastructure/persistence/seeders/users.seeder.ts`
-
-``` bash
-mkdir -p src/features/auth/users/infrastructure/persistence/seeders cat > src/features/auth/users/infrastructure/persistence/seeders/users.seeder.ts <<'EOF_BACKEND_IA' /**  * Seeder de feature deshabilitado.  * El bootstrap central vive en:  * src/infrastructure/database/seeders/auth-bootstrap.seeder.ts  * para respetar el orden de dependencias Business → Auth.  */ export class FeatureSeederDisabled {} EOF_BACKEND_IA
-```
+![](images/clipboard-537726458.png)
 
 **Sugerencia de commit (issue):**
 
