@@ -3,7 +3,7 @@ import {
   ApiPropertyOptional,
 } from '@nestjs/swagger';
 
-import { Status } from '../../../../common/enums/status.enum.js';
+import { Status } from '../../../../../common/enums/status.enum.js';
 
 export class CourseResponseDto {
   @ApiProperty({ example: 1 })

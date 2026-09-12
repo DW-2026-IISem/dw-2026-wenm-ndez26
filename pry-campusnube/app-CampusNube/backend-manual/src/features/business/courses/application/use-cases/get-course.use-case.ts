@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import {
   COURSE_REPOSITORY,
-  ICourseRepository,
+  type ICourseRepository,
 } from '../../domain/interfaces/course-repository.interface.js';
 import { CourseNotFoundException } from '../../domain/exceptions/course-not-found.exception.js';
 import { CourseMapper } from '../mappers/course.mapper.js';

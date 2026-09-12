@@ -2126,27 +2126,41 @@ Agrega el feature module de negocio recién terminado.
 
 ``` bash
 git add . 
-git commit -m "feat: export ClientsModule from BusinessModule"
+git commit -m "feat: export CoursesModule from BusinessModule"
 ```
 
+![](images/clipboard-738600480.png)
+
 Verificamos en Github
+
+![](images/clipboard-1871443428.png)
 
 #### 7.27 — Actualizar database-seeder.service.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
+![](images/clipboard-60419750.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "chore: run seedClients on bootstrap"
+git commit -m "chore: run seedCourses on bootstrap"
 ```
+
+![](images/clipboard-1567590538.png)
+
+Verficamos en Github
+
+![](images/clipboard-2042012891.png)
 
 #### 7.28 — Actualizar app.module.ts
 
 Importa BusinessModule y/o AuthModule según el avance. Los guards globales llegan en la fase RBAC.
 
 **Archivo:** `src/app.module.ts`
+
+![](images/clipboard-1394433966.png)
 
 **Sugerencia de commit (issue):**
 
@@ -2155,7 +2169,11 @@ git add .
 git commit -m "feat: import BusinessModule into AppModule"
 ```
 
+![](images/clipboard-1429573938.png)
+
 Verificar en Github
+
+![](images/clipboard-2270698405.png)
 
 #### 7.29 — Verificar tabla física `courses` y API
 
@@ -2169,7 +2187,7 @@ npm run start:dev
 
 ``` bash
 git add . 
-git commit -m "test: verify clients table and crud endpoints"
+git commit -m "test: verify courses table and crud endpoints"
 ```
 
 ------------------------------------------------------------------------

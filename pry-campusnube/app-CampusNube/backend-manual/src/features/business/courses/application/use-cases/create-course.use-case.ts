@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import {
   COURSE_REPOSITORY,
-  ICourseRepository,
+  type ICourseRepository,
 } from '../../domain/interfaces/course-repository.interface.js';
 import { Course } from '../../domain/entities/course.entity.js';
 import { CourseNameAlreadyExistsException } from '../../domain/exceptions/course-name-already-exists.exception.js';
