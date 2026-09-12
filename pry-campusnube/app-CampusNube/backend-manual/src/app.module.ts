@@ -14,13 +14,20 @@ import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/seq
 import { SecurityModule } from './infrastructure/security/security.module.js';
 import { BusinessModule } from './features/business/business.module.js';
 
-export const { ObserveModule, ObserveInstrument } = createObserveModule();
+export const {
+  ObserveModule,
+  ObserveInstrument,
+} = createObserveModule();
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [envConfig, appConfig, jwtConfig],
+      load: [
+        envConfig,
+        appConfig,
+        jwtConfig,
+      ],
       envFilePath: '.env',
     }),
 
@@ -35,7 +42,13 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'backend-manual',
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+
+  controllers: [
+    AppController,
+  ],
+
+  providers: [
+    AppService,
+  ],
 })
 export class AppModule {}
