@@ -13,6 +13,7 @@ import { LoggerModule } from './config/logger/logger.module.js';
 import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/sequelize.module.js';
 import { SecurityModule } from './infrastructure/security/security.module.js';
 import { BusinessModule } from './features/business/business.module.js';
+import { AuthModule } from './features/auth/auth.module.js';
 
 export const {
   ObserveModule,
@@ -35,6 +36,7 @@ export const {
     SecurityModule,
     LoggerModule,
     BusinessModule,
+    AuthModule,
 
     ObserveModule.forRoot({
       appKey: 'YOUR_APP_KEY',
