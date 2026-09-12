@@ -1,53 +1,32 @@
-import { createRequire } from 'node:module';
-
 import {
-  AutoIncrement,
-  BelongsTo,
-  Column,
-  CreatedAt,
-  DataType,
-  ForeignKey,
-  HasMany,
-  Model,
-  PrimaryKey,
   Table,
+  Column,
+  Model,
+  DataType,
+  CreatedAt,
   UpdatedAt,
 } from 'sequelize-typescript';
 
-import { Status } from '../../../../../../common/enums/status.enum.js';
-
-const require = createRequire(import.meta.url);
-
 @Table({ tableName: 'modules' })
 export class ModuleModel extends Model {
-  @PrimaryKey
-  @AutoIncrement
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  })
   declare id: number;
 
-  @ForeignKey(
-    () =>
-      require('../../../../courses/infrastructure/persistence/models/course.model.js')
-        .CourseModel,
-  )
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
   declare courseId: number;
 
-  @BelongsTo(
-    () =>
-      require('../../../../courses/infrastructure/persistence/models/course.model.js')
-        .CourseModel,
-  )
-  declare course: unknown;
-
   @Column({
     type: DataType.STRING(150),
     allowNull: false,
   })
-  declare name: string;
+  declare title: string;
 
   @Column({
     type: DataType.TEXT,
@@ -58,26 +37,12 @@ export class ModuleModel extends Model {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
-    defaultValue: 1,
   })
   declare order: number;
-
-  @Column({
-    type: DataType.ENUM(...Object.values(Status)),
-    allowNull: false,
-    defaultValue: Status.ACTIVE,
-  })
-  declare status: Status;
 
   @CreatedAt
   declare createdAt: Date;
 
   @UpdatedAt
   declare updatedAt: Date;
-
-  @HasMany(
-    () =>
-      require('./lesson.model.js').LessonModel,
-  )
-  declare lessons: unknown[];
 }

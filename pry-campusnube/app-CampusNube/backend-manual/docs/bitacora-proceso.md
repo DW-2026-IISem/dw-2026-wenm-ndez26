@@ -3633,18 +3633,14 @@ Puerto (contrato) del repositorio. La aplicación depende de esta interface, no 
 
 ``` bash
 git add .
-git commit -m "feat: add repository port user-repository.interface.ts"
+git commit -m "feat: add module domain service"
 ```
 
-#### 11.6 — features/auth/users/infrastructure/persistence/models/user.model.ts (sin asociaciones cruzadas aún)
+![](images/clipboard-3312237562.png)
 
-Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física. En esta fase se crea **sin** BelongsToMany/HasMany hacia módulos aún no creados, para poder compilar y sincronizar la tabla.
+#### 11.6 — module.model
 
-**Archivo:** `src/features/auth/users/infrastructure/persistence/models/user.model.ts`
-
-``` bash
-mkdir -p src/features/auth/users/infrastructure/persistence/models cat > src/features/auth/users/infrastructure/persistence/models/user.model.ts <<'EOF_BACKEND_IA' import {   Table,   Column,   Model,   DataType,   CreatedAt,   UpdatedAt, } from 'sequelize-typescript'; import { Status } from '../../../../../../common/enums/status.enum';  @Table({ tableName: 'users' }) export class UserModel extends Model {   @Column({     type: DataType.INTEGER,     primaryKey: true,     autoIncrement: true,   })   declare id: number;    @Column({ type: DataType.STRING(100), allowNull: false, unique: true })   declare username: string;    @Column({ type: DataType.STRING(150), allowNull: false, unique: true })   declare email: string;    @Column({ type: DataType.STRING(255), allowNull: false })   declare password: string;    @Column({     type: DataType.ENUM(...Object.values(Status)),     allowNull: false,     defaultValue: Status.ACTIVE,   })   declare isActive: Status;    @Column({ type: DataType.STRING(500), allowNull: true })   declare avatar: string | null;    @CreatedAt   declare createdAt: Date;    @UpdatedAt   declare updatedAt: Date; } EOF_BACKEND_IA
-```
+![](images/clipboard-2699688114.png)
 
 **Sugerencia de commit (issue):**
 
