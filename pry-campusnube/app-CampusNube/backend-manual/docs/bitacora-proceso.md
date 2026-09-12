@@ -3164,18 +3164,22 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 
 ``` bash
 git add . 
-git commit -m "feat: add domain exception insufficient-stock.exception.ts"
+git commit -m "feat: add domain exception invalid-lesson-order.exception.ts"
 ```
 
-#### 10.3 — features/business/sales/domain/exceptions/sale-not-found.exception.ts
+![](images/clipboard-3221730916.png)
+
+#### 10.3 — lesson-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-1561056536.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .
-git commit -m "feat: add domain exception sale-not-found.exception.ts"
+git commit -m "feat: add domain exception lesson-not-found.exception.ts"
 ```
 
 #### 10.4 — features/business/sales/domain/interfaces/sale-repository.interface.ts
