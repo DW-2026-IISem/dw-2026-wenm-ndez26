@@ -3345,20 +3345,28 @@ git add .
 git commit -m "feat: add mapper lesson.mapper.ts"
 ```
 
-#### 10.15 — features/business/sales/application/use-cases/cancel-sale.use-case.ts
+![](images/clipboard-1539569079.png)
+
+#### 10.15 — delete-lesson.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-3922241100.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add use case cancel-sale.use-case.ts"
+git commit -m "feat: add use case delete-lesson.use-case.ts"
 ```
 
-#### 10.16 — features/business/sales/application/use-cases/create-sale.use-case.ts
+![](images/clipboard-268354722.png)
+
+#### 10.16 — create-lesson.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-3215096492.png)
 
 **Sugerencia de commit (issue):**
 
