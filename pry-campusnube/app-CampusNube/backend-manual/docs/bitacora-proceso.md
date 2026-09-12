@@ -2838,9 +2838,13 @@ git add .
 git commit -m "chore: add migration create-apprentices-table.migration.ts"
 ```
 
-#### 9.11 — features/business/products/infrastructure/persistence/seeders/products.seeder.ts
+![](images/clipboard-2689095192.png)
+
+#### 9.11 — apprentice.seeder.ts
 
 Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+![](images/clipboard-2674298006.png)
 
 **Sugerencia de commit (issue):**
 
