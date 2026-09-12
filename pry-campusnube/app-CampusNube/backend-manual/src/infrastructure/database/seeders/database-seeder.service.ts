@@ -1,11 +1,17 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  OnModuleInit,
+} from '@nestjs/common';
 
 import { seedCourses } from '../../../features/business/courses/infrastructure/persistence/seeders/courses.seeder.js';
-import { seedApprentices } from '../../../features/business/apprentices/infrastructure/persistence/seeders/apprentices.seeder.js';
+import { seedLearningContent } from '../../../features/business/learning-content/infrastructure/persistence/seeders/learning-content.seeder.js';
 
 @Injectable()
 export class DatabaseSeederService implements OnModuleInit {
-  private readonly logger = new Logger(DatabaseSeederService.name);
+  private readonly logger = new Logger(
+    DatabaseSeederService.name,
+  );
 
   async onModuleInit(): Promise<void> {
     if (process.env.NODE_ENV === 'production') {
@@ -14,7 +20,7 @@ export class DatabaseSeederService implements OnModuleInit {
 
     try {
       await seedCourses();
-      await seedApprentices();
+      await seedLearningContent();
 
       this.logger.log('✅ Seeders ejecutados');
     } catch (error: any) {
