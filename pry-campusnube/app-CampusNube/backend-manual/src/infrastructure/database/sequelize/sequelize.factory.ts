@@ -5,6 +5,7 @@ import { DatabaseDialect } from '../../../config/environment/env.interface.js';
 import { getSequelizeOptions } from './sequelize.options.js';
 
 import { CourseModel } from '../../../features/business/courses/infrastructure/persistence/models/course.model.js';
+import { ApprenticeModel } from '../../../features/business/apprentices/infrastructure/persistence/models/apprentice.model.js';
 import { EnrollmentModel } from '../../../features/business/enrollment/infrastructure/persistence/models/enrollment.model.js';
 
 const require = createRequire(import.meta.url);

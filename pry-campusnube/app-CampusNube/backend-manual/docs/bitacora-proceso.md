@@ -3063,9 +3063,13 @@ git add .
 git commit -m "feat: wire nest module products.module.ts"
 ```
 
+![](images/clipboard-48249126.png)
+
 #### 9.26 — Actualizar sequelize.factory.ts (registrar modelos)
 
 Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+![](images/clipboard-3972617020.png)
 
 **Sugerencia de commit (issue):**
 
