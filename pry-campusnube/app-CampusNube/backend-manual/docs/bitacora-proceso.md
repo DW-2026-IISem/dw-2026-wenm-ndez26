@@ -3705,36 +3705,19 @@ git add .
 git commit -m "feat: add dto create-module.dto.ts"
 ```
 
-#### 11.10 — features/auth/users/application/dto/update-user.dto.ts
+![](images/clipboard-2844420856.png)
 
-DTO de entrada/salida HTTP con `class-validator` / Swagger.
-
-**Archivo:** `src/features/auth/users/application/dto/update-user.dto.ts`
-
-``` bash
-mkdir -p src/features/auth/users/application/dto cat > src/features/auth/users/application/dto/update-user.dto.ts <<'EOF_BACKEND_IA' export { UpdateUserDto } from './create-user.dto'; EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "feat: add dto update-user.dto.ts"
-```
-
-#### 11.11 — features/auth/users/application/mappers/user.mapper.ts
+#### 11.11 —Module.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
-**Archivo:** `src/features/auth/users/application/mappers/user.mapper.ts`
-
-``` bash
-mkdir -p src/features/auth/users/application/mappers cat > src/features/auth/users/application/mappers/user.mapper.ts <<'EOF_BACKEND_IA' import { User } from '../../domain/entities/user.entity'; import { UserModel } from '../../infrastructure/persistence/models/user.model';  export class UserMapper {   static toDomain(model: UserModel): User {     return new User({       id: model.id,       username: model.username,       email: model.email,       password: model.password,       isActive: model.isActive,       avatar: model.avatar ?? undefined,       createdAt: model.createdAt,       updatedAt: model.updatedAt,     });   }    static toPersistence(entity: User): Partial<UserModel> {     return {       id: entity.id,       username: entity.username,       email: entity.email,       password: entity.password,       isActive: entity.isActive,       avatar: entity.avatar ?? null,     };   }    static toResponse(entity: User) {     return {       id: entity.id,       username: entity.username,       email: entity.email,       isActive: entity.isActive,       avatar: entity.avatar,       createdAt: entity.createdAt,       updatedAt: entity.updatedAt,     };   } } EOF_BACKEND_IA
-```
+![](images/clipboard-3892444019.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add mapper user.mapper.ts"
+git add .
+git commit -m "feat: add mapper module.mapper.ts"
 ```
 
 #### 11.12 — features/auth/users/application/use-cases/create-user.use-case.ts
