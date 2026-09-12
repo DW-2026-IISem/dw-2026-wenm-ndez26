@@ -4,6 +4,7 @@ import {
   IModuleRepository,
   MODULE_REPOSITORY,
   ModuleFindAllParams,
+  ModuleUpdateData,
 } from '../../../domain/interfaces/module-repository.interface.js';
 import { ModuleModel } from '../models/module.model.js';
 
@@ -39,7 +40,6 @@ export class SequelizeModuleRepository implements IModuleRepository {
 
   async findById(id: number): Promise<ModuleEntity | null> {
     const model = await ModuleModel.findByPk(id);
-
     return model ? this.toDomain(model) : null;
   }
 
@@ -54,7 +54,7 @@ export class SequelizeModuleRepository implements IModuleRepository {
 
   async update(
     id: number,
-    data: Partial<ModuleEntity>,
+    data: ModuleUpdateData,
   ): Promise<ModuleEntity> {
     const model = await ModuleModel.findByPk(id);
 
@@ -62,15 +62,17 @@ export class SequelizeModuleRepository implements IModuleRepository {
       throw new Error(`Module ${id} not found`);
     }
 
-    await model.update(data);
+    const updateData: Record<string, unknown> = {
+      ...(data as Record<string, unknown>),
+    };
+
+    await model.update(updateData);
 
     return this.toDomain(model);
   }
 
   async delete(id: number): Promise<void> {
-    await ModuleModel.destroy({
-      where: { id },
-    });
+    await ModuleModel.destroy({ where: { id } });
   }
 
   private toDomain(model: ModuleModel): ModuleEntity {

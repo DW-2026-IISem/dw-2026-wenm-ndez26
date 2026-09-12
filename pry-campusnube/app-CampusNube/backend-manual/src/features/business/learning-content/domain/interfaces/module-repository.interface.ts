@@ -8,11 +8,18 @@ export interface ModuleFindAllParams {
   limit?: number;
 }
 
+export interface ModuleUpdateData {
+  courseId?: number;
+  title?: string;
+  description?: string;
+  order?: number;
+}
+
 export interface IModuleRepository {
   create(module: ModuleEntity): Promise<ModuleEntity>;
   findAll(params?: ModuleFindAllParams): Promise<ModuleEntity[]>;
   findById(id: number): Promise<ModuleEntity | null>;
   findByCourseId(courseId: number): Promise<ModuleEntity[]>;
-  update(id: number, data: Partial<ModuleEntity>): Promise<ModuleEntity>;
+  update(id: number, data: ModuleUpdateData): Promise<ModuleEntity>;
   delete(id: number): Promise<void>;
 }

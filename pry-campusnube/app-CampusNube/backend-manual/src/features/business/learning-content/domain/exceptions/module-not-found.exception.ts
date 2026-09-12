@@ -1,7 +1,7 @@
-import { EntityNotFoundException } from '../../../../../common/exceptions/entity-not-found.exception.js';
+import { NotFoundException } from '@nestjs/common';
 
-export class ModuleNotFoundException extends EntityNotFoundException {
+export class ModuleNotFoundException extends NotFoundException {
   constructor(identifier: string | number) {
-    super('Módulo', identifier);
+    super(`Módulo no encontrado: ${identifier}`);
   }
 }
