@@ -4078,39 +4078,38 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case get-role.use-case.ts"
+git add .
+git commit -m "feat: add use case get-role.use-case.ts"
 ```
 
-#### 12.14 — features/auth/roles/application/use-cases/list-roles.use-case.ts
+![](images/clipboard-4245019113.png)
+
+#### 12.14 — list-roles.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/auth/roles/application/use-cases/list-roles.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/application/use-cases cat > src/features/auth/roles/application/use-cases/list-roles.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ROLE_REPOSITORY } from '../../domain/interfaces/role-repository.interface'; import type { IRoleRepository } from '../../domain/interfaces/role-repository.interface'; import { RoleMapper } from '../mappers/role.mapper';  @Injectable() export class ListRolesUseCase {   constructor(     @Inject(ROLE_REPOSITORY)     private readonly roleRepository: IRoleRepository,   ) {}    async execute() {     const roles = await this.roleRepository.findAll();     return roles.map(RoleMapper.toResponse);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-4057030284.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case list-roles.use-case.ts"
+git add . 
+git commit -m "feat: add use case list-roles.use-case.ts"
 ```
 
-#### 12.15 — features/auth/roles/application/use-cases/update-role.use-case.ts
+![](images/clipboard-1221657910.png)
+
+#### 12.15 — update-role.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/auth/roles/application/use-cases/update-role.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/application/use-cases cat > src/features/auth/roles/application/use-cases/update-role.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { RoleNameExistsException } from '../../domain/exceptions/role-name-exists.exception'; import { RoleNotFoundException } from '../../domain/exceptions/role-not-found.exception'; import { ROLE_REPOSITORY } from '../../domain/interfaces/role-repository.interface'; import type { IRoleRepository } from '../../domain/interfaces/role-repository.interface'; import { UpdateRoleDto } from '../dto/update-role.dto'; import { RoleMapper } from '../mappers/role.mapper';  @Injectable() export class UpdateRoleUseCase {   constructor(     @Inject(ROLE_REPOSITORY)     private readonly roleRepository: IRoleRepository,   ) {}    async execute(id: number, dto: UpdateRoleDto) {     const existing = await this.roleRepository.findById(id);     if (!existing) {       throw new RoleNotFoundException(id);     }      if (dto.name && dto.name !== existing.name) {       const nameTaken = await this.roleRepository.findByName(dto.name);       if (nameTaken) {         throw new RoleNameExistsException(dto.name);       }     }      const updated = await this.roleRepository.update(id, dto);     return RoleMapper.toResponse(updated);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-813138231.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case update-role.use-case.ts"
+git add .
+git commit -m "feat: add use case update-role.use-case.ts"
 ```
 
 #### 12.16 — features/auth/roles/presentation/http/controllers/roles.controller.ts
