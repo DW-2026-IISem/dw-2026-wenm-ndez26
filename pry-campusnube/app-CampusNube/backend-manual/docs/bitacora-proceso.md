@@ -3720,79 +3720,65 @@ git add .
 git commit -m "feat: add mapper module.mapper.ts"
 ```
 
-#### 11.12 — features/auth/users/application/use-cases/create-user.use-case.ts
+![](images/clipboard-214756162.png)
 
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+#### 11.12 — create-module.use-case.ts
 
-**Archivo:** `src/features/auth/users/application/use-cases/create-user.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/users/application/use-cases cat > src/features/auth/users/application/use-cases/create-user.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { Status } from '../../../../../common/enums/status.enum'; import { PASSWORD_HASHER } from '../../../../../infrastructure/security/hashing/password-hasher.interface'; import type { IPasswordHasher } from '../../../../../infrastructure/security/hashing/password-hasher.interface'; import { User } from '../../domain/entities/user.entity'; import { UserEmailExistsException } from '../../domain/exceptions/user-email-exists.exception'; import { UserUsernameExistsException } from '../../domain/exceptions/user-username-exists.exception'; import { USER_REPOSITORY } from '../../domain/interfaces/user-repository.interface'; import type { IUserRepository } from '../../domain/interfaces/user-repository.interface'; import { CreateUserDto } from '../dto/create-user.dto'; import { UserMapper } from '../mappers/user.mapper';  @Injectable() export class CreateUserUseCase {   constructor(     @Inject(USER_REPOSITORY)     private readonly userRepository: IUserRepository,     @Inject(PASSWORD_HASHER)     private readonly passwordHasher: IPasswordHasher,   ) {}    async execute(dto: CreateUserDto) {     const existingEmail = await this.userRepository.findByEmail(dto.email);     if (existingEmail) {       throw new UserEmailExistsException(dto.email);     }      const existingUsername = await this.userRepository.findByUsername(dto.username);     if (existingUsername) {       throw new UserUsernameExistsException(dto.username);     }      const hashedPassword = await this.passwordHasher.hash(dto.password);      const user = new User({       username: dto.username,       email: dto.email,       password: hashedPassword,       isActive: dto.isActive ?? Status.ACTIVE,       avatar: dto.avatar,     });      const created = await this.userRepository.create(user);     return UserMapper.toResponse(created);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-2248085620.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case create-user.use-case.ts"
+git add . 
+git commit -m "feat: add use case create-module.use-case.ts"
 ```
 
-#### 11.13 — features/auth/users/application/use-cases/delete-user.use-case.ts
+![](images/clipboard-3883952270.png)
 
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+#### 11.13 — delete-module.use-case.ts
 
-**Archivo:** `src/features/auth/users/application/use-cases/delete-user.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/users/application/use-cases cat > src/features/auth/users/application/use-cases/delete-user.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { USER_REPOSITORY } from '../../domain/interfaces/user-repository.interface'; import type { IUserRepository } from '../../domain/interfaces/user-repository.interface'; import { UserNotFoundException } from '../../domain/exceptions/user-not-found.exception';  @Injectable() export class DeleteUserUseCase {   constructor(     @Inject(USER_REPOSITORY)     private readonly userRepository: IUserRepository,   ) {}    async execute(id: number): Promise<void> {     const existing = await this.userRepository.findById(id);     if (!existing) {       throw new UserNotFoundException(id);     }     await this.userRepository.delete(id);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-1430189016.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case delete-user.use-case.ts"
+git add . 
+git commit -m "feat: add use case create-module.use-case.ts"
 ```
 
-#### 11.14 — features/auth/users/application/use-cases/get-user.use-case.ts
+![](images/clipboard-1615885913.png)
 
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+#### 11.14 — get-module.use-case.ts
 
-**Archivo:** `src/features/auth/users/application/use-cases/get-user.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/users/application/use-cases cat > src/features/auth/users/application/use-cases/get-user.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { USER_REPOSITORY } from '../../domain/interfaces/user-repository.interface'; import type { IUserRepository } from '../../domain/interfaces/user-repository.interface'; import { UserNotFoundException } from '../../domain/exceptions/user-not-found.exception'; import { UserMapper } from '../mappers/user.mapper';  @Injectable() export class GetUserUseCase {   constructor(     @Inject(USER_REPOSITORY)     private readonly userRepository: IUserRepository,   ) {}    async execute(id: number) {     const user = await this.userRepository.findById(id);     if (!user) {       throw new UserNotFoundException(id);     }     return UserMapper.toResponse(user);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-2502659206.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case get-user.use-case.ts"
+git add . 
+git commit -m "feat: add use case get-module.use-case.ts"
 ```
 
-#### 11.15 — features/auth/users/application/use-cases/list-users.use-case.ts
+![](images/clipboard-3767043450.png)
 
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+#### 11.15 — list.modules.use-case.ts
 
-**Archivo:** `src/features/auth/users/application/use-cases/list-users.use-case.ts`
-
-``` bash
-mkdir -p src/features/auth/users/application/use-cases cat > src/features/auth/users/application/use-cases/list-users.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { USER_REPOSITORY } from '../../domain/interfaces/user-repository.interface'; import type { IUserRepository } from '../../domain/interfaces/user-repository.interface'; import { UserMapper } from '../mappers/user.mapper';  @Injectable() export class ListUsersUseCase {   constructor(     @Inject(USER_REPOSITORY)     private readonly userRepository: IUserRepository,   ) {}    async execute() {     const users = await this.userRepository.findAll();     return users.map(UserMapper.toResponse);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-872425115.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case list-users.use-case.ts"
+git add . 
+git commit -m "feat: add use case list-modules.use-case.ts"
 ```
 
-#### 11.16 — features/auth/users/application/use-cases/update-user.use-case.ts
+![](images/clipboard-546287132.png)
 
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+#### 11.16 — update-module.dto-case.ts
 
-**Archivo:** `src/features/auth/users/application/use-cases/update-user.use-case.ts`
+![](images/clipboard-2645009346.png)
 
-``` bash
-mkdir -p src/features/auth/users/application/use-cases cat > src/features/auth/users/application/use-cases/update-user.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { PASSWORD_HASHER } from '../../../../../infrastructure/security/hashing/password-hasher.interface'; import type { IPasswordHasher } from '../../../../../infrastructure/security/hashing/password-hasher.interface'; import { UserEmailExistsException } from '../../domain/exceptions/user-email-exists.exception'; import { UserNotFoundException } from '../../domain/exceptions/user-not-found.exception'; import { UserUsernameExistsException } from '../../domain/exceptions/user-username-exists.exception'; import { USER_REPOSITORY } from '../../domain/interfaces/user-repository.interface'; import type { IUserRepository } from '../../domain/interfaces/user-repository.interface'; import { UpdateUserDto } from '../dto/update-user.dto'; import { UserMapper } from '../mappers/user.mapper';  @Injectable() export class UpdateUserUseCase {   constructor(     @Inject(USER_REPOSITORY)     private readonly userRepository: IUserRepository,     @Inject(PASSWORD_HASHER)     private readonly passwordHasher: IPasswordHasher,   ) {}    async execute(id: number, dto: UpdateUserDto) {     const existing = await this.userRepository.findById(id);     if (!existing) {       throw new UserNotFoundException(id);     }      if (dto.email && dto.email !== existing.email) {       const emailTaken = await this.userRepository.findByEmail(dto.email);       if (emailTaken) {         throw new UserEmailExistsException(dto.email);       }     }      if (dto.username && dto.username !== existing.username) {       const usernameTaken = await this.userRepository.findByUsername(dto.username);       if (usernameTaken) {         throw new UserUsernameExistsException(dto.username);       }     }      const updateData: Partial<typeof existing> = { ...dto };     if (dto.password) {       updateData.password = await this.passwordHasher.hash(dto.password);     }      const updated = await this.userRepository.update(id, updateData);     return UserMapper.toResponse(updated);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-1821694895.png)
 
 **Sugerencia de commit (issue):**
 
