@@ -3450,15 +3450,13 @@ git add .
 git commit -m "chore: add barrel export learning-content"
 ```
 
-#### 10.22 — features/business/sales/sales.module.ts
+![](images/clipboard-2040099810.png)
+
+#### 10.22 — learning-content.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
 
-**Archivo:** `src/features/business/sales/sales.module.ts`
-
-``` bash
-mkdir -p src/features/business/sales cat > src/features/business/sales/sales.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ClientsModule } from '../clients/clients.module'; import { ProductsModule } from '../products/products.module'; import { SALE_REPOSITORY } from './domain/interfaces/sale-repository.interface'; import { SaleRepository } from './infrastructure/persistence/repositories/sale.repository'; import { CreateSaleUseCase } from './application/use-cases/create-sale.use-case'; import { CancelSaleUseCase } from './application/use-cases/cancel-sale.use-case'; import { GetSaleUseCase } from './application/use-cases/get-sale.use-case'; import { ListSalesUseCase } from './application/use-cases/list-sales.use-case'; import { SalesController } from './presentation/http/controllers/sales.controller';  @Module({   imports: [ClientsModule, ProductsModule],   controllers: [SalesController],   providers: [     SaleRepository,     { provide: SALE_REPOSITORY, useExisting: SaleRepository },     CreateSaleUseCase,     CancelSaleUseCase,     GetSaleUseCase,     ListSalesUseCase,   ],   exports: [SALE_REPOSITORY], }) export class SalesModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-1689439489.png)
 
 **Sugerencia de commit (issue):**
 
