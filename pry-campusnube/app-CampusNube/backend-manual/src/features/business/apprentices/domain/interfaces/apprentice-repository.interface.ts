@@ -6,7 +6,7 @@ export const APPRENTICE_REPOSITORY = 'APPRENTICE_REPOSITORY';
 export interface ApprenticeFindAllParams {
   page?: number;
   limit?: number;
-  search?: string;
+  name?: string;
 }
 
 export interface IApprenticeRepository {

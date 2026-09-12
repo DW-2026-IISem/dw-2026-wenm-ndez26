@@ -12,6 +12,7 @@ const require = createRequire(import.meta.url);
 
 export const ALL_MODELS = [
   CourseModel,
+  ApprenticeModel,
   EnrollmentModel,
 ];
 
@@ -64,4 +65,3 @@ export async function createSequelizeInstance(
 
   return sequelize;
 }
-
