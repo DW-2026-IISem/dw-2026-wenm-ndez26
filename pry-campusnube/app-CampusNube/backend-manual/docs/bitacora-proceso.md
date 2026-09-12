@@ -3572,18 +3572,17 @@ Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain entity user.entity.ts"
+git add .
+git commit -m "feat: add domain entity module.entity.ts"
 ```
 
-#### 11.2 — features/auth/users/domain/exceptions/user-email-exists.exception.ts
+![](images/clipboard-2140109242.png)
+
+#### 11.2 — ivalid-module-order.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-**Archivo:** `src/features/auth/users/domain/exceptions/user-email-exists.exception.ts`
-
-``` bash
-mkdir -p src/features/auth/users/domain/exceptions cat > src/features/auth/users/domain/exceptions/user-email-exists.exception.ts <<'EOF_BACKEND_IA' import { DomainException } from '../../../../../common/exceptions/domain.exception';  export class UserEmailExistsException extends DomainException {   constructor(email: string) {     super(`El email ${email} ya está registrado`);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-4166170519.png)
 
 **Sugerencia de commit (issue):**
 
