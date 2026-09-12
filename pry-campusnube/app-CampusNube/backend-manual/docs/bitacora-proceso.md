@@ -3315,132 +3315,96 @@ git add .
 git commit -m "feat: add dto lesson-filter.dto.ts"
 ```
 
-#### 10.13 — features/business/sales/application/dto/sale-response.dto.ts
+![](images/clipboard-365026591.png)
+
+#### 10.13 — lesson-response.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/sales/application/dto/sale-response.dto.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/dto cat > src/features/business/sales/application/dto/sale-response.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty } from '@nestjs/swagger'; import { Status } from '../../../../../common/enums/status.enum';  export class SaleItemResponseDto {   @ApiProperty({ example: 1 })   id: number;    @ApiProperty({ example: 1 })   productId: number;    @ApiProperty({ example: 2 })   quantity: number;    @ApiProperty({ example: 59999 })   unitPrice: number;    @ApiProperty({ example: 119998 })   total: number; }  export class SaleResponseDto {   @ApiProperty({ example: 1 })   id: number;    @ApiProperty()   saleDate: Date;    @ApiProperty({ example: 119998 })   subtotal: number;    @ApiProperty({ example: 22799 })   tax: number;    @ApiProperty({ example: 0 })   discounts: number;    @ApiProperty({ example: 142797 })   total: number;    @ApiProperty({ enum: Status, example: Status.ACTIVE })   status: Status;    @ApiProperty({ example: 1 })   clientId: number;    @ApiProperty({ type: [SaleItemResponseDto] })   items: SaleItemResponseDto[];    @ApiProperty()   createdAt: Date;    @ApiProperty()   updatedAt: Date; } EOF_BACKEND_IA
-```
+![](images/clipboard-1039594249.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto sale-response.dto.ts"
+git add . 
+git commit -m "feat: add dto sale-response.dto.ts"
 ```
 
 #### 10.14 — features/business/sales/application/mappers/sale.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
-**Archivo:** `src/features/business/sales/application/mappers/sale.mapper.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/mappers cat > src/features/business/sales/application/mappers/sale.mapper.ts <<'EOF_BACKEND_IA' import { Status } from '../../../../../common/enums/status.enum'; import { Sale, SaleItem } from '../../domain/entities/sale.entity'; import {   SaleItemResponseDto,   SaleResponseDto, } from '../dto/sale-response.dto'; import { SaleModel } from '../../infrastructure/persistence/models/sale.model'; import { ProductSaleModel } from '../../infrastructure/persistence/models/product-sale.model';  export class SaleMapper {   static toDomain(saleModel: SaleModel, itemModels: ProductSaleModel[]): Sale {     const items = itemModels.map((item) =>       SaleItem.reconstitute({         id: item.id,         productId: item.productId,         quantity: item.quantity,         unitPrice: Number(item.unitPrice),         total: Number(item.total),         saleId: item.saleId,       }),     );      return Sale.reconstitute({       id: saleModel.id,       saleDate: saleModel.saleDate,       subtotal: Number(saleModel.subtotal),       tax: Number(saleModel.tax),       discounts: Number(saleModel.discounts),       total: Number(saleModel.total),       status: saleModel.status,       clientId: saleModel.clientId,       items,       createdAt: saleModel.createdAt,       updatedAt: saleModel.updatedAt,     });   }    static toResponse(entity: Sale): SaleResponseDto {     return {       id: entity.id!,       saleDate: entity.saleDate,       subtotal: entity.subtotal,       tax: entity.tax,       discounts: entity.discounts,       total: entity.total,       status: entity.status,       clientId: entity.clientId,       items: entity.items.map((item) => SaleMapper.toItemResponse(item)),       createdAt: entity.createdAt!,       updatedAt: entity.updatedAt!,     };   }    static toItemResponse(item: SaleItem): SaleItemResponseDto {     return {       id: item.id!,       productId: item.productId,       quantity: item.quantity,       unitPrice: item.unitPrice,       total: item.total,     };   }    static toPersistence(entity: Sale): Partial<SaleModel> {     return {       id: entity.id,       saleDate: entity.saleDate,       subtotal: entity.subtotal,       tax: entity.tax,       discounts: entity.discounts,       total: entity.total,       status: entity.status ?? Status.ACTIVE,       clientId: entity.clientId,     };   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add mapper sale.mapper.ts"
+git add . 
+git commit -m "feat: add mapper sale.mapper.ts"
 ```
 
 #### 10.15 — features/business/sales/application/use-cases/cancel-sale.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/business/sales/application/use-cases/cancel-sale.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/cancel-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { Status } from '../../../../../common/enums/status.enum'; import { SaleNotFoundException } from '../../domain/exceptions/sale-not-found.exception'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class CancelSaleUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(id: number) {     const sale = await this.saleRepository.findById(id);     if (!sale) {       throw new SaleNotFoundException(id);     }      if (sale.status === Status.INACTIVE) {       return SaleMapper.toResponse(sale);     }      sale.cancel();     const updated = await this.saleRepository.update(sale);     return SaleMapper.toResponse(updated);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case cancel-sale.use-case.ts"
+git add . 
+git commit -m "feat: add use case cancel-sale.use-case.ts"
 ```
 
 #### 10.16 — features/business/sales/application/use-cases/create-sale.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/business/sales/application/use-cases/create-sale.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/create-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ClientNotFoundException } from '../../../clients/domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../../clients/domain/interfaces/client-repository.interface'; import { ProductNotFoundException } from '../../../products/domain/exceptions/product-not-found.exception'; import {   type IProductRepository,   PRODUCT_REPOSITORY, } from '../../../products/domain/interfaces/product-repository.interface'; import { InsufficientStockException } from '../../domain/exceptions/insufficient-stock.exception'; import { Sale, SaleItem } from '../../domain/entities/sale.entity'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleCalculatorDomainService } from '../../domain/services/sale-calculator.domain-service'; import { CreateSaleDto } from '../dto/create-sale.dto'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class CreateSaleUseCase {   private readonly saleCalculator = new SaleCalculatorDomainService();    constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,     @Inject(PRODUCT_REPOSITORY)     private readonly productRepository: IProductRepository,   ) {}    async execute(dto: CreateSaleDto) {     const client = await this.clientRepository.findById(dto.clientId);     if (!client) {       throw new ClientNotFoundException(dto.clientId);     }      const saleItems: SaleItem[] = [];      for (const itemDto of dto.items) {       const product = await this.productRepository.findById(itemDto.productId);       if (!product) {         throw new ProductNotFoundException(itemDto.productId);       }        if (product.quantity < itemDto.quantity) {         throw new InsufficientStockException(           product.name,           product.quantity,           itemDto.quantity,         );       }        saleItems.push(         SaleItem.create({           productId: itemDto.productId,           quantity: itemDto.quantity,           unitPrice: itemDto.unitPrice,         }),       );     }      const totals = this.saleCalculator.calculateTotals(       dto.items,       dto.tax ?? 0,       dto.discounts ?? 0,     );      const sale = Sale.create({       saleDate: new Date(),       subtotal: totals.subtotal,       tax: totals.tax,       discounts: totals.discounts,       total: totals.total,       clientId: dto.clientId,       items: saleItems,     });      const created = await this.saleRepository.create(sale);     return SaleMapper.toResponse(created);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case create-sale.use-case.ts"
+git add .
+git commit -m "feat: add use case create-sale.use-case.ts"
 ```
 
 #### 10.17 — features/business/sales/application/use-cases/get-sale.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/business/sales/application/use-cases/get-sale.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/get-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { SaleNotFoundException } from '../../domain/exceptions/sale-not-found.exception'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class GetSaleUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(id: number) {     const sale = await this.saleRepository.findById(id);     if (!sale) {       throw new SaleNotFoundException(id);     }      return SaleMapper.toResponse(sale);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case get-sale.use-case.ts"
+git add . 
+git commit -m "feat: add use case get-sale.use-case.ts"
 ```
 
 #### 10.18 — features/business/sales/application/use-cases/list-sales.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/business/sales/application/use-cases/list-sales.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/list-sales.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleFilterDto } from '../dto/sale-filter.dto'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class ListSalesUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(filter: SaleFilterDto) {     const result = await this.saleRepository.findAll(filter);     return {       items: result.items.map((sale) => SaleMapper.toResponse(sale)),       meta: result.meta,     };   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case list-sales.use-case.ts"
+git add . 
+git commit -m "feat: add use case list-sales.use-case.ts"
 ```
 
 #### 10.19 — features/business/sales/presentation/http/serializers/sale.serializer.ts
 
 Serializer de presentación (forma estable de la respuesta HTTP).
 
-**Archivo:** `src/features/business/sales/presentation/http/serializers/sale.serializer.ts`
-
-``` bash
-mkdir -p src/features/business/sales/presentation/http/serializers cat > src/features/business/sales/presentation/http/serializers/sale.serializer.ts <<'EOF_BACKEND_IA' import { Sale } from '../../../domain/entities/sale.entity'; import { SaleResponseDto } from '../../../application/dto/sale-response.dto'; import { SaleMapper } from '../../../application/mappers/sale.mapper';  export class SaleSerializer {   static serialize(entity: Sale): SaleResponseDto {     return SaleMapper.toResponse(entity);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add serializer sale.serializer.ts"
+git add . 
+git commit -m "feat: add serializer sale.serializer.ts"
 ```
 
 #### 10.20 — features/business/sales/presentation/http/controllers/sales.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
-**Archivo:** `src/features/business/sales/presentation/http/controllers/sales.controller.ts`
-
-``` bash
-mkdir -p src/features/business/sales/presentation/http/controllers cat > src/features/business/sales/presentation/http/controllers/sales.controller.ts <<'EOF_BACKEND_IA' import {   Body,   Controller,   Get,   Param,   Patch,   Post,   Query, } from '@nestjs/common'; import {   ApiCreatedResponse,   ApiOkResponse,   ApiOperation,   ApiTags, } from '@nestjs/swagger'; import { ParsePositiveIntPipe } from '../../../../../../common/pipes/parse-positive-int.pipe'; import { CreateSaleDto } from '../../../application/dto/create-sale.dto'; import { SaleFilterDto } from '../../../application/dto/sale-filter.dto'; import { SaleResponseDto } from '../../../application/dto/sale-response.dto'; import { CreateSaleUseCase } from '../../../application/use-cases/create-sale.use-case'; import { CancelSaleUseCase } from '../../../application/use-cases/cancel-sale.use-case'; import { GetSaleUseCase } from '../../../application/use-cases/get-sale.use-case'; import { ListSalesUseCase } from '../../../application/use-cases/list-sales.use-case';  @ApiTags('Sales') @Controller('sales') export class SalesController {   constructor(     private readonly createSaleUseCase: CreateSaleUseCase,     private readonly cancelSaleUseCase: CancelSaleUseCase,     private readonly getSaleUseCase: GetSaleUseCase,     private readonly listSalesUseCase: ListSalesUseCase,   ) {}    @Post()   @ApiOperation({ summary: 'Crear una venta' })   @ApiCreatedResponse({ type: SaleResponseDto })   create(@Body() dto: CreateSaleDto) {     return this.createSaleUseCase.execute(dto);   }    @Get()   @ApiOperation({ summary: 'Listar ventas' })   @ApiOkResponse({ type: [SaleResponseDto] })   findAll(@Query() filter: SaleFilterDto) {     return this.listSalesUseCase.execute(filter);   }    @Get(':id')   @ApiOperation({ summary: 'Obtener una venta por ID' })   @ApiOkResponse({ type: SaleResponseDto })   findOne(@Param('id', ParsePositiveIntPipe) id: number) {     return this.getSaleUseCase.execute(id);   }    @Patch(':id/cancel')   @ApiOperation({ summary: 'Cancelar una venta' })   @ApiOkResponse({ type: SaleResponseDto })   cancel(@Param('id', ParsePositiveIntPipe) id: number) {     return this.cancelSaleUseCase.execute(id);   } } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add controller sales.controller.ts"
+git add . 
+git commit -m "feat: add controller sales.controller.ts"
 ```
 
 #### 10.21 — features/business/sales/index.ts
