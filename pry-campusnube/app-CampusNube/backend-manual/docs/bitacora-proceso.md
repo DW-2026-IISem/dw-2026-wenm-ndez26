@@ -2898,20 +2898,19 @@ git add .
 git commit -m "feat: add dto apprentice-response.dto.ts"
 ```
 
+![](images/clipboard-3517586693.png)
+
 #### 9.15 — features/business/products/application/dto/update-product.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/products/application/dto/update-product.dto.ts`
-
-``` bash
-mkdir -p src/features/business/products/application/dto cat > src/features/business/products/application/dto/update-product.dto.ts <<'EOF_BACKEND_IA' import { PartialType } from '@nestjs/mapped-types'; import { CreateProductDto } from './create-product.dto';  export class UpdateProductDto extends PartialType(CreateProductDto) {} EOF_BACKEND_IA
-```
+![](images/clipboard-1020193586.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto update-product.dto.ts"
+git add . 
+git commit -m "feat: add dto update-product.dto.ts"
 ```
 
 #### 9.16 — features/business/products/application/mappers/product.mapper.ts
