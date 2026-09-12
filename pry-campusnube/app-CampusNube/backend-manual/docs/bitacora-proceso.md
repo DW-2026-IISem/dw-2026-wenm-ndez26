@@ -3372,12 +3372,16 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 
 ``` bash
 git add .
-git commit -m "feat: add use case create-sale.use-case.ts"
+git commit -m "feat: add use case create-lesson.use-case.ts"
 ```
 
-#### 10.17 — features/business/sales/application/use-cases/get-sale.use-case.ts
+![](images/clipboard-2446018057.png)
+
+#### 10.17 — get-lesson.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+![](images/clipboard-1656766982.png)
 
 **Sugerencia de commit (issue):**
 
