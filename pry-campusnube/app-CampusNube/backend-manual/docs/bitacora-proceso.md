@@ -2808,58 +2808,56 @@ git add .
 git commit -m "feat: add sequelize model product.model.ts"
 ```
 
+![](images/clipboard-1923879589.png)
+
 #### 9.9 —apprentices.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
+
+![](images/clipboard-3805942873.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add sequelize repository product.repository.ts"
+git commit -m "feat: add sequelize repository apprentice.repository.ts"
 ```
+
+![](images/clipboard-1428094715.png)
 
 #### 9.10 — apprentice-table.migration.ts
 
 Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el esquema.
 
+![](images/clipboard-3486320745.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .
-git commit -m "chore: add migration create-products-table.migration.ts"
+git commit -m "chore: add migration create-apprentices-table.migration.ts"
 ```
 
 #### 9.11 — features/business/products/infrastructure/persistence/seeders/products.seeder.ts
 
 Seeder de datos iniciales para desarrollo y verificación física en BD.
 
-**Archivo:** `src/features/business/products/infrastructure/persistence/seeders/products.seeder.ts`
-
-``` bash
-mkdir -p src/features/business/products/infrastructure/persistence/seeders cat > src/features/business/products/infrastructure/persistence/seeders/products.seeder.ts <<'EOF_BACKEND_IA' import { ProductModel } from '../models/product.model'; import { Status } from '../../../../../../common/enums/status.enum';  export async function seedProducts(): Promise<void> {   const count = await ProductModel.count();   if (count > 0) {     return;   }    await ProductModel.bulkCreate([     {       name: 'Smartphone X',       brand: 'TechBrand',       price: 59999,       minStock: 5,       quantity: 50,       productTypeId: 1,       status: Status.ACTIVE,     },     {       name: 'Wireless Headphones',       brand: 'AudioPro',       price: 12999,       minStock: 10,       quantity: 100,       productTypeId: 1,       status: Status.ACTIVE,     },   ]); } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add seeder products.seeder.ts"
+git add . 
+git commit -m "chore: add seeder products.seeder.ts"
 ```
 
 #### 9.12 — features/business/products/application/dto/create-product.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/products/application/dto/create-product.dto.ts`
-
-``` bash
-mkdir -p src/features/business/products/application/dto cat > src/features/business/products/application/dto/create-product.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'; import {   IsInt,   IsNotEmpty,   IsNumber,   IsOptional,   IsPositive,   IsString,   MaxLength,   Min, } from 'class-validator';  export class CreateProductDto {   @ApiProperty({ example: 'Smartphone X' })   @IsString()   @IsNotEmpty()   @MaxLength(150)   name: string;    @ApiProperty({ example: 'TechBrand' })   @IsString()   @IsNotEmpty()   @MaxLength(100)   brand: string;    @ApiProperty({ example: 59999 })   @IsNumber()   @IsPositive()   price: number;    @ApiProperty({ example: 5, default: 0 })   @IsInt()   @Min(0)   minStock: number;    @ApiProperty({ example: 50, default: 0 })   @IsInt()   @Min(0)   quantity: number;    @ApiProperty({ example: 1 })   @IsInt()   @IsPositive()   productTypeId: number; } EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto create-product.dto.ts"
+git add .
+git commit -m "feat: add dto create-product.dto.ts"
 ```
 
 #### 9.13 — features/business/products/application/dto/product-filter.dto.ts
