@@ -50,6 +50,28 @@ export class Enrollment {
     return new Enrollment(props);
   }
 
+  update(
+    props: Partial<
+      Omit<EnrollmentProps, 'id' | 'createdAt' | 'updatedAt'>
+    >,
+  ): void {
+    if (props.apprenticeId !== undefined) {
+      this.apprenticeId = props.apprenticeId;
+    }
+
+    if (props.courseId !== undefined) {
+      this.courseId = props.courseId;
+    }
+
+    if (props.status !== undefined) {
+      this.status = props.status;
+    }
+
+    if (props.enrolledAt !== undefined) {
+      this.enrolledAt = props.enrolledAt;
+    }
+  }
+
   deactivate(): void {
     this.status = Status.INACTIVE;
   }
