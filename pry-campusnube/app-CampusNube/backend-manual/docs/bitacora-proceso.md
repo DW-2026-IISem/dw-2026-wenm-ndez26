@@ -3327,18 +3327,22 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
 ``` bash
 git add . 
-git commit -m "feat: add dto sale-response.dto.ts"
+git commit -m "feat: add dto lesson-response.dto.ts"
 ```
 
-#### 10.14 — features/business/sales/application/mappers/sale.mapper.ts
+![](images/clipboard-1120039225.png)
+
+#### 10.14 — lesson.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
+
+![](images/clipboard-709960031.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add mapper sale.mapper.ts"
+git commit -m "feat: add mapper lesson.mapper.ts"
 ```
 
 #### 10.15 — features/business/sales/application/use-cases/cancel-sale.use-case.ts
