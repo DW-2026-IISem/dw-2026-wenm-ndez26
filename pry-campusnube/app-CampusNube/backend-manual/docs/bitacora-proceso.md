@@ -4112,20 +4112,19 @@ git add .
 git commit -m "feat: add use case update-role.use-case.ts"
 ```
 
-#### 12.16 — features/auth/roles/presentation/http/controllers/roles.controller.ts
+![](images/clipboard-297505592.png)
+
+#### 12.16 — roles.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
-**Archivo:** `src/features/auth/roles/presentation/http/controllers/roles.controller.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/presentation/http/controllers cat > src/features/auth/roles/presentation/http/controllers/roles.controller.ts <<'EOF_BACKEND_IA' import {   Body,   Controller,   Delete,   Get,   Param,   ParseIntPipe,   Post,   Put, } from '@nestjs/common'; import { CreateRoleDto } from '../../../application/dto/create-role.dto'; import { UpdateRoleDto } from '../../../application/dto/update-role.dto'; import { CreateRoleUseCase } from '../../../application/use-cases/create-role.use-case'; import { DeleteRoleUseCase } from '../../../application/use-cases/delete-role.use-case'; import { GetRoleUseCase } from '../../../application/use-cases/get-role.use-case'; import { ListRolesUseCase } from '../../../application/use-cases/list-roles.use-case'; import { UpdateRoleUseCase } from '../../../application/use-cases/update-role.use-case';  @Controller('roles') export class RolesController {   constructor(     private readonly createRoleUseCase: CreateRoleUseCase,     private readonly listRolesUseCase: ListRolesUseCase,     private readonly getRoleUseCase: GetRoleUseCase,     private readonly updateRoleUseCase: UpdateRoleUseCase,     private readonly deleteRoleUseCase: DeleteRoleUseCase,   ) {}    @Post()   create(@Body() dto: CreateRoleDto) {     return this.createRoleUseCase.execute(dto);   }    @Get()   findAll() {     return this.listRolesUseCase.execute();   }    @Get(':id')   findOne(@Param('id', ParseIntPipe) id: number) {     return this.getRoleUseCase.execute(id);   }    @Put(':id')   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateRoleDto) {     return this.updateRoleUseCase.execute(id, dto);   }    @Delete(':id')   async remove(@Param('id', ParseIntPipe) id: number) {     await this.deleteRoleUseCase.execute(id);     return { message: 'Rol eliminado' };   } } EOF_BACKEND_IA
-```
+![](images/clipboard-2114165659.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add controller roles.controller.ts"
+git add . 
+git commit -m "feat: add controller roles.controller.ts"
 ```
 
 #### 12.17 — features/auth/roles/roles.module.ts
