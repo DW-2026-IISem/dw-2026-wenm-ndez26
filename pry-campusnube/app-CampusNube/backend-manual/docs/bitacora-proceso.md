@@ -3297,23 +3297,22 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
 ``` bash
 git add . 
-git commit -m "feat: add dto create-sale.dto.ts"
+git commit -m "feat: add dto create-lesson.dto.ts"
 ```
 
-#### 10.12 — features/business/sales/application/dto/sale-filter.dto.ts
+![](images/clipboard-697322091.png)
+
+#### 10.12 — lesson-filter.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/sales/application/dto/sale-filter.dto.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/dto cat > src/features/business/sales/application/dto/sale-filter.dto.ts <<'EOF_BACKEND_IA' import { ApiPropertyOptional } from '@nestjs/swagger'; import { Type } from 'class-transformer'; import { IsInt, IsOptional, IsPositive, Min } from 'class-validator';  export class SaleFilterDto {   @ApiPropertyOptional({ example: 1, default: 1 })   @IsOptional()   @Type(() => Number)   @IsInt()   @Min(1)   page?: number;    @ApiPropertyOptional({ example: 10, default: 10 })   @IsOptional()   @Type(() => Number)   @IsInt()   @IsPositive()   limit?: number;    @ApiPropertyOptional({ example: 1 })   @IsOptional()   @Type(() => Number)   @IsInt()   @IsPositive()   clientId?: number; } EOF_BACKEND_IA
-```
+![](images/clipboard-2973593545.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto sale-filter.dto.ts"
+git add .
+git commit -m "feat: add dto lesson-filter.dto.ts"
 ```
 
 #### 10.13 — features/business/sales/application/dto/sale-response.dto.ts
