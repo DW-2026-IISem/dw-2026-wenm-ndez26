@@ -3913,23 +3913,23 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception role-name-exists.exception.ts"
+git add . 
+git commit -m "feat: add domain exception role-name-exists.exception.ts"
 ```
 
-#### 12.3 — features/auth/roles/domain/exceptions/role-not-found.exception.ts
+![](images/clipboard-3215555062.png)
+
+#### 12.3 —role-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-**Archivo:** `src/features/auth/roles/domain/exceptions/role-not-found.exception.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/domain/exceptions cat > src/features/auth/roles/domain/exceptions/role-not-found.exception.ts <<'EOF_BACKEND_IA' import { EntityNotFoundException } from '../../../../../common/exceptions/entity-not-found.exception';  export class RoleNotFoundException extends EntityNotFoundException {   constructor(identifier: string | number) {     super('Rol', identifier);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-4183262734.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception role-not-found.exception.ts"
+git add . 
+git commit -m "feat: add domain exception role-not-found.exception.ts"
 ```
 
 #### 12.4 — features/auth/roles/domain/interfaces/role-repository.interface.ts
