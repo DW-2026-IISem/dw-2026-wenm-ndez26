@@ -2745,18 +2745,22 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 
 ``` bash
 git add .
-git commit -m "feat: add domain exception product-not-found.exception.ts"
+git commit -m "feat: add domain validator apprentice-name.validator.ts"
 ```
+
+![](images/clipboard-4111379528.png)
 
 #### 9.5 — features/business/products/domain/interfaces/product-repository.interface.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
+![](images/clipboard-3170061353.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .
-git commit -m "feat: add repository port product-repository.interface.ts"
+git commit -m "feat: add domain validator apprentice-description.validator.ts"
 ```
 
 #### 9.6 — apprentices.validator.ts
