@@ -1,4 +1,5 @@
 import { createRequire } from 'node:module';
+
 import { Sequelize } from 'sequelize-typescript';
 
 import { DatabaseDialect } from '../../../config/environment/env.interface.js';
@@ -8,12 +9,17 @@ import { CourseModel } from '../../../features/business/courses/infrastructure/p
 import { ApprenticeModel } from '../../../features/business/apprentices/infrastructure/persistence/models/apprentice.model.js';
 import { EnrollmentModel } from '../../../features/business/enrollment/infrastructure/persistence/models/enrollment.model.js';
 
+import { ModuleModel } from '../../../features/business/learning-content/infrastructure/persistence/models/module.model.js';
+import { LessonModel } from '../../../features/business/learning-content/infrastructure/persistence/models/lesson.model.js';
+
 const require = createRequire(import.meta.url);
 
 export const ALL_MODELS = [
   CourseModel,
   ApprenticeModel,
   EnrollmentModel,
+  ModuleModel,
+  LessonModel,
 ];
 
 export async function createSequelizeInstance(
@@ -52,14 +58,22 @@ export async function createSequelizeInstance(
 
   try {
     await sequelize.authenticate();
-    console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);
+
+    console.log(
+      `✅ Conexión exitosa a ${dialect.toUpperCase()}`,
+    );
 
     if (process.env.NODE_ENV !== 'production') {
       await sequelize.sync();
+
       console.log('✅ Tablas sincronizadas');
     }
   } catch (error) {
-    console.error('❌ Error conectando a la base de datos:', error);
+    console.error(
+      '❌ Error conectando a la base de datos:',
+      error,
+    );
+
     throw error;
   }
 
