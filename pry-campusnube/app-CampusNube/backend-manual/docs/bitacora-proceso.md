@@ -4003,18 +4003,17 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto create-role.dto.ts"
+git add . 
+git commit -m "feat: add dto create-role.dto.ts"
 ```
+
+![](images/clipboard-728571759.png)
 
 #### 12.9 — features/auth/roles/application/dto/update-role.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/auth/roles/application/dto/update-role.dto.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/application/dto cat > src/features/auth/roles/application/dto/update-role.dto.ts <<'EOF_BACKEND_IA' export { UpdateRoleDto } from './create-role.dto'; EOF_BACKEND_IA
-```
+![](images/clipboard-514855190.png)
 
 **Sugerencia de commit (issue):**
 
