@@ -3686,23 +3686,23 @@ git commit -m "chore: add modules table migration reference"
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add seeder users.seeder.ts"
+git add . 
+git commit -m "chore: add modules seeder"
 ```
 
-#### 11.9 — features/auth/users/application/dto/create-user.dto.ts
+![](images/clipboard-3695321502.png)
+
+#### 11.10 — features/auth/users/application/dto/create-user.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/auth/users/application/dto/create-user.dto.ts`
-
-``` bash
-mkdir -p src/features/auth/users/application/dto cat > src/features/auth/users/application/dto/create-user.dto.ts <<'EOF_BACKEND_IA' import {   IsEmail,   IsEnum,   IsNotEmpty,   IsOptional,   IsString,   MinLength, } from 'class-validator'; import { Status } from '../../../../../common/enums/status.enum';  export class CreateUserDto {   @IsString()   @IsNotEmpty()   username: string;    @IsEmail()   email: string;    @IsString()   @MinLength(6)   password: string;    @IsOptional()   @IsEnum(Status)   isActive?: Status;    @IsOptional()   @IsString()   avatar?: string; }  export class UpdateUserDto {   @IsOptional()   @IsString()   @IsNotEmpty()   username?: string;    @IsOptional()   @IsEmail()   email?: string;    @IsOptional()   @IsString()   @MinLength(6)   password?: string;    @IsOptional()   @IsEnum(Status)   isActive?: Status;    @IsOptional()   @IsString()   avatar?: string; } EOF_BACKEND_IA
-```
+![](images/clipboard-1767799113.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto create-user.dto.ts"
+git add .
+git commit -m "feat: add dto create-module.dto.ts"
 ```
 
 #### 11.10 — features/auth/users/application/dto/update-user.dto.ts
