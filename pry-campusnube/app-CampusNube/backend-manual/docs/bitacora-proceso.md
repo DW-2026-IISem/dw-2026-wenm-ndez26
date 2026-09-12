@@ -2702,23 +2702,29 @@ Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven
 
 ``` bash
 git add . 
-git commit -m "feat: add domain entity product.entity.ts"
+git commit -m "feat: add domain entity apprentice.entity.ts"
 ```
 
-#### 9.2 — Apprentice.exception.ts
+![](images/clipboard-1705129981.png)
 
-}
+#### 9.2 — Apprentice-not-found.exceptd.exce
+
+![](images/clipboard-1553774260.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add domain exception invalid-product-price.exception.ts"
+git commit -m "feat: add domain exception apprentice-not-found.exception.ts"
 ```
+
+![](images/clipboard-3485052935.png)
 
 #### 9.3 — apprentice.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-419773829.png)
 
 **Sugerencia de commit (issue):**
 
