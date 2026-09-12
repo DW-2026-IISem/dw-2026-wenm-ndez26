@@ -3402,12 +3402,16 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 
 ``` bash
 git add . 
-git commit -m "feat: add use case list-sales.use-case.ts"
+git commit -m "feat: add use case list-lessons.use-case.ts"
 ```
 
-#### 10.19 — features/business/sales/presentation/http/serializers/sale.serializer.ts
+![](images/clipboard-159505067.png)
+
+#### 10.19 — lesson.serializer.ts
 
 Serializer de presentación (forma estable de la respuesta HTTP).
+
+![](images/clipboard-1754186861.png)
 
 **Sugerencia de commit (issue):**
 
