@@ -3932,36 +3932,34 @@ git add .
 git commit -m "feat: add domain exception role-not-found.exception.ts"
 ```
 
-#### 12.4 — features/auth/roles/domain/interfaces/role-repository.interface.ts
+![](images/clipboard-678868888.png)
+
+#### 12.4 — role-repository.interface.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-**Archivo:** `src/features/auth/roles/domain/interfaces/role-repository.interface.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/domain/interfaces cat > src/features/auth/roles/domain/interfaces/role-repository.interface.ts <<'EOF_BACKEND_IA' import { Role } from '../entities/role.entity';  export const ROLE_REPOSITORY = 'ROLE_REPOSITORY';  export interface IRoleRepository {   create(role: Role): Promise<Role>;   findAll(): Promise<Role[]>;   findById(id: number): Promise<Role | null>;   findByName(name: string): Promise<Role | null>;   findByIds(ids: number[]): Promise<Role[]>;   update(id: number, data: Partial<Role>): Promise<Role>;   delete(id: number): Promise<void>; } EOF_BACKEND_IA
-```
+![](images/clipboard-4188242461.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add repository port role-repository.interface.ts"
+git add . 
+git commit -m "feat: add repository port role-repository.interface.ts"
 ```
 
-#### 12.5 — features/auth/roles/infrastructure/persistence/models/role.model.ts (sin asociaciones cruzadas aún)
+![](images/clipboard-4209731479.png)
+
+#### 12.5 — role.model.ts (sin asociaciones cruzadas aún)
 
 Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física. En esta fase se crea **sin** BelongsToMany/HasMany hacia módulos aún no creados, para poder compilar y sincronizar la tabla.
 
-**Archivo:** `src/features/auth/roles/infrastructure/persistence/models/role.model.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/infrastructure/persistence/models cat > src/features/auth/roles/infrastructure/persistence/models/role.model.ts <<'EOF_BACKEND_IA' import {   Table,   Column,   Model,   DataType,   CreatedAt,   UpdatedAt, } from 'sequelize-typescript'; import { Status } from '../../../../../../common/enums/status.enum';  @Table({ tableName: 'roles' }) export class RoleModel extends Model {   @Column({     type: DataType.INTEGER,     primaryKey: true,     autoIncrement: true,   })   declare id: number;    @Column({ type: DataType.STRING(100), allowNull: false, unique: true })   declare name: string;    @Column({     type: DataType.ENUM(...Object.values(Status)),     allowNull: false,     defaultValue: Status.ACTIVE,   })   declare isActive: Status;    @CreatedAt   declare createdAt: Date;    @UpdatedAt   declare updatedAt: Date; } EOF_BACKEND_IA
-```
+![](images/clipboard-880853936.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize model role.model.ts without cross associations"
+git add . 
+git commit -m "feat: add sequelize model role.model.ts without cross associations"
 ```
 
 #### 12.6 — features/auth/roles/infrastructure/persistence/repositories/sequelize-role.repository.ts
