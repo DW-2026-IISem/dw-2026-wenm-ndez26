@@ -2730,12 +2730,16 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 
 ``` bash
 git add . 
-git commit -m "feat: add domain exception invalid-product-stock.exception.ts"
+git commit -m "feat: add repository port apprentice-repository.interface.ts"
 ```
+
+![](images/clipboard-1659071291.png)
 
 #### 9.4 — apprentice-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-2421765975.png)
 
 **Sugerencia de commit (issue):**
 
