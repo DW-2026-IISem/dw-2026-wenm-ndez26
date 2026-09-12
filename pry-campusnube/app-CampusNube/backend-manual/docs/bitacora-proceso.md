@@ -2667,13 +2667,17 @@ git add .
 git commit -m "chore: keep BusinessModule wired in AppModule"
 ```
 
-#### 8.26 — Verificar tabla `product_types`
+![](images/clipboard-3106143345.png)
 
-Confirma sync/seeder y endpoints `/api/product-types`.
+#### 8.26 — Verificar tabla enrollment
+
+Confirma sync/seeder y endpoints `/api/enrollment-types`.
 
 ``` bash
 npm run start:dev
 ```
+
+![](images/clipboard-2359384673.png)
 
 **Sugerencia de commit (issue):**
 
