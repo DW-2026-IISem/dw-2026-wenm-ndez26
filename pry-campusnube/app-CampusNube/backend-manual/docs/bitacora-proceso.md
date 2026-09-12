@@ -2177,7 +2177,7 @@ Verificar en Github
 
 #### 7.29 — Verificar tabla física `courses` y API
 
-Arranca la app. Debe crear/sync tabla `clients`, correr seeder y exponer `/api/clients`. Prueba list/create en Swagger o curl.
+Arranca la app. Debe crear/sync tabla `courses`, correr seeder y exponer `/api/clients`. Prueba list/create en Swagger o curl.
 
 ``` bash
 npm run start:dev
@@ -2231,14 +2231,20 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 
 ``` bash
 git add . 
-git commit -m "feat: add domain exception product-type-not-found.exception.ts"
+git commit -m "feat: add domain exception enrollment-not-found.exception.ts"
 ```
 
+![](images/clipboard-1437829291.png)
+
 Verificamos en Github
+
+![](images/clipboard-2950428895.png)
 
 #### 8.3 — Enrollment-repository.interface.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
+
+![](images/clipboard-2690022882.png)
 
 **Sugerencia de commit (issue):**
 
