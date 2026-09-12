@@ -2329,11 +2329,17 @@ git add .
 git commit -m "chore: add seeder enrollments.seeder.ts"
 ```
 
+![](images/clipboard-3731864269.png)
+
 Verificamos con Github
+
+![](images/clipboard-92550267.png)
 
 #### 8.8 — create-enrollment.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-1234002009.png)
 
 **Sugerencia de commit (issue):**
 
