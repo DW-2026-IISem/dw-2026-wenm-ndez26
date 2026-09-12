@@ -2778,9 +2778,13 @@ git add .
 git commit -m "feat: add domain validator apprentice-name.validator.ts"
 ```
 
+![](images/clipboard-1941281725.png)
+
 #### 9.7 — apprentices.validator.ts
 
 Validador de dominio reutilizable (reglas independientes del framework HTTP).
+
+![](images/clipboard-2067983421.png)
 
 **Sugerencia de commit (issue):**
 
