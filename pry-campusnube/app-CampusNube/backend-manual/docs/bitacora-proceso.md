@@ -2215,11 +2215,17 @@ git add .
 git commit -m "feat: add domain entity enrollment.entity.ts"
 ```
 
+![](images/clipboard-3221281674.png)
+
 Verificamos en Github
+
+![](images/clipboard-4134813069.png)
 
 #### 8.2 — Enrollment-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-2364009608.png)
 
 **Sugerencia de commit (issue):**
 
