@@ -4127,6 +4127,8 @@ git add .
 git commit -m "feat: add controller roles.controller.ts"
 ```
 
+![](images/clipboard-1528583353.png)
+
 #### 12.17 — features/auth/roles/roles.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
