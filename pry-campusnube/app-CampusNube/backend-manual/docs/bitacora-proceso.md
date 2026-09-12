@@ -3587,23 +3587,23 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception user-email-exists.exception.ts"
+git add . 
+git commit -m "feat: add domain exception invalid-module-order.exception.ts"
 ```
 
-#### 11.3 — features/auth/users/domain/exceptions/user-not-found.exception.ts
+![](images/clipboard-3635180747.png)
+
+#### 11.3 —module-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-**Archivo:** `src/features/auth/users/domain/exceptions/user-not-found.exception.ts`
-
-``` bash
-mkdir -p src/features/auth/users/domain/exceptions cat > src/features/auth/users/domain/exceptions/user-not-found.exception.ts <<'EOF_BACKEND_IA' import { EntityNotFoundException } from '../../../../../common/exceptions/entity-not-found.exception';  export class UserNotFoundException extends EntityNotFoundException {   constructor(identifier: string | number) {     super('Usuario', identifier);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-1198691887.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception user-not-found.exception.ts"
+git add . 
+git commit -m "feat: add domain exception module-not-found.exception.ts"
 ```
 
 #### 11.4 — features/auth/users/domain/exceptions/user-username-exists.exception.ts
