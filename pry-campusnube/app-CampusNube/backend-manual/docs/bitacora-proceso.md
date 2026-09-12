@@ -3075,12 +3075,16 @@ Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
 ``` bash
 git add .
-git commit -m "feat: register ProductModel in sequelize factory"
+git commit -m "feat: register ApprenticeModel in sequelize factory"
 ```
+
+![](images/clipboard-3220740905.png)
 
 #### 9.27 — Actualizar business.module.ts
 
 Agrega el feature module de negocio recién terminado.
+
+![](images/clipboard-1968063099.png)
 
 **Sugerencia de commit (issue):**
 
