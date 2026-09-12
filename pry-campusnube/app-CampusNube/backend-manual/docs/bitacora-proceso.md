@@ -4018,23 +4018,23 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto update-role.dto.ts"
+git add .
+git commit -m "feat: add dto update-role.dto.ts"
 ```
+
+![](images/clipboard-1531507669.png)
 
 #### 12.10 — features/auth/roles/application/mappers/role.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
-**Archivo:** `src/features/auth/roles/application/mappers/role.mapper.ts`
-
-``` bash
-mkdir -p src/features/auth/roles/application/mappers cat > src/features/auth/roles/application/mappers/role.mapper.ts <<'EOF_BACKEND_IA' import { Role } from '../../domain/entities/role.entity'; import { RoleModel } from '../../infrastructure/persistence/models/role.model';  export class RoleMapper {   static toDomain(model: RoleModel): Role {     return new Role({       id: model.id,       name: model.name,       isActive: model.isActive,       createdAt: model.createdAt,       updatedAt: model.updatedAt,     });   }    static toPersistence(entity: Role): Partial<RoleModel> {     return {       id: entity.id,       name: entity.name,       isActive: entity.isActive,     };   }    static toResponse(entity: Role) {     return {       id: entity.id,       name: entity.name,       isActive: entity.isActive,       createdAt: entity.createdAt,       updatedAt: entity.updatedAt,     };   } } EOF_BACKEND_IA
-```
+![](images/clipboard-524787559.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add mapper role.mapper.ts"
+git add . 
+git commit -m "feat: add mapper role.mapper.ts"
 ```
 
 #### 12.11 — features/auth/roles/application/use-cases/create-role.use-case.ts
