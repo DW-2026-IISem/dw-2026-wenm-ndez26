@@ -2592,71 +2592,65 @@ Módulo Nest del feature: cablea providers, tokens DI y controller.
 
 ``` bash
 git add . 
-git commit -m "feat: wire nest module product-types.module.ts"
+git commit -m "feat: wire nest module enrollment.module.ts"
 ```
+
+![](images/clipboard-2378051130.png)
+
+Vereficar en Github
+
+![](images/clipboard-240212511.png)
 
 #### 8.22 — Actualizar sequelize.factory.ts (registrar modelos)
 
 Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-**Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
-
-``` bash
-mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.factory.ts <<'EOF_BACKEND_IA' import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { getSequelizeOptions } from './sequelize.options';  import { ClientModel } from '../../../features/business/clients/infrastructure/persistence/models/client.model'; import { ProductTypeModel } from '../../../features/business/product-types/infrastructure/persistence/models/product-type.model';  export const ALL_MODELS = [   ClientModel,   ProductTypeModel, ];  export async function createSequelizeInstance(   dialect: DatabaseDialect, ): Promise<Sequelize> {   const options = getSequelizeOptions(dialect);    let dialectModule: any;    switch (dialect) {     case DatabaseDialect.MySQL:       dialectModule = require('mysql2');       break;     case DatabaseDialect.Postgres:       dialectModule = require('pg');       break;     case DatabaseDialect.MSSQL:       dialectModule = require('tedious');       break;     case DatabaseDialect.Oracle:       dialectModule = require('oracledb');       break;     default:       throw new Error(`Dialecto no soportado: ${dialect}`);   }    const sequelize = new Sequelize({     ...options,     dialectModule,     models: ALL_MODELS,   } as any);    try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);   } catch (error: any) {     console.error(       `❌ Error conectando a ${dialect.toUpperCase()}:`,       error.message,     );     throw error;   }    if (process.env.NODE_ENV !== 'production') {     await sequelize.sync({ alter: false });     console.log('✅ Tablas sincronizadas');   }    return sequelize; } EOF_BACKEND_IA
-```
+![](images/clipboard-4118108737.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: register ProductTypeModel in sequelize factory"
+git add . 
+git commit -m "feat: register EnrollmentModel in sequelize factory"
 ```
+
+![](images/clipboard-1504245863.png)
+
+Verificamos en Github
+
+![](images/clipboard-2884368664.png)
 
 #### 8.23 — Actualizar business.module.ts
 
 Agrega el feature module de negocio recién terminado.
 
-**Archivo:** `src/features/business/business.module.ts`
-
-``` bash
-mkdir -p src/features/business cat > src/features/business/business.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ClientsModule } from './clients/clients.module'; import { ProductTypesModule } from './product-types/product-types.module';  @Module({   imports: [ClientsModule, ProductTypesModule],   exports: [ClientsModule, ProductTypesModule], }) export class BusinessModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-2624990531.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add ProductTypesModule to BusinessModule"
+git add . 
+git commit -m "feat: add ProductTypesModule to BusinessModule"
 ```
 
 #### 8.24 — Actualizar database-seeder.service.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
-**Archivo:** `src/infrastructure/database/seeders/database-seeder.service.ts`
-
 ``` bash
-mkdir -p src/infrastructure/database/seeders cat > src/infrastructure/database/seeders/database-seeder.service.ts <<'EOF_BACKEND_IA' import { Injectable, Logger, OnModuleInit } from '@nestjs/common'; import { seedClients } from '../../../features/business/clients/infrastructure/persistence/seeders/clients.seeder'; import { seedProductTypes } from '../../../features/business/product-types/infrastructure/persistence/seeders/product-types.seeder';  /**  * Ejecuta seeders en orden de dependencias.  * Solo en entornos no productivos.  */ @Injectable() export class DatabaseSeederService implements OnModuleInit {   private readonly logger = new Logger(DatabaseSeederService.name);    async onModuleInit(): Promise<void> {     if (process.env.NODE_ENV === 'production') {       return;     }      try {       await seedClients();       await seedProductTypes();       this.logger.log('✅ Seeders ejecutados');     } catch (error: any) {       this.logger.error(`❌ Error en seeders: ${error.message}`, error.stack);       throw error;     }   } } EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "chore: run seedProductTypes on bootstrap"
+git add .
+git commit -m "chore: run seedProductTypes on bootstrap"
 ```
 
 #### 8.25 — Actualizar app.module.ts
 
 Importa BusinessModule y/o AuthModule según el avance. Los guards globales llegan en la fase RBAC.
 
-**Archivo:** `src/app.module.ts`
-
-``` bash
-mkdir -p src cat > src/app.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { envConfig } from './config/environment/env.config'; import { appConfig } from './config/app/app.config'; import { jwtConfig } from './config/jwt/jwt.config'; import { LoggerModule } from './config/logger/logger.module'; import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/sequelize.module'; import { SecurityModule } from './infrastructure/security/security.module'; import { BusinessModule } from './features/business/business.module'; import { AppController } from './app.controller'; import { AppService } from './app.service';  @Module({   imports: [     ConfigModule.forRoot({       isGlobal: true,       load: [envConfig, appConfig, jwtConfig],       envFilePath: '.env',     }),     SequelizeDatabaseModule,     SecurityModule,     LoggerModule,     BusinessModule,   ],   controllers: [AppController],   providers: [     AppService,   ], }) export class AppModule {} EOF_BACKEND_IA
-```
-
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: keep BusinessModule wired in AppModule"
+git add . 
+git commit -m "chore: keep BusinessModule wired in AppModule"
 ```
 
 #### 8.26 — Verificar tabla `product_types`
