@@ -2690,7 +2690,7 @@ git commit -m "test: verify enrollments table and endpoints"
 
 ## ![](images/clipboard-437836516.png)
 
-## FASE 9 — apprentice 
+## FASE 9 — apprentice
 
 #### 9.1 — apprentice.entity.ts
 
@@ -3105,23 +3105,419 @@ Ejecuta seeders en orden de dependencias al arrancar (dev).
 
 ``` bash
 git add . 
-git commit -m "chore: run seedProducts on bootstrap"
+git commit -m "chore: run seedApprentices on bootstrap"
 ```
+
+![](images/clipboard-3228005648.png)
 
 #### 9.29 — Actualizar app.module.ts
 
 Importa BusinessModule y/o AuthModule según el avance. Los guards globales llegan en la fase RBAC.
 
+![](images/clipboard-1174928506.png)
+
+#### 9.30 — Verificar tabla `apprentices`
+
+Confirma FK a product_types, seeder y CRUD `/api/apprentices`.
+
+``` bash
+npm run start:dev
+```
+
+![](images/clipboard-656727929.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "chore: keep BusinessModule wired in AppModule"
+git commit -m "test: verify apprentices table and endpoints"
 ```
 
-#### 9.30 — Verificar tabla `products`
+![](images/clipboard-2989522167.png)
 
-Confirma FK a product_types, seeder y CRUD `/api/products`.
+------------------------------------------------------------------------
+
+## FASE 10 — Learning-content
+
+#### 10.1 — learning.entity.ts
+
+Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
+
+![](images/clipboard-1377726664.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: add domain entity lesson.entity.ts"
+```
+
+#### 10.2 — features/business/sales/domain/exceptions/insufficient-stock.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add domain exception insufficient-stock.exception.ts"
+```
+
+#### 10.3 — features/business/sales/domain/exceptions/sale-not-found.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: add domain exception sale-not-found.exception.ts"
+```
+
+#### 10.4 — features/business/sales/domain/interfaces/sale-repository.interface.ts
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: add repository port sale-repository.interface.ts"
+```
+
+#### 10.5 — features/business/sales/domain/services/sale-calculator.domain-service.ts
+
+Servicio de dominio (lógica pura sin I/O).
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add domain service sale-calculator.domain-service.ts"
+```
+
+#### 10.6 — features/business/sales/infrastructure/persistence/models/product-sale.model.ts
+
+Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: add sequelize model product-sale.model.ts"
+```
+
+#### 10.7 — features/business/sales/infrastructure/persistence/models/sale.model.ts
+
+Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add sequelize model sale.model.ts"
+```
+
+#### 10.8 — features/business/sales/infrastructure/persistence/repositories/sale.repository.ts
+
+Adaptador del repositorio: implementa el puerto de dominio con Sequelize
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: add sequelize repository sale.repository.ts"
+```
+
+#### 10.9 — features/business/sales/infrastructure/persistence/migrations/create-sales-table.migration.ts
+
+Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el esquema.
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "chore: add migration create-sales-table.migration.ts"
+```
+
+#### 10.10 — features/business/sales/infrastructure/persistence/seeders/sales.seeder.ts
+
+Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: add seeder sales.seeder.ts"
+```
+
+#### 10.11 — features/business/sales/application/dto/create-sale.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add dto create-sale.dto.ts"
+```
+
+#### 10.12 — features/business/sales/application/dto/sale-filter.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+**Archivo:** `src/features/business/sales/application/dto/sale-filter.dto.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/dto cat > src/features/business/sales/application/dto/sale-filter.dto.ts <<'EOF_BACKEND_IA' import { ApiPropertyOptional } from '@nestjs/swagger'; import { Type } from 'class-transformer'; import { IsInt, IsOptional, IsPositive, Min } from 'class-validator';  export class SaleFilterDto {   @ApiPropertyOptional({ example: 1, default: 1 })   @IsOptional()   @Type(() => Number)   @IsInt()   @Min(1)   page?: number;    @ApiPropertyOptional({ example: 10, default: 10 })   @IsOptional()   @Type(() => Number)   @IsInt()   @IsPositive()   limit?: number;    @ApiPropertyOptional({ example: 1 })   @IsOptional()   @Type(() => Number)   @IsInt()   @IsPositive()   clientId?: number; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add dto sale-filter.dto.ts"
+```
+
+#### 10.13 — features/business/sales/application/dto/sale-response.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+**Archivo:** `src/features/business/sales/application/dto/sale-response.dto.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/dto cat > src/features/business/sales/application/dto/sale-response.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty } from '@nestjs/swagger'; import { Status } from '../../../../../common/enums/status.enum';  export class SaleItemResponseDto {   @ApiProperty({ example: 1 })   id: number;    @ApiProperty({ example: 1 })   productId: number;    @ApiProperty({ example: 2 })   quantity: number;    @ApiProperty({ example: 59999 })   unitPrice: number;    @ApiProperty({ example: 119998 })   total: number; }  export class SaleResponseDto {   @ApiProperty({ example: 1 })   id: number;    @ApiProperty()   saleDate: Date;    @ApiProperty({ example: 119998 })   subtotal: number;    @ApiProperty({ example: 22799 })   tax: number;    @ApiProperty({ example: 0 })   discounts: number;    @ApiProperty({ example: 142797 })   total: number;    @ApiProperty({ enum: Status, example: Status.ACTIVE })   status: Status;    @ApiProperty({ example: 1 })   clientId: number;    @ApiProperty({ type: [SaleItemResponseDto] })   items: SaleItemResponseDto[];    @ApiProperty()   createdAt: Date;    @ApiProperty()   updatedAt: Date; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add dto sale-response.dto.ts"
+```
+
+#### 10.14 — features/business/sales/application/mappers/sale.mapper.ts
+
+Mapper entre entidad de dominio y DTO de respuesta.
+
+**Archivo:** `src/features/business/sales/application/mappers/sale.mapper.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/mappers cat > src/features/business/sales/application/mappers/sale.mapper.ts <<'EOF_BACKEND_IA' import { Status } from '../../../../../common/enums/status.enum'; import { Sale, SaleItem } from '../../domain/entities/sale.entity'; import {   SaleItemResponseDto,   SaleResponseDto, } from '../dto/sale-response.dto'; import { SaleModel } from '../../infrastructure/persistence/models/sale.model'; import { ProductSaleModel } from '../../infrastructure/persistence/models/product-sale.model';  export class SaleMapper {   static toDomain(saleModel: SaleModel, itemModels: ProductSaleModel[]): Sale {     const items = itemModels.map((item) =>       SaleItem.reconstitute({         id: item.id,         productId: item.productId,         quantity: item.quantity,         unitPrice: Number(item.unitPrice),         total: Number(item.total),         saleId: item.saleId,       }),     );      return Sale.reconstitute({       id: saleModel.id,       saleDate: saleModel.saleDate,       subtotal: Number(saleModel.subtotal),       tax: Number(saleModel.tax),       discounts: Number(saleModel.discounts),       total: Number(saleModel.total),       status: saleModel.status,       clientId: saleModel.clientId,       items,       createdAt: saleModel.createdAt,       updatedAt: saleModel.updatedAt,     });   }    static toResponse(entity: Sale): SaleResponseDto {     return {       id: entity.id!,       saleDate: entity.saleDate,       subtotal: entity.subtotal,       tax: entity.tax,       discounts: entity.discounts,       total: entity.total,       status: entity.status,       clientId: entity.clientId,       items: entity.items.map((item) => SaleMapper.toItemResponse(item)),       createdAt: entity.createdAt!,       updatedAt: entity.updatedAt!,     };   }    static toItemResponse(item: SaleItem): SaleItemResponseDto {     return {       id: item.id!,       productId: item.productId,       quantity: item.quantity,       unitPrice: item.unitPrice,       total: item.total,     };   }    static toPersistence(entity: Sale): Partial<SaleModel> {     return {       id: entity.id,       saleDate: entity.saleDate,       subtotal: entity.subtotal,       tax: entity.tax,       discounts: entity.discounts,       total: entity.total,       status: entity.status ?? Status.ACTIVE,       clientId: entity.clientId,     };   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add mapper sale.mapper.ts"
+```
+
+#### 10.15 — features/business/sales/application/use-cases/cancel-sale.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/sales/application/use-cases/cancel-sale.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/cancel-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { Status } from '../../../../../common/enums/status.enum'; import { SaleNotFoundException } from '../../domain/exceptions/sale-not-found.exception'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class CancelSaleUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(id: number) {     const sale = await this.saleRepository.findById(id);     if (!sale) {       throw new SaleNotFoundException(id);     }      if (sale.status === Status.INACTIVE) {       return SaleMapper.toResponse(sale);     }      sale.cancel();     const updated = await this.saleRepository.update(sale);     return SaleMapper.toResponse(updated);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case cancel-sale.use-case.ts"
+```
+
+#### 10.16 — features/business/sales/application/use-cases/create-sale.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/sales/application/use-cases/create-sale.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/create-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ClientNotFoundException } from '../../../clients/domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../../clients/domain/interfaces/client-repository.interface'; import { ProductNotFoundException } from '../../../products/domain/exceptions/product-not-found.exception'; import {   type IProductRepository,   PRODUCT_REPOSITORY, } from '../../../products/domain/interfaces/product-repository.interface'; import { InsufficientStockException } from '../../domain/exceptions/insufficient-stock.exception'; import { Sale, SaleItem } from '../../domain/entities/sale.entity'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleCalculatorDomainService } from '../../domain/services/sale-calculator.domain-service'; import { CreateSaleDto } from '../dto/create-sale.dto'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class CreateSaleUseCase {   private readonly saleCalculator = new SaleCalculatorDomainService();    constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,     @Inject(PRODUCT_REPOSITORY)     private readonly productRepository: IProductRepository,   ) {}    async execute(dto: CreateSaleDto) {     const client = await this.clientRepository.findById(dto.clientId);     if (!client) {       throw new ClientNotFoundException(dto.clientId);     }      const saleItems: SaleItem[] = [];      for (const itemDto of dto.items) {       const product = await this.productRepository.findById(itemDto.productId);       if (!product) {         throw new ProductNotFoundException(itemDto.productId);       }        if (product.quantity < itemDto.quantity) {         throw new InsufficientStockException(           product.name,           product.quantity,           itemDto.quantity,         );       }        saleItems.push(         SaleItem.create({           productId: itemDto.productId,           quantity: itemDto.quantity,           unitPrice: itemDto.unitPrice,         }),       );     }      const totals = this.saleCalculator.calculateTotals(       dto.items,       dto.tax ?? 0,       dto.discounts ?? 0,     );      const sale = Sale.create({       saleDate: new Date(),       subtotal: totals.subtotal,       tax: totals.tax,       discounts: totals.discounts,       total: totals.total,       clientId: dto.clientId,       items: saleItems,     });      const created = await this.saleRepository.create(sale);     return SaleMapper.toResponse(created);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case create-sale.use-case.ts"
+```
+
+#### 10.17 — features/business/sales/application/use-cases/get-sale.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/sales/application/use-cases/get-sale.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/get-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { SaleNotFoundException } from '../../domain/exceptions/sale-not-found.exception'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class GetSaleUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(id: number) {     const sale = await this.saleRepository.findById(id);     if (!sale) {       throw new SaleNotFoundException(id);     }      return SaleMapper.toResponse(sale);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case get-sale.use-case.ts"
+```
+
+#### 10.18 — features/business/sales/application/use-cases/list-sales.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/sales/application/use-cases/list-sales.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/list-sales.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleFilterDto } from '../dto/sale-filter.dto'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class ListSalesUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(filter: SaleFilterDto) {     const result = await this.saleRepository.findAll(filter);     return {       items: result.items.map((sale) => SaleMapper.toResponse(sale)),       meta: result.meta,     };   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case list-sales.use-case.ts"
+```
+
+#### 10.19 — features/business/sales/presentation/http/serializers/sale.serializer.ts
+
+Serializer de presentación (forma estable de la respuesta HTTP).
+
+**Archivo:** `src/features/business/sales/presentation/http/serializers/sale.serializer.ts`
+
+``` bash
+mkdir -p src/features/business/sales/presentation/http/serializers cat > src/features/business/sales/presentation/http/serializers/sale.serializer.ts <<'EOF_BACKEND_IA' import { Sale } from '../../../domain/entities/sale.entity'; import { SaleResponseDto } from '../../../application/dto/sale-response.dto'; import { SaleMapper } from '../../../application/mappers/sale.mapper';  export class SaleSerializer {   static serialize(entity: Sale): SaleResponseDto {     return SaleMapper.toResponse(entity);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add serializer sale.serializer.ts"
+```
+
+#### 10.20 — features/business/sales/presentation/http/controllers/sales.controller.ts
+
+Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+**Archivo:** `src/features/business/sales/presentation/http/controllers/sales.controller.ts`
+
+``` bash
+mkdir -p src/features/business/sales/presentation/http/controllers cat > src/features/business/sales/presentation/http/controllers/sales.controller.ts <<'EOF_BACKEND_IA' import {   Body,   Controller,   Get,   Param,   Patch,   Post,   Query, } from '@nestjs/common'; import {   ApiCreatedResponse,   ApiOkResponse,   ApiOperation,   ApiTags, } from '@nestjs/swagger'; import { ParsePositiveIntPipe } from '../../../../../../common/pipes/parse-positive-int.pipe'; import { CreateSaleDto } from '../../../application/dto/create-sale.dto'; import { SaleFilterDto } from '../../../application/dto/sale-filter.dto'; import { SaleResponseDto } from '../../../application/dto/sale-response.dto'; import { CreateSaleUseCase } from '../../../application/use-cases/create-sale.use-case'; import { CancelSaleUseCase } from '../../../application/use-cases/cancel-sale.use-case'; import { GetSaleUseCase } from '../../../application/use-cases/get-sale.use-case'; import { ListSalesUseCase } from '../../../application/use-cases/list-sales.use-case';  @ApiTags('Sales') @Controller('sales') export class SalesController {   constructor(     private readonly createSaleUseCase: CreateSaleUseCase,     private readonly cancelSaleUseCase: CancelSaleUseCase,     private readonly getSaleUseCase: GetSaleUseCase,     private readonly listSalesUseCase: ListSalesUseCase,   ) {}    @Post()   @ApiOperation({ summary: 'Crear una venta' })   @ApiCreatedResponse({ type: SaleResponseDto })   create(@Body() dto: CreateSaleDto) {     return this.createSaleUseCase.execute(dto);   }    @Get()   @ApiOperation({ summary: 'Listar ventas' })   @ApiOkResponse({ type: [SaleResponseDto] })   findAll(@Query() filter: SaleFilterDto) {     return this.listSalesUseCase.execute(filter);   }    @Get(':id')   @ApiOperation({ summary: 'Obtener una venta por ID' })   @ApiOkResponse({ type: SaleResponseDto })   findOne(@Param('id', ParsePositiveIntPipe) id: number) {     return this.getSaleUseCase.execute(id);   }    @Patch(':id/cancel')   @ApiOperation({ summary: 'Cancelar una venta' })   @ApiOkResponse({ type: SaleResponseDto })   cancel(@Param('id', ParsePositiveIntPipe) id: number) {     return this.cancelSaleUseCase.execute(id);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add controller sales.controller.ts"
+```
+
+#### 10.21 — features/business/sales/index.ts
+
+Barrel export del feature para imports limpios.
+
+**Archivo:** `src/features/business/sales/index.ts`
+
+``` bash
+mkdir -p src/features/business/sales cat > src/features/business/sales/index.ts <<'EOF_BACKEND_IA' export { SalesModule } from './sales.module'; EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: add barrel export sales"
+```
+
+#### 10.22 — features/business/sales/sales.module.ts
+
+Módulo Nest del feature: cablea providers, tokens DI y controller.
+
+**Archivo:** `src/features/business/sales/sales.module.ts`
+
+``` bash
+mkdir -p src/features/business/sales cat > src/features/business/sales/sales.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ClientsModule } from '../clients/clients.module'; import { ProductsModule } from '../products/products.module'; import { SALE_REPOSITORY } from './domain/interfaces/sale-repository.interface'; import { SaleRepository } from './infrastructure/persistence/repositories/sale.repository'; import { CreateSaleUseCase } from './application/use-cases/create-sale.use-case'; import { CancelSaleUseCase } from './application/use-cases/cancel-sale.use-case'; import { GetSaleUseCase } from './application/use-cases/get-sale.use-case'; import { ListSalesUseCase } from './application/use-cases/list-sales.use-case'; import { SalesController } from './presentation/http/controllers/sales.controller';  @Module({   imports: [ClientsModule, ProductsModule],   controllers: [SalesController],   providers: [     SaleRepository,     { provide: SALE_REPOSITORY, useExisting: SaleRepository },     CreateSaleUseCase,     CancelSaleUseCase,     GetSaleUseCase,     ListSalesUseCase,   ],   exports: [SALE_REPOSITORY], }) export class SalesModule {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: wire nest module sales.module.ts"
+```
+
+#### 10.23 — Barrel business/index.ts
+
+Exports públicos del bounded context business.
+
+**Archivo:** `src/features/business/index.ts`
+
+``` bash
+mkdir -p src/features/business cat > src/features/business/index.ts <<'EOF_BACKEND_IA' export { BusinessModule } from './business.module'; EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: add business barrel exports"
+```
+
+#### 10.24 — Actualizar sequelize.factory.ts (registrar modelos)
+
+Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+**Archivo:** `src/infrastructure/database/sequelize/sequelize.factory.ts`
+
+``` bash
+mkdir -p src/infrastructure/database/sequelize cat > src/infrastructure/database/sequelize/sequelize.factory.ts <<'EOF_BACKEND_IA' import { Sequelize } from 'sequelize-typescript'; import { DatabaseDialect } from '../../../config/environment/env.interface'; import { getSequelizeOptions } from './sequelize.options';  import { ClientModel } from '../../../features/business/clients/infrastructure/persistence/models/client.model'; import { ProductTypeModel } from '../../../features/business/product-types/infrastructure/persistence/models/product-type.model'; import { ProductModel } from '../../../features/business/products/infrastructure/persistence/models/product.model'; import { SaleModel } from '../../../features/business/sales/infrastructure/persistence/models/sale.model'; import { ProductSaleModel } from '../../../features/business/sales/infrastructure/persistence/models/product-sale.model';  export const ALL_MODELS = [   ClientModel,   ProductTypeModel,   ProductModel,   SaleModel,   ProductSaleModel, ];  export async function createSequelizeInstance(   dialect: DatabaseDialect, ): Promise<Sequelize> {   const options = getSequelizeOptions(dialect);    let dialectModule: any;    switch (dialect) {     case DatabaseDialect.MySQL:       dialectModule = require('mysql2');       break;     case DatabaseDialect.Postgres:       dialectModule = require('pg');       break;     case DatabaseDialect.MSSQL:       dialectModule = require('tedious');       break;     case DatabaseDialect.Oracle:       dialectModule = require('oracledb');       break;     default:       throw new Error(`Dialecto no soportado: ${dialect}`);   }    const sequelize = new Sequelize({     ...options,     dialectModule,     models: ALL_MODELS,   } as any);    try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${dialect.toUpperCase()}`);   } catch (error: any) {     console.error(       `❌ Error conectando a ${dialect.toUpperCase()}:`,       error.message,     );     throw error;   }    if (process.env.NODE_ENV !== 'production') {     await sequelize.sync({ alter: false });     console.log('✅ Tablas sincronizadas');   }    return sequelize; } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: register SaleModel and ProductSaleModel"
+```
+
+#### 10.25 — Actualizar business.module.ts
+
+Agrega el feature module de negocio recién terminado.
+
+**Archivo:** `src/features/business/business.module.ts`
+
+``` bash
+mkdir -p src/features/business cat > src/features/business/business.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ClientsModule } from './clients/clients.module'; import { ProductTypesModule } from './product-types/product-types.module'; import { ProductsModule } from './products/products.module'; import { SalesModule } from './sales/sales.module';  @Module({   imports: [ClientsModule, ProductTypesModule, ProductsModule, SalesModule],   exports: [ClientsModule, ProductTypesModule, ProductsModule, SalesModule], }) export class BusinessModule {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add SalesModule to BusinessModule"
+```
+
+#### 10.26 — Actualizar database-seeder.service.ts
+
+Ejecuta seeders en orden de dependencias al arrancar (dev).
+
+**Archivo:** `src/infrastructure/database/seeders/database-seeder.service.ts`
+
+``` bash
+mkdir -p src/infrastructure/database/seeders cat > src/infrastructure/database/seeders/database-seeder.service.ts <<'EOF_BACKEND_IA' import { Injectable, Logger, OnModuleInit } from '@nestjs/common'; import { seedClients } from '../../../features/business/clients/infrastructure/persistence/seeders/clients.seeder'; import { seedProductTypes } from '../../../features/business/product-types/infrastructure/persistence/seeders/product-types.seeder'; import { seedProducts } from '../../../features/business/products/infrastructure/persistence/seeders/products.seeder'; import { seedSales } from '../../../features/business/sales/infrastructure/persistence/seeders/sales.seeder';  /**  * Ejecuta seeders en orden de dependencias.  * Solo en entornos no productivos.  */ @Injectable() export class DatabaseSeederService implements OnModuleInit {   private readonly logger = new Logger(DatabaseSeederService.name);    async onModuleInit(): Promise<void> {     if (process.env.NODE_ENV === 'production') {       return;     }      try {       await seedClients();       await seedProductTypes();       await seedProducts();       await seedSales();       this.logger.log('✅ Seeders ejecutados');     } catch (error: any) {       this.logger.error(`❌ Error en seeders: ${error.message}`, error.stack);       throw error;     }   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: run seedSales on bootstrap"
+```
+
+#### 10.27 — Actualizar app.module.ts
+
+Importa BusinessModule y/o AuthModule según el avance. Los guards globales llegan en la fase RBAC.
+
+**Archivo:** `src/app.module.ts`
+
+``` bash
+mkdir -p src cat > src/app.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ConfigModule } from '@nestjs/config'; import { envConfig } from './config/environment/env.config'; import { appConfig } from './config/app/app.config'; import { jwtConfig } from './config/jwt/jwt.config'; import { LoggerModule } from './config/logger/logger.module'; import { SequelizeDatabaseModule } from './infrastructure/database/sequelize/sequelize.module'; import { SecurityModule } from './infrastructure/security/security.module'; import { BusinessModule } from './features/business/business.module'; import { AppController } from './app.controller'; import { AppService } from './app.service';  @Module({   imports: [     ConfigModule.forRoot({       isGlobal: true,       load: [envConfig, appConfig, jwtConfig],       envFilePath: '.env',     }),     SequelizeDatabaseModule,     SecurityModule,     LoggerModule,     BusinessModule,   ],   controllers: [AppController],   providers: [     AppService,   ], }) export class AppModule {} EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "chore: keep BusinessModule wired in AppModule"
+```
+
+#### 10.28 — Verificar tablas `sales` / `product_sales`
+
+Prueba crear una venta y cancelarla. Revisa stock de productos y filas en product_sales.
 
 ``` bash
 npm run start:dev
@@ -3130,7 +3526,7 @@ npm run start:dev
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "test: verify products table and endpoints"
+git add . git commit -m "test: verify sales flow and stock side effects"
 ```
 
 ------------------------------------------------------------------------
