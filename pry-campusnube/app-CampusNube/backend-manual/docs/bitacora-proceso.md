@@ -2345,14 +2345,20 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
 ``` bash
 git add . 
-git commit -m "feat: add dto create-product-type.dto.ts"
+git commit -m "feat: add dto create-enrollment.dto.ts"
 ```
 
+![](images/clipboard-302353586.png)
+
 Verificar en Github
+
+![](images/clipboard-1391072445.png)
 
 #### 8.9 —Enrollment-filter.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-1505478724.png)
 
 **Sugerencia de commit (issue):**
 
