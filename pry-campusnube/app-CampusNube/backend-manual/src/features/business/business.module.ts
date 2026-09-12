@@ -2,18 +2,19 @@ import { Module } from '@nestjs/common';
 
 import { CoursesModule } from './courses/courses.module.js';
 import { EnrollmentModule } from './enrollment/enrollment.module.js';
-import { ApprenticesModule } from './apprentices/apprentices.module.js';
+import { LearningContentModule } from './learning-content/learning-content.module.js';
 
 @Module({
   imports: [
     CoursesModule,
     EnrollmentModule,
-    ApprenticesModule,
+    LearningContentModule,
   ],
+
   exports: [
     CoursesModule,
     EnrollmentModule,
-    ApprenticesModule,
+    LearningContentModule,
   ],
 })
 export class BusinessModule {}

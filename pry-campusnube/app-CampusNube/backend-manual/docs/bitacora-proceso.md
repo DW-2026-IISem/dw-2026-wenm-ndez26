@@ -3491,18 +3491,17 @@ Registra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: register SaleModel and ProductSaleModel"
+git add . 
+git commit -m "feat: register ModuleModel and LessonModel"
 ```
+
+![](images/clipboard-4148421753.png)
 
 #### 10.25 — Actualizar business.module.ts
 
 Agrega el feature module de negocio recién terminado.
 
-**Archivo:** `src/features/business/business.module.ts`
-
-``` bash
-mkdir -p src/features/business cat > src/features/business/business.module.ts <<'EOF_BACKEND_IA' import { Module } from '@nestjs/common'; import { ClientsModule } from './clients/clients.module'; import { ProductTypesModule } from './product-types/product-types.module'; import { ProductsModule } from './products/products.module'; import { SalesModule } from './sales/sales.module';  @Module({   imports: [ClientsModule, ProductTypesModule, ProductsModule, SalesModule],   exports: [ClientsModule, ProductTypesModule, ProductsModule, SalesModule], }) export class BusinessModule {} EOF_BACKEND_IA
-```
+![](images/clipboard-804774564.png)
 
 **Sugerencia de commit (issue):**
 
