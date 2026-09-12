@@ -2784,18 +2784,22 @@ git commit -m "feat: add domain validator apprentice-name.validator.ts"
 
 Validador de dominio reutilizable (reglas independientes del framework HTTP).
 
-![](images/clipboard-2067983421.png)
+![](images/clipboard-3660808084.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add domain validator product-stock.validator.ts"
+git commit -m "feat: add domain validator apprentice-description.validator.ts"
 ```
+
+![](images/clipboard-2782788626.png)
 
 #### 9.8 — apprentice.model.ts
 
 Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
+
+![](images/clipboard-192377959.png)
 
 **Sugerencia de commit (issue):**
 
