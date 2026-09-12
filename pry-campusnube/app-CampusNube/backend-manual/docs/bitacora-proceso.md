@@ -3240,9 +3240,13 @@ git add .
 git commit -m "feat: add sequelize model module.model.ts"
 ```
 
-#### 10.8 — features/business/sales/infrastructure/persistence/repositories/sale.repository.ts
+![](images/clipboard-721455850.png)
+
+#### 10.8 — lesson.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize
+
+![](images/clipboard-1668780768.png)
 
 **Sugerencia de commit (issue):**
 
