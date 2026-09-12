@@ -2850,12 +2850,16 @@ Seeder de datos iniciales para desarrollo y verificación física en BD.
 
 ``` bash
 git add . 
-git commit -m "chore: add seeder products.seeder.ts"
+git commit -m "chore: add seeder apprentices.seeder.ts"
 ```
 
-#### 9.12 — features/business/products/application/dto/create-product.dto.ts
+![](images/clipboard-3599898833.png)
+
+#### 9.12 — create-apprentice.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-3901802650.png)
 
 **Sugerencia de commit (issue):**
 
