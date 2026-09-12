@@ -3015,34 +3015,46 @@ Serializer de presentación (forma estable de la respuesta HTTP).
 
 ``` bash
 git add .
-git commit -m "feat: add serializer product.serializer.ts"
+git commit -m "feat: add serializer apprentice.serializer.ts
 ```
+
+![](images/clipboard-1969649898.png)
 
 #### 9.23 — apprentice.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
+![](images/clipboard-1602605222.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add controller products.controller.ts"
+git commit -m "feat: add controller apprentices.controller.ts"
 ```
+
+![](images/clipboard-3536061707.png)
 
 #### 9.24 — apprentice/index.ts
 
 Barrel export del feature para imports limpios.
 
+![](images/clipboard-3221282222.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "chore: add barrel export products"
+git commit -m "chore: add barrel export apprentices"
 ```
+
+![](images/clipboard-1859451504.png)
 
 #### 9.25 — apprentice.module.ts
 
 Módulo Nest del feature: cablea providers, tokens DI y controller.
+
+![](images/clipboard-357248064.png)
 
 **Sugerencia de commit (issue):**
 
