@@ -2763,15 +2763,19 @@ git add .
 git commit -m "feat: add domain validator apprentice-description.validator.ts"
 ```
 
+![](images/clipboard-4188801894.png)
+
 #### 9.6 — apprentices.validator.ts
 
 Validador de dominio reutilizable (reglas independientes del framework HTTP).
+
+![](images/clipboard-363539672.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .
-git commit -m "feat: add domain validator product-price.validator.ts"
+git commit -m "feat: add domain validator apprentice-name.validator.ts"
 ```
 
 #### 9.7 — apprentices.validator.ts
