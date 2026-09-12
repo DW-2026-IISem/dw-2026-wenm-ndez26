@@ -3915,79 +3915,41 @@ git commit -m "feat: add teacher not found exception"
 
 ![](images/clipboard-930652850.png)
 
-#### 10.4 — features/business/sales/domain/interfaces/sale-repository.interface.ts
+#### 12.3 — Teacher-repository.interface.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-**Archivo:** `src/features/business/sales/domain/interfaces/sale-repository.interface.ts`
-
-``` bash
-mkdir -p src/features/business/sales/domain/interfaces cat > src/features/business/sales/domain/interfaces/sale-repository.interface.ts <<'EOF_BACKEND_IA' import { PaginatedResult } from '../../../../../common/interfaces/pagination.interface'; import { Sale } from '../entities/sale.entity';  export const SALE_REPOSITORY = 'SALE_REPOSITORY';  export interface SaleFindAllParams {   page?: number;   limit?: number;   clientId?: number; }  export interface ISaleRepository {   create(sale: Sale): Promise<Sale>;   update(sale: Sale): Promise<Sale>;   findById(id: number): Promise<Sale | null>;   findAll(params: SaleFindAllParams): Promise<PaginatedResult<Sale>>; } EOF_BACKEND_IA
-```
+![](images/clipboard-3330844562.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add repository port sale-repository.interface.ts"
+git add .
+git commit -m "feat: add teacher repository interface"
 ```
 
-#### 10.5 — features/business/sales/domain/services/sale-calculator.domain-service.ts
+![](images/clipboard-3935324873.png)
 
-Servicio de dominio (lógica pura sin I/O).
-
-**Archivo:** `src/features/business/sales/domain/services/sale-calculator.domain-service.ts`
-
-``` bash
-mkdir -p src/features/business/sales/domain/services cat > src/features/business/sales/domain/services/sale-calculator.domain-service.ts <<'EOF_BACKEND_IA' export interface SaleItemInput {   quantity: number;   unitPrice: number; }  export interface SaleTotals {   subtotal: number;   tax: number;   discounts: number;   total: number; }  export class SaleCalculatorDomainService {   calculateSubtotal(items: SaleItemInput[]): number {     return items.reduce(       (sum, item) => sum + item.quantity * item.unitPrice,       0,     );   }    calculateTotals(     items: SaleItemInput[],     tax = 0,     discounts = 0,   ): SaleTotals {     const subtotal = this.calculateSubtotal(items);     const total = subtotal + tax - discounts;      return {       subtotal,       tax,       discounts,       total,     };   } } EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "feat: add domain service sale-calculator.domain-service.ts"
-```
-
-#### 10.6 — features/business/sales/infrastructure/persistence/models/product-sale.model.ts
+#### 12.4 — teacher.model.ts
 
 Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
 
-**Archivo:** `src/features/business/sales/infrastructure/persistence/models/product-sale.model.ts`
-
-``` bash
-mkdir -p src/features/business/sales/infrastructure/persistence/models cat > src/features/business/sales/infrastructure/persistence/models/product-sale.model.ts <<'EOF_BACKEND_IA' import {   AutoIncrement,   BelongsTo,   Column,   DataType,   ForeignKey,   Model,   PrimaryKey,   Table, } from 'sequelize-typescript';  @Table({ tableName: 'product_sales' }) export class ProductSaleModel extends Model {   @PrimaryKey   @AutoIncrement   @Column(DataType.INTEGER)   declare id: number;    @Column({ type: DataType.BIGINT, allowNull: false })   declare total: number;    @ForeignKey(     () =>       require('../../../../products/infrastructure/persistence/models/product.model')         .ProductModel,   )   @Column({ type: DataType.INTEGER, allowNull: false })   declare productId: number;    @BelongsTo(     () =>       require('../../../../products/infrastructure/persistence/models/product.model')         .ProductModel,   )   declare product: unknown;    @ForeignKey(() => require('./sale.model').SaleModel)   @Column({ type: DataType.INTEGER, allowNull: false })   declare saleId: number;    @BelongsTo(() => require('./sale.model').SaleModel)   declare sale: unknown;    @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 1 })   declare quantity: number;    @Column({ type: DataType.BIGINT, allowNull: false })   declare unitPrice: number; } EOF_BACKEND_IA
-```
+![](images/clipboard-2793266583.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize model product-sale.model.ts"
+git add . 
+git commit -m "feat: add teacher sequelize model
 ```
 
-#### 10.7 — features/business/sales/infrastructure/persistence/models/sale.model.ts
+![](images/clipboard-3355465246.png)
 
-Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
-
-**Archivo:** `src/features/business/sales/infrastructure/persistence/models/sale.model.ts`
-
-``` bash
-mkdir -p src/features/business/sales/infrastructure/persistence/models cat > src/features/business/sales/infrastructure/persistence/models/sale.model.ts <<'EOF_BACKEND_IA' import {   AutoIncrement,   BelongsTo,   Column,   CreatedAt,   DataType,   ForeignKey,   HasMany,   Model,   PrimaryKey,   Table,   UpdatedAt, } from 'sequelize-typescript'; import { Status } from '../../../../../../common/enums/status.enum';  @Table({ tableName: 'sales' }) export class SaleModel extends Model {   @PrimaryKey   @AutoIncrement   @Column(DataType.INTEGER)   declare id: number;    @Column({ type: DataType.DATE, allowNull: false })   declare saleDate: Date;    @Column({ type: DataType.BIGINT, allowNull: false, defaultValue: 0 })   declare subtotal: number;    @Column({ type: DataType.BIGINT, allowNull: false, defaultValue: 0 })   declare tax: number;    @Column({ type: DataType.BIGINT, allowNull: false, defaultValue: 0 })   declare discounts: number;    @Column({ type: DataType.BIGINT, allowNull: false, defaultValue: 0 })   declare total: number;    @Column({     type: DataType.ENUM(...Object.values(Status)),     allowNull: false,     defaultValue: Status.ACTIVE,   })   declare status: Status;    @ForeignKey(     () =>       require('../../../../clients/infrastructure/persistence/models/client.model')         .ClientModel,   )   @Column({ type: DataType.INTEGER, allowNull: false })   declare clientId: number;    @BelongsTo(     () =>       require('../../../../clients/infrastructure/persistence/models/client.model')         .ClientModel,   )   declare client: unknown;    @CreatedAt   declare createdAt: Date;    @UpdatedAt   declare updatedAt: Date;    @HasMany(     () =>       require('./product-sale.model').ProductSaleModel,   )   declare items: unknown[]; } EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "feat: add sequelize model sale.model.ts"
-```
-
-#### 10.8 — features/business/sales/infrastructure/persistence/repositories/sale.repository.ts
+#### 12.5 — teacher.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
-**Archivo:** `src/features/business/sales/infrastructure/persistence/repositories/sale.repository.ts`
-
-``` bash
-mkdir -p src/features/business/sales/infrastructure/persistence/repositories cat > src/features/business/sales/infrastructure/persistence/repositories/sale.repository.ts <<'EOF_BACKEND_IA' import { Injectable } from '@nestjs/common'; import {   buildPaginatedResult,   normalizePagination, } from '../../../../../../common/utils/pagination.util'; import { ProductModel } from '../../../../products/infrastructure/persistence/models/product.model'; import { Sale } from '../../../domain/entities/sale.entity'; import {   ISaleRepository,   SaleFindAllParams, } from '../../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../../../application/mappers/sale.mapper'; import { SaleModel } from '../models/sale.model'; import { ProductSaleModel } from '../models/product-sale.model';  @Injectable() export class SaleRepository implements ISaleRepository {   async create(sale: Sale): Promise<Sale> {     const sequelize = SaleModel.sequelize!;      return sequelize.transaction(async (transaction) => {       const saleModel = await SaleModel.create(         SaleMapper.toPersistence(sale),         { transaction },       );        const itemModels = await ProductSaleModel.bulkCreate(         sale.items.map((item) => ({           productId: item.productId,           saleId: saleModel.id,           quantity: item.quantity,           unitPrice: item.unitPrice,           total: item.total,         })),         { transaction },       );        for (const item of sale.items) {         const product = await ProductModel.findByPk(item.productId, {           transaction,         });         if (product) {           await product.update(             { quantity: product.quantity - item.quantity },             { transaction },           );         }       }        return SaleMapper.toDomain(saleModel, itemModels);     });   }    async update(sale: Sale): Promise<Sale> {     await SaleModel.update(SaleMapper.toPersistence(sale), {       where: { id: sale.id },     });      const updated = await SaleModel.findByPk(sale.id!, {       include: [ProductSaleModel],     });      return SaleMapper.toDomain(updated!, updated!.items as ProductSaleModel[]);   }    async findById(id: number): Promise<Sale | null> {     const model = await SaleModel.findByPk(id, {       include: [ProductSaleModel],     });      if (!model) {       return null;     }      return SaleMapper.toDomain(model, model.items as ProductSaleModel[]);   }    async findAll(params: SaleFindAllParams) {     const { page, limit, offset } = normalizePagination(       params.page,       params.limit,     );      const where = params.clientId ? { clientId: params.clientId } : {};      const { rows, count } = await SaleModel.findAndCountAll({       where,       limit,       offset,       order: [['createdAt', 'DESC']],       include: [ProductSaleModel],     });      return buildPaginatedResult(       rows.map((row) =>         SaleMapper.toDomain(row, row.items as ProductSaleModel[]),       ),       count,       page,       limit,     );   } } EOF_BACKEND_IA
-```
+![](images/clipboard-3183844026.png)
 
 **Sugerencia de commit (issue):**
 
