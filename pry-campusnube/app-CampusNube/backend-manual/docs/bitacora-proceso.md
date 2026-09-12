@@ -3210,15 +3210,19 @@ git add .
 git commit -m "feat: add domain service sale-calculator.domain-service.ts"
 ```
 
-#### 10.6 — features/business/sales/infrastructure/persistence/models/product-sale.model.ts
+![](images/clipboard-1575900575.png)
+
+#### 10.6 — lesson.model.ts
 
 Modelo Sequelize (`@Table`). Solo infraestructura: mapeo a tabla física.
+
+![](images/clipboard-3262524416.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .
-git commit -m "feat: add sequelize model product-sale.model.ts"
+git commit -m "feat: add sequelize model lesson.model.ts"
 ```
 
 #### 10.7 — features/business/sales/infrastructure/persistence/models/sale.model.ts
