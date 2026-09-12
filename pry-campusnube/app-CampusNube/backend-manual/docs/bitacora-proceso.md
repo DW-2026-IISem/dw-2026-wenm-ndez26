@@ -2865,39 +2865,37 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
 ``` bash
 git add .
-git commit -m "feat: add dto create-product.dto.ts"
+git commit -m "feat: add dto create-apprentice.dto.ts"
 ```
 
-#### 9.13 — features/business/products/application/dto/product-filter.dto.ts
+![](images/clipboard-1372916087.png)
+
+#### 9.13 — apprentice-filter.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/products/application/dto/product-filter.dto.ts`
-
-``` bash
-mkdir -p src/features/business/products/application/dto cat > src/features/business/products/application/dto/product-filter.dto.ts <<'EOF_BACKEND_IA' import { ApiPropertyOptional } from '@nestjs/swagger'; import { Type } from 'class-transformer'; import { IsInt, IsOptional, IsPositive, IsString, Min } from 'class-validator';  export class ProductFilterDto {   @ApiPropertyOptional({ example: 1, default: 1 })   @IsOptional()   @Type(() => Number)   @IsInt()   @Min(1)   page?: number;    @ApiPropertyOptional({ example: 10, default: 10 })   @IsOptional()   @Type(() => Number)   @IsInt()   @IsPositive()   limit?: number;    @ApiPropertyOptional({ example: 'smartphone' })   @IsOptional()   @IsString()   search?: string;    @ApiPropertyOptional({ example: 1 })   @IsOptional()   @Type(() => Number)   @IsInt()   @IsPositive()   productTypeId?: number; } EOF_BACKEND_IA
-```
+![](images/clipboard-567156393.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto product-filter.dto.ts"
+git add . 
+git commit -m "feat: add dto apprentice-filter.dto.ts"
 ```
 
-#### 9.14 — features/business/products/application/dto/product-response.dto.ts
+![](images/clipboard-3701029486.png)
+
+#### 9.14 — apprentice-response.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/products/application/dto/product-response.dto.ts`
-
-``` bash
-mkdir -p src/features/business/products/application/dto cat > src/features/business/products/application/dto/product-response.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty } from '@nestjs/swagger'; import { Status } from '../../../../../common/enums/status.enum';  export class ProductResponseDto {   @ApiProperty({ example: 1 })   id: number;    @ApiProperty({ example: 'Smartphone X' })   name: string;    @ApiProperty({ example: 'TechBrand' })   brand: string;    @ApiProperty({ example: 59999 })   price: number;    @ApiProperty({ example: 5 })   minStock: number;    @ApiProperty({ example: 50 })   quantity: number;    @ApiProperty({ example: 1 })   productTypeId: number;    @ApiProperty({ enum: Status, example: Status.ACTIVE })   status: Status;    @ApiProperty()   createdAt: Date;    @ApiProperty()   updatedAt: Date; } EOF_BACKEND_IA
-```
+![](images/clipboard-806907214.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto product-response.dto.ts"
+git add . 
+git commit -m "feat: add dto apprentice-response.dto.ts"
 ```
 
 #### 9.15 — features/business/products/application/dto/update-product.dto.ts
