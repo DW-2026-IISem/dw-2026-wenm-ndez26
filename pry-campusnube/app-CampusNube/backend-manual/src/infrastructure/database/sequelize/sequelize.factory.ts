@@ -8,7 +8,6 @@ import { getSequelizeOptions } from './sequelize.options.js';
 import { CourseModel } from '../../../features/business/courses/infrastructure/persistence/models/course.model.js';
 import { ApprenticeModel } from '../../../features/business/apprentices/infrastructure/persistence/models/apprentice.model.js';
 import { EnrollmentModel } from '../../../features/business/enrollment/infrastructure/persistence/models/enrollment.model.js';
-
 import { ModuleModel } from '../../../features/business/learning-content/infrastructure/persistence/models/module.model.js';
 import { LessonModel } from '../../../features/business/learning-content/infrastructure/persistence/models/lesson.model.js';
 

@@ -3814,8 +3814,10 @@ Ahora conectamos los casos de uso y el repositorio con NestJS.
 
 ``` bash
 git add .
-git commit -m "feat: wire nest module users.module.ts"
+git commit -m "feat: wire learning content module"
 ```
+
+![](images/clipboard-4057666968.png)
 
 #### 11.19 — Actualizar sequelize.factory.ts (registrar modeRegistra en ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
