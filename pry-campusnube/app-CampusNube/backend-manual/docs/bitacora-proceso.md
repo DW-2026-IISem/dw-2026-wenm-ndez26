@@ -3417,34 +3417,37 @@ Serializer de presentación (forma estable de la respuesta HTTP).
 
 ``` bash
 git add . 
-git commit -m "feat: add serializer sale.serializer.ts"
+git commit -m "feat: add serializer lesson.serializer.ts"
 ```
 
-#### 10.20 — features/business/sales/presentation/http/controllers/sales.controller.ts
+![](images/clipboard-2705811099.png)
+
+#### 10.20 — lesson.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+![](images/clipboard-2660392355.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add . 
-git commit -m "feat: add controller sales.controller.ts"
+git commit -m "feat: add controller lessons.controller.ts"
 ```
+
+![](images/clipboard-1686651925.png)
 
 #### 10.21 — features/business/sales/index.ts
 
 Barrel export del feature para imports limpios.
 
-**Archivo:** `src/features/business/sales/index.ts`
-
-``` bash
-mkdir -p src/features/business/sales cat > src/features/business/sales/index.ts <<'EOF_BACKEND_IA' export { SalesModule } from './sales.module'; EOF_BACKEND_IA
-```
+![](images/clipboard-518086871.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add barrel export sales"
+git add . 
+git commit -m "chore: add barrel export learning-content"
 ```
 
 #### 10.22 — features/business/sales/sales.module.ts
