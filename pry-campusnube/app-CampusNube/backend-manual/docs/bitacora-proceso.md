@@ -2630,21 +2630,35 @@ Agrega el feature module de negocio recién terminado.
 
 ``` bash
 git add . 
-git commit -m "feat: add ProductTypesModule to BusinessModule"
+git commit -m "feat: add EnrollmentModule to BusinessModule"
 ```
+
+![](images/clipboard-2656633287.png)
+
+Verificamos en Github
+
+![](images/clipboard-1154970593.png)
 
 #### 8.24 — Actualizar database-seeder.service.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
+![](images/clipboard-2820446892.png)
+
 ``` bash
 git add .
-git commit -m "chore: run seedProductTypes on bootstrap"
+git commit -m "chore: keep course seeder on bootstrap"
 ```
+
+![](images/clipboard-3578011448.png)
+
+![](images/clipboard-902859406.png)
 
 #### 8.25 — Actualizar app.module.ts
 
 Importa BusinessModule y/o AuthModule según el avance. Los guards globales llegan en la fase RBAC.
+
+![](images/clipboard-2638508703.png)
 
 **Sugerencia de commit (issue):**
 
