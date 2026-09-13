@@ -4214,15 +4214,19 @@ npm run start:dev
 **Sugerencia de commit (issue):**
 
 ``` bash
+git add .
+git commit -m "fix: correct teacher repository type imports"
 ```
 
-## FASE 11 — module.entity.ts
+![](images/clipboard-725552621.png)
 
-#### 11.1 — module.entity.ts
+## FASE 13 — evaluation.entity.ts
+
+#### 13.1 — evaluation.entity.ts
 
 Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
 
-![](images/clipboard-2694696115.png)
+![](images/clipboard-161193089.png)
 
 **Sugerencia de commit (issue):**
 
