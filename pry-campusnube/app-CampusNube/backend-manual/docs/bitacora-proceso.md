@@ -4360,24 +4360,24 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto create-module.dto.ts"
+git add .
+git commit -m "feat: add dto create-evaluation.dto.ts"
 ```
 
-![](images/clipboard-2844420856.png)
-
-#### 11.11 —Module.mapper.ts
+#### ![](images/clipboard-3723281782.png)11.11 —Evaluation.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
-![](images/clipboard-3892444019.png)
+![](images/clipboard-1056972746.png)
+
+![](images/clipboard-315526381.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add mapper module.mapper.ts"
+git add . 
+git commit -m "feat: add mapper module.mapper.ts"
 ```
-
-![](images/clipboard-214756162.png)
 
 #### 11.12 — create-module.use-case.ts
 
