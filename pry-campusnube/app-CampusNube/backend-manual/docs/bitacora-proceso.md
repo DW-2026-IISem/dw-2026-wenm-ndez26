@@ -4645,16 +4645,17 @@ git add .
 git commit -m "feat: add sequelize attempt repository"
 ```
 
-![](images/clipboard-1531290992.png)
+![](images/clipboard-2328615951.png)
 
-#### 13.8 — Migration.
+#### 14.8 — Migration.
 
-![](images/clipboard-3493979735.png)
+![](images/clipboard-2221910180.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "chore: add evaluations table migration reference"
+git add .   
+git commit -m "chore: add attempts table migration reference"
 ```
 
 #### ![](images/clipboard-74055301.png)
