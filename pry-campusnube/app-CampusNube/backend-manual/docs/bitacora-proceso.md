@@ -5278,7 +5278,7 @@ git commit -m "feat: add sequelize model progress.model.ts"
 
 ![](images/clipboard-3689071886.png)
 
-#### 16.7 — sequelize-submissions.repository.ts
+#### 16.7 — sequelize.progress.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
@@ -5287,22 +5287,24 @@ Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add sequelize progress repository"
+git add .    
+git commit -m "feat: add sequelize progress repository"
 ```
 
-![](images/clipboard-1080404071.png)
+![](images/clipboard-3051164732.png)
 
-#### 15.8 — Migration.
+#### 16.8 — Migration.
 
-![](images/clipboard-1244558818.png)
+![](images/clipboard-3086126097.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .     git commit -m "chore: add submissions table migration reference"
+git add .     
+git commit -m "chore: add progress table migration reference"
 ```
 
-#### ![](images/clipboard-1935163352.png)
+#### 
 
 #### 15.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
