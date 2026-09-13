@@ -5572,16 +5572,17 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add progress repository port"
+git add .  
+git commit -m "feat: add certifcates repository port"
 ```
 
-![](images/clipboard-2622158876.png)
+![](images/clipboard-2498158532.png)
 
-#### 16.5 — ptogress-demain.service.ts
+#### 17.5 — certificates-demain.service.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-![](images/clipboard-692803553.png)
+![](images/clipboard-407007944.png)
 
 **Sugerencia de commit (issue):**
 
