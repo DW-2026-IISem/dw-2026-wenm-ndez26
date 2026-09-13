@@ -4940,17 +4940,18 @@ git add .
 git commit -m "feat: add submission domain service"
 ```
 
-#### 14.6 — attem.model
+![](images/clipboard-529325668.png)
 
-![](images/clipboard-4114593044.png)
+#### 15.6 — submission.model
+
+![](images/clipboard-2392677374.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add sequelize model attempt.model.ts"
+git add .   
+git commit -m "feat: add sequelize model submission.model.ts
 ```
-
-![](images/clipboard-1533079255.png)
 
 #### 14.7 — sequelize-attempt.repository.ts
 
