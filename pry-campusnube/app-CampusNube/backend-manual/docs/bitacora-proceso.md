@@ -5557,14 +5557,17 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .     git commit -m "feat: add domain exception progress-not-found.exception.ts"
+git add .     
+git commit -m "feat: add certificate not found exception"
 ```
 
-#### 17.4 — progress-repository.inteface.ts
+![](images/clipboard-544686293.png)
+
+#### 17.4 — certificates-repository.inteface.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-1347025171.png)
+![](images/clipboard-771284673.png)
 
 **Sugerencia de commit (issue):**
 
