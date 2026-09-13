@@ -5604,21 +5604,20 @@ git add .
 git commit -m "feat: add sequelize model certificate.model.ts"
 ```
 
-![](images/clipboard-3689071886.png)
+![](images/clipboard-2310588678.png)
 
-#### 16.7 — sequelize.progress.repository.ts
+#### 17.7 — sequelize.certificates.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
-![](images/clipboard-3228438733.png)
+![](images/clipboard-4049183833.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .     git commit -m "feat: add sequelize progress repository"
+git add .    
+git commit -m "feat: add sequelize progress repository"
 ```
-
-![](images/clipboard-3051164732.png)
 
 #### 16.8 — Migration.
 
@@ -5627,7 +5626,8 @@ git add .     git commit -m "feat: add sequelize progress repository"
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .      git commit -m "chore: add progress table migration reference"
+git add .      
+git commit -m "feat: add sequelize certificate repository"
 ```
 
 #### ![](images/clipboard-1502008394.png)
