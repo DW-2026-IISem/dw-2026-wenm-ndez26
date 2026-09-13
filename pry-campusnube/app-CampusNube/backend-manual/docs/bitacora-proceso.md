@@ -4882,33 +4882,33 @@ git commit -m "feat: add domain entity submission.entity.ts"
 
 ![](images/clipboard-2699996878.png)
 
-#### 15.2 — ivalid-attemp.exception.ts
+#### 15.2 — ivalid-submissions.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-182118216.png)
+![](images/clipboard-1182479504.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception invalid-attempt.exception.ts"
+git add . 
+git commit -m "feat: add domain exception invalid-submission.exception.ts"
 ```
 
-![](images/clipboard-576734324.png)
+![](images/clipboard-4088942816.png)
 
-#### 14.3 —attempt-not-found.exception.ts
+#### 15.3 —submissions-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-2698045295.png)
+![](images/clipboard-739783019.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add domain exception attempt-not-found.exception.ts"
+git add .   
+git commit -m "feat: add domain exception submission-not-found.exception.ts"
 ```
-
-![](images/clipboard-3257347968.png)
 
 #### 14.4 — attempt-repository.inteface.ts
 
