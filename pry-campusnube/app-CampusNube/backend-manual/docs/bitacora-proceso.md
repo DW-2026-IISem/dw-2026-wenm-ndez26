@@ -5474,24 +5474,23 @@ Aquí **no creamos otro módulo** porque `AssessmentsModule` ya está conectado 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit --allow-empty -m "feat: wire attempts into business module"
+git add .   
+git commit --allow-empty -m "feat: wire progress into business module"
 ```
 
-![](images/clipboard-2480877127.png)
+![](images/clipboard-1758736950.png)
 
-#### 15.21 — Actualizar database-seeder.ts
+#### 16.21 — Actualizar database-seeder.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
-![](images/clipboard-4230229207.png)
+![](images/clipboard-3516111051.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .     git commit -m "chore: update submissions seeders bootstrap order"
 ```
-
-![](images/clipboard-199371793.png)
 
 #### 14.22 — Verificar feature
 
