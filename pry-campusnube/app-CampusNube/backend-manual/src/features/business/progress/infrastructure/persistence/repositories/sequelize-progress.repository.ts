@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
 import { ProgressEntity } from '../../../domain/entities/progress.entity.js';
-import {
+import { PROGRESS_REPOSITORY } from '../../../domain/interfaces/progress-repository.interface.js';
+import type {
   IProgressRepository,
-  PROGRESS_REPOSITORY,
   ProgressFindAllParams,
   ProgressUpdateData,
 } from '../../../domain/interfaces/progress-repository.interface.js';

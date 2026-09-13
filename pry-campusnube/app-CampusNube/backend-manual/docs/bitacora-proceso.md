@@ -5489,10 +5489,13 @@ Ejecuta seeders en orden de dependencias al arrancar (dev).
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .     git commit -m "chore: update submissions seeders bootstrap order"
+git add .     
+git commit -m "chore: update progress seeders bootstrap order"
 ```
 
-#### 14.22 — Verificar feature
+![](images/clipboard-302930687.png)
+
+#### 16.22 — Verificar feature
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
 
@@ -5500,12 +5503,13 @@ Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes,
 npm run start:dev
 ```
 
-![](images/clipboard-631913483.png)
+![](images/clipboard-4100797947.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "test: verify submissions feature"
+git add . 
+git commit -m "test: verify progress feature"
 ```
 
 ------------------------------------------------------------------------

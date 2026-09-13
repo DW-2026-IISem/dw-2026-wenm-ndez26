@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { progressRepositoryProvider } from './domain/interfaces/progress-repository.interface.js';
+import { progressRepositoryProvider } from './infrastructure/persistence/repositories/sequelize-progress.repository.js';
+
 import { ProgressDomainService } from './domain/services/progress-domain.service.js';
 import { SequelizeProgressRepository } from './infrastructure/persistence/repositories/sequelize-progress.repository.js';
 import { ProgressController } from './interfaces/http/progress.controller.js';

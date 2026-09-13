@@ -7,8 +7,7 @@ import { LearningContentModule } from './learning-content/learning-content.modul
 import { TeachersModule } from './teachers/teachers.module.js';
 import { AssessmentsModule } from './assessments/assessments.module.js';
 import { SubmissionsModule } from './submissions/submissions.module.js';
-import { CertificatesModule } from './certificates/certificates.module.js';
-
+import { ProgressModule } from './progress/progress.module.js';
 @Module({
   imports: [
     CoursesModule,
@@ -18,7 +17,7 @@ import { CertificatesModule } from './certificates/certificates.module.js';
     TeachersModule,
     AssessmentsModule,
     SubmissionsModule,
-    CertificatesModule,
+    ProgressModule,
   ],
   exports: [
     CoursesModule,
@@ -28,7 +27,7 @@ import { CertificatesModule } from './certificates/certificates.module.js';
     TeachersModule,
     AssessmentsModule,
     SubmissionsModule,
-    CertificatesModule,
+    ProgressModule,
   ],
 })
 export class BusinessModule {}
