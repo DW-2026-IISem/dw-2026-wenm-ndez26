@@ -4955,7 +4955,7 @@ git commit -m "feat: add sequelize model submission.model.ts
 
 ![](images/clipboard-2532599955.png)
 
-#### 14.7 — sequelize-submissions.repository.ts
+#### 15.7 — sequelize-submissions.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
@@ -4970,7 +4970,7 @@ git commit -m "feat: add sequelize submission repository"
 
 ![](images/clipboard-1080404071.png)
 
-#### 14.8 — Migration.
+#### 15.8 — Migration.
 
 ![](images/clipboard-1244558818.png)
 
@@ -4978,22 +4978,21 @@ git commit -m "feat: add sequelize submission repository"
 
 ``` bash
 git add .    
-git commit -m "chore: add attempts table migration reference"
+git commit -m "chore: add submissions table migration reference"
 ```
 
-#### ![](images/clipboard-3766792782.png)
+#### ![](images/clipboard-1935163352.png)
 
-#### 14.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+#### 15.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
-![](images/clipboard-143924679.png)
+![](images/clipboard-3559853948.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "chore: add attempts seeder
+git add . 
+git commit -m "chore: add submissions seeder"
 ```
-
-![](images/clipboard-2343410520.png)
 
 #### 14.10 — create-attempts.dto.ts
 
