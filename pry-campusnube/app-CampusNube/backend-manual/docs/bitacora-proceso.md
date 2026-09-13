@@ -4443,80 +4443,85 @@ git commit -m "feat: add use case list-evaluations.use-case.ts"
 
 ``` bash
 git add .  
-git commit -m "feat: add update module use case and dto
+git commit -m "feat: add update evaluation use case and dto
 ```
 
-![](images/clipboard-422613340.png)
+![](images/clipboard-3865774057.png)
 
-#### 11.17 — Modules.controller.ts
+#### 13.17 — Evaluation.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
-![](images/clipboard-2907067381.png)
+![](images/clipboard-3920293622.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add controller modules.controller.ts"
+git add .  
+git commit -m "feat: add controller evaluations.controller.ts"
 ```
 
-![](images/clipboard-4281216756.png)
+![](images/clipboard-1262188831.png)
 
-#### 11.18 — Learning Content.module.ts
+#### 13.18 — assements.module.ts
 
 Ahora conectamos los casos de uso y el repositorio con NestJS.
 
-![](images/clipboard-508633561.png)
+![](images/clipboard-1152537846.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: wire learning content module"
+git add . 
+git commit -m "feat: wire assessments evalution"
 ```
 
-![](images/clipboard-4057666968.png)
+![](images/clipboard-1875385287.png)
 
-#### 11.19 — Actualizar sequelize.factory.ts 
+#### 13.19 — Actualizar sequelize.factory.ts 
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-![](images/clipboard-1902184559.png)
+![](images/clipboard-2030285195.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: register module model in sequelize"
+git add .  
+git commit -m "feat: register evalution model in sequelize"
 ```
 
-![](images/clipboard-134799775.png)
+![](images/clipboard-1936366228.png)
 
-#### 11.20 — Actualizar learning-content.module.ts
+#### 13.20 — Actualizar learning-content.module.ts
 
-![](images/clipboard-41776159.png)
+![](images/clipboard-3899048196.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: wire learning content module"
+git add . 
+git commit -m "feat: wire assessments module into business module"
 ```
 
-![](images/clipboard-2379392638.png)
+![](images/clipboard-693464123.png)
 
-#### 11.21 — Actualizar database-seeder.ts
+#### 13.21 — Actualizar database-seeder.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
-![](images/clipboard-3561445569.png)
+![](images/clipboard-3571285516.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "chore: update learning content seeders bootstrap order"
+git add .  
+git commit -m "chore: update assessments seeders bootstrap order"
 ```
 
-![](images/clipboard-3342095304.png)
+![](images/clipboard-275705980.png)
 
-#### 11.22 — Verificar feature 
+#### 13.22 — Verificar feature 
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
 
@@ -4524,15 +4529,16 @@ Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes,
 npm run start:dev
 ```
 
-![](images/clipboard-2084413663.png)
+![](images/clipboard-587763405.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "test: verify learning content module feature"
+git add .
+git commit -m "test: verify learning content module feature"
 ```
 
-![](images/clipboard-3355450816.png)
+![](images/clipboard-671201367.png)
 
 ------------------------------------------------------------------------
 
