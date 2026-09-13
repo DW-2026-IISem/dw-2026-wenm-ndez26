@@ -5233,21 +5233,20 @@ git add .
 git commit -m "feat: add domain exception progress-not-found.exception.ts"
 ```
 
-![](images/clipboard-2112428433.png)
+![](images/clipboard-2012560471.png)
 
-#### 15.4 — submission-repository.inteface.ts
+#### 15.4 — progress-repository.inteface.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-1454217064.png)
+![](images/clipboard-1347025171.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add submission repository port"
+git add .  
+git commit -m "feat: add progress repository port"
 ```
-
-![](images/clipboard-892831349.png)
 
 #### 15.5 — submissions-demain.service.ts
 
