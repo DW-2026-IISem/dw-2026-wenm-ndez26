@@ -5078,19 +5078,18 @@ git add .
 git commit -m "feat: add use case list-submissions.use-case.ts"
 ```
 
-#### 14.16 — update-attempt.dto-case.ts
+#### ![](images/clipboard-3420668999.png) 15.16 — update-submissions.dto-case.ts
 
-![](images/clipboard-4282773457.png)
+![](images/clipboard-335575932.png)
 
-![](images/clipboard-3425939578.png)
+![](images/clipboard-1047927264.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add update attempt use case and dto"
+git add .  
+git commit -m "feat: add update submission use case and dto"
 ```
-
-![](images/clipboard-582629746.png)
 
 #### 14.17 — attempt.controller.ts
 
