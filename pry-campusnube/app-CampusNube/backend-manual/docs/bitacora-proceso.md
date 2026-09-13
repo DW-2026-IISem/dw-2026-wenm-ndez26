@@ -3954,23 +3954,23 @@ Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize repository sale.repository.ts"
+git add . 
+git commit -m "feat: add sequelize teacher repository"
 ```
 
-#### 10.9 — features/business/sales/infrastructure/persistence/migrations/create-sales-table.migration.ts
+![](images/clipboard-1415184036.png)
+
+#### 12.6— teacher-table.migration.ts
 
 Migración documental/auxiliar de la tabla. En dev el sync de Sequelize crea el esquema.
 
-**Archivo:** `src/features/business/sales/infrastructure/persistence/migrations/create-sales-table.migration.ts`
-
-``` bash
-mkdir -p src/features/business/sales/infrastructure/persistence/migrations cat > src/features/business/sales/infrastructure/persistence/migrations/create-sales-table.migration.ts <<'EOF_BACKEND_IA' export const createSalesTableMigration = {   name: 'create-sales-table',   async up(): Promise<void> {     // Sequelize sync handles table creation in development.     // Production: CREATE TABLE sales (...), CREATE TABLE product_sales (...)   },   async down(): Promise<void> {     // Production: DROP TABLE product_sales, DROP TABLE sales   }, }; EOF_BACKEND_IA
-```
+![](images/clipboard-3872399235.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "chore: add migration create-sales-table.migration.ts"
+git add . 
+git commit -m "chore: add migration create-sales-table.migration.ts"
 ```
 
 #### 10.10 — features/business/sales/infrastructure/persistence/seeders/sales.seeder.ts
