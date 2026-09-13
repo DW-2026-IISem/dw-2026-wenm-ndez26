@@ -5332,6 +5332,8 @@ git add .
 git commit -m "feat: add dto create-progress.dto.ts"
 ```
 
+![](images/clipboard-1013555042.png)
+
 #### 16.11 —Evaluation.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
