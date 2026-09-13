@@ -5106,13 +5106,13 @@ git add .
 git commit -m "feat: add controller submissions.controller.ts"
 ```
 
-![](images/clipboard-2492695657.png)
+![](images/clipboard-3963368332.png)
 
-#### 14.18 — assements.module.ts
+#### 15.18 — assements.module.ts
 
 Ahora conectamos los casos de uso y el repositorio con NestJS.
 
-![](images/clipboard-1890085871.png)
+![](images/clipboard-1129320407.png)
 
 **Sugerencia de commit (issue):**
 
