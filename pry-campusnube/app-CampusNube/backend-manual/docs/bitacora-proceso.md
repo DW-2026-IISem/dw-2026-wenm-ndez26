@@ -4630,18 +4630,19 @@ git add .
 git commit -m "feat: add sequelize model attempt.model.ts"
 ```
 
-![](images/clipboard-3573428215.png)
+![](images/clipboard-1533079255.png)
 
-#### 13.7 — sequelize-evaluation.repository.ts
+#### 14.7 — sequelize-attempt.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
-![](images/clipboard-1080777092.png)
+![](images/clipboard-1646294583.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add sequelize evaluation repository
+git add .  
+git commit -m "feat: add sequelize attempt repository"
 ```
 
 ![](images/clipboard-1531290992.png)
