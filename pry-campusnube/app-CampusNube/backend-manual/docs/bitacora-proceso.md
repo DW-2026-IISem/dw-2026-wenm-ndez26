@@ -5754,19 +5754,22 @@ Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
 ``` bash
 git add .   
-git commit -m "feat: add controller ptogress.controller.ts"
+git commit -m "feat: add controller certificates.controller.ts"
 ```
 
-#### 16.18 — submissions.module.ts
+![](images/clipboard-2685457917.png)
+
+#### 17.18 — certiifcates.module.ts
 
 Ahora conectamos los casos de uso y el repositorio con NestJS.
 
-![](images/clipboard-2302108893.png)
+![](images/clipboard-2752143932.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: wire progress module"
+git add .  
+git commit -m "feat: wire progress module"
 ```
 
 ![](images/clipboard-2438033508.png)
