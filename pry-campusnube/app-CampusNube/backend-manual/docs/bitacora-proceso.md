@@ -3819,7 +3819,7 @@ git commit -m "feat: wire learning content module"
 
 ![](images/clipboard-4057666968.png)
 
-#### 11.19 — Actualizar sequelize.factory.ts 
+#### 11.19 — Actualizar sequelize.factory.ts
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
@@ -3862,7 +3862,7 @@ git commit -m "chore: update learning content seeders bootstrap order"
 
 ![](images/clipboard-3342095304.png)
 
-#### 11.22 — Verificar feature 
+#### 11.22 — Verificar feature
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
 
@@ -3883,7 +3883,7 @@ git commit -m "test: verify learning content module feature"
 
 ------------------------------------------------------------------------
 
-## FASE 12 
+## FASE 12
 
 #### 12.1 — teacher.entity.ts
 
@@ -4478,7 +4478,7 @@ git commit -m "feat: wire assessments evalution"
 
 ![](images/clipboard-1875385287.png)
 
-#### 13.19 — Actualizar sequelize.factory.ts 
+#### 13.19 — Actualizar sequelize.factory.ts
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
@@ -4521,7 +4521,7 @@ git commit -m "chore: update assessments seeders bootstrap order"
 
 ![](images/clipboard-275705980.png)
 
-#### 13.22 — Verificar feature 
+#### 13.22 — Verificar feature
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
 
@@ -4802,7 +4802,7 @@ git commit -m "feat: wire attempts into assessments module"
 
 ![](images/clipboard-2939491509.png)
 
-#### 18.19 — Actualizar sequelize.factory.ts 
+#### 18.19 — Actualizar sequelize.factory.ts
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
@@ -4844,7 +4844,7 @@ git commit -m "chore: update attempts seeders bootstrap order"
 
 ![](images/clipboard-2898725528.png)
 
-#### 14.22 — Verificar feature 
+#### 14.22 — Verificar feature
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
 
@@ -5123,7 +5123,7 @@ git commit -m "feat: wire submissions module"
 
 ![](images/clipboard-1906086178.png)
 
-#### 115.19 — Actualizar sequelize.factory.ts 
+#### 15.19 — Actualizar sequelize.factory.ts
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
@@ -5167,7 +5167,7 @@ git commit -m "chore: update submissions seeders bootstrap order"
 
 ![](images/clipboard-199371793.png)
 
-#### 14.22 — Verificar feature 
+#### 15.22 — Verificar feature
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
 
@@ -5185,6 +5185,309 @@ git commit -m "test: verify submissions feature"
 ```
 
 ------------------------------------------------------------------------
+
+![](images/clipboard-2431510055.png)
+
+## FASE 16. — progress.entity.ts
+
+#### 15.1 — progress.entity.ts
+
+Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
+
+![](images/clipboard-1491302041.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: create progress domain entity"
+```
+
+#### 15.2 — ivalid-submissions.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-1182479504.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add domain exception invalid-submission.exception.ts"
+```
+
+![](images/clipboard-4088942816.png)
+
+#### 15.3 —submissions-not-found.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-739783019.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add domain exception submission-not-found.exception.ts"
+```
+
+![](images/clipboard-2112428433.png)
+
+#### 15.4 — submission-repository.inteface.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-1454217064.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add submission repository port"
+```
+
+![](images/clipboard-892831349.png)
+
+#### 15.5 — submissions-demain.service.ts
+
+Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
+
+![](images/clipboard-79715974.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add submission domain service"
+```
+
+![](images/clipboard-529325668.png)
+
+#### 15.6 — submission.model
+
+![](images/clipboard-2392677374.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add sequelize model submission.model.ts
+```
+
+![](images/clipboard-2532599955.png)
+
+#### 15.7 — sequelize-submissions.repository.ts
+
+Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
+
+![](images/clipboard-3714135501.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add sequelize submission repository"
+```
+
+![](images/clipboard-1080404071.png)
+
+#### 15.8 — Migration.
+
+![](images/clipboard-1244558818.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .     git commit -m "chore: add submissions table migration reference"
+```
+
+#### ![](images/clipboard-1935163352.png)
+
+#### 15.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+![](images/clipboard-3559853948.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "chore: add submissions seeder"
+```
+
+![](images/clipboard-23719458.png)
+
+#### 15.10 — create-subbmissions.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-3713156049.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add dto create-submission.dto.ts
+```
+
+![](images/clipboard-1293655067.png)
+
+#### 15.11 —Evaluation.mapper.ts
+
+Mapper entre entidad de dominio y DTO de respuesta.
+
+![](images/clipboard-1242902466.png)
+
+![](images/clipboard-41711826.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add mapper submission.mapper.ts"
+```
+
+![](images/clipboard-3274642642.png)
+
+#### 15.12 — create-submissions.use-case.ts
+
+![](images/clipboard-1625880490.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add use case create-submission.use-case.ts"
+```
+
+![](images/clipboard-4215038438.png)
+
+#### 15.13 — delete-submission.use-case.ts
+
+![](images/clipboard-322565228.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add use case delete-submission.use-case.ts"
+```
+
+![](images/clipboard-3850467987.png)
+
+#### 15.14 — get-attempt.use-case.ts
+
+![](images/clipboard-4104732913.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add use case get-attempt.use-case.ts"
+```
+
+![](images/clipboard-3416381304.png)
+
+#### 15.15 — list.submissions.use-case.ts
+
+![](images/clipboard-2702115275.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add use case list-submissions.use-case.ts"
+```
+
+#### ![](images/clipboard-3420668999.png) 15.16 — update-submissions.dto-case.ts
+
+![](images/clipboard-335575932.png)
+
+![](images/clipboard-1047927264.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add update submission use case and dto"
+```
+
+![](images/clipboard-4033878097.png)
+
+#### 15.17 — submissions.controller.ts
+
+Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+![](images/clipboard-800007099.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add controller submissions.controller.ts"
+```
+
+![](images/clipboard-3963368332.png)
+
+#### 15.18 — submissions.module.ts
+
+Ahora conectamos los casos de uso y el repositorio con NestJS.
+
+![](images/clipboard-1129320407.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: wire submissions module"
+```
+
+![](images/clipboard-1906086178.png)
+
+#### 15.19 — Actualizar sequelize.factory.ts
+
+#### ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+![](images/clipboard-3880121967.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: register submission model in sequelize"
+```
+
+![](images/clipboard-1891715542.png)
+
+#### 15.20 — Actualizar learning-content.module.ts
+
+Aquí **no creamos otro módulo** porque `AssessmentsModule` ya está conectado al `BusinessModule`.
+
+![](images/clipboard-1423348723.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit --allow-empty -m "feat: wire attempts into business module"
+```
+
+![](images/clipboard-2480877127.png)
+
+#### 15.21 — Actualizar database-seeder.ts
+
+Ejecuta seeders en orden de dependencias al arrancar (dev).
+
+![](images/clipboard-4230229207.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .     git commit -m "chore: update submissions seeders bootstrap order"
+```
+
+![](images/clipboard-199371793.png)
+
+#### 14.22 — Verificar feature
+
+Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
+
+``` bash
+npm run start:dev
+```
+
+![](images/clipboard-631913483.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "test: verify submissions feature"
+```
+
+------------------------------------------------------------------------
+
+![](images/clipboard-2431510055.png)
 
 ## FA
 
