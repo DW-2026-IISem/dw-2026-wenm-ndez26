@@ -8,6 +8,8 @@ import { TeachersModule } from './teachers/teachers.module.js';
 import { AssessmentsModule } from './assessments/assessments.module.js';
 import { SubmissionsModule } from './submissions/submissions.module.js';
 import { ProgressModule } from './progress/progress.module.js';
+import { CertificatesModule } from './certificates/certificates.module.js';
+
 @Module({
   imports: [
     CoursesModule,
@@ -18,6 +20,7 @@ import { ProgressModule } from './progress/progress.module.js';
     AssessmentsModule,
     SubmissionsModule,
     ProgressModule,
+    CertificatesModule,
   ],
   exports: [
     CoursesModule,
@@ -28,6 +31,7 @@ import { ProgressModule } from './progress/progress.module.js';
     AssessmentsModule,
     SubmissionsModule,
     ProgressModule,
+    CertificatesModule,
   ],
 })
 export class BusinessModule {}

@@ -5784,16 +5784,16 @@ git commit -m "feat: wire nest module certificates.module.ts"
 
 ``` bash
 git add . 
-git commit -m "feat: register progress model in sequelize"
+git commit -m "feat: register certificate model in sequelize factory"
 ```
 
-![](images/clipboard-2177885425.png)
+![](images/clipboard-727396596.png)
 
-#### 16.20 — Actualizar certificatesModule-content.module.ts
+#### 17.20 — Actualizar certificatesModule-content.module.ts
 
 Aquí **no creamos otro módulo** porque `AssessmentsModule` ya está conectado al `BusinessModule`.
 
-![](images/clipboard-694908365.png)
+![](images/clipboard-1645363727.png)
 
 **Sugerencia de commit (issue):**
 
