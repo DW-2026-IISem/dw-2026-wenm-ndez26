@@ -4574,47 +4574,50 @@ git commit -m "feat: add domain exception invalid-attempt.exception.ts"
 
 ![](images/clipboard-576734324.png)
 
-#### 14.3 —evaluation-not-found.exception.ts
+#### 14.3 —attempt-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-3705486659.png)
+![](images/clipboard-2698045295.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add domain exception evaluation-not-found.exception.ts
+git add .  
+git commit -m "feat: add domain exception attempt-not-found.exception.ts"
 ```
 
-![](images/clipboard-480060980.png)
+![](images/clipboard-3257347968.png)
 
-#### 14.4 — evaluation-repository.inteface.ts
+#### 14.4 — attempt-repository.inteface.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-893886482.png)
+![](images/clipboard-1433799697.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add evaluation repository port
+git add .  
+git commit -m "feat: add attempt repository port"
 ```
 
-![](images/clipboard-2230218579.png)
+![](images/clipboard-3800092852.png)
 
-#### 13.5 — evaluation-demain.service.ts
+#### 14.5 — attempen-demain.service.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-![](images/clipboard-3119117281.png)
+![](images/clipboard-1444831013.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add evaluation domain service"
+git add .  
+git commit -m "feat: add attempt domain service"
 ```
 
-![](images/clipboard-35946496.png)
+![](images/clipboard-3698751375.png)
 
 #### 13.6 — evaluation.model
 
