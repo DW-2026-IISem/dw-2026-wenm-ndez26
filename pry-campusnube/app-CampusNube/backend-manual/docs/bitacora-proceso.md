@@ -5091,16 +5091,19 @@ git add .
 git commit -m "feat: add update submission use case and dto"
 ```
 
-#### 14.17 — attempt.controller.ts
+![](images/clipboard-4033878097.png)
+
+#### 15.17 — submissions.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
-![](images/clipboard-1890225554.png)
+![](images/clipboard-800007099.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add controller attempts.controller.ts"
+git add .  
+git commit -m "feat: add controller submissions.controller.ts"
 ```
 
 ![](images/clipboard-2492695657.png)
