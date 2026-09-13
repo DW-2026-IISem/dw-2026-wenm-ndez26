@@ -4994,19 +4994,20 @@ git add .
 git commit -m "chore: add submissions seeder"
 ```
 
-#### 14.10 — create-attempts.dto.ts
+![](images/clipboard-23719458.png)
+
+#### 15.10 — create-subbmissions.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-![](images/clipboard-5870499.png)
+![](images/clipboard-3713156049.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add dto create-attempt.dto.ts"
+git add .  
+git commit -m "feat: add dto create-submission.dto.ts
 ```
-
-![](images/clipboard-219146956.png)
 
 #### 14.11 —Evaluation.mapper.ts
 
