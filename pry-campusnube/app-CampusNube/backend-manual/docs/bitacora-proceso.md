@@ -4787,42 +4787,44 @@ git commit -m "feat: add controller attempts.controller.ts"
 
 ![](images/clipboard-2492695657.png)
 
-#### 13.18 — assements.module.ts
+#### 14.18 — assements.module.ts
 
 Ahora conectamos los casos de uso y el repositorio con NestJS.
 
-![](images/clipboard-1152537846.png)
+![](images/clipboard-1890085871.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: wire assessments evalution"
+git add .  
+git commit -m "feat: wire attempts into assessments module"
 ```
 
-![](images/clipboard-1875385287.png)
+![](images/clipboard-2939491509.png)
 
-#### 13.19 — Actualizar sequelize.factory.ts 
+#### 18.19 — Actualizar sequelize.factory.ts 
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-![](images/clipboard-2030285195.png)
+![](images/clipboard-3081820452.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: register evalution model in sequelize"
+git add .   git commit -m "feat: register attempt model in sequelize"
 ```
 
-![](images/clipboard-1936366228.png)
+![](images/clipboard-2400472882.png)
 
-#### 13.20 — Actualizar learning-content.module.ts
+#### 14.20 — Actualizar learning-content.module.ts
 
-![](images/clipboard-3899048196.png)
+Aquí **no creamos otro módulo** porque `AssessmentsModule` ya está conectado al `BusinessModule`.
 
-**Sugerencia de commit (issue):**
+![](images/clipboard-4055459396.png)**Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: wire assessments module into business module"
+git add .  
+git commit --allow-empty -m "feat: wire attempts into business module"
 ```
 
 ![](images/clipboard-693464123.png)
