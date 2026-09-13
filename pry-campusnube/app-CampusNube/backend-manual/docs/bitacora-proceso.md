@@ -4402,45 +4402,48 @@ git commit -m "feat: add use case create-evaluation.use-case.ts
 
 ``` bash
 git add .  
-git commit -m "feat: add use case create-module.use-case.ts"
+git commit -m "feat: add use case delete-evaluation.use-case.ts
 ```
 
-![](images/clipboard-1615885913.png)
+![](images/clipboard-61395237.png)
 
-#### 11.14 — get-module.use-case.ts
+#### 13.14 — get-evaluation.use-case.ts
 
-![](images/clipboard-2502659206.png)
+![](images/clipboard-1331530980.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add use case get-module.use-case.ts"
+git add .  
+git commit -m "feat: add use case get-evaluation.use-case.ts"
 ```
 
-![](images/clipboard-3767043450.png)
+![](images/clipboard-2197317962.png)
 
-#### 11.15 — list.modules.use-case.ts
+#### 13.15 — list.evalutions.use-case.ts
 
-![](images/clipboard-872425115.png)
+![](images/clipboard-2127808155.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add use case list-modules.use-case.ts"
+git add .  
+git commit -m "feat: add use case list-evaluations.use-case.ts"
 ```
 
-![](images/clipboard-546287132.png)
+![](images/clipboard-1738745516.png)
 
-#### 11.16 — update-module.dto-case.ts
+#### 13.16 — update-evaluation.dto-case.ts
 
-![](images/clipboard-2645009346.png)
+![](images/clipboard-4182744567.png)
 
-![](images/clipboard-1821694895.png)
+![](images/clipboard-3231844294.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add update module use case and dto
+git add .  
+git commit -m "feat: add update module use case and dto
 ```
 
 ![](images/clipboard-422613340.png)
