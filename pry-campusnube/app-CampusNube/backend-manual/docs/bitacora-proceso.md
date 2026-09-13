@@ -5817,6 +5817,8 @@ git add .
 git commit -m "feat: register certificate database seeder"
 ```
 
+![](images/clipboard-2282724146.png)
+
 #### 16.22 — Verificar feature
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
@@ -5825,12 +5827,13 @@ Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes,
 npm run start:dev
 ```
 
-![](images/clipboard-4100797947.png)
+![](images/clipboard-3448931188.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "test: verify progress feature"
+git add .  
+git commit -m "test: verify certificates feature"
 ```
 
 ------------------------------------------------------------------------
