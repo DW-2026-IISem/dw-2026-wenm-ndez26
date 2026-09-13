@@ -5036,18 +5036,21 @@ git commit -m "feat: add mapper submission.mapper.ts"
 
 ``` bash
 git add . 
-git commit -m "feat: add use case create-attempt.use-case.ts"
+git commit -m "feat: add use case create-submission.use-case.ts"
 ```
 
-#### 15.13 — delete-evaluation.use-case.ts
+![](images/clipboard-4215038438.png)
+
+#### 15.13 — delete-submission.use-case.ts
+
+![](images/clipboard-322565228.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add use case delete-attempt.use-case.ts"
+git add .   
+git commit -m "feat: add use case delete-submission.use-case.ts"
 ```
-
-![](images/clipboard-2432592462.png)
 
 #### 14.14 — get-attempt.use-case.ts
 
