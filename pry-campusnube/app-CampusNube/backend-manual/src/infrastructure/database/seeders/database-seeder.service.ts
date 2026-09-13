@@ -5,6 +5,7 @@ import { seedApprentices } from '../../../features/business/apprentices/infrastr
 import { seedEnrollments } from '../../../features/business/enrollment/infrastructure/persistence/seeders/enrollments.seeder.js';
 import { seedModules } from '../../../features/business/learning-content/infrastructure/persistence/seeders/modules.seeder.js';
 import { seedTeachers } from '../../../features/business/teachers/infrastructure/persistence/seeders/teachers.seeder.js';
+import { seedEvaluations } from '../../../features/business/assessments/infrastructure/persistence/seeders/evaluations.seeder.js';
 
 @Injectable()
 export class DatabaseSeederService implements OnModuleInit {
@@ -21,6 +22,7 @@ export class DatabaseSeederService implements OnModuleInit {
       await seedEnrollments();
       await seedModules();
       await seedTeachers();
+      await seedEvaluations();
 
       this.logger.log('✅ Seeders ejecutados');
     } catch (error: any) {
