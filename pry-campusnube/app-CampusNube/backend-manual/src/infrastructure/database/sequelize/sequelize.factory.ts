@@ -16,6 +16,7 @@ import { RoleModel } from '../../../features/auth/roles/infrastructure/persisten
 import { AttemptModel } from '../../../features/business/assessments/infrastructure/persistence/models/attempt.model.js';
 import { SubmissionModel } from '../../../features/business/submissions/infrastructure/persistence/models/submission.model.js'; 
 import { ProgressModel } from '../../../features/business/progress/infrastructure/persistence/models/progress.model.js';
+import { CertificateModel } from '../../../features/business/certificates/infrastructure/persistence/models/certificate.model.js';
 
 
 const require = createRequire(import.meta.url);
@@ -32,7 +33,7 @@ export const ALL_MODELS = [
   SubmissionModel,
   ProgressModel,
   RoleModel,
- 
+  CertificateModel, 
 ];
 
 export async function createSequelizeInstance(
