@@ -5304,7 +5304,7 @@ git add .
 git commit -m "chore: add progress table migration reference"
 ```
 
-#### 
+#### ![](images/clipboard-1502008394.png)
 
 #### 15.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
