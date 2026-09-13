@@ -3985,23 +3985,22 @@ Seeder de datos iniciales para desarrollo y verificación física en BD.
 
 ``` bash
 git add .
-git commit -m "chore: add seeder sales.seeder.ts"
+git commit -m "chore: add teachers seeder"
 ```
 
-#### 10.11 — features/business/sales/application/dto/create-sale.dto.ts
+![](images/clipboard-234728911.png)
+
+#### 12.8 —teacher.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-**Archivo:** `src/features/business/sales/application/dto/create-sale.dto.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/dto cat > src/features/business/sales/application/dto/create-sale.dto.ts <<'EOF_BACKEND_IA' import { ApiProperty } from '@nestjs/swagger'; import { Type } from 'class-transformer'; import {   IsArray,   IsInt,   IsNumber,   IsOptional,   IsPositive,   Min,   ValidateNested, } from 'class-validator';  export class CreateSaleItemDto {   @ApiProperty({ example: 1 })   @IsInt()   @IsPositive()   productId: number;    @ApiProperty({ example: 2 })   @IsInt()   @Min(1)   quantity: number;    @ApiProperty({ example: 59999 })   @IsNumber()   @IsPositive()   unitPrice: number; }  export class CreateSaleDto {   @ApiProperty({ example: 1 })   @IsInt()   @IsPositive()   clientId: number;    @ApiProperty({ type: [CreateSaleItemDto] })   @IsArray()   @ValidateNested({ each: true })   @Type(() => CreateSaleItemDto)   items: CreateSaleItemDto[];    @ApiProperty({ example: 0, required: false })   @IsOptional()   @IsNumber()   @Min(0)   tax?: number;    @ApiProperty({ example: 0, required: false })   @IsOptional()   @IsNumber()   @Min(0)   discounts?: number; } EOF_BACKEND_IA
-```
+![](images/clipboard-582683036.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto create-sale.dto.ts"
+git add . 
+git commit -m "feat: add dto create-sale.dto.ts"
 ```
 
 #### 10.12 — features/business/sales/application/dto/sale-filter.dto.ts
