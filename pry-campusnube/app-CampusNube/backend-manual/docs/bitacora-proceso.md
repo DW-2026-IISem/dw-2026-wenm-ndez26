@@ -4838,12 +4838,13 @@ Ejecuta seeders en orden de dependencias al arrancar (dev).
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "chore: update assessments seeders bootstrap order"
+git add .   
+git commit -m "chore: update attempts seeders bootstrap order"
 ```
 
-![](images/clipboard-275705980.png)
+![](images/clipboard-2898725528.png)
 
-#### 13.22 — Verificar feature 
+#### 14.22 — Verificar feature 
 
 Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
 
@@ -4851,15 +4852,317 @@ Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes,
 npm run start:dev
 ```
 
-![](images/clipboard-587763405.png)
+![](images/clipboard-4161176506.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "test: verify learning content module feature"
+git add .
+git commit -m "test: verify attempts feature"
 ```
 
-![](images/clipboard-671201367.png)
+![](images/clipboard-3505664974.png)
+
+------------------------------------------------------------------------
+
+## FASE 15 — submission.entity.ts
+
+#### 15.1 — submission.entity.ts
+
+Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
+
+![](images/clipboard-2298575870.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: add domain entity attempt.entity.ts
+```
+
+#### 15.2 — ivalid-attemp.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-182118216.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add domain exception invalid-attempt.exception.ts"
+```
+
+![](images/clipboard-576734324.png)
+
+#### 14.3 —attempt-not-found.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-2698045295.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add domain exception attempt-not-found.exception.ts"
+```
+
+![](images/clipboard-3257347968.png)
+
+#### 14.4 — attempt-repository.inteface.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-1433799697.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add attempt repository port"
+```
+
+![](images/clipboard-3800092852.png)
+
+#### 14.5 — attempen-demain.service.ts
+
+Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
+
+![](images/clipboard-1444831013.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add attempt domain service"
+```
+
+![](images/clipboard-1316460446.png)
+
+#### 14.6 — attem.model
+
+![](images/clipboard-4114593044.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add sequelize model attempt.model.ts"
+```
+
+![](images/clipboard-1533079255.png)
+
+#### 14.7 — sequelize-attempt.repository.ts
+
+Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
+
+![](images/clipboard-1646294583.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add sequelize attempt repository"
+```
+
+![](images/clipboard-2328615951.png)
+
+#### 14.8 — Migration.
+
+![](images/clipboard-2221910180.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "chore: add attempts table migration reference"
+```
+
+#### ![](images/clipboard-3766792782.png)
+
+#### 14.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+![](images/clipboard-143924679.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "chore: add attempts seeder
+```
+
+![](images/clipboard-2343410520.png)
+
+#### 14.10 — create-attempts.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-5870499.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add dto create-attempt.dto.ts"
+```
+
+![](images/clipboard-219146956.png)
+
+#### 14.11 —Evaluation.mapper.ts
+
+Mapper entre entidad de dominio y DTO de respuesta.
+
+![](images/clipboard-3472998392.png)
+
+![](images/clipboard-628549196.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add mapper attempt.mapper.ts"
+```
+
+![](images/clipboard-3421934933.png)
+
+#### 14.12 — create-attempent.use-case.ts
+
+![](images/clipboard-2995787955.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add use case create-attempt.use-case.ts"
+```
+
+![](images/clipboard-3087304958.png)
+
+#### 14.13 — delete-evaluation.use-case.ts
+
+![](images/clipboard-1206606795.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add use case delete-attempt.use-case.ts"
+```
+
+![](images/clipboard-2432592462.png)
+
+#### 14.14 — get-attempt.use-case.ts
+
+![](images/clipboard-3648224181.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add use case get-attempt.use-case.ts"
+```
+
+![](images/clipboard-3160321162.png)
+
+#### 14.15 — list.attempent.use-case.ts
+
+![](images/clipboard-2282894856.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add use case list-attempts.use-case.ts"
+```
+
+![](images/clipboard-2946792399.png)
+
+#### 14.16 — update-attempt.dto-case.ts
+
+![](images/clipboard-4282773457.png)
+
+![](images/clipboard-3425939578.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add update attempt use case and dto"
+```
+
+![](images/clipboard-582629746.png)
+
+#### 14.17 — attempt.controller.ts
+
+Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+![](images/clipboard-1890225554.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add controller attempts.controller.ts"
+```
+
+![](images/clipboard-2492695657.png)
+
+#### 14.18 — assements.module.ts
+
+Ahora conectamos los casos de uso y el repositorio con NestJS.
+
+![](images/clipboard-1890085871.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: wire attempts into assessments module"
+```
+
+![](images/clipboard-2939491509.png)
+
+#### 18.19 — Actualizar sequelize.factory.ts 
+
+#### ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+![](images/clipboard-3081820452.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: register attempt model in sequelize"
+```
+
+![](images/clipboard-2400472882.png)
+
+#### 14.20 — Actualizar learning-content.module.ts
+
+Aquí **no creamos otro módulo** porque `AssessmentsModule` ya está conectado al `BusinessModule`.
+
+![](images/clipboard-4055459396.png)**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit --allow-empty -m "feat: wire attempts into business module"
+```
+
+![](images/clipboard-4138752749.png)
+
+#### 14.21 — Actualizar database-seeder.ts
+
+Ejecuta seeders en orden de dependencias al arrancar (dev).
+
+![](images/clipboard-1002235422.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "chore: update attempts seeders bootstrap order"
+```
+
+![](images/clipboard-2898725528.png)
+
+#### 14.22 — Verificar feature 
+
+Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
+
+``` bash
+npm run start:dev
+```
+
+![](images/clipboard-4161176506.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "test: verify attempts feature"
+```
+
+![](images/clipboard-3505664974.png)
 
 ------------------------------------------------------------------------
 
