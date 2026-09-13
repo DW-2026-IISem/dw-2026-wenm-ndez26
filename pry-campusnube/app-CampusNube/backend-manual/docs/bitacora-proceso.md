@@ -5414,24 +5414,24 @@ git commit -m "feat: add use case list-progress.use-case.ts"
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add update submission use case and dto"
+git add .   
+git commit -m "feat: add update progress use case and dto"
 ```
 
-![](images/clipboard-4033878097.png)
+![](images/clipboard-1944310068.png)
 
-#### 15.17 — submissions.controller.ts
+#### 16.17 — progress.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
-![](images/clipboard-800007099.png)
+![](images/clipboard-3865632389.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add controller submissions.controller.ts"
+git add .   
+git commit -m "feat: add controller submissions.controller.ts"
 ```
-
-![](images/clipboard-3963368332.png)
 
 #### 15.18 — submissions.module.ts
 
