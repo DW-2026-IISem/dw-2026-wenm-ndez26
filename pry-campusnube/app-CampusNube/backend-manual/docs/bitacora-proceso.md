@@ -4141,18 +4141,15 @@ Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add controller sales.controller.ts"
+git add .
+git commit -m "feat: add controller teachers.controller.ts
 ```
 
-#### 10.21 — features/business/sales/index.ts
+![](images/clipboard-1201623684.png)
 
-Barrel export del feature para imports limpios.
+#### 12.18 — teachers.module.ts
 
-**Archivo:** `src/features/business/sales/index.ts`
-
-``` bash
-mkdir -p src/features/business/sales cat > src/features/business/sales/index.ts <<'EOF_BACKEND_IA' export { SalesModule } from './sales.module'; EOF_BACKEND_IA
-```
+![](images/clipboard-1378322781.png)
 
 **Sugerencia de commit (issue):**
 
