@@ -4921,22 +4921,24 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add attempt repository port"
+git add .  
+git commit -m "feat: add submission repository port"
 ```
 
-#### 14.5 — attempen-demain.service.ts
+![](images/clipboard-892831349.png)
+
+#### 15.5 — submissions-demain.service.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-![](images/clipboard-1444831013.png)
+![](images/clipboard-79715974.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add attempt domain service"
+git add .   
+git commit -m "feat: add submission domain service"
 ```
-
-![](images/clipboard-1316460446.png)
 
 #### 14.6 — attem.model
 
