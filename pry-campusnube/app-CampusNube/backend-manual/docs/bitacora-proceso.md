@@ -5656,24 +5656,24 @@ DTO de entrada/salida HTTP con `class-validator` / Swagger.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add dto create-progress.dto.ts"
+git add .   
+git commit -m "feat: add dto create-certificate.dto.ts"
 ```
 
-#### 16.11 —progress.mapper.ts
+![](images/clipboard-4169304449.png)
+
+#### 17.11 —progress.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
-![](images/clipboard-2824535549.png)
-
-![](images/clipboard-2389136640.png)
+![](images/clipboard-1429262568.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .     git commit -m "feat: add mapper progress.mapper.ts"
+git add .     
+git commit -m "feat: add mapper progress.mapper.ts"
 ```
-
-![](images/clipboard-3186777506.png)
 
 #### 16.12 — create-progress.use-case.ts
 
