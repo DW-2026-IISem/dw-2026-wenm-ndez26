@@ -5629,22 +5629,21 @@ git commit -m "feat: add sequelize progress repository"
 
 ``` bash
 git add .      
-git commit -m "feat: add sequelize certificate repository"
+git commit -m "feat: add certificate migration"
 ```
 
-#### 
+#### ![](images/clipboard-467166314.png)
 
 #### 16.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
-![](images/clipboard-3462788442.png)
+![](images/clipboard-1545075605.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "chore: add progresss seeder"
+git add . 
+git commit -m "chore: add progresss seeder"
 ```
-
-![](images/clipboard-1556888549.png)
 
 #### 16.10 — create-progress.dto.ts
 
