@@ -5634,7 +5634,7 @@ git commit -m "feat: add certificate migration"
 
 #### ![](images/clipboard-467166314.png)
 
-#### 16.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+#### 17.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
 ![](images/clipboard-1545075605.png)
 
@@ -5642,22 +5642,22 @@ git commit -m "feat: add certificate migration"
 
 ``` bash
 git add . 
-git commit -m "chore: add progresss seeder"
+git commit -m "chore: certificate seeder"
 ```
 
-#### 16.10 — create-progress.dto.ts
+![](images/clipboard-3455389605.png)
+
+#### 17.10 — create-certificates.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-![](images/clipboard-1900657073.png)
+![](images/clipboard-3779790951.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .   git commit -m "feat: add dto create-progress.dto.ts"
 ```
-
-![](images/clipboard-1013555042.png)
 
 #### 16.11 —progress.mapper.ts
 
