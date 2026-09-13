@@ -4055,10 +4055,11 @@ git commit -m "feat: add dto update-teacher.dto.ts"
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add mapper sale.mapper.ts"
+git add .
+git commit -m "feat: add mapper teacher.mapper.ts"
 ```
 
-#### 
+#### ![](images/clipboard-234006681.png)
 
 #### 10.15 — features/business/sales/application/use-cases/cancel-sale.use-case.ts
 
