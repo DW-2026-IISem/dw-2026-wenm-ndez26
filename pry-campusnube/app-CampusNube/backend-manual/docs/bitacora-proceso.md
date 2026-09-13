@@ -5203,19 +5203,19 @@ git add .
 git commit -m "feat: create progress domain entity"
 ```
 
-#### 15.2 — ivalid-submissions.exception.ts
+![](images/clipboard-3036793150.png)
+
+#### 16.2 — ivalid-progress.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-1182479504.png)
+![](images/clipboard-4102010190.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .  git commit -m "feat: add domain exception invalid-submission.exception.ts"
 ```
-
-![](images/clipboard-4088942816.png)
 
 #### 15.3 —submissions-not-found.exception.ts
 
