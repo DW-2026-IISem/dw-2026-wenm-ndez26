@@ -5685,12 +5685,14 @@ git commit -m "feat: add mapper certificate.mapper.ts"
 
 ``` bash
 git add . 
-git commit -m "feat: add use case create-progress.use-case.ts"
+git commit -m "feat: add use case create-certificate.use-case.ts"
 ```
 
-#### 16.13 — delete-progress.use-case.ts
+![](images/clipboard-4255387661.png)
 
-![](images/clipboard-149799976.png)
+#### 17.13 — delete-certificate.use-case.ts
+
+![](images/clipboard-655456914.png)
 
 **Sugerencia de commit (issue):**
 
