@@ -5738,24 +5738,24 @@ git commit -m "feat: add use case list-certificates.use-case.ts"
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add update progress use case and dto" 
+git add .  
+git commit -m "feat: add update certificates use case and dto" 
 ```
 
-![](images/clipboard-1944310068.png)
+![](images/clipboard-2311826135.png)
 
-#### 17.17 — p.controller.ts
+#### 17.17 — ceritificates.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
-![](images/clipboard-3865632389.png)
+![](images/clipboard-3392563445.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add controller ptogress.controller.ts"
+git add .   
+git commit -m "feat: add controller ptogress.controller.ts"
 ```
-
-![](images/clipboard-2077737019.png)
 
 #### 16.18 — submissions.module.ts
 
