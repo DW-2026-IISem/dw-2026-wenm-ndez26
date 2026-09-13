@@ -5235,7 +5235,7 @@ git commit -m "feat: add domain exception progress-not-found.exception.ts"
 
 ![](images/clipboard-2012560471.png)
 
-#### 15.4 — progress-repository.inteface.ts
+#### 16.4 — progress-repository.inteface.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
@@ -5248,19 +5248,20 @@ git add .
 git commit -m "feat: add progress repository port"
 ```
 
-#### 15.5 — submissions-demain.service.ts
+![](images/clipboard-2622158876.png)
+
+#### 16.5 — ptogress-demain.service.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-![](images/clipboard-79715974.png)
+![](images/clipboard-692803553.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add submission domain service"
+git add .   
+git commit -m "feat: add progress domain service"
 ```
-
-![](images/clipboard-529325668.png)
 
 #### 15.6 — submission.model
 
