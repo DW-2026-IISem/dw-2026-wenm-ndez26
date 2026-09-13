@@ -4910,19 +4910,19 @@ git add .
 git commit -m "feat: add domain exception submission-not-found.exception.ts"
 ```
 
-#### 14.4 — attempt-repository.inteface.ts
+![](images/clipboard-2112428433.png)
+
+#### 15.4 — submission-repository.inteface.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-1433799697.png)
+![](images/clipboard-1454217064.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .   git commit -m "feat: add attempt repository port"
 ```
-
-![](images/clipboard-3800092852.png)
 
 #### 14.5 — attempen-demain.service.ts
 
