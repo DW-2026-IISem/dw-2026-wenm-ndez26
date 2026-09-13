@@ -4388,19 +4388,21 @@ git commit -m "feat: add mapper evaluation.mapper.ts"
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add use case create-module.use-case.ts"
+git add .  
+git commit -m "feat: add use case create-evaluation.use-case.ts
 ```
 
-![](images/clipboard-3883952270.png)
+![](images/clipboard-1509835077.png)
 
-#### 11.13 — delete-module.use-case.ts
+#### 13.13 — delete-evaluation.use-case.ts
 
-![](images/clipboard-1430189016.png)
+![](images/clipboard-415055384.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add use case create-module.use-case.ts"
+git add .  
+git commit -m "feat: add use case create-module.use-case.ts"
 ```
 
 ![](images/clipboard-1615885913.png)
