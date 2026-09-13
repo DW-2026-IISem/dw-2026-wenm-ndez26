@@ -5711,24 +5711,21 @@ git commit -m "feat: add use case delete-certificate.use-case.ts"
 
 ``` bash
 git add .    
-git commit -m "feat: add use case get-progress.use-case.ts"
+git commit -m "feat: add use case get-certificate.use-case.ts"
 ```
 
-![](images/clipboard-2828415887.png)
+![](images/clipboard-773564013.png)
 
-#### 16.15 — list.progress.use-case.ts
+#### 17.15 — list.certificates.use-case.ts
 
-![](images/clipboard-2535809326.png)
-
-![](images/clipboard-1980679446.png)
+![](images/clipboard-1271198794.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add use case list-progress.use-case.ts"
+git add .  
+git commit -m "feat: add use case list-progress.use-case.ts"
 ```
-
-![](images/clipboard-1102994301.png)
 
 ####  16.16 — update-progress.dto-case.ts
 
