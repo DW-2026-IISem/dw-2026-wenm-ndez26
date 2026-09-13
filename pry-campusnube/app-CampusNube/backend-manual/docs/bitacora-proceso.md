@@ -5394,17 +5394,22 @@ git commit -m "feat: add use case get-progress.use-case.ts"
 
 ![](images/clipboard-2535809326.png)
 
+![](images/clipboard-1980679446.png)
+
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add use case list-submissions.use-case.ts"
+git add .  
+git commit -m "feat: add use case list-progress.use-case.ts"
 ```
 
-#### ![](images/clipboard-3420668999.png) 15.16 — update-submissions.dto-case.ts
+![](images/clipboard-1102994301.png)
 
-![](images/clipboard-335575932.png)
+####  16.16 — update-progress.dto-case.ts
 
-![](images/clipboard-1047927264.png)
+![](images/clipboard-2938871552.png)
+
+![](images/clipboard-1549719271.png)
 
 **Sugerencia de commit (issue):**
 
