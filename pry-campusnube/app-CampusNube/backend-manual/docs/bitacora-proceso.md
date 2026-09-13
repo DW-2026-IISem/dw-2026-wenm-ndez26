@@ -5190,7 +5190,7 @@ git commit -m "test: verify submissions feature"
 
 ## FASE 16. — progress.entity.ts
 
-#### 15.1 — progress.entity.ts
+#### 16.1 — progress.entity.ts
 
 Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
 
@@ -5514,7 +5514,312 @@ git commit -m "test: verify progress feature"
 
 ------------------------------------------------------------------------
 
-![](images/clipboard-2431510055.png)
+![](images/clipboard-2932738281.png)
+
+## FASE 17. — certificates.entity.ts
+
+#### 17.1 — certificates.entity.ts
+
+Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
+
+![](images/clipboard-3498243995.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: create certificates domain entity"
+```
+
+#### 16.2 — ivalid-progress.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-4102010190.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add progress domain exception"
+```
+
+![](images/clipboard-3345869608.png)
+
+#### 16.3 —progress-not-found.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-4280704499.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .     git commit -m "feat: add domain exception progress-not-found.exception.ts"
+```
+
+![](images/clipboard-2012560471.png)
+
+#### 16.4 — progress-repository.inteface.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-1347025171.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add progress repository port"
+```
+
+![](images/clipboard-2622158876.png)
+
+#### 16.5 — ptogress-demain.service.ts
+
+Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
+
+![](images/clipboard-692803553.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add progress domain service"
+```
+
+![](images/clipboard-2712609722.png)
+
+#### 16.6 — progress.model
+
+![](images/clipboard-1380084900.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .     git commit -m "feat: add sequelize model progress.model.ts"
+```
+
+![](images/clipboard-3689071886.png)
+
+#### 16.7 — sequelize.progress.repository.ts
+
+Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
+
+![](images/clipboard-3228438733.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .     git commit -m "feat: add sequelize progress repository"
+```
+
+![](images/clipboard-3051164732.png)
+
+#### 16.8 — Migration.
+
+![](images/clipboard-3086126097.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .      git commit -m "chore: add progress table migration reference"
+```
+
+#### ![](images/clipboard-1502008394.png)
+
+#### 16.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+![](images/clipboard-3462788442.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "chore: add progresss seeder"
+```
+
+![](images/clipboard-1556888549.png)
+
+#### 16.10 — create-progress.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-1900657073.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add dto create-progress.dto.ts"
+```
+
+![](images/clipboard-1013555042.png)
+
+#### 16.11 —progress.mapper.ts
+
+Mapper entre entidad de dominio y DTO de respuesta.
+
+![](images/clipboard-2824535549.png)
+
+![](images/clipboard-2389136640.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .     git commit -m "feat: add mapper progress.mapper.ts"
+```
+
+![](images/clipboard-3186777506.png)
+
+#### 16.12 — create-progress.use-case.ts
+
+![](images/clipboard-4083359729.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add use case create-progress.use-case.ts"
+```
+
+![](images/clipboard-3907426181.png)
+
+#### 16.13 — delete-progress.use-case.ts
+
+![](images/clipboard-149799976.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .     git commit -m "feat: add use case delete-progress.use-case.ts"
+```
+
+![](images/clipboard-1371966247.png)
+
+#### 16.14 — get-progress.use-case.ts
+
+![](images/clipboard-3983509422.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add use case get-progress.use-case.ts"
+```
+
+![](images/clipboard-2828415887.png)
+
+#### 16.15 — list.progress.use-case.ts
+
+![](images/clipboard-2535809326.png)
+
+![](images/clipboard-1980679446.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add use case list-progress.use-case.ts"
+```
+
+![](images/clipboard-1102994301.png)
+
+####  16.16 — update-progress.dto-case.ts
+
+![](images/clipboard-2938871552.png)
+
+![](images/clipboard-1549719271.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add update progress use case and dto" 
+```
+
+![](images/clipboard-1944310068.png)
+
+#### 16.17 — progress.controller.ts
+
+Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+![](images/clipboard-3865632389.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit -m "feat: add controller ptogress.controller.ts"
+```
+
+![](images/clipboard-2077737019.png)
+
+#### 16.18 — submissions.module.ts
+
+Ahora conectamos los casos de uso y el repositorio con NestJS.
+
+![](images/clipboard-2302108893.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: wire progress module"
+```
+
+![](images/clipboard-2438033508.png)
+
+#### 16.19 — Actualizar sequelize.factory.ts
+
+#### ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+![](images/clipboard-2825846493.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: register progress model in sequelize"
+```
+
+![](images/clipboard-2177885425.png)
+
+#### 16.20 — Actualizar certificatesModule-content.module.ts
+
+Aquí **no creamos otro módulo** porque `AssessmentsModule` ya está conectado al `BusinessModule`.
+
+![](images/clipboard-694908365.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .    git commit --allow-empty -m "feat: wire progress into business module"
+```
+
+![](images/clipboard-1758736950.png)
+
+#### 16.21 — Actualizar database-seeder.ts
+
+Ejecuta seeders en orden de dependencias al arrancar (dev).
+
+![](images/clipboard-3516111051.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .      git commit -m "chore: update progress seeders bootstrap order"
+```
+
+![](images/clipboard-302930687.png)
+
+#### 16.22 — Verificar feature
+
+Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
+
+``` bash
+npm run start:dev
+```
+
+![](images/clipboard-4100797947.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "test: verify progress feature"
+```
+
+------------------------------------------------------------------------
+
+![](images/clipboard-2932738281.png)
 
 ## FA
 
