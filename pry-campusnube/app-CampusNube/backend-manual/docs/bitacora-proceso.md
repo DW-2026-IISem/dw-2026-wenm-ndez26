@@ -5672,20 +5672,21 @@ Mapper entre entidad de dominio y DTO de respuesta.
 
 ``` bash
 git add .     
-git commit -m "feat: add mapper progress.mapper.ts"
+git commit -m "feat: add mapper certificate.mapper.ts"
 ```
 
-#### 16.12 — create-progress.use-case.ts
+![](images/clipboard-1824576828.png)
 
-![](images/clipboard-4083359729.png)
+#### 17.12 — create-certificates.use-case.ts
+
+![](images/clipboard-3564212340.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add use case create-progress.use-case.ts"
+git add . 
+git commit -m "feat: add use case create-progress.use-case.ts"
 ```
-
-![](images/clipboard-3907426181.png)
 
 #### 16.13 — delete-progress.use-case.ts
 
