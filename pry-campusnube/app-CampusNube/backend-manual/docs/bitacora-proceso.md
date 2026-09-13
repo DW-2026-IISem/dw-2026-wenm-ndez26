@@ -5263,28 +5263,31 @@ git add .
 git commit -m "feat: add progress domain service"
 ```
 
-#### 15.6 — submission.model
+![](images/clipboard-2712609722.png)
 
-![](images/clipboard-2392677374.png)
+#### 16.6 — progress.model
+
+![](images/clipboard-1380084900.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add sequelize model submission.model.ts
+git add .    
+git commit -m "feat: add sequelize model progress.model.ts"
 ```
 
-![](images/clipboard-2532599955.png)
+![](images/clipboard-3689071886.png)
 
-#### 15.7 — sequelize-submissions.repository.ts
+#### 16.7 — sequelize-submissions.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
-![](images/clipboard-3714135501.png)
+![](images/clipboard-3228438733.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add sequelize submission repository"
+git add .    git commit -m "feat: add sequelize progress repository"
 ```
 
 ![](images/clipboard-1080404071.png)
