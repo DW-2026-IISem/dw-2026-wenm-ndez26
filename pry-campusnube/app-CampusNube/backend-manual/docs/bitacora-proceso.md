@@ -5306,31 +5306,31 @@ git commit -m "chore: add progress table migration reference"
 
 #### ![](images/clipboard-1502008394.png)
 
-#### 15.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+#### 16.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
-![](images/clipboard-3559853948.png)
+![](images/clipboard-3462788442.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "chore: add submissions seeder"
+git add .  
+git commit -m "chore: add progresss seeder"
 ```
 
-![](images/clipboard-23719458.png)
+![](images/clipboard-1556888549.png)
 
-#### 15.10 — create-subbmissions.dto.ts
+#### 16.10 — create-progress.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-![](images/clipboard-3713156049.png)
+![](images/clipboard-1196484948.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add dto create-submission.dto.ts
+git add .  
+git commit -m "feat: add dto create-progress.dto.ts
 ```
-
-![](images/clipboard-1293655067.png)
 
 #### 15.11 —Evaluation.mapper.ts
 
