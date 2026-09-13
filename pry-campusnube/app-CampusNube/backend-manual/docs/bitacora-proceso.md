@@ -4658,33 +4658,35 @@ git add .
 git commit -m "chore: add attempts table migration reference"
 ```
 
-#### ![](images/clipboard-74055301.png)
+#### ![](images/clipboard-3766792782.png)
 
-#### 13.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+#### 14.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
-![](images/clipboard-422433209.png)
+![](images/clipboard-143924679.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "chore: add modules seeder"
+git add . 
+git commit -m "chore: add attempts seeder
 ```
 
-![](images/clipboard-1133698345.png)
+![](images/clipboard-2343410520.png)
 
-#### 13.10 — create-evaluation.dto.ts
+#### 14.10 — create-attempts.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-![](images/clipboard-776092220.png)
+![](images/clipboard-5870499.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add dto create-evaluation.dto.ts"
+git add . 
+git commit -m "feat: add dto create-attempt.dto.ts"
 ```
 
-#### ![](images/clipboard-3723281782.png)11.11 —Evaluation.mapper.ts
+#### 11.11 —Evaluation.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
