@@ -5769,21 +5769,22 @@ Ahora conectamos los casos de uso y el repositorio con NestJS.
 
 ``` bash
 git add .  
-git commit -m "feat: wire progress module"
+git commit -m "feat: wire nest module certificates.module.ts"
 ```
 
-![](images/clipboard-2438033508.png)
+![](images/clipboard-2364720208.png)
 
-#### 16.19 — Actualizar sequelize.factory.ts
+#### 17.19 — Actualizar sequelize.factory.ts
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-![](images/clipboard-2825846493.png)
+![](images/clipboard-79708970.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: register progress model in sequelize"
+git add . 
+git commit -m "feat: register progress model in sequelize"
 ```
 
 ![](images/clipboard-2177885425.png)
