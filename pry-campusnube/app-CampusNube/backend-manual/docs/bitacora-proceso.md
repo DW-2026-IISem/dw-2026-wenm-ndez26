@@ -5362,6 +5362,8 @@ git add .
 git commit -m "feat: add use case create-progress.use-case.ts"
 ```
 
+![](images/clipboard-3907426181.png)
+
 #### 15.13 — delete-submission.use-case.ts
 
 ![](images/clipboard-322565228.png)
