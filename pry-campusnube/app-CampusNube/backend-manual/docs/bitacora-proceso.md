@@ -4332,10 +4332,11 @@ git commit -m "feat: add sequelize evaluation repository
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "chore: add modules table migration reference"
+git add .  
+git commit -m "chore: add evaluations table migration reference"
 ```
 
-#### ![](images/clipboard-3781741137.png)
+#### ![](images/clipboard-74055301.png)
 
 #### 11.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
