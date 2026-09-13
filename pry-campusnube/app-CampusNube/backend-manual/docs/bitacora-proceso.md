@@ -4246,24 +4246,24 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add domain exception invalid-module-order.exception.ts"
+git add .
+git commit -m "feat: add domain exception invalid-evaluation.exception.ts"
 ```
 
-![](images/clipboard-3635180747.png)
+![](images/clipboard-1123453873.png)
 
-#### 11.3 —module-not-found.exception.ts
+#### 11.3 —evaluation-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-1198691887.png)
+![](images/clipboard-3705486659.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add domain exception module-not-found.exception.ts"
+git add .  
+git commit -m "feat: add domain exception evaluation-not-found.exception.ts
 ```
-
-![](images/clipboard-1359583684.png)
 
 #### 11.4 — module-repository.inteface.ts
 
