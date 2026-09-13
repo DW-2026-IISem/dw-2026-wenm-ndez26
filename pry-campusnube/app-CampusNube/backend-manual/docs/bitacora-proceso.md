@@ -5009,13 +5009,15 @@ git add .
 git commit -m "feat: add dto create-submission.dto.ts
 ```
 
-#### 14.11 —Evaluation.mapper.ts
+![](images/clipboard-1293655067.png)
+
+#### 15.11 —Evaluation.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
-![](images/clipboard-3472998392.png)
+![](images/clipboard-1242902466.png)
 
-![](images/clipboard-628549196.png)
+![](images/clipboard-41711826.png)
 
 **Sugerencia de commit (issue):**
 
@@ -5023,11 +5025,7 @@ Mapper entre entidad de dominio y DTO de respuesta.
 git add .   git commit -m "feat: add mapper attempt.mapper.ts"
 ```
 
-![](images/clipboard-3421934933.png)
-
 #### 14.12 — create-attempent.use-case.ts
-
-![](images/clipboard-2995787955.png)
 
 **Sugerencia de commit (issue):**
 
