@@ -4074,7 +4074,7 @@ git commit -m "feat: add use case create-teacher.use-case.ts"
 
 ![](images/clipboard-520774313.png)
 
-#### 12.13 — delte-tecaher.use.case.ts
+#### 12.13 — delete-tecaher.use.case.ts
 
 ![](images/clipboard-331505948.png)
 
@@ -4082,50 +4082,31 @@ git commit -m "feat: add use case create-teacher.use-case.ts"
 
 ``` bash
 git add . 
-git commit -m "feat: add use case cancel-sale.use-case.ts"
+git commit -m "feat: add use case delete-teacher.use-case.ts"
 ```
 
-#### 10.16 — features/business/sales/application/use-cases/create-sale.use-case.ts
+![](images/clipboard-1310568522.png)
+
+#### 12.14 —get-teacher.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/business/sales/application/use-cases/create-sale.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/create-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { ClientNotFoundException } from '../../../clients/domain/exceptions/client-not-found.exception'; import {   CLIENT_REPOSITORY,   type IClientRepository, } from '../../../clients/domain/interfaces/client-repository.interface'; import { ProductNotFoundException } from '../../../products/domain/exceptions/product-not-found.exception'; import {   type IProductRepository,   PRODUCT_REPOSITORY, } from '../../../products/domain/interfaces/product-repository.interface'; import { InsufficientStockException } from '../../domain/exceptions/insufficient-stock.exception'; import { Sale, SaleItem } from '../../domain/entities/sale.entity'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleCalculatorDomainService } from '../../domain/services/sale-calculator.domain-service'; import { CreateSaleDto } from '../dto/create-sale.dto'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class CreateSaleUseCase {   private readonly saleCalculator = new SaleCalculatorDomainService();    constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,     @Inject(CLIENT_REPOSITORY)     private readonly clientRepository: IClientRepository,     @Inject(PRODUCT_REPOSITORY)     private readonly productRepository: IProductRepository,   ) {}    async execute(dto: CreateSaleDto) {     const client = await this.clientRepository.findById(dto.clientId);     if (!client) {       throw new ClientNotFoundException(dto.clientId);     }      const saleItems: SaleItem[] = [];      for (const itemDto of dto.items) {       const product = await this.productRepository.findById(itemDto.productId);       if (!product) {         throw new ProductNotFoundException(itemDto.productId);       }        if (product.quantity < itemDto.quantity) {         throw new InsufficientStockException(           product.name,           product.quantity,           itemDto.quantity,         );       }        saleItems.push(         SaleItem.create({           productId: itemDto.productId,           quantity: itemDto.quantity,           unitPrice: itemDto.unitPrice,         }),       );     }      const totals = this.saleCalculator.calculateTotals(       dto.items,       dto.tax ?? 0,       dto.discounts ?? 0,     );      const sale = Sale.create({       saleDate: new Date(),       subtotal: totals.subtotal,       tax: totals.tax,       discounts: totals.discounts,       total: totals.total,       clientId: dto.clientId,       items: saleItems,     });      const created = await this.saleRepository.create(sale);     return SaleMapper.toResponse(created);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-249989914.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case create-sale.use-case.ts"
+git add . 
+git commit -m "feat: add use case get-teacher.use-case.ts"
 ```
 
-#### 10.17 — features/business/sales/application/use-cases/get-sale.use-case.ts
+![](images/clipboard-3585744729.png)
+
+#### 12.15 —list-teacher.use-case.ts
 
 Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
 
-**Archivo:** `src/features/business/sales/application/use-cases/get-sale.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/get-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { SaleNotFoundException } from '../../domain/exceptions/sale-not-found.exception'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class GetSaleUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(id: number) {     const sale = await this.saleRepository.findById(id);     if (!sale) {       throw new SaleNotFoundException(id);     }      return SaleMapper.toResponse(sale);   } } EOF_BACKEND_IA
-```
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add . git commit -m "feat: add use case get-sale.use-case.ts"
-```
-
-#### 10.18 — features/business/sales/application/use-cases/list-sales.use-case.ts
-
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
-
-**Archivo:** `src/features/business/sales/application/use-cases/list-sales.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/list-sales.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleFilterDto } from '../dto/sale-filter.dto'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class ListSalesUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(filter: SaleFilterDto) {     const result = await this.saleRepository.findAll(filter);     return {       items: result.items.map((sale) => SaleMapper.toResponse(sale)),       meta: result.meta,     };   } } EOF_BACKEND_IA
-```
+![](images/clipboard-1665465417.png)
 
 **Sugerencia de commit (issue):**
 
