@@ -5364,29 +5364,29 @@ git commit -m "feat: add use case create-progress.use-case.ts"
 
 ![](images/clipboard-3907426181.png)
 
-#### 15.13 — delete-submission.use-case.ts
+#### 16.13 — delete-progress.use-case.ts
 
-![](images/clipboard-322565228.png)
-
-**Sugerencia de commit (issue):**
-
-``` bash
-git add .    git commit -m "feat: add use case delete-submission.use-case.ts"
-```
-
-![](images/clipboard-3850467987.png)
-
-#### 15.14 — get-attempt.use-case.ts
-
-![](images/clipboard-4104732913.png)
+![](images/clipboard-149799976.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add use case get-attempt.use-case.ts"
+git add .    
+git commit -m "feat: add use case delete-progress.use-case.ts"
 ```
 
-![](images/clipboard-3416381304.png)
+![](images/clipboard-1371966247.png)
+
+#### 16.14 — get-progress.use-case.ts
+
+![](images/clipboard-3983509422.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   
+git commit -m "feat: add use case get-attempt.use-case.ts"
+```
 
 #### 15.15 — list.submissions.use-case.ts
 
