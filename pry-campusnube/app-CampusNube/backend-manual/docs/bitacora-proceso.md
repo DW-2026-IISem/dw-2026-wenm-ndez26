@@ -4965,17 +4965,20 @@ Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
 ``` bash
 git add .   
-git commit -m "feat: add sequelize attempt repository"
+git commit -m "feat: add sequelize submission repository"
 ```
+
+![](images/clipboard-1080404071.png)
 
 #### 14.8 — Migration.
 
-![](images/clipboard-2221910180.png)
+![](images/clipboard-1244558818.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "chore: add attempts table migration reference"
+git add .    
+git commit -m "chore: add attempts table migration reference"
 ```
 
 #### ![](images/clipboard-3766792782.png)
