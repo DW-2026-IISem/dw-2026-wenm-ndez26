@@ -5445,8 +5445,10 @@ Ahora conectamos los casos de uso y el repositorio con NestJS.
 
 ``` bash
 git add . 
-git commit -m "feat: wire submissions module"
+git commit -m "feat: wire progress module"
 ```
+
+![](images/clipboard-2438033508.png)
 
 #### 15.19 — Actualizar sequelize.factory.ts
 

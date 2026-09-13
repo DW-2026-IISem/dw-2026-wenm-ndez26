@@ -15,6 +15,7 @@ import { EvaluationModel } from '../../../features/business/assessments/infrastr
 import { RoleModel } from '../../../features/auth/roles/infrastructure/persistence/models/role.model.js';
 import { AttemptModel } from '../../../features/business/assessments/infrastructure/persistence/models/attempt.model.js';
 import { SubmissionModel } from '../../../features/business/submissions/infrastructure/persistence/models/submission.model.js'; 
+import { CertificateModel } from '../../../features/business/certificates/infrastructure/persistence/models/certificate.model.js';
 
 
 const require = createRequire(import.meta.url);
@@ -29,6 +30,7 @@ export const ALL_MODELS = [
   EvaluationModel,
   AttemptModel,
   SubmissionModel,
+  CertificateModel,
   RoleModel,
 ];
 
