@@ -5587,19 +5587,21 @@ Puerto (contrato) del repositorio. La aplicación depende de esta interface, no 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add progress domain service"
+git add .   
+git commit -m "feat: add certificates domain service"
 ```
 
-![](images/clipboard-2712609722.png)
+![](images/clipboard-4032201715.png)
 
-#### 16.6 — progress.model
+#### 17.6 — certificates.model
 
 ![](images/clipboard-1380084900.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .     git commit -m "feat: add sequelize model progress.model.ts"
+git add .     
+git commit -m "feat: add sequelize model certificate.model.ts"
 ```
 
 ![](images/clipboard-3689071886.png)
