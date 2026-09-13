@@ -4018,7 +4018,58 @@ git add .
 git commit -m "feat: add dto teacher-response.dto.ts"
 ```
 
-#### 10.14 — features/business/sales/application/mappers/sale.mapper.ts
+![](images/clipboard-2947641084.png)
+
+#### 12.9 — teacher.create.dto.ts
+
+.
+
+![](images/clipboard-1876317543.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .
+git commit -m "feat: add dto create-teacher.dto.ts"
+```
+
+#### ![](images/clipboard-434929975.png)
+
+#### 12.10 — teacher.update.dto.ts
+
+Mapper entre entidad de dominio y DTO de respuesta.
+
+**Archivo:** `src/features/business/sales/application/mappers/sale.mapper.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/mappers cat > src/features/business/sales/application/mappers/sale.mapper.ts <<'EOF_BACKEND_IA' import { Status } from '../../../../../common/enums/status.enum'; import { Sale, SaleItem } from '../../domain/entities/sale.entity'; import {   SaleItemResponseDto,   SaleResponseDto, } from '../dto/sale-response.dto'; import { SaleModel } from '../../infrastructure/persistence/models/sale.model'; import { ProductSaleModel } from '../../infrastructure/persistence/models/product-sale.model';  export class SaleMapper {   static toDomain(saleModel: SaleModel, itemModels: ProductSaleModel[]): Sale {     const items = itemModels.map((item) =>       SaleItem.reconstitute({         id: item.id,         productId: item.productId,         quantity: item.quantity,         unitPrice: Number(item.unitPrice),         total: Number(item.total),         saleId: item.saleId,       }),     );      return Sale.reconstitute({       id: saleModel.id,       saleDate: saleModel.saleDate,       subtotal: Number(saleModel.subtotal),       tax: Number(saleModel.tax),       discounts: Number(saleModel.discounts),       total: Number(saleModel.total),       status: saleModel.status,       clientId: saleModel.clientId,       items,       createdAt: saleModel.createdAt,       updatedAt: saleModel.updatedAt,     });   }    static toResponse(entity: Sale): SaleResponseDto {     return {       id: entity.id!,       saleDate: entity.saleDate,       subtotal: entity.subtotal,       tax: entity.tax,       discounts: entity.discounts,       total: entity.total,       status: entity.status,       clientId: entity.clientId,       items: entity.items.map((item) => SaleMapper.toItemResponse(item)),       createdAt: entity.createdAt!,       updatedAt: entity.updatedAt!,     };   }    static toItemResponse(item: SaleItem): SaleItemResponseDto {     return {       id: item.id!,       productId: item.productId,       quantity: item.quantity,       unitPrice: item.unitPrice,       total: item.total,     };   }    static toPersistence(entity: Sale): Partial<SaleModel> {     return {       id: entity.id,       saleDate: entity.saleDate,       subtotal: entity.subtotal,       tax: entity.tax,       discounts: entity.discounts,       total: entity.total,       status: entity.status ?? Status.ACTIVE,       clientId: entity.clientId,     };   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add mapper sale.mapper.ts"
+```
+
+#### 10.15 — features/business/sales/application/use-cases/cancel-sale.use-case.ts
+
+Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+
+**Archivo:** `src/features/business/sales/application/use-cases/cancel-sale.use-case.ts`
+
+``` bash
+mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/cancel-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { Status } from '../../../../../common/enums/status.enum'; import { SaleNotFoundException } from '../../domain/exceptions/sale-not-found.exception'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class CancelSaleUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(id: number) {     const sale = await this.saleRepository.findById(id);     if (!sale) {       throw new SaleNotFoundException(id);     }      if (sale.status === Status.INACTIVE) {       return SaleMapper.toResponse(sale);     }      sale.cancel();     const updated = await this.saleRepository.update(sale);     return SaleMapper.toResponse(updated);   } } EOF_BACKEND_IA
+```
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add use case cancel-sale.use-case.ts"
+```
+
+#### 
+
+#### 12.9 — features/business/sales/application/mappers/sale.mapper.ts
 
 Mapper entre entidad de dominio y DTO de respuesta.
 
