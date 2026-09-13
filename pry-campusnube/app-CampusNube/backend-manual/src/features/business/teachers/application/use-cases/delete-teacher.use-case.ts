@@ -2,10 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { TeacherNotFoundException } from '../../domain/exceptions/teacher-not-found.exception.js';
 
-import {
-  ITeacherRepository,
-  TEACHER_REPOSITORY,
-} from '../../domain/interfaces/teacher-repository.interface.js';
+import { TEACHER_REPOSITORY } from '../../domain/interfaces/teacher-repository.interface.js';
+import type { ITeacherRepository } from '../../domain/interfaces/teacher-repository.interface.js';
 
 @Injectable()
 export class DeleteTeacherUseCase {

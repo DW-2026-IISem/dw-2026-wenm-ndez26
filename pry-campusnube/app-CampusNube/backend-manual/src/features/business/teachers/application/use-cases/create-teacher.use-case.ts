@@ -1,9 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import {
-  ITeacherRepository,
-  TEACHER_REPOSITORY,
-} from '../../domain/interfaces/teacher-repository.interface.js';
+import { TEACHER_REPOSITORY } from '../../domain/interfaces/teacher-repository.interface.js';
+import type { ITeacherRepository } from '../../domain/interfaces/teacher-repository.interface.js';
 
 import { CreateTeacherDto } from '../dto/create-teacher.dto.js';
 import { TeacherResponseDto } from '../dto/teacher-response.dto.js';
