@@ -5430,22 +5430,23 @@ Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
 ``` bash
 git add .   
-git commit -m "feat: add controller submissions.controller.ts"
+git commit -m "feat: add controller ptogress.controller.ts"
 ```
 
-#### 15.18 — submissions.module.ts
+![](images/clipboard-2077737019.png)
+
+#### 16.18 — submissions.module.ts
 
 Ahora conectamos los casos de uso y el repositorio con NestJS.
 
-![](images/clipboard-1129320407.png)
+![](images/clipboard-2302108893.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: wire submissions module"
+git add . 
+git commit -m "feat: wire submissions module"
 ```
-
-![](images/clipboard-1906086178.png)
 
 #### 15.19 — Actualizar sequelize.factory.ts
 
