@@ -5450,25 +5450,26 @@ git commit -m "feat: wire progress module"
 
 ![](images/clipboard-2438033508.png)
 
-#### 15.19 — Actualizar sequelize.factory.ts
+#### 16.19 — Actualizar sequelize.factory.ts
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-![](images/clipboard-3880121967.png)
+![](images/clipboard-2825846493.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: register submission model in sequelize"
+git add . 
+git commit -m "feat: register progress model in sequelize"
 ```
 
-![](images/clipboard-1891715542.png)
+![](images/clipboard-2177885425.png)
 
-#### 15.20 — Actualizar learning-content.module.ts
+#### 16.20 — Actualizar certificatesModule-content.module.ts
 
 Aquí **no creamos otro módulo** porque `AssessmentsModule` ya está conectado al `BusinessModule`.
 
-![](images/clipboard-1423348723.png)
+![](images/clipboard-694908365.png)
 
 **Sugerencia de commit (issue):**
 
