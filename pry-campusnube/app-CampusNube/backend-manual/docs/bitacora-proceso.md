@@ -4568,10 +4568,11 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain exception invalid-evaluation.exception.ts"
+git add .
+git commit -m "feat: add domain exception invalid-attempt.exception.ts"
 ```
 
-![](images/clipboard-1123453873.png)
+![](images/clipboard-576734324.png)
 
 #### 14.3 —evaluation-not-found.exception.ts
 
