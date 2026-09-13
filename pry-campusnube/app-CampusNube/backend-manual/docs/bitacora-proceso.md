@@ -4119,18 +4119,24 @@ git commit -m "feat: add use case list-teachers.use-case.ts"
 
 #### 12..16.- Update-teacher.dto.ts + update-teacher.use-case.ts
 
+Aquí vamos a crear el **caso de uso de actualización**.
+
 ![](images/clipboard-3971176959.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
 git add .
-git commit -m "feat: add serializer sale.serializer.ts"
+git commit -m "feat: add update teacher use case and dto"
 ```
 
-#### 10.20 — features/business/sales/presentation/http/controllers/sales.controller.ts
+![](images/clipboard-920547765.png)
+
+#### 12.17 — teacher.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+![](images/clipboard-2790646613.png)
 
 **Sugerencia de commit (issue):**
 
