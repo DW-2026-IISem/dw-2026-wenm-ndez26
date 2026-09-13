@@ -5724,14 +5724,16 @@ git commit -m "feat: add use case get-certificate.use-case.ts"
 
 ``` bash
 git add .  
-git commit -m "feat: add use case list-progress.use-case.ts"
+git commit -m "feat: add use case list-certificates.use-case.ts"
 ```
 
-####  16.16 — update-progress.dto-case.ts
+![](images/clipboard-266793914.png)
 
-![](images/clipboard-2938871552.png)
+####  17.16 — update-certificates.dto-case.ts
 
-![](images/clipboard-1549719271.png)
+![](images/clipboard-1779749053.png)
+
+![](images/clipboard-4241506951.png)
 
 **Sugerencia de commit (issue):**
 
@@ -5741,7 +5743,7 @@ git add .    git commit -m "feat: add update progress use case and dto"
 
 ![](images/clipboard-1944310068.png)
 
-#### 16.17 — progress.controller.ts
+#### 17.17 — p.controller.ts
 
 Controller delgado: valida DTO, llama use-case, devuelve respuesta.
 
