@@ -5214,19 +5214,23 @@ Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a stat
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add domain exception invalid-submission.exception.ts"
+git add .  
+git commit -m "feat: add progress domain exception"
 ```
 
-#### 15.3 —submissions-not-found.exception.ts
+![](images/clipboard-3345869608.png)
+
+#### 16.3 —progress-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-739783019.png)
+![](images/clipboard-4280704499.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add domain exception submission-not-found.exception.ts"
+git add .    
+git commit -m "feat: add domain exception progress-not-found.exception.ts"
 ```
 
 ![](images/clipboard-2112428433.png)
