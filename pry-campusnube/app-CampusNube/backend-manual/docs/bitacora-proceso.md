@@ -5531,11 +5531,13 @@ git add .
 git commit -m "feat: create certificates domain entity"
 ```
 
-#### 16.2 — ivalid-progress.exception.ts
+![](images/clipboard-3176809453.png)
+
+#### 16.2 — ivalid-certificates.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-4102010190.png)
+![](images/clipboard-3711881835.png)
 
 **Sugerencia de commit (issue):**
 
