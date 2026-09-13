@@ -4617,16 +4617,17 @@ git add .
 git commit -m "feat: add attempt domain service"
 ```
 
-![](images/clipboard-3698751375.png)
+![](images/clipboard-1316460446.png)
 
-#### 13.6 — evaluation.model
+#### 14.6 — attem.model
 
-![](images/clipboard-4201293805.png)
+![](images/clipboard-4114593044.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add sequelize model evaluation.model.ts"
+git add .  
+git commit -m "feat: add sequelize model attempt.model.ts"
 ```
 
 ![](images/clipboard-3573428215.png)
