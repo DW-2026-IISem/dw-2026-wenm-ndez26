@@ -4827,13 +4827,13 @@ git add .
 git commit --allow-empty -m "feat: wire attempts into business module"
 ```
 
-![](images/clipboard-693464123.png)
+![](images/clipboard-4138752749.png)
 
-#### 13.21 — Actualizar database-seeder.ts
+#### 14.21 — Actualizar database-seeder.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
-![](images/clipboard-3571285516.png)
+![](images/clipboard-1002235422.png)
 
 **Sugerencia de commit (issue):**
 
