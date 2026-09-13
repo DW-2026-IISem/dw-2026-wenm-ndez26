@@ -4542,6 +4542,307 @@ git commit -m "test: verify learning content module feature"
 
 ------------------------------------------------------------------------
 
+## FASE 14 — attempts.entity.ts
+
+#### 14.1 — evaluation.entity.ts
+
+Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
+
+![](images/clipboard-2062145156.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . 
+git commit -m "feat: add domain entity attempt.entity.ts
+```
+
+![](images/clipboard-116815712.png)
+
+#### 14.2 — ivalid-attemp.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-182118216.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add domain exception invalid-evaluation.exception.ts"
+```
+
+![](images/clipboard-1123453873.png)
+
+#### 14.3 —evaluation-not-found.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-3705486659.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add domain exception evaluation-not-found.exception.ts
+```
+
+![](images/clipboard-480060980.png)
+
+#### 14.4 — evaluation-repository.inteface.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-893886482.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add evaluation repository port
+```
+
+![](images/clipboard-2230218579.png)
+
+#### 13.5 — evaluation-demain.service.ts
+
+Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
+
+![](images/clipboard-3119117281.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add evaluation domain service"
+```
+
+![](images/clipboard-35946496.png)
+
+#### 13.6 — evaluation.model
+
+![](images/clipboard-4201293805.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add sequelize model evaluation.model.ts"
+```
+
+![](images/clipboard-3573428215.png)
+
+#### 13.7 — sequelize-evaluation.repository.ts
+
+Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
+
+![](images/clipboard-1080777092.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add sequelize evaluation repository
+```
+
+![](images/clipboard-1531290992.png)
+
+#### 13.8 — Migration.
+
+![](images/clipboard-3493979735.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "chore: add evaluations table migration reference"
+```
+
+#### ![](images/clipboard-74055301.png)
+
+#### 13.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+![](images/clipboard-422433209.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "chore: add modules seeder"
+```
+
+![](images/clipboard-1133698345.png)
+
+#### 13.10 — create-evaluation.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-776092220.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add dto create-evaluation.dto.ts"
+```
+
+#### ![](images/clipboard-3723281782.png)11.11 —Evaluation.mapper.ts
+
+Mapper entre entidad de dominio y DTO de respuesta.
+
+![](images/clipboard-1056972746.png)
+
+![](images/clipboard-315526381.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add mapper evaluation.mapper.ts"
+```
+
+![](images/clipboard-1808113730.png)
+
+#### 13.12 — create-evaluation.use-case.ts
+
+![](images/clipboard-1884982568.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add use case create-evaluation.use-case.ts
+```
+
+![](images/clipboard-1509835077.png)
+
+#### 13.13 — delete-evaluation.use-case.ts
+
+![](images/clipboard-415055384.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add use case delete-evaluation.use-case.ts
+```
+
+![](images/clipboard-61395237.png)
+
+#### 13.14 — get-evaluation.use-case.ts
+
+![](images/clipboard-1331530980.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add use case get-evaluation.use-case.ts"
+```
+
+![](images/clipboard-2197317962.png)
+
+#### 13.15 — list.evalutions.use-case.ts
+
+![](images/clipboard-2127808155.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add use case list-evaluations.use-case.ts"
+```
+
+![](images/clipboard-1738745516.png)
+
+#### 13.16 — update-evaluation.dto-case.ts
+
+![](images/clipboard-4182744567.png)
+
+![](images/clipboard-3231844294.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add update evaluation use case and dto
+```
+
+![](images/clipboard-3865774057.png)
+
+#### 13.17 — Evaluation.controller.ts
+
+Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+![](images/clipboard-3920293622.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: add controller evaluations.controller.ts"
+```
+
+![](images/clipboard-1262188831.png)
+
+#### 13.18 — assements.module.ts
+
+Ahora conectamos los casos de uso y el repositorio con NestJS.
+
+![](images/clipboard-1152537846.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: wire assessments evalution"
+```
+
+![](images/clipboard-1875385287.png)
+
+#### 13.19 — Actualizar sequelize.factory.ts 
+
+#### ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+![](images/clipboard-2030285195.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "feat: register evalution model in sequelize"
+```
+
+![](images/clipboard-1936366228.png)
+
+#### 13.20 — Actualizar learning-content.module.ts
+
+![](images/clipboard-3899048196.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: wire assessments module into business module"
+```
+
+![](images/clipboard-693464123.png)
+
+#### 13.21 — Actualizar database-seeder.ts
+
+Ejecuta seeders en orden de dependencias al arrancar (dev).
+
+![](images/clipboard-3571285516.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .   git commit -m "chore: update assessments seeders bootstrap order"
+```
+
+![](images/clipboard-275705980.png)
+
+#### 13.22 — Verificar feature 
+
+Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
+
+``` bash
+npm run start:dev
+```
+
+![](images/clipboard-587763405.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "test: verify learning content module feature"
+```
+
+![](images/clipboard-671201367.png)
+
+------------------------------------------------------------------------
+
 ## FA
 
 ## FASE 12 — `_AUTH_ROLES`
