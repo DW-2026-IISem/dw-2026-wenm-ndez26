@@ -5052,17 +5052,18 @@ git add .
 git commit -m "feat: add use case delete-submission.use-case.ts"
 ```
 
-#### 14.14 — get-attempt.use-case.ts
+![](images/clipboard-3850467987.png)
 
-![](images/clipboard-3648224181.png)
+#### 15.14 — get-attempt.use-case.ts
+
+![](images/clipboard-4104732913.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add use case get-attempt.use-case.ts"
+git add .  
+git commit -m "feat: add use case get-attempt.use-case.ts"
 ```
-
-![](images/clipboard-3160321162.png)
 
 #### 14.15 — list.attempent.use-case.ts
 
