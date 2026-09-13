@@ -14,6 +14,8 @@ import { TeacherModel } from '../../../features/business/teachers/infrastructure
 import { EvaluationModel } from '../../../features/business/assessments/infrastructure/persistence/models/evaluation.model.js';
 import { RoleModel } from '../../../features/auth/roles/infrastructure/persistence/models/role.model.js';
 import { AttemptModel } from '../../../features/business/assessments/infrastructure/persistence/models/attempt.model.js';
+import { SubmissionModel } from '../../../features/business/submissions/infrastructure/persistence/models/submission.model.js'; 
+
 
 const require = createRequire(import.meta.url);
 
@@ -26,6 +28,7 @@ export const ALL_MODELS = [
   TeacherModel,
   EvaluationModel,
   AttemptModel,
+  SubmissionModel,
   RoleModel,
 ];
 
