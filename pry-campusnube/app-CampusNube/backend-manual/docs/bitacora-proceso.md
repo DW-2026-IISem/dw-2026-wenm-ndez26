@@ -4231,16 +4231,17 @@ Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add domain entity module.entity.ts"
+git add . 
+git commit -m "feat: add domain entity evaluation.entity.ts
 ```
 
-![](images/clipboard-2140109242.png)
+![](images/clipboard-163976983.png)
 
-#### 11.2 — ivalid-module-order.exception.ts
+#### 13.2 — ivalid-evaluation.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-4166170519.png)
+![](images/clipboard-2633412207.png)
 
 **Sugerencia de commit (issue):**
 
