@@ -4297,7 +4297,7 @@ git commit -m "feat: add evaluation domain service"
 
 ![](images/clipboard-35946496.png)
 
-#### 11.6 — evaluation.model
+#### 13.6 — evaluation.model
 
 ![](images/clipboard-4201293805.png)
 
@@ -4310,7 +4310,7 @@ git commit -m "feat: add sequelize model evaluation.model.ts"
 
 ![](images/clipboard-3573428215.png)
 
-#### 11.7 — sequelize-evaluation.repository.ts
+#### 13.7 — sequelize-evaluation.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
@@ -4320,14 +4320,14 @@ Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
 ``` bash
 git add . 
-git commit -m "feat: add sequelize evaluation repository"
+git commit -m "feat: add sequelize evaluation repository
 ```
 
-![](images/clipboard-123631474.png)
+![](images/clipboard-1531290992.png)
 
-#### 11.8 — Migration.
+#### 13.8 — Migration.
 
-![](images/clipboard-300081319.png)
+![](images/clipboard-3493979735.png)
 
 **Sugerencia de commit (issue):**
 
