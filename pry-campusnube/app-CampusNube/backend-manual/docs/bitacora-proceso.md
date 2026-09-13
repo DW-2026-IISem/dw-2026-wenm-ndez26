@@ -4061,36 +4061,28 @@ git commit -m "feat: add mapper teacher.mapper.ts"
 
 #### ![](images/clipboard-234006681.png)
 
-#### 10.15 — features/business/sales/application/use-cases/cancel-sale.use-case.ts
+#### 12.12 — create-teacher.use-case.ts
 
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
-
-**Archivo:** `src/features/business/sales/application/use-cases/cancel-sale.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/cancel-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { Status } from '../../../../../common/enums/status.enum'; import { SaleNotFoundException } from '../../domain/exceptions/sale-not-found.exception'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class CancelSaleUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(id: number) {     const sale = await this.saleRepository.findById(id);     if (!sale) {       throw new SaleNotFoundException(id);     }      if (sale.status === Status.INACTIVE) {       return SaleMapper.toResponse(sale);     }      sale.cancel();     const updated = await this.saleRepository.update(sale);     return SaleMapper.toResponse(updated);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-2502101140.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case cancel-sale.use-case.ts"
+git add . 
+git commit -m "feat: add use case create-teacher.use-case.ts"
 ```
 
-#### 10.15 — features/business/sales/application/use-cases/cancel-sale.use-case.ts
+![](images/clipboard-520774313.png)
 
-Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo invoca.
+#### 12.13 — delte-tecaher.use.case.ts
 
-**Archivo:** `src/features/business/sales/application/use-cases/cancel-sale.use-case.ts`
-
-``` bash
-mkdir -p src/features/business/sales/application/use-cases cat > src/features/business/sales/application/use-cases/cancel-sale.use-case.ts <<'EOF_BACKEND_IA' import { Inject, Injectable } from '@nestjs/common'; import { Status } from '../../../../../common/enums/status.enum'; import { SaleNotFoundException } from '../../domain/exceptions/sale-not-found.exception'; import {   type ISaleRepository,   SALE_REPOSITORY, } from '../../domain/interfaces/sale-repository.interface'; import { SaleMapper } from '../mappers/sale.mapper';  @Injectable() export class CancelSaleUseCase {   constructor(     @Inject(SALE_REPOSITORY)     private readonly saleRepository: ISaleRepository,   ) {}    async execute(id: number) {     const sale = await this.saleRepository.findById(id);     if (!sale) {       throw new SaleNotFoundException(id);     }      if (sale.status === Status.INACTIVE) {       return SaleMapper.toResponse(sale);     }      sale.cancel();     const updated = await this.saleRepository.update(sale);     return SaleMapper.toResponse(updated);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-331505948.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case cancel-sale.use-case.ts"
+git add . 
+git commit -m "feat: add use case cancel-sale.use-case.ts"
 ```
 
 #### 10.16 — features/business/sales/application/use-cases/create-sale.use-case.ts
