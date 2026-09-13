@@ -4338,23 +4338,24 @@ git commit -m "chore: add evaluations table migration reference"
 
 #### ![](images/clipboard-74055301.png)
 
-#### 11.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+#### 13.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
-![](images/clipboard-537726458.png)
+![](images/clipboard-422433209.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "chore: add modules seeder"
+git add .  
+git commit -m "chore: add modules seeder"
 ```
 
-![](images/clipboard-3695321502.png)
+![](images/clipboard-1133698345.png)
 
-#### 11.10 — features/auth/users/application/dto/create-user.dto.ts
+#### 13.10 — create-evaluation.dto.ts
 
 DTO de entrada/salida HTTP con `class-validator` / Swagger.
 
-![](images/clipboard-1767799113.png)
+![](images/clipboard-776092220.png)
 
 **Sugerencia de commit (issue):**
 
