@@ -4111,23 +4111,21 @@ Caso de uso (aplicación). Orquesta dominio + repositorio. El controller solo lo
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add use case list-sales.use-case.ts"
+git add . 
+git commit -m "feat: add use case list-teachers.use-case.ts"
 ```
 
-#### 10.19 — features/business/sales/presentation/http/serializers/sale.serializer.ts
+![](images/clipboard-1155366699.png)
 
-Serializer de presentación (forma estable de la respuesta HTTP).
+#### 12..16.- Update-teacher.dto.ts + update-teacher.use-case.ts
 
-**Archivo:** `src/features/business/sales/presentation/http/serializers/sale.serializer.ts`
-
-``` bash
-mkdir -p src/features/business/sales/presentation/http/serializers cat > src/features/business/sales/presentation/http/serializers/sale.serializer.ts <<'EOF_BACKEND_IA' import { Sale } from '../../../domain/entities/sale.entity'; import { SaleResponseDto } from '../../../application/dto/sale-response.dto'; import { SaleMapper } from '../../../application/mappers/sale.mapper';  export class SaleSerializer {   static serialize(entity: Sale): SaleResponseDto {     return SaleMapper.toResponse(entity);   } } EOF_BACKEND_IA
-```
+![](images/clipboard-3971176959.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add serializer sale.serializer.ts"
+git add .
+git commit -m "feat: add serializer sale.serializer.ts"
 ```
 
 #### 10.20 — features/business/sales/presentation/http/controllers/sales.controller.ts
@@ -4264,6 +4262,308 @@ npm run start:dev
 
 ``` bash
 ```
+
+## FASE 11 — module.entity.ts
+
+#### 11.1 — module.entity.ts
+
+Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven las reglas del negocio.
+
+![](images/clipboard-2694696115.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add domain entity module.entity.ts"
+```
+
+![](images/clipboard-2140109242.png)
+
+#### 11.2 — ivalid-module-order.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-4166170519.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add domain exception invalid-module-order.exception.ts"
+```
+
+![](images/clipboard-3635180747.png)
+
+#### 11.3 —module-not-found.exception.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-1198691887.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add domain exception module-not-found.exception.ts"
+```
+
+![](images/clipboard-1359583684.png)
+
+#### 11.4 — module-repository.inteface.ts
+
+Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
+
+![](images/clipboard-2628358317.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add module repository port"
+```
+
+![](images/clipboard-170304634.png)
+
+#### 11.5 — module-demain.service.ts
+
+Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
+
+![](images/clipboard-2580613058.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add module domain service"
+```
+
+![](images/clipboard-3312237562.png)
+
+#### 11.6 — module.model
+
+![](images/clipboard-2699688114.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add sequelize model module.model.ts"
+```
+
+![](images/clipboard-84642113.png)
+
+#### 11.7 — sequelize-module.repository.ts
+
+Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
+
+![](images/clipboard-327934707.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add sequelize module repository"
+```
+
+![](images/clipboard-123631474.png)
+
+#### 11.8 — Migration.
+
+![](images/clipboard-300081319.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "chore: add modules table migration reference"
+```
+
+#### ![](images/clipboard-3781741137.png)
+
+#### 11.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
+
+![](images/clipboard-537726458.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "chore: add modules seeder"
+```
+
+![](images/clipboard-3695321502.png)
+
+#### 11.10 — features/auth/users/application/dto/create-user.dto.ts
+
+DTO de entrada/salida HTTP con `class-validator` / Swagger.
+
+![](images/clipboard-1767799113.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add dto create-module.dto.ts"
+```
+
+![](images/clipboard-2844420856.png)
+
+#### 11.11 —Module.mapper.ts
+
+Mapper entre entidad de dominio y DTO de respuesta.
+
+![](images/clipboard-3892444019.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: add mapper module.mapper.ts"
+```
+
+![](images/clipboard-214756162.png)
+
+#### 11.12 — create-module.use-case.ts
+
+![](images/clipboard-2248085620.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add use case create-module.use-case.ts"
+```
+
+![](images/clipboard-3883952270.png)
+
+#### 11.13 — delete-module.use-case.ts
+
+![](images/clipboard-1430189016.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add use case create-module.use-case.ts"
+```
+
+![](images/clipboard-1615885913.png)
+
+#### 11.14 — get-module.use-case.ts
+
+![](images/clipboard-2502659206.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add use case get-module.use-case.ts"
+```
+
+![](images/clipboard-3767043450.png)
+
+#### 11.15 — list.modules.use-case.ts
+
+![](images/clipboard-872425115.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add use case list-modules.use-case.ts"
+```
+
+![](images/clipboard-546287132.png)
+
+#### 11.16 — update-module.dto-case.ts
+
+![](images/clipboard-2645009346.png)
+
+![](images/clipboard-1821694895.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add update module use case and dto
+```
+
+![](images/clipboard-422613340.png)
+
+#### 11.17 — Modules.controller.ts
+
+Controller delgado: valida DTO, llama use-case, devuelve respuesta.
+
+![](images/clipboard-2907067381.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: add controller modules.controller.ts"
+```
+
+![](images/clipboard-4281216756.png)
+
+#### 11.18 — Learning Content.module.ts
+
+Ahora conectamos los casos de uso y el repositorio con NestJS.
+
+![](images/clipboard-508633561.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "feat: wire learning content module"
+```
+
+![](images/clipboard-4057666968.png)
+
+#### 11.19 — Actualizar sequelize.factory.ts 
+
+#### ALL_MODELS solo los modelos ya creados (orden de dependencias).
+
+![](images/clipboard-1902184559.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: register module model in sequelize"
+```
+
+![](images/clipboard-134799775.png)
+
+#### 11.20 — Actualizar learning-content.module.ts
+
+![](images/clipboard-41776159.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "feat: wire learning content module"
+```
+
+![](images/clipboard-2379392638.png)
+
+#### 11.21 — Actualizar database-seeder.ts
+
+Ejecuta seeders en orden de dependencias al arrancar (dev).
+
+![](images/clipboard-3561445569.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add .  git commit -m "chore: update learning content seeders bootstrap order"
+```
+
+![](images/clipboard-3342095304.png)
+
+#### 11.22 — Verificar feature 
+
+Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes, el sync de columnas principales ya debe existir.
+
+``` bash
+npm run start:dev
+```
+
+![](images/clipboard-2084413663.png)
+
+**Sugerencia de commit (issue):**
+
+``` bash
+git add . git commit -m "test: verify learning content module feature"
+```
+
+![](images/clipboard-3355450816.png)
+
+------------------------------------------------------------------------
+
+## FA
 
 ## FASE 12 — `_AUTH_ROLES`
 
