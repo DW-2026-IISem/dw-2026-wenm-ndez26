@@ -5022,22 +5022,24 @@ Mapper entre entidad de dominio y DTO de respuesta.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: add mapper attempt.mapper.ts"
+git add .   
+git commit -m "feat: add mapper submission.mapper.ts"
 ```
 
-#### 14.12 — create-attempent.use-case.ts
+![](images/clipboard-3274642642.png)
+
+#### 15.12 — create-submissions.use-case.ts
+
+![](images/clipboard-1625880490.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "feat: add use case create-attempt.use-case.ts"
+git add . 
+git commit -m "feat: add use case create-attempt.use-case.ts"
 ```
 
-![](images/clipboard-3087304958.png)
-
-#### 14.13 — delete-evaluation.use-case.ts
-
-![](images/clipboard-1206606795.png)
+#### 15.13 — delete-evaluation.use-case.ts
 
 **Sugerencia de commit (issue):**
 
