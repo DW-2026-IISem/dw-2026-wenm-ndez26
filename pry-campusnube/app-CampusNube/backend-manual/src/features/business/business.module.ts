@@ -1,4 +1,4 @@
-import { Module } from '@nestjDs/common';
+import { Module } from '@nestjs/common';
 
 import { CoursesModule } from './courses/courses.module.js';
 import { ApprenticesModule } from './apprentices/apprentices.module.js';

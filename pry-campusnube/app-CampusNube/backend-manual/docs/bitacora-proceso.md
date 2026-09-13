@@ -5108,7 +5108,7 @@ git commit -m "feat: add controller submissions.controller.ts"
 
 ![](images/clipboard-3963368332.png)
 
-#### 15.18 — assements.module.ts
+#### 15.18 — submissions.module.ts
 
 Ahora conectamos los casos de uso y el repositorio con NestJS.
 
@@ -5117,50 +5117,55 @@ Ahora conectamos los casos de uso y el repositorio con NestJS.
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: wire attempts into assessments module"
+git add .  
+git commit -m "feat: wire submissions module"
 ```
 
-![](images/clipboard-2939491509.png)
+![](images/clipboard-1906086178.png)
 
-#### 18.19 — Actualizar sequelize.factory.ts 
+#### 115.19 — Actualizar sequelize.factory.ts 
 
 #### ALL_MODELS solo los modelos ya creados (orden de dependencias).
 
-![](images/clipboard-3081820452.png)
+![](images/clipboard-3880121967.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .   git commit -m "feat: register attempt model in sequelize"
+git add . 
+git commit -m "feat: register submission model in sequelize"
 ```
 
-![](images/clipboard-2400472882.png)
+![](images/clipboard-1891715542.png)
 
-#### 14.20 — Actualizar learning-content.module.ts
+#### 15.20 — Actualizar learning-content.module.ts
 
 Aquí **no creamos otro módulo** porque `AssessmentsModule` ya está conectado al `BusinessModule`.
 
-![](images/clipboard-4055459396.png)**Sugerencia de commit (issue):**
+![](images/clipboard-1423348723.png)
+
+**Sugerencia de commit (issue):**
 
 ``` bash
 git add .   git commit --allow-empty -m "feat: wire attempts into business module"
 ```
 
-![](images/clipboard-4138752749.png)
+![](images/clipboard-2480877127.png)
 
-#### 14.21 — Actualizar database-seeder.ts
+#### 15.21 — Actualizar database-seeder.ts
 
 Ejecuta seeders en orden de dependencias al arrancar (dev).
 
-![](images/clipboard-1002235422.png)
+![](images/clipboard-4230229207.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .    git commit -m "chore: update attempts seeders bootstrap order"
+git add .    
+git commit -m "chore: update submissions seeders bootstrap order"
 ```
 
-![](images/clipboard-2898725528.png)
+![](images/clipboard-199371793.png)
 
 #### 14.22 — Verificar feature 
 
@@ -5170,15 +5175,14 @@ Arranca y confirma tablas/endpoints del feature. Si hay asociaciones pendientes,
 npm run start:dev
 ```
 
-![](images/clipboard-4161176506.png)
+![](images/clipboard-631913483.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "test: verify attempts feature"
+git add . 
+git commit -m "test: verify submissions feature"
 ```
-
-![](images/clipboard-3505664974.png)
 
 ------------------------------------------------------------------------
 
