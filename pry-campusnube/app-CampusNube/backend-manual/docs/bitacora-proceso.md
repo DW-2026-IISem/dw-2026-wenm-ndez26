@@ -4252,7 +4252,7 @@ git commit -m "feat: add domain exception invalid-evaluation.exception.ts"
 
 ![](images/clipboard-1123453873.png)
 
-#### 11.3 —evaluation-not-found.exception.ts
+#### 13.3 —evaluation-not-found.exception.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
@@ -4265,11 +4265,13 @@ git add .
 git commit -m "feat: add domain exception evaluation-not-found.exception.ts
 ```
 
-#### 11.4 — module-repository.inteface.ts
+![](images/clipboard-480060980.png)
+
+#### 13.4 — evaluation-repository.inteface.ts
 
 Excepción de dominio. El caso de uso la lanza; el filter HTTP la traduce a status code.
 
-![](images/clipboard-2628358317.png)
+![](images/clipboard-893886482.png)
 
 **Sugerencia de commit (issue):**
 
