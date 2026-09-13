@@ -5619,9 +5619,11 @@ git add .
 git commit -m "feat: add sequelize progress repository"
 ```
 
-#### 16.8 — Migration.
+![](images/clipboard-435398230.png)
 
-![](images/clipboard-3086126097.png)
+#### 17.8 — Migration.
+
+![](images/clipboard-4043526370.png)
 
 **Sugerencia de commit (issue):**
 
@@ -5630,7 +5632,7 @@ git add .
 git commit -m "feat: add sequelize certificate repository"
 ```
 
-#### ![](images/clipboard-1502008394.png)
+#### 
 
 #### 16.9 — Seeder de datos iniciales para desarrollo y verificación física en BD.
 
