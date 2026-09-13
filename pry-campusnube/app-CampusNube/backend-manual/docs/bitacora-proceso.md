@@ -4282,42 +4282,45 @@ git commit -m "feat: add evaluation repository port
 
 ![](images/clipboard-2230218579.png)
 
-#### 11.5 — module-demain.service.ts
+#### 13.5 — evaluation-demain.service.ts
 
 Puerto (contrato) del repositorio. La aplicación depende de esta interface, no de Sequelize.
 
-![](images/clipboard-2580613058.png)
+![](images/clipboard-3119117281.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add module domain service"
+git add . 
+git commit -m "feat: add evaluation domain service"
 ```
 
-![](images/clipboard-3312237562.png)
+![](images/clipboard-35946496.png)
 
-#### 11.6 — module.model
+#### 11.6 — evaluation.model
 
-![](images/clipboard-2699688114.png)
+![](images/clipboard-4201293805.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add .  git commit -m "feat: add sequelize model module.model.ts"
+git add .  
+git commit -m "feat: add sequelize model evaluation.model.ts"
 ```
 
-![](images/clipboard-84642113.png)
+![](images/clipboard-3573428215.png)
 
-#### 11.7 — sequelize-module.repository.ts
+#### 11.7 — sequelize-evaluation.repository.ts
 
 Adaptador del repositorio: implementa el puerto de dominio con Sequelize.
 
-![](images/clipboard-327934707.png)
+![](images/clipboard-1080777092.png)
 
 **Sugerencia de commit (issue):**
 
 ``` bash
-git add . git commit -m "feat: add sequelize module repository"
+git add . 
+git commit -m "feat: add sequelize evaluation repository"
 ```
 
 ![](images/clipboard-123631474.png)
