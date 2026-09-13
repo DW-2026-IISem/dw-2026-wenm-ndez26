@@ -13,6 +13,7 @@ import { LessonModel } from '../../../features/business/learning-content/infrast
 import { TeacherModel } from '../../../features/business/teachers/infrastructure/persistence/models/teacher.model.js';
 import { EvaluationModel } from '../../../features/business/assessments/infrastructure/persistence/models/evaluation.model.js';
 import { RoleModel } from '../../../features/auth/roles/infrastructure/persistence/models/role.model.js';
+import { AttemptModel } from '../../../features/business/assessments/infrastructure/persistence/models/attempt.model.js';
 
 const require = createRequire(import.meta.url);
 
@@ -24,6 +25,7 @@ export const ALL_MODELS = [
   LessonModel,
   TeacherModel,
   EvaluationModel,
+  AttemptModel,
   RoleModel,
 ];
 
