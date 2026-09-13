@@ -4877,8 +4877,10 @@ Entidad de dominio (TypeScript puro). No extiende Sequelize `Model`. Aquí viven
 
 ``` bash
 git add .
-git commit -m "feat: add domain entity attempt.entity.ts
+git commit -m "feat: add domain entity submission.entity.ts"
 ```
+
+![](images/clipboard-2699996878.png)
 
 #### 15.2 — ivalid-attemp.exception.ts
 
