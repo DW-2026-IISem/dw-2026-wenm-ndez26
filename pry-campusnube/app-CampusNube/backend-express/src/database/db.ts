@@ -1,44 +1,39 @@
-import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 interface DatabaseConfig {
-  dialect: string;
   host: string;
+  port: number;
   username: string;
   password: string;
   database: string;
-  port: number;
 }
 
-const dbConfigurations: Record<string, DatabaseConfig> = {
+const configs: Record<string, DatabaseConfig> = {
   mysql: {
-    dialect: "mysql",
-    host: process.env.MYSQL_HOST || "localhost",
-    username: process.env.MYSQL_USER || "root",
-    password: process.env.MYSQL_PASSWORD || "",
-    database: process.env.MYSQL_NAME || "campusnube",
-    port: parseInt(process.env.MYSQL_PORT || "3306")
+    host: process.env.MYSQL_HOST || 'localhost',
+    port: Number(process.env.MYSQL_PORT) || 3306,
+    username: process.env.MYSQL_USER || 'root',
+    password: process.env.MYSQL_PASSWORD || '',
+    database: process.env.MYSQL_NAME || 'campusnube'
   },
   postgres: {
-    dialect: "postgres",
-    host: process.env.POSTGRES_HOST || "localhost",
-    username: process.env.POSTGRES_USER || "postgres",
-    password: process.env.POSTGRES_PASSWORD || "",
-    database: process.env.POSTGRES_NAME || "campusnube",
-    port: parseInt(process.env.POSTGRES_PORT || "5432")
+    host: process.env.POSTGRES_HOST || 'localhost',
+    port: Number(process.env.POSTGRES_PORT) || 5432,
+    username: process.env.POSTGRES_USER || 'postgres',
+    password: process.env.POSTGRES_PASSWORD || '',
+    database: process.env.POSTGRES_NAME || 'campusnube'
   }
 };
 
-const selectedEngine = process.env.DB_ENGINE || "mysql";
-const selectedConfig = dbConfigurations[selectedEngine];
+const selectedEngine = (process.env.DB_ENGINE || 'mysql').toLowerCase();
+const selectedConfig = configs[selectedEngine];
 
 if (!selectedConfig) {
   throw new Error(`Motor de base de datos no soportado: ${selectedEngine}`);
 }
-
-console.log(`🔌 Conectando a base de datos: ${selectedEngine.toUpperCase()}`);
 
 export const sequelize = new Sequelize(
   selectedConfig.database,
@@ -47,32 +42,26 @@ export const sequelize = new Sequelize(
   {
     host: selectedConfig.host,
     port: selectedConfig.port,
-    dialect: selectedConfig.dialect as any,
-    logging: process.env.NODE_ENV === 'development' ? console.log : false,
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000
-    }
+    dialect: selectedEngine as 'mysql' | 'postgres',
+    logging: false
   }
 );
 
-export const getDatabaseInfo = () => {
+export function getDatabaseInfo() {
   return {
     engine: selectedEngine,
-    config: selectedConfig,
-    connectionString: `${selectedConfig.dialect}://${selectedConfig.username}@${selectedConfig.host}:${selectedConfig.port}/${selectedConfig.database}`
+    host: selectedConfig.host,
+    port: selectedConfig.port,
+    database: selectedConfig.database
   };
-};
+}
 
-export const testConnection = async (): Promise<boolean> => {
+export async function testConnection(): Promise<void> {
   try {
     await sequelize.authenticate();
-    console.log(`✅ Conexión exitosa a ${selectedEngine.toUpperCase()}`);
-    return true;
+    console.log('✅ Conexión a la base de datos exitosa');
   } catch (error) {
-    console.error(`❌ Error de conexión a ${selectedEngine.toUpperCase()}:`, error);
-    return false;
+    console.error('❌ Error de conexión a la base de datos:', error);
+    throw error;
   }
-};
+}
