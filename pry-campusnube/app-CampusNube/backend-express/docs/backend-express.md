@@ -315,7 +315,7 @@ git push origin main
   git push origin main
   ```
 
-  # 
+  # ![](images/clipboard-1242110958.png)
 
 ------------------------------------------------------------------------
 
@@ -323,22 +323,35 @@ git push origin main
 
 **Criterios de este sub-ítem**
 
-- [ ] `sequelize`, `mysql2`, `pg`, `pg-hstore`, `tedious`, `oracledb` instalados
-- [ ] `.env` con `PORT`, `DB_ENGINE`, MySQL/Postgres/MSSQL/Oracle
+- [x] `sequelize`, `mysql2`, `pg`, `pg-hstore`, `tedious`, `oracledb` instalados
 
-``` bash
-npm install sequelize@^6.37.8 mysql2@^3.24.4 pg@^8.23.0 pg-hstore@^2.3.4 \   tedious@^20.0.0 oracledb@^7.0.1 npm install -D @types/sequelize@^6.12.0
-```
+- [x] `.env` con `PORT`, `DB_ENGINE`, MySQL/Postgres/MSSQL/Oracle
 
-``` bash
-: > .env cat >> .env << 'EOF' PORT=4000  # Variable para seleccionar el motor de base de datos DB_ENGINE=mysql  # Configuración para MySQL MYSQL_HOST=localhost MYSQL_USER=admin MYSQL_PASSWORD=MiNiCo57** MYSQL_NAME=tecnogua MYSQL_PORT=3306  # Configuración para PostgreSQL POSTGRES_HOST=localhost POSTGRES_USER=postgres POSTGRES_PASSWORD=password POSTGRES_NAME=almacen_2025_iisem_node POSTGRES_PORT=5432  # Configuración para SQL Server MSSQL_HOST=localhost MSSQL_USER=sa MSSQL_PASSWORD=password MSSQL_NAME=almacen_2025_iisem_node MSSQL_PORT=1433  # Configuración para Oracle ORACLE_HOST=localhost ORACLE_USER=ALMACENDB_ADMIN ORACLE_PASSWORD=password ORACLE_NAME=xe ORACLE_PORT=1521  EOF
-```
+- [x]  Instalar Sequelize y los drivers
 
-``` bash
-test -f .env && grep DB_ENGINE .env npm ls sequelize mysql2 --depth=0
-```
+  #### Evidencia
 
-------------------------------------------------------------------------
+  ![](images/clipboard-3702284504.png)
+
+- [x] ![](images/clipboard-2814811267.png)
+
+  ####  Crear `.env` para CampusNube
+
+  ![](images/clipboard-2378225846.png)
+
+#### Verificar Sequelize y MySQL
+
+![](images/clipboard-1561342852.png)
+
+- ::: {}
+  ### Realizamos el  commit
+
+  ``` bash
+  git add . 
+  git commit -m "ISS-02: Drivers Sequelize y .env"  
+  git push origin main
+  ```
+  :::
 
 ## 3.2 Configuración Sequelize (`database/db.ts`)
 
