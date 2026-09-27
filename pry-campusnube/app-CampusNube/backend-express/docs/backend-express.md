@@ -33,7 +33,7 @@ node -v npm -v
 node -v && npm -v
 ```
 
-#### EVIDENCIA 
+#### EVIDENCIA
 
 #### ![](images/clipboard-1705120117.png)
 
@@ -48,13 +48,14 @@ node -v && npm -v
 
 - [ ] **2.1** Existe `package.json` con `"type": "commonjs"` y scripts `build` / `dev`
 
-  #### Evidencia  
+  #### Evidencia
 
   ![](images/clipboard-625410312.png)
 
 - [ ] **2.2** Árbol `src/` con `config`, `database/seeders`, `routes`, `features/business/` (auth **fuera de alcance** de este lab)
 
   #### Se creó la estructura base del backend Express organizada por features, adaptada al dominio de CampusNube. Se prepararon las carpetas correspondientes a las 11 entidades del sistema.
+
   La estructura contempla los features Learner, Teacher, Course, Module, Lesson, Enrollment, Evaluation, Attempt, Submission, Progress y Certificate.
 
   ![](images/clipboard-487243888.png)
@@ -67,7 +68,7 @@ node -v && npm -v
 
 - [ ] **2.4** Existe `tsconfig.json` (`rootDir: ./src`, `outDir: ./dist`, `strict: true`)
 
-  ### Evidencia 
+  ### Evidencia
 
   ![](images/clipboard-1837826771.png)
 
@@ -87,11 +88,11 @@ node -v && npm -v
 
 ![](images/clipboard-2373908580.png)
 
-### Realizamos el primer commit 
+### Realizamos el primer commit
 
 ``` bash
 git add .
-git commit -m "ISS-01: initialize Express backend workspace"
+git commit -m "ISS-01: Esqueleto del proyecto"
 git push origin main
 ```
 
@@ -130,11 +131,11 @@ git push origin main
 
   `npx tsc --noEmit` sin errores al cerrar el ISS
 
-  ### EVIDENCIA  `config/index.ts`
+  ### EVIDENCIA `config/index.ts`
 
   ![](images/clipboard-1908940105.png)
 
-  ### EVIDENCIA  `config/server.ts`
+  ### EVIDENCIA `config/server.ts`
 
 ![](images/clipboard-4268425216.png)
 
@@ -151,7 +152,7 @@ git push origin main
 - **Dentro de** `"scripts"`: deja solo (o añade) `build` y `dev` como abajo.
 - **Debajo de** `"license"` (o al mismo nivel que `"scripts"`): asegúrate de `"type": "commonjs"`.
 
-### EVIDENCIA 
+### EVIDENCIA
 
 ![](images/clipboard-2646010305.png)
 
@@ -190,7 +191,7 @@ node -e "const p=require('./package.json'); console.log(p.scripts)"
 find src -type d | sort
 ```
 
-#### Evidencia 
+#### Evidencia
 
 ![](images/clipboard-3900110705.png)
 
@@ -270,3 +271,117 @@ npm run dev
 > El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
 >
 > ![](images/clipboard-2806914315.png)
+
+### Realizamos el  commit
+
+``` bash
+git add . 
+git commit -m "ISS-01: ISS-01: Inicializar npm y scripts" 
+git push origin main
+```
+
+![](images/clipboard-1244445308.png){width="722"}
+
+# 3. ISS-02 — Infraestructura de base de datos
+
+**Objetivo:** drivers + `.env` + módulo Sequelize + carpeta `seeders/`.\
+**Bloqueado por:** ISS-01.
+
+### Criterios de aceptación (ISS-02) — consolidados
+
+- [ ] **3.1** Paquetes Sequelize/drivers instalados; existe `.env` con `DB_ENGINE` y bloques de motores
+
+  ![](images/clipboard-3659110232.png)
+
+- [ ] **3.2** Existe `src/database/db.ts` exportando `sequelize`, `getDatabaseInfo`, `testConnection`
+
+  Crear `src/database/db.ts`
+
+  ![](images/clipboard-1563374045.png)
+
+- [ ] **3.3** Existe carpeta `src/database/seeders/` **sin** lógica implementada aún
+
+  ![](images/clipboard-2590173340.png)
+
+- [ ] `npx tsc --noEmit`
+
+  ![](images/clipboard-1361748247.png)
+
+  ### Realizamos el  commit
+
+  ``` bash
+  git add . 
+  git commit -m "ISS-02: Infraestructura de base de datos"  
+  git push origin main
+  ```
+
+  # 
+
+------------------------------------------------------------------------
+
+## 3.1 Drivers Sequelize y `.env`
+
+**Criterios de este sub-ítem**
+
+- [ ] `sequelize`, `mysql2`, `pg`, `pg-hstore`, `tedious`, `oracledb` instalados
+- [ ] `.env` con `PORT`, `DB_ENGINE`, MySQL/Postgres/MSSQL/Oracle
+
+``` bash
+npm install sequelize@^6.37.8 mysql2@^3.24.4 pg@^8.23.0 pg-hstore@^2.3.4 \   tedious@^20.0.0 oracledb@^7.0.1 npm install -D @types/sequelize@^6.12.0
+```
+
+``` bash
+: > .env cat >> .env << 'EOF' PORT=4000  # Variable para seleccionar el motor de base de datos DB_ENGINE=mysql  # Configuración para MySQL MYSQL_HOST=localhost MYSQL_USER=admin MYSQL_PASSWORD=MiNiCo57** MYSQL_NAME=tecnogua MYSQL_PORT=3306  # Configuración para PostgreSQL POSTGRES_HOST=localhost POSTGRES_USER=postgres POSTGRES_PASSWORD=password POSTGRES_NAME=almacen_2025_iisem_node POSTGRES_PORT=5432  # Configuración para SQL Server MSSQL_HOST=localhost MSSQL_USER=sa MSSQL_PASSWORD=password MSSQL_NAME=almacen_2025_iisem_node MSSQL_PORT=1433  # Configuración para Oracle ORACLE_HOST=localhost ORACLE_USER=ALMACENDB_ADMIN ORACLE_PASSWORD=password ORACLE_NAME=xe ORACLE_PORT=1521  EOF
+```
+
+``` bash
+test -f .env && grep DB_ENGINE .env npm ls sequelize mysql2 --depth=0
+```
+
+------------------------------------------------------------------------
+
+## 3.2 Configuración Sequelize (`database/db.ts`)
+
+**Criterios de este sub-ítem**
+
+- [ ] Archivo `src/database/db.ts` creado
+- [ ] Exporta `sequelize`, `getDatabaseInfo`, `testConnection`
+
+``` bash
+: > src/database/db.ts cat >> src/database/db.ts << 'EOF' import { Sequelize } from "sequelize"; import dotenv from "dotenv";  dotenv.config();  interface DatabaseConfig {   dialect: string;   host: string;   username: string;   password: string;   database: string;   port: number; }  const dbConfigurations: Record<string, DatabaseConfig> = {   mysql: {     dialect: "mysql",     host: process.env.MYSQL_HOST || "localhost",     username: process.env.MYSQL_USER || "root",     password: process.env.MYSQL_PASSWORD || "",     database: process.env.MYSQL_NAME || "test",     port: parseInt(process.env.MYSQL_PORT || "3306")   },   postgres: {     dialect: "postgres",     host: process.env.POSTGRES_HOST || "localhost",     username: process.env.POSTGRES_USER || "postgres",     password: process.env.POSTGRES_PASSWORD || "",     database: process.env.POSTGRES_NAME || "test",     port: parseInt(process.env.POSTGRES_PORT || "5432")   } };  const selectedEngine = process.env.DB_ENGINE || "mysql"; const selectedConfig = dbConfigurations[selectedEngine];  if (!selectedConfig) {   throw new Error(`Motor de base de datos no soportado: ${selectedEngine}`); }  console.log(`🔌 Conectando a base de datos: ${selectedEngine.toUpperCase()}`);  export const sequelize = new Sequelize(   selectedConfig.database,   selectedConfig.username,   selectedConfig.password,   {     host: selectedConfig.host,     port: selectedConfig.port,     dialect: selectedConfig.dialect as any,     logging: process.env.NODE_ENV === 'development' ? console.log : false,     pool: {       max: 5,       min: 0,       acquire: 30000,       idle: 10000     }   } );  export const getDatabaseInfo = () => {   return {     engine: selectedEngine,     config: selectedConfig,     connectionString: `${selectedConfig.dialect}://${selectedConfig.username}@${selectedConfig.host}:${selectedConfig.port}/${selectedConfig.database}`   }; };  export const testConnection = async (): Promise<boolean> => {   try {     await sequelize.authenticate();     console.log(`✅ Conexión exitosa a ${selectedEngine.toUpperCase()}`);     return true;   } catch (error) {     console.error(`❌ Error de conexión a ${selectedEngine.toUpperCase()}:`, error);     return false;   } }; EOF
+```
+
+``` bash
+test -f src/database/db.ts && npx tsc --noEmit
+```
+
+------------------------------------------------------------------------
+
+## 3.3 Carpeta seeders (reservada)
+
+**Criterios de este sub-ítem**
+
+- [ ] `src/database/seeders/` existe (la lógica llega en ISS-04)
+- [ ] `src/database/seeders/` existe **sin** `*.seeder.ts` ni runner
+
+``` bash
+mkdir -p src/database/seeders # opcional: touch src/database/seeders/.gitkeep
+```
+
+``` bash
+test -d src/database/seeders && echo OK
+```
+
+### Verificación del ISS-02
+
+``` bash
+npx tsc --noEmit test -f src/database/db.ts && test -f .env && test -d src/database/seeders
+```
+
+### Cierre del ISS
+
+``` bash
+npm run dev
+```
+
+> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
