@@ -649,11 +649,68 @@ npm run dev
 ```
 
 > ![](images/clipboard-3234504110.png)
-
-### Realizamos el commit
+>
+> ### Realizamos el commit
 
 ``` bash
 git add .     
 git commit -m "ISS-03-C: Learner - Crear aprendiz vía API" 
 git push origin main
 ```
+
+![](images/clipboard-2895064167.png)
+
+# 7. ISS-03-D — Feature learn — Update (PUT) y Update (PATCH)
+
+**Objetivo:** actualización completa y parcial.\
+**Bloqueado por:** ISS-03-C.
+
+### Controller — **PARCHE** `learn.controller.ts` (ya existe)
+
+**Debajo de** el comentario `// ================== UPDATE ==================` (y **encima de** `// ================== DELETE ==================`), **añadir**:
+
+![](images/clipboard-3678796925.png)
+
+> ### Realizamos el commit
+
+``` bash
+git add .     
+git commit -m "ISS-03-D: Learner - Controller Update PUT y PATCH"
+git push origin main
+```
+
+![](images/clipboard-235923656.png)
+
+### Rutas — **PARCHE** `learns.routes.ts` (ya existe)
+
+**Debajo de** el bloque `// create`, **añadir** PUT y PATCH:
+
+![](images/clipboard-2640336509.png)
+
+> ### Realizamos el commit
+
+``` bash
+git add .      
+git commit -m "ISS-03-D: Learner - Rutas Update PUT y PATCH"
+git push origin main
+```
+
+### HTTP — archivo nuevo
+
+``` bash
+: > src/features/business/client/http/clients.update.http cat >> src/features/business/client/http/clients.update.http << 'EOF' ### Feature Client — UPDATE (PUT) / UPDATE (PATCH) ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000 @id = 1  # @name updateClientPut PUT {{baseUrl}}/api/clientes/{{id}} Content-Type: application/json  {   "name": "Ana Pérez Actualizada",   "address": "Carrera 15 #40-10",   "phone": "3009876543",   "email": "ana.perez@example.com",   "password": "Password123!",   "status": "active" }  ###  # @name updateClientPatch PATCH {{baseUrl}}/api/clientes/{{id}} Content-Type: application/json  {   "phone": "3011112233",   "address": "Nueva dirección parcial" } EOF
+```
+
+### Verificación
+
+``` bash
+curl -s -X PUT http://localhost:4000/api/clientes/1 -H 'Content-Type: application/json' \   -d '{"name":"Ana","address":"x","phone":"300","email":"ana@test.com","status":"active"}' curl -s -X PATCH http://localhost:4000/api/clientes/1 -H 'Content-Type: application/json' \   -d '{"phone":"301"}'
+```
+
+### Cierre del ISS
+
+``` bash
+npm run dev
+```
+
+> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
