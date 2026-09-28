@@ -562,6 +562,16 @@ git push origin main
 
 **Debajo de** el comentario `// ================== RUTAS SIN AUTENTICACIÓN / SIN MIDDLEWARE JWT ==================`, **añadir** primero `getAll` y después `getOne`:
 
+![](images/clipboard-579907181.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-03-B: Learner - Rutas GetAll y GetOne"  
+git push origin main
+```
+
 ### HTTP — archivo nuevo
 
 ``` bash
