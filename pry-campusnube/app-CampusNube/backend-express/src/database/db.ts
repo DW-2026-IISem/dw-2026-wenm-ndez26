@@ -56,12 +56,13 @@ export function getDatabaseInfo() {
   };
 }
 
-export async function testConnection(): Promise<void> {
+export async function testConnection(): Promise<boolean> {
   try {
     await sequelize.authenticate();
     console.log('✅ Conexión a la base de datos exitosa');
+    return true;
   } catch (error) {
     console.error('❌ Error de conexión a la base de datos:', error);
-    throw error;
+    return false;
   }
 }

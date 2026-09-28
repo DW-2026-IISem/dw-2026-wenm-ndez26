@@ -477,24 +477,23 @@ mkdir -p src/features/business/learner/http
 > git push origin main
 > ```
 >
+> ![](images/clipboard-3387377060.png)
+>
 > ### 4.3 Agregador Routes + cableado en Config
 
 **Criterios**
 
-- [ ] `src/routes/index.ts` con `clientRoutes`
-- [ ] `config` importa modelo + `dbConnection` + `routes`
+- [ ] `src/routes/index.ts` con `leanerRoutes`
 
-``` bash
-: > src/routes/index.ts cat >> src/routes/index.ts << 'EOF' import { ClientRoutes } from "../features/business/client/client.routes";  export class Routes {   public clientRoutes: ClientRoutes = new ClientRoutes(); } EOF
-```
+  **Crear `src/routes/index.ts`**
 
-**PARCHE** — `src/config/index.ts` **ya existe** (ISS-01).
+  ![](images/clipboard-2067884378.png)
+
+- [x] **PARCHE** — `src/config/index.ts` **ya existe** (ISS-01).
 
 1.  **Debajo de** `var cors = require("cors");` **añadir**:
 
-``` ts
-import { sequelize, getDatabaseInfo, testConnection } from "../database/db"; import "../features/business/client/client.model"; import { Routes } from "../routes/index";
-```
+![](images/clipboard-3724928373.png)
 
 2.  **Dentro de** `export class App`, **debajo de** `public app: Application;` **añadir**:
 
@@ -502,25 +501,25 @@ import { sequelize, getDatabaseInfo, testConnection } from "../database/db"; imp
   public routePrv: Routes = new Routes();
 ```
 
+![](images/clipboard-1379712393.png)
+
 3.  **Dentro de** `routes()`, **reemplazar** el comentario `// ISS-03 §4.3` por:
 
 ``` ts
-    this.routePrv.clientRoutes.routes(this.app);
+  this.routePrv.learnerRoutes.routes(this.app);
 ```
 
-4.  **Dentro de** `dbConnection()`, **reemplazar** el comentario `// ISS-02 / ISS-03` por:
+![](images/clipboard-2656875063.png)
 
-``` ts
-    try {       // Mostrar información de la base de datos seleccionada       const dbInfo = getDatabaseInfo();       console.log(`🔗 Intentando conectar a: ${dbInfo.engine.toUpperCase()}`);        // Probar la conexión       const isConnected = await testConnection();        if (!isConnected) {         throw new Error(`No se pudo conectar a la base de datos ${dbInfo.engine.toUpperCase()}`);       }        // alter: true actualiza columnas faltantes (ej. createdAt/updatedAt tras timestamps: true).       // force: false no recrea tablas; no borra datos. En producción preferir migraciones.       await sequelize.sync({ force: false, alter: true });       console.log(`📦 Base de datos sincronizada exitosamente`);     } catch (error) {       console.error("❌ Error al conectar con la base de datos:", error);       process.exit(1); // Terminar la aplicación si no se puede conectar     }
-```
-
-> **Importante (lab):** si la tabla `clients` se creó antes con `timestamps: false`, `sync({ force: false })` **no** añade `createdAt`/`updatedAt`. Por eso se usa `alter: true`.
+4.  **Dentro de** `dbConnection()`, **reemplazar** el comentario `// ISS-02 / ISS-03` por:![](images/clipboard-2124942523.png)
 
 ### Verificación ISS-03-A
 
 ``` bash
-test -d src/features/business/client/http && echo HTTP_FOLDER_OK
+test -d src/features/business/learner/http && echo HTTP_FOLDER_OK
 ```
+
+![](images/clipboard-692750428.png)
 
 ### Cierre del ISS
 
@@ -528,4 +527,12 @@ test -d src/features/business/client/http && echo HTTP_FOLDER_OK
 npm run dev
 ```
 
-> Sync OK y tabla `clients` (con `createdAt` / `updatedAt`). Detenerlo con Ctrl+C antes de continuar.
+> ![](images/clipboard-3854915334.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+git commit -m "ISS-03-A: Agregador Routes + cableado en Config"  
+git push origin main
+```
