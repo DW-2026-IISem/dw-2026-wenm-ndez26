@@ -695,17 +695,15 @@ git commit -m "ISS-03-D: Learner - Rutas Update PUT y PATCH"
 git push origin main
 ```
 
+![](images/clipboard-3781145699.png)
+
 ### HTTP — archivo nuevo
 
-``` bash
-: > src/features/business/client/http/clients.update.http cat >> src/features/business/client/http/clients.update.http << 'EOF' ### Feature Client — UPDATE (PUT) / UPDATE (PATCH) ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000 @id = 1  # @name updateClientPut PUT {{baseUrl}}/api/clientes/{{id}} Content-Type: application/json  {   "name": "Ana Pérez Actualizada",   "address": "Carrera 15 #40-10",   "phone": "3009876543",   "email": "ana.perez@example.com",   "password": "Password123!",   "status": "active" }  ###  # @name updateClientPatch PATCH {{baseUrl}}/api/clientes/{{id}} Content-Type: application/json  {   "phone": "3011112233",   "address": "Nueva dirección parcial" } EOF
-```
+![](images/clipboard-293634186.png)
 
 ### Verificación
 
-``` bash
-curl -s -X PUT http://localhost:4000/api/clientes/1 -H 'Content-Type: application/json' \   -d '{"name":"Ana","address":"x","phone":"300","email":"ana@test.com","status":"active"}' curl -s -X PATCH http://localhost:4000/api/clientes/1 -H 'Content-Type: application/json' \   -d '{"phone":"301"}'
-```
+![](images/clipboard-918879003.png)
 
 ### Cierre del ISS
 
@@ -713,4 +711,12 @@ curl -s -X PUT http://localhost:4000/api/clientes/1 -H 'Content-Type: applicatio
 npm run dev
 ```
 
-> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
+![](images/clipboard-2313887628.png)
+
+### Realizamos el commit
+
+``` bash
+git add .    
+git commit -m "ISS-03-D: Learner - HTTP Update PUT y PATCH"
+git push origin main
+```

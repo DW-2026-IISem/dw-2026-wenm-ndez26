@@ -1,0 +1,25 @@
+### Feature Learner — UPDATE (PUT) / UPDATE (PATCH)
+### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación)
+@baseUrl = http://localhost:4000
+@id = 1
+
+# @name updateLearnerPut
+PUT {{baseUrl}}/api/aprendices/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Ana Pérez Actualizada",
+  "description": "Aprendiz actualizado de CampusNube",
+  "password": "Password123!",
+  "status": "active"
+}
+
+###
+
+# @name updateLearnerPatch
+PATCH {{baseUrl}}/api/aprendices/{{id}}
+Content-Type: application/json
+
+{
+  "description": "Descripción actualizada parcialmente"
+}
