@@ -572,17 +572,20 @@ git commit -m "ISS-03-B: Learner - Rutas GetAll y GetOne"
 git push origin main
 ```
 
+![](images/clipboard-1719580219.png)
+
 ### HTTP — archivo nuevo
 
-``` bash
-: > src/features/business/client/http/clients.get.http cat >> src/features/business/client/http/clients.get.http << 'EOF' ### Feature Client — GET ALL / GET ONE ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000 @id = 1  # @name getAllClients GET {{baseUrl}}/api/clientes  ###  # @name getOneClient GET {{baseUrl}}/api/clientes/{{id}} EOF
-```
+![](images/clipboard-3742688651.png)
 
 ### Verificación
 
 ``` bash
-curl -s http://localhost:4000/api/clientes curl -s http://localhost:4000/api/clientes/1
+curl -s http://localhost:4000/api/aprendices
+curl -s http://localhost:4000/api/aprendices/1
 ```
+
+![](images/clipboard-3578344295.png)
 
 ### Cierre del ISS
 
@@ -590,4 +593,14 @@ curl -s http://localhost:4000/api/clientes curl -s http://localhost:4000/api/cli
 npm run dev
 ```
 
-> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
+> ![](images/clipboard-1256150355.png)
+
+### Realizamos el commit
+
+``` bash
+git add .    
+git commit -m "ISS-03-B: Learner - HTTP GetAll y GetOne"  
+git push origin main
+```
+
+![](images/clipboard-1719580219.png)
