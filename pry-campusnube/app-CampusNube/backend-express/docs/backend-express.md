@@ -603,4 +603,49 @@ git commit -m "ISS-03-B: Learner - HTTP GetAll y GetOne"
 git push origin main
 ```
 
-![](images/clipboard-1719580219.png)
+![](images/clipboard-2534740742.png)
+
+# 6. ISS-03-C — Feature learn— learn
+
+**Objetivo:** alta de aprendiz vía API, después de getAll y getOne.\
+**Bloqueado por:** ISS-03-B.
+
+### Controller — **PARCHE** `leaner.controller.ts` (ya existe)
+
+**Debajo de** el comentario `// ================== CREATE ==================` (y **encima de** `// ================== UPDATE ==================`), **añadir** el método `create`:Rutas — **PARCHE** `client.routes.ts` (ya existe)
+
+![](images/clipboard-2644206639.png)
+
+### Realizamos el commit
+
+``` bash
+git add .     
+git commit -m "ISS-03-C: Learner - Controller Create"  
+git push origin main
+```
+
+**Debajo de** el bloque `// getOne`, **añadir**:
+
+``` ts
+    // create     app       .route("/api/clientes")       .post(this.clientController.create.bind(this.clientController));
+```
+
+### HTTP — archivo nuevo
+
+``` bash
+: > src/features/business/client/http/clients.create.http cat >> src/features/business/client/http/clients.create.http << 'EOF' ### Feature Client — CREATE ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000  # @name createClient POST {{baseUrl}}/api/clientes Content-Type: application/json  {   "name": "Ana Pérez",   "address": "Calle 10 #20-30",   "phone": "3001234567",   "email": "ana.perez@example.com",   "password": "Password123!",   "status": "active" } EOF
+```
+
+### Verificación
+
+``` bash
+curl -s -X POST http://localhost:4000/api/clientes \   -H 'Content-Type: application/json' \   -d '{"name":"Ana","phone":"3001","email":"ana@test.com","password":"Password123!","status":"active"}'
+```
+
+### Cierre del ISS
+
+``` bash
+npm run dev
+```
+
+> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.

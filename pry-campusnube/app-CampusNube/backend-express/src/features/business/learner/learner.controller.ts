@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Learner } from "./learner.model";
+import { Learner, LearnerI } from "./learner.model";
 
 function paramId(req: Request): number {
   const raw = req.params.id;
@@ -51,7 +51,30 @@ export class LearnerController {
   }
 
   // ================== CREATE ==================
-  // (rellenar en los siguientes ISS)
+    public async create(req: Request, res: Response) {
+    try {
+      const body = req.body as LearnerI;
+
+      const learner = await Learner.create({
+        name: body.name,
+        description: body.description,
+        password: body.password,
+        status: body.status ?? "active",
+      });
+
+      const { password, ...safe } = learner.toJSON() as LearnerI & {
+        password?: string;
+      };
+
+      res.status(201).json({ learner: safe });
+    } catch (error) {
+      res.status(500).json({
+        error: "Error creating learner",
+        detail: String(error),
+      });
+    }
+  }
+
 
   // ================== UPDATE ==================
   // (rellenar en los siguientes ISS)
