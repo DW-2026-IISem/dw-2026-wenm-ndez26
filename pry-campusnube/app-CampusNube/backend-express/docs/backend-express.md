@@ -888,3 +888,107 @@ git add .
 git commit -m "ISS-04: Learner - SeedersRunner"
 git push origin main
 ```
+
+![](images/clipboard-379942148.png)
+
+# 10. ISS-05 — leaner-Swagger / OpenAPI
+
+**Objetivo:** documentar el API del feature leaner en OpenAPI 3 y montar Swagger UI desde un **registry externo** (mismo patrón que seeders).\
+**Bloqueado por:** ISS-03-E (rutas CRUD definidas).
+
+**Diseño**
+
+| Pieza | Ubicación | Rol |
+|---------------------|---------------------------------|-------------------|
+| Docs del feature | `src/features/business/learn/leaner.swagger.ts` | Paths + schemas Leaner |
+| Registry | `src/swagger/index.ts` | Fusiona features + `setupSwagger(app)` |
+| UI | `/api/docs` | Swagger UI |
+| Spec | `/api/docs.json` | OpenAPI JSON |
+
+------------------------------------------------------------------------
+
+## 10.1 OpenAPI dentro del feature Leaner
+
+**Criterios**
+
+- [ ] Exporta `clientSwagger` con `tags`, `paths`, `components.schemas`
+- [ ] Endpoints documentados como **SIN AUTH**
+- [ ] 
+
+``` bash
+# Paquetes (una vez) npm install swagger-ui-express@^5.0.1
+npm install -D @types/swagger-ui-express@^4.1.8
+```
+
+![](images/clipboard-3741575613.png)
+
+#### creamos learner.swagger.ts:
+
+![](images/clipboard-1566625716.png)
+
+### Realizamos el commit
+
+``` bash
+git add .     
+git commit -m "ISS-05: Learner - Documentación OpenAPI"
+git push origin main
+```
+
+## 10.2 Registry externo + montaje en Config
+
+**Criterios**
+
+- [ ] `buildOpenApiDocument()` fusiona módulos de features
+- [ ] `setupSwagger(app)` monta `/api/docs` y `/api/docs.json`
+- [ ] `config` invoca `setupSwagger` (método `docs()`)
+
+``` bash
+mkdir -p src/swagger
+```
+
+Archivo **nuevo**:
+
+``` bash
+: > src/swagger/index.ts cat >> src/swagger/index.ts << 'EOF' import { Application } from "express"; import swaggerUi from "swagger-ui-express"; import { clientSwagger } from "../features/business/client/client.swagger";  export type FeatureSwaggerModule = {   tags: unknown[];   paths: Record<string, unknown>;   components?: { schemas?: Record<string, unknown> }; };  /**  * Registry externo: importa la documentación OpenAPI de cada feature  * (mismo patrón que SeedersRunner).  */ const featureSwaggerModules: FeatureSwaggerModule[] = [   clientSwagger,   // productSwagger,   // userSwagger, ];  export function buildOpenApiDocument() {   const tags: unknown[] = [];   const paths: Record<string, unknown> = {};   const schemas: Record<string, unknown> = {};    for (const mod of featureSwaggerModules) {     tags.push(...mod.tags);     Object.assign(paths, mod.paths);     if (mod.components?.schemas) {       Object.assign(schemas, mod.components.schemas);     }   }    return {     openapi: "3.0.3",     info: {       title: "StoreLab API",       version: "1.0.0",       description:         "API StoreLab (Express + Sequelize). Los endpoints de Client están documentados como **SIN AUTH** Todas las rutas business son **SIN AUTH** en este lab.",     },     servers: [       {         url: `http://localhost:${process.env.PORT || 4000}`,         description: "Local",       },     ],     tags,     paths,     components: { schemas },   }; }  /** Monta Swagger UI y el JSON OpenAPI */ export function setupSwagger(app: Application): void {   const document = buildOpenApiDocument();   app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(document));   app.get("/api/docs.json", (_req, res) => {     res.json(document);   });   console.log("📘 Swagger UI: /api/docs  |  OpenAPI JSON: /api/docs.json"); } EOF
+```
+
+**PARCHE** — `src/config/index.ts` **ya existe**.
+
+1.  **Debajo de** `import { Routes } from "../routes/index";` (o **debajo de** los imports de BD/modelo), **añadir**:
+
+``` ts
+import { setupSwagger } from "../swagger/index";
+```
+
+2.  **Dentro del** `constructor`, **debajo de** `this.routes();` y **encima de** `this.dbConnection();`, **añadir**:
+
+``` ts
+    this.docs();
+```
+
+3.  **Dentro de** la clase `App`, **debajo de** el método `routes()` y **encima de** `dbConnection()`, **añadir**:
+
+``` ts
+  private docs(): void {     setupSwagger(this.app);   }
+```
+
+### Verificación ISS-05
+
+``` bash
+curl -s http://localhost:4000/api/docs.json | head
+```
+
+> Con el servidor del cierre: abrir [`http://localhost:4000/api/docs`](http://localhost:4000/api/docs).
+
+**Al agregar otra entidad (patrón):**
+
+1.  Archivo **nuevo** `features/.../<entidad>.swagger.ts` con `: >` + `cat >>`.
+2.  **PARCHE** `src/swagger/index.ts`: **debajo de** `import { clientSwagger } ...`, **añadir** el import; **dentro de** `featureSwaggerModules`, **debajo de** `clientSwagger,`, **añadir** el módulo nuevo.
+
+### Cierre del ISS
+
+``` bash
+npm run dev
+```
+
+> El servidor debe arrancar sin error. Abrir [`http://localhost:4000/api/docs`](http://localhost:4000/api/docs). Detenerlo con Ctrl+C antes de continuar
