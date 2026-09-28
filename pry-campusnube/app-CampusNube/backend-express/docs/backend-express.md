@@ -841,10 +841,18 @@ git commit -m "ISS-04: Learner - Seeder con Faker"
 git push origin main
 ```
 
+![](images/clipboard-3112225544.png)
+
 ### 9.2.1 Conteos
 
+![](images/clipboard-2735206219.png)
+
+### Realizamos el commit
+
 ``` bash
-: > src/database/seeders/counts.ts cat >> src/database/seeders/counts.ts << 'EOF' /**  * Cantidad de registros por feature/entidad.  * Prioridad: CLI (--clients=N) > env (SEED_CLIENTS) > default de este archivo.  *  * Cuando agregues features, suma aquí la clave y léela en el runner.  */ export type SeedCounts = {   clients: number;   // users?: number;   // roles?: number;   // products?: number; };  export const DEFAULT_SEED_COUNTS: SeedCounts = {   clients: 10, };  export function resolveSeedCounts(argv: string[] = process.argv.slice(2)): SeedCounts {   const counts: SeedCounts = { ...DEFAULT_SEED_COUNTS };    const envClients = process.env.SEED_CLIENTS;   if (envClients !== undefined && envClients !== "") {     counts.clients = Number(envClients);   }    for (const arg of argv) {     const m = arg.match(/^--([a-zA-Z_]+)=(\d+)$/);     if (!m) continue;     const key = m[1] as keyof SeedCounts;     const value = Number(m[2]);     if (key in counts) {       counts[key] = value;     }   }    return counts; } EOF
+git add .   
+git commit -m "ISS-04: Learner - Configuración de cantidad del seeder"
+git push origin main
 ```
 
 ### 9.2.2 Runner
