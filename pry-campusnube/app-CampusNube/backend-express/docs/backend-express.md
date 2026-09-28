@@ -855,30 +855,22 @@ git commit -m "ISS-04: Learner - Configuración de cantidad del seeder"
 git push origin main
 ```
 
+![](images/clipboard-382621725.png)
+
 ### 9.2.2 Runner
 
-``` bash
-: > src/database/seeders/index.ts cat >> src/database/seeders/index.ts << 'EOF' import dotenv from "dotenv"; import { sequelize, testConnection } from "../db"; import "../../features/business/client/client.model"; import { seedClients } from "../../features/business/client/client.seeder"; import { resolveSeedCounts } from "./counts";  dotenv.config();  /**  * SeedersRunner — ejecuta TODOS los seeders de features.  *  * Ubicación: `src/database/seeders/` (orquestación fuera de cada feature).  * Cada feature exporta su seeder (ej. `features/business/client/client.seeder.ts`).  *  * Uso:  *   npm run db:seed  *   npm run db:seed -- --clients=20  *   SEED_CLIENTS=5 npm run db:seed  */ export async function runAllSeeders(): Promise<void> {   const counts = resolveSeedCounts();   console.log("🌱 Iniciando SeedersRunner...");   console.log("📊 Conteos:", counts);    const ok = await testConnection();   if (!ok) {     throw new Error("No hay conexión a la base de datos");   }    await sequelize.sync({ force: false, alter: true });    // Orden: business (padres → hijos)   await seedClients(counts.clients);    console.log("🌱 SeedersRunner finalizado"); }  if (require.main === module) {   runAllSeeders()     .then(async () => {       await sequelize.close();       process.exit(0);     })     .catch(async (err) => {       console.error("❌ Error en seeders:", err);       await sequelize.close();       process.exit(1);     }); } EOF
-```
+![](images/clipboard-2296215481.png)
 
-**PARCHE** — `package.json` **ya existe**.
+### **PARCHE** — `package.json` **ya existe**.
 
 **Dentro de** `"scripts"`, **debajo de** `"dev": "..."`, **añadir** la coma al final de `dev` (si falta) y la clave:
 
-``` json
-    "db:seed": "ts-node -- src/database/seeders/index.ts"
-```
+![](images/clipboard-435139364.png)
 
-Fragmento esperado:
-
-``` json
-  "scripts": {     "build": "tsc",     "dev": "nodemon --watch src --ext ts --exec ts-node -- src/server.ts",     "db:seed": "ts-node -- src/database/seeders/index.ts"   }
-```
-
-### Verificación ISS-04
+#### **Verificación ISS-04**
 
 ``` bash
-npm run db:seed npm run db:seed -- --clients=20 SEED_CLIENTS=5 npm run db:seed
+npm run db:seed
 ```
 
 **Al agregar otra entidad (patrón):**
@@ -887,10 +879,12 @@ npm run db:seed npm run db:seed -- --clients=20 SEED_CLIENTS=5 npm run db:seed
 2.  **PARCHE** `counts.ts`: **dentro de** `SeedCounts` / defaults, **añadir** clave (ej. `products: 10`).
 3.  **PARCHE** `database/seeders/index.ts`: **debajo de** `await seedClients(...)`, **añadir** la llamada al nuevo seeder.
 
-### Cierre del ISS
+![](images/clipboard-3553180495.png)
+
+### Realizamos el commit
 
 ``` bash
-npm run dev
+git add .    
+git commit -m "ISS-04: Learner - SeedersRunner"
+git push origin main
 ```
-
-> 
