@@ -1070,21 +1070,19 @@ git commit -m "ISS-06: Teacher - Archivos HTTP CRUD"
 git push origin main
 ```
 
+![](images/clipboard-1845473533.png)
+
 ### 11.4 Cableado Routes + Config
 
 **PARCHE** — `src/routes/index.ts` **ya existe**.
 
-1.  **Debajo de** `import { ClientRoutes } ...`, **añadir**:
+1.  **Debajo de** `import { leanerRoutes } ...`, **añadir**:
 
-``` ts
-import { ProductTypeRoutes } from "../features/business/product-type/product-type.routes";
-```
+![](images/clipboard-2352344287.png)
 
-2.  **Dentro de** `export class Routes`, **debajo de** `clientRoutes`, **añadir**:
+2.  **Dentro de** `export class Routes`, **debajo de** `leanerRoutes`, **añadir**:
 
-``` ts
-  public productTypeRoutes: ProductTypeRoutes = new ProductTypeRoutes();
-```
+![](images/clipboard-1059702087.png)
 
 **PARCHE** — `src/config/index.ts` **ya existe**.
 
