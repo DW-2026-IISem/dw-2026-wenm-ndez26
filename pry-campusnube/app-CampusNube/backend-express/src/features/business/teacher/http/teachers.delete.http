@@ -1,0 +1,12 @@
+### Feature Teacher — DELETE físico / DELETE lógico
+### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación)
+@baseUrl = http://localhost:4000
+@id = 1
+
+# @name deleteTeacherPhysical
+DELETE {{baseUrl}}/api/docentes/{{id}}
+
+###
+
+# @name deleteTeacherLogical
+PATCH {{baseUrl}}/api/docentes/{{id}}/deactivate

@@ -1,0 +1,24 @@
+### Feature Teacher — UPDATE (PUT) / UPDATE (PATCH)
+### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación)
+@baseUrl = http://localhost:4000
+@id = 1
+
+# @name updateTeacherPut
+PUT {{baseUrl}}/api/docentes/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Carlos Rodríguez Actualizado",
+  "description": "Docente actualizado de CampusNube",
+  "isActive": true
+}
+
+###
+
+# @name updateTeacherPatch
+PATCH {{baseUrl}}/api/docentes/{{id}}
+Content-Type: application/json
+
+{
+  "description": "Descripción actualizada parcialmente"
+}

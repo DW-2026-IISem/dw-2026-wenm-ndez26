@@ -1032,27 +1032,45 @@ git commit -m "ISS-06: Teacher - Controller y Routes CRUD"
 git push origin main
 ```
 
-## 11.3 HTTP (REST Client)
+![](images/clipboard-2691941968.png)
+
+## 11.3 HTTP TEACHER
+
+### 1. GET TEACHER 
+
+![](images/clipboard-4100364245.png)
+
+### 2. CREATE TEACHER 
+
+![](images/clipboard-2686102223.png)
+
+### 3. UPDATE TECAHER 
+
+![](images/clipboard-4183076279.png)
+
+### 4. DELETE TEACHER
+
+### ![](images/clipboard-3528468085.png)
+
+### VERIFICAMOS 
 
 ``` bash
-: > src/features/business/product-type/http/product-types.get.http cat >> src/features/business/product-type/http/product-types.get.http << 'EOF' ### Feature ProductType — GET ALL / GET ONE ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000 @id = 1  # @name getAllProductTypes GET {{baseUrl}}/api/tipos-producto  ###  # @name getOneProductType GET {{baseUrl}}/api/tipos-producto/{{id}} EOF
+npm run dev 
+curl -i http://localhost:4000/api/docentes
+curl -i http://localhost:4000/api/docentes/1
 ```
+
+![](images/clipboard-188761636.png)
+
+### Realizamos el commit
 
 ``` bash
-: > src/features/business/product-type/http/product-types.create.http cat >> src/features/business/product-type/http/product-types.create.http << 'EOF' ### Feature ProductType — CREATE ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000  # @name createProductType POST {{baseUrl}}/api/tipos-producto Content-Type: application/json  {   "name": "Electrónica",   "description": "Dispositivos y accesorios",   "status": "active" } EOF
+git add .    
+git commit -m "ISS-06: Teacher - Archivos HTTP CRUD" 
+git push origin main
 ```
 
-``` bash
-: > src/features/business/product-type/http/product-types.update.http cat >> src/features/business/product-type/http/product-types.update.http << 'EOF' ### Feature ProductType — UPDATE (PUT) / UPDATE (PATCH) ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000 @id = 1  # @name updateProductTypePut PUT {{baseUrl}}/api/tipos-producto/{{id}} Content-Type: application/json  {   "name": "Electrónica Actualizada",   "description": "Categoría renovada",   "status": "active" }  ###  # @name updateProductTypePatch PATCH {{baseUrl}}/api/tipos-producto/{{id}} Content-Type: application/json  {   "description": "Descripción parcial" } EOF
-```
-
-``` bash
-: > src/features/business/product-type/http/product-types.delete.http cat >> src/features/business/product-type/http/product-types.delete.http << 'EOF' ### Feature ProductType — DELETE físico / DELETE lógico (status = inactive) ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000 @id = 1  # @name deleteProductTypePhysical DELETE {{baseUrl}}/api/tipos-producto/{{id}}  ###  # @name deleteProductTypeLogical PATCH {{baseUrl}}/api/tipos-producto/{{id}}/deactivate EOF
-```
-
-------------------------------------------------------------------------
-
-## 11.4 Cableado Routes + Config
+### 11.4 Cableado Routes + Config
 
 **PARCHE** — `src/routes/index.ts` **ya existe**.
 

@@ -1,0 +1,13 @@
+### Feature Teacher — CREATE
+### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación)
+@baseUrl = http://localhost:4000
+
+# @name createTeacher
+POST {{baseUrl}}/api/docentes
+Content-Type: application/json
+
+{
+  "name": "Carlos Rodríguez",
+  "description": "Docente del programa de Seguridad y Salud en el Trabajo",
+  "isActive": true
+}
