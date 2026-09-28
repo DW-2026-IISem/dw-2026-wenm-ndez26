@@ -536,3 +536,48 @@ git add .
 git commit -m "ISS-03-A: Agregador Routes + cableado en Config"  
 git push origin main
 ```
+
+![](images/clipboard-2125299570.png)
+
+# 5. ISS-03-B — Feature leaners — GetAll y GetOne
+
+**Objetivo:** listar activos y obtener uno por id. Es el primer paso del feature: getAll, getOne, luego create, update y delete.\
+**Bloqueado por:** ISS-03-A.
+
+### Controller — **PARCHE** `leaner.controller.ts` (ya existe)
+
+**Debajo de** el comentario `// ================== READ ==================` (y **encima de** `// ================== CREATE ==================`), **añadir** primero `getAll` y después `getOne`:
+
+![](images/clipboard-1991663154.png)
+
+Rutas — **PARCHE** `learns.routes.ts` (ya existe)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-03-B: Learner - Controller GetAll y GetOne"  
+git push origin main
+```
+
+**Debajo de** el comentario `// ================== RUTAS SIN AUTENTICACIÓN / SIN MIDDLEWARE JWT ==================`, **añadir** primero `getAll` y después `getOne`:
+
+### HTTP — archivo nuevo
+
+``` bash
+: > src/features/business/client/http/clients.get.http cat >> src/features/business/client/http/clients.get.http << 'EOF' ### Feature Client — GET ALL / GET ONE ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000 @id = 1  # @name getAllClients GET {{baseUrl}}/api/clientes  ###  # @name getOneClient GET {{baseUrl}}/api/clientes/{{id}} EOF
+```
+
+### Verificación
+
+``` bash
+curl -s http://localhost:4000/api/clientes curl -s http://localhost:4000/api/clientes/1
+```
+
+### Cierre del ISS
+
+``` bash
+npm run dev
+```
+
+> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
