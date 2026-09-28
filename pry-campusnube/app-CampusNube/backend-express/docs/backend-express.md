@@ -720,3 +720,68 @@ git add .
 git commit -m "ISS-03-D: Learner - HTTP Update PUT y PATCH"
 git push origin main
 ```
+
+![](images/clipboard-3203890707.png)
+
+# 8. ISS-03-E — controller: eliminación física y lógica
+
+**Objetivo:** borrado físico (`DELETE`) y lógico (`status = 'inactive'`).\
+**Bloqueado por:** ISS-03-D.
+
+### Controller — **PARCHE** `client.controller.ts` (ya existe)
+
+**Debajo de** el comentario `// ================== DELETE ==================`, **añadir** primero el borrado físico y después el lógico:
+
+![](images/clipboard-2582246386.png)
+
+ELIMINACIÓN LÓGICA
+
+![](images/clipboard-3607640621.png)
+
+### Realizamos el commit
+
+``` bash
+git add .     
+git commit -m "ISS-03-E: Learner - Controller Delete físico y lógico" 
+git push origin main
+```
+
+### Rutas — **PARCHE** `client.routes.ts` (ya existe)
+
+1.  **Debajo de** el bloque `// update (PUT / PATCH)`, **añadir** el borrado físico:
+
+2.  **Debajo de** ese bloque, **añadir** la baja lógica:
+
+3.  HTTP — archivo nuevo
+
+``` bash
+: > src/features/business/client/http/clients.delete.http cat >> src/features/business/client/http/clients.delete.http << 'EOF' ### Feature Client — DELETE físico / DELETE lógico (status = inactive) ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000 @id = 1  # @name deleteClientPhysical DELETE {{baseUrl}}/api/clientes/{{id}}  ###  # @name deleteClientLogical PATCH {{baseUrl}}/api/clientes/{{id}}/deactivate EOF
+```
+
+### Verificación
+
+``` bash
+curl -s -X PATCH http://localhost:4000/api/clientes/1/deactivate curl -s -X DELETE http://localhost:4000/api/clientes/1
+```
+
+> Tras baja lógica, `GET /api/clientes` ya no debe listar ese registro (filtra `active`).
+
+### Estado final Client (CRUD completo) — archivos consolidados
+
+Tras ISS-03-B…E, estos archivos deben quedar así (equivalente a aplicar todos los PARCHE):
+
+``` bash
+: > src/features/business/client/client.controller.ts cat >> src/features/business/client/client.controller.ts << 'EOF' import { Request, Response } from "express"; import { Client, ClientI } from "./client.model";  function paramId(req: Request): number {   const raw = req.params.id;   const value = Array.isArray(raw) ? raw[0] : raw;   return Number(value); }  export class ClientController {   // ================== READ ==================   public async getAll(req: Request, res: Response) {     try {       const clients = await Client.findAll({         where: { status: "active" },         attributes: { exclude: ["password"] },       });       res.status(200).json({ clients });     } catch (error) {       res.status(500).json({ error: "Error fetching clients", detail: String(error) });     }   }    public async getOne(req: Request, res: Response) {     try {       const id = paramId(req);       const client = await Client.findByPk(id, {         attributes: { exclude: ["password"] },       });       if (!client) {         res.status(404).json({ error: "Client not found" });         return;       }       res.status(200).json({ client });     } catch (error) {       res.status(500).json({ error: "Error fetching client", detail: String(error) });     }   }    // ================== CREATE ==================   public async create(req: Request, res: Response) {     try {       const body = req.body as ClientI;       const client = await Client.create({         name: body.name,         address: body.address,         phone: body.phone,         email: body.email,         password: body.password,         status: body.status ?? "active",       });       const { password, ...safe } = client.toJSON() as ClientI & { password?: string };       res.status(201).json({ client: safe });     } catch (error) {       res.status(500).json({ error: "Error creating client", detail: String(error) });     }   }    // ================== UPDATE ==================   public async updatePut(req: Request, res: Response) {     try {       const id = paramId(req);       const body = req.body as ClientI;       const client = await Client.findByPk(id);       if (!client) {         res.status(404).json({ error: "Client not found" });         return;       }        await client.update({         name: body.name,         address: body.address,         phone: body.phone,         email: body.email,         password: body.password ?? client.password,         status: body.status ?? client.status,       });        const { password, ...safe } = client.toJSON() as ClientI & { password?: string };       res.status(200).json({ client: safe });     } catch (error) {       res.status(500).json({ error: "Error updating client (PUT)", detail: String(error) });     }   }    public async updatePatch(req: Request, res: Response) {     try {       const id = paramId(req);       const body = req.body as Partial<ClientI>;       const client = await Client.findByPk(id);       if (!client) {         res.status(404).json({ error: "Client not found" });         return;       }        await client.update(body);       const { password, ...safe } = client.toJSON() as ClientI & { password?: string };       res.status(200).json({ client: safe });     } catch (error) {       res.status(500).json({ error: "Error updating client (PATCH)", detail: String(error) });     }   }    // ================== DELETE ==================   /** Eliminación física */   public async deletePhysical(req: Request, res: Response) {     try {       const id = paramId(req);       const client = await Client.findByPk(id);       if (!client) {         res.status(404).json({ error: "Client not found" });         return;       }       await client.destroy();       res.status(200).json({ message: "Client permanently deleted", id });     } catch (error) {       res.status(500).json({ error: "Error deleting client", detail: String(error) });     }   }    /** Eliminación lógica → status = inactive */   public async deleteLogical(req: Request, res: Response) {     try {       const id = paramId(req);       const client = await Client.findByPk(id);       if (!client) {         res.status(404).json({ error: "Client not found" });         return;       }       await client.update({ status: "inactive" });       const { password, ...safe } = client.toJSON() as ClientI & { password?: string };       res.status(200).json({ message: "Client deactivated (logical delete)", client: safe });     } catch (error) {       res.status(500).json({ error: "Error deactivating client", detail: String(error) });     }   } } EOF
+```
+
+``` bash
+: > src/features/business/client/client.routes.ts cat >> src/features/business/client/client.routes.ts << 'EOF' import { Application } from "express"; import { ClientController } from "./client.controller";  export class ClientRoutes {   public clientController: ClientController = new ClientController();    public routes(app: Application): void {     // ================== RUTAS SIN AUTENTICACIÓN / SIN MIDDLEWARE JWT ==================      // getAll     app       .route("/api/clientes")       .get(this.clientController.getAll.bind(this.clientController));      // getOne     app       .route("/api/clientes/:id")       .get(this.clientController.getOne.bind(this.clientController));      // create     app       .route("/api/clientes")       .post(this.clientController.create.bind(this.clientController));      // update (PUT / PATCH)     app       .route("/api/clientes/:id")       .put(this.clientController.updatePut.bind(this.clientController))       .patch(this.clientController.updatePatch.bind(this.clientController));      // delete físico     app       .route("/api/clientes/:id")       .delete(this.clientController.deletePhysical.bind(this.clientController));      // delete lógico     app       .route("/api/clientes/:id/deactivate")       .patch(this.clientController.deleteLogical.bind(this.clientController));   } } EOF
+```
+
+### Cierre del ISS
+
+``` bash
+npm run dev
+```
+
+> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
