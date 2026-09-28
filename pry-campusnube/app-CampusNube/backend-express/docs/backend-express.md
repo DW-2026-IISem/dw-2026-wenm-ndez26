@@ -793,3 +793,96 @@ git add .
 git commit -m "ISS-03-E: Learner - HTTP Delete físico y lógico"
 git push origin main
 ```
+
+![](images/clipboard-4293606642.png)
+
+# 9. ISS-04 — Seeders con Faker 
+
+**Objetivo:** datos falsos por feature (Faker) y un orquestador externo que ejecuta todos los seeders enviando la **cantidad por entidad**.\
+**Bloqueado por:** ISS-03-A (modelo); recomendado tras ISS-03-E.
+
+**Diseño**
+
+| Pieza | Ubicación | Rol |
+|---------------------|---------------------------------|-------------------|
+| Seeder del feature | `src/features/business/leanrs/client.seeder.ts` | Genera filas falsas de learns |
+| Conteos | `src/database/seeders/counts.ts` | `learns: N` (y futuras entidades) |
+| Runner | `src/database/seeders/index.ts` | Importa seeders de features y los ejecuta en orden |
+
+------------------------------------------------------------------------
+
+## 9.1 Seeder dentro del feature learns
+
+**Criterios**
+
+``` bash
+npm install -D @faker-js/faker@^10.6.0
+```
+
+``` bash
+Instalar Faker
+```
+
+![](images/clipboard-2551523415.png)
+
+------------------------------------------------------------------------
+
+## 9.2 SeedersRunner + conteos por entidad (`database/seeders`)
+
+## **Creamos el seders.learns**
+
+![](images/clipboard-3612915010.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+git commit -m "ISS-04: Learner - Seeder con Faker"
+git push origin main
+```
+
+### 9.2.1 Conteos
+
+``` bash
+: > src/database/seeders/counts.ts cat >> src/database/seeders/counts.ts << 'EOF' /**  * Cantidad de registros por feature/entidad.  * Prioridad: CLI (--clients=N) > env (SEED_CLIENTS) > default de este archivo.  *  * Cuando agregues features, suma aquí la clave y léela en el runner.  */ export type SeedCounts = {   clients: number;   // users?: number;   // roles?: number;   // products?: number; };  export const DEFAULT_SEED_COUNTS: SeedCounts = {   clients: 10, };  export function resolveSeedCounts(argv: string[] = process.argv.slice(2)): SeedCounts {   const counts: SeedCounts = { ...DEFAULT_SEED_COUNTS };    const envClients = process.env.SEED_CLIENTS;   if (envClients !== undefined && envClients !== "") {     counts.clients = Number(envClients);   }    for (const arg of argv) {     const m = arg.match(/^--([a-zA-Z_]+)=(\d+)$/);     if (!m) continue;     const key = m[1] as keyof SeedCounts;     const value = Number(m[2]);     if (key in counts) {       counts[key] = value;     }   }    return counts; } EOF
+```
+
+### 9.2.2 Runner
+
+``` bash
+: > src/database/seeders/index.ts cat >> src/database/seeders/index.ts << 'EOF' import dotenv from "dotenv"; import { sequelize, testConnection } from "../db"; import "../../features/business/client/client.model"; import { seedClients } from "../../features/business/client/client.seeder"; import { resolveSeedCounts } from "./counts";  dotenv.config();  /**  * SeedersRunner — ejecuta TODOS los seeders de features.  *  * Ubicación: `src/database/seeders/` (orquestación fuera de cada feature).  * Cada feature exporta su seeder (ej. `features/business/client/client.seeder.ts`).  *  * Uso:  *   npm run db:seed  *   npm run db:seed -- --clients=20  *   SEED_CLIENTS=5 npm run db:seed  */ export async function runAllSeeders(): Promise<void> {   const counts = resolveSeedCounts();   console.log("🌱 Iniciando SeedersRunner...");   console.log("📊 Conteos:", counts);    const ok = await testConnection();   if (!ok) {     throw new Error("No hay conexión a la base de datos");   }    await sequelize.sync({ force: false, alter: true });    // Orden: business (padres → hijos)   await seedClients(counts.clients);    console.log("🌱 SeedersRunner finalizado"); }  if (require.main === module) {   runAllSeeders()     .then(async () => {       await sequelize.close();       process.exit(0);     })     .catch(async (err) => {       console.error("❌ Error en seeders:", err);       await sequelize.close();       process.exit(1);     }); } EOF
+```
+
+**PARCHE** — `package.json` **ya existe**.
+
+**Dentro de** `"scripts"`, **debajo de** `"dev": "..."`, **añadir** la coma al final de `dev` (si falta) y la clave:
+
+``` json
+    "db:seed": "ts-node -- src/database/seeders/index.ts"
+```
+
+Fragmento esperado:
+
+``` json
+  "scripts": {     "build": "tsc",     "dev": "nodemon --watch src --ext ts --exec ts-node -- src/server.ts",     "db:seed": "ts-node -- src/database/seeders/index.ts"   }
+```
+
+### Verificación ISS-04
+
+``` bash
+npm run db:seed npm run db:seed -- --clients=20 SEED_CLIENTS=5 npm run db:seed
+```
+
+**Al agregar otra entidad (patrón):**
+
+1.  Archivo **nuevo** `features/.../<entidad>.seeder.ts` con `: >` + `cat >>`.
+2.  **PARCHE** `counts.ts`: **dentro de** `SeedCounts` / defaults, **añadir** clave (ej. `products: 10`).
+3.  **PARCHE** `database/seeders/index.ts`: **debajo de** `await seedClients(...)`, **añadir** la llamada al nuevo seeder.
+
+### Cierre del ISS
+
+``` bash
+npm run dev
+```
+
+> 
