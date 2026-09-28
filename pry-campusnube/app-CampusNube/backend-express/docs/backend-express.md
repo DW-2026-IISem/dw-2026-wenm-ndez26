@@ -449,30 +449,35 @@ git commit -m "ISS-03-A: Modelo Learner"
 git push origin main
 ```
 
+![](images/clipboard-3745688854.png)
+
 ## 4.2 Esqueleto controller / routes + carpeta HTTP
 
 **Criterios**
 
-- [ ] Archivos `client.controller.ts` y `client.routes.ts` existen (esqueleto)
-- [ ] Carpeta `src/features/business/client/http/` existe
+- [x] Archivos `leaner.controller.ts` y `leaner.routes.ts` existen (esqueleto)
 
 ``` bash
-mkdir -p src/features/business/client/http
+mkdir -p src/features/business/learner/http
 ```
 
-> El CRUD se completa en ISS-03-B…E. Aquí se reserva la carpeta `http/` para archivos `.http` (REST Client) con leyenda **SIN AUTH**.
-
-``` bash
-: > src/features/business/client/client.controller.ts cat >> src/features/business/client/client.controller.ts << 'EOF' import { Request, Response } from "express"; import { Client, ClientI } from "./client.model";  function paramId(req: Request): number {   const raw = req.params.id;   const value = Array.isArray(raw) ? raw[0] : raw;   return Number(value); }  export class ClientController {   // ================== READ ==================   // (rellenar en ISS-03-B) getAll, luego getOne    // ================== CREATE ==================   // (rellenar en ISS-03-C)    // ================== UPDATE ==================   // (rellenar en ISS-03-D)    // ================== DELETE ==================   // (rellenar en ISS-03-E) } EOF
-```
-
-``` bash
-: > src/features/business/client/client.routes.ts cat >> src/features/business/client/client.routes.ts << 'EOF' import { Application } from "express"; import { ClientController } from "./client.controller";  export class ClientRoutes {   public clientController: ClientController = new ClientController();    public routes(app: Application): void {     // ================== RUTAS SIN AUTENTICACIÓN / SIN MIDDLEWARE JWT ==================     // (rellenar en ISS-03-B…E)   } } EOF
-```
-
-------------------------------------------------------------------------
-
-## 4.3 Agregador Routes + cableado en Config
+> #### Evidencia  `leaner.controller.ts`
+>
+> ![](images/clipboard-291041579.png)
+>
+> > #### Evidencia  `leaner.routes.ts`
+>
+> ![](images/clipboard-1929538768.png)
+>
+> ### Realizamos el commit
+>
+> ``` bash
+> git add .  
+> git commit -m "ISS-03-A: Esqueleto Controller y Routes de Learner" 
+> git push origin main
+> ```
+>
+> ### 4.3 Agregador Routes + cableado en Config
 
 **Criterios**
 
