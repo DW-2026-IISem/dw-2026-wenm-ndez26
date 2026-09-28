@@ -272,7 +272,7 @@ npm run dev
 >
 > ![](images/clipboard-2806914315.png)
 
-### Realizamos el  commit
+### Realizamos el commit
 
 ``` bash
 git add . 
@@ -307,7 +307,7 @@ git push origin main
 
   ![](images/clipboard-1361748247.png)
 
-  ### Realizamos el  commit
+  ### Realizamos el commit
 
   ``` bash
   git add . 
@@ -327,7 +327,7 @@ git push origin main
 
 - [x] `.env` con `PORT`, `DB_ENGINE`, MySQL/Postgres/MSSQL/Oracle
 
-- [x]  Instalar Sequelize y los drivers
+- [x] Instalar Sequelize y los drivers
 
   #### Evidencia
 
@@ -335,7 +335,7 @@ git push origin main
 
 - [x] ![](images/clipboard-2814811267.png)
 
-  ####  Crear `.env` para CampusNube
+  #### Crear `.env` para CampusNube
 
   ![](images/clipboard-2378225846.png)
 
@@ -344,7 +344,7 @@ git push origin main
 ![](images/clipboard-1561342852.png)
 
 - ::: {}
-  ### Realizamos el  commit
+  ### Realizamos el commit
 
   ``` bash
   git add . 
@@ -369,27 +369,152 @@ git push origin main
 test -f src/database/db.ts && npx tsc --noEmit
 ```
 
+- ::: {}
+  ### Realizamos el commit
+
+  ``` bash
+  git add . 
+  git commit -m "Configuración Sequelize (database/db.ts)"
+  git push origin main
+  ```
+  :::
+
+  ![](images/clipboard-2651415791.png)
+
 ------------------------------------------------------------------------
 
 ## 3.3 Carpeta seeders (reservada)
 
 **Criterios de este sub-ítem**
 
-- [ ] `src/database/seeders/` existe (la lógica llega en ISS-04)
-- [ ] `src/database/seeders/` existe **sin** `*.seeder.ts` ni runner
+- [x] `src/database/seeders/` existe (la lógica llega en ISS-04)
 
-``` bash
-mkdir -p src/database/seeders # opcional: touch src/database/seeders/.gitkeep
-```
+  ![](images/clipboard-3995174481.png)
 
-``` bash
-test -d src/database/seeders && echo OK
-```
+- [x] `src/database/seeders/` existe **sin** `*.seeder.ts` ni runner
 
-### Verificación del ISS-02
+  ### Verificación del ISS-02
 
 ``` bash
 npx tsc --noEmit test -f src/database/db.ts && test -f .env && test -d src/database/seeders
+```
+
+![](images/clipboard-199508076.png)
+
+### Cierre del ISS
+
+``` bash
+npm run dev
+```
+
+> ![](images/clipboard-228772405.png)
+>
+> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
+
+![](images/clipboard-1343494053.png)
+
+### Realizamos commit
+
+``` bash
+git add . 
+git commit -m "ISS-02: Preparar carpeta seeders" 
+git push origin main
+```
+
+# 4. ISS-03-A — Feature leaners — fundación (modelo, esqueleto, HTTP, cableado)
+
+**Nombre recomendado:** *Feature Client — fundación*\
+**Objetivo:** dejar el feature listo para CRUD: modelo con columnas obligatorias, esqueleto controller/routes, carpeta `http/`, agregador y sync.\
+**Bloqueado por:** ISS-02.
+
+## 4.1 Modelo learners 
+
+**Criterios**
+
+- [x] `src/features/business/learners/leaner.model.ts`
+- [x] Enum `active`/`inactive`, default `inactive`; `timestamps: true`
+
+``` bash
+npm install bcryptjs@^3.0.3
+npm install -D @types/bcryptjs@^3.0.0
+```
+
+![](images/clipboard-2703867273.png)
+
+### Realizamos el commit
+
+``` bash
+git add . 
+git commit -m "ISS-03-A: Modelo Learner" 
+git push origin main
+```
+
+## 4.2 Esqueleto controller / routes + carpeta HTTP
+
+**Criterios**
+
+- [ ] Archivos `client.controller.ts` y `client.routes.ts` existen (esqueleto)
+- [ ] Carpeta `src/features/business/client/http/` existe
+
+``` bash
+mkdir -p src/features/business/client/http
+```
+
+> El CRUD se completa en ISS-03-B…E. Aquí se reserva la carpeta `http/` para archivos `.http` (REST Client) con leyenda **SIN AUTH**.
+
+``` bash
+: > src/features/business/client/client.controller.ts cat >> src/features/business/client/client.controller.ts << 'EOF' import { Request, Response } from "express"; import { Client, ClientI } from "./client.model";  function paramId(req: Request): number {   const raw = req.params.id;   const value = Array.isArray(raw) ? raw[0] : raw;   return Number(value); }  export class ClientController {   // ================== READ ==================   // (rellenar en ISS-03-B) getAll, luego getOne    // ================== CREATE ==================   // (rellenar en ISS-03-C)    // ================== UPDATE ==================   // (rellenar en ISS-03-D)    // ================== DELETE ==================   // (rellenar en ISS-03-E) } EOF
+```
+
+``` bash
+: > src/features/business/client/client.routes.ts cat >> src/features/business/client/client.routes.ts << 'EOF' import { Application } from "express"; import { ClientController } from "./client.controller";  export class ClientRoutes {   public clientController: ClientController = new ClientController();    public routes(app: Application): void {     // ================== RUTAS SIN AUTENTICACIÓN / SIN MIDDLEWARE JWT ==================     // (rellenar en ISS-03-B…E)   } } EOF
+```
+
+------------------------------------------------------------------------
+
+## 4.3 Agregador Routes + cableado en Config
+
+**Criterios**
+
+- [ ] `src/routes/index.ts` con `clientRoutes`
+- [ ] `config` importa modelo + `dbConnection` + `routes`
+
+``` bash
+: > src/routes/index.ts cat >> src/routes/index.ts << 'EOF' import { ClientRoutes } from "../features/business/client/client.routes";  export class Routes {   public clientRoutes: ClientRoutes = new ClientRoutes(); } EOF
+```
+
+**PARCHE** — `src/config/index.ts` **ya existe** (ISS-01).
+
+1.  **Debajo de** `var cors = require("cors");` **añadir**:
+
+``` ts
+import { sequelize, getDatabaseInfo, testConnection } from "../database/db"; import "../features/business/client/client.model"; import { Routes } from "../routes/index";
+```
+
+2.  **Dentro de** `export class App`, **debajo de** `public app: Application;` **añadir**:
+
+``` ts
+  public routePrv: Routes = new Routes();
+```
+
+3.  **Dentro de** `routes()`, **reemplazar** el comentario `// ISS-03 §4.3` por:
+
+``` ts
+    this.routePrv.clientRoutes.routes(this.app);
+```
+
+4.  **Dentro de** `dbConnection()`, **reemplazar** el comentario `// ISS-02 / ISS-03` por:
+
+``` ts
+    try {       // Mostrar información de la base de datos seleccionada       const dbInfo = getDatabaseInfo();       console.log(`🔗 Intentando conectar a: ${dbInfo.engine.toUpperCase()}`);        // Probar la conexión       const isConnected = await testConnection();        if (!isConnected) {         throw new Error(`No se pudo conectar a la base de datos ${dbInfo.engine.toUpperCase()}`);       }        // alter: true actualiza columnas faltantes (ej. createdAt/updatedAt tras timestamps: true).       // force: false no recrea tablas; no borra datos. En producción preferir migraciones.       await sequelize.sync({ force: false, alter: true });       console.log(`📦 Base de datos sincronizada exitosamente`);     } catch (error) {       console.error("❌ Error al conectar con la base de datos:", error);       process.exit(1); // Terminar la aplicación si no se puede conectar     }
+```
+
+> **Importante (lab):** si la tabla `clients` se creó antes con `timestamps: false`, `sync({ force: false })` **no** añade `createdAt`/`updatedAt`. Por eso se usa `alter: true`.
+
+### Verificación ISS-03-A
+
+``` bash
+test -d src/features/business/client/http && echo HTTP_FOLDER_OK
 ```
 
 ### Cierre del ISS
@@ -398,4 +523,4 @@ npx tsc --noEmit test -f src/database/db.ts && test -f .env && test -d src/datab
 npm run dev
 ```
 
-> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
+> Sync OK y tabla `clients` (con `createdAt` / `updatedAt`). Detenerlo con Ctrl+C antes de continuar.
