@@ -746,11 +746,22 @@ git commit -m "ISS-03-E: Learner - Controller Delete físico y lógico"
 git push origin main
 ```
 
+![](images/clipboard-3564895151.png)
+
 ### Rutas — **PARCHE** `client.routes.ts` (ya existe)
 
-1.  **Debajo de** el bloque `// update (PUT / PATCH)`, **añadir** el borrado físico:
-
+1.  **Debajo de** el bloque `// update (PUT / PATCH)`, **añadir** el borrado físico
 2.  **Debajo de** ese bloque, **añadir** la baja lógica:
+
+![](images/clipboard-1000311232.png)
+
+### Realizamos el commit
+
+``` bash
+git add .      
+git commit -m "ISS-03-E: Learner - Rutas Delete físico y lógico"
+git push origin main
+```
 
 3.  HTTP — archivo nuevo
 
