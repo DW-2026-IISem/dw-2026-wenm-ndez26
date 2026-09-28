@@ -1,0 +1,14 @@
+### Feature Learner — CREATE
+### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación)
+@baseUrl = http://localhost:4000
+
+# @name createLearner
+POST {{baseUrl}}/api/aprendices
+Content-Type: application/json
+
+{
+  "name": "Ana Pérez",
+  "description": "Aprendiz de CampusNube",
+  "password": "Password123!",
+  "status": "active"
+}

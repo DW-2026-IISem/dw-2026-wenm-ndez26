@@ -624,23 +624,23 @@ git commit -m "ISS-03-C: Learner - Controller Create"
 git push origin main
 ```
 
+![](images/clipboard-1208310019.png)
+
 **Debajo de** el bloque `// getOne`, **añadir**:
 
 ``` ts
     // create     app       .route("/api/clientes")       .post(this.clientController.create.bind(this.clientController));
 ```
 
+![](images/clipboard-2353985714.png)
+
 ### HTTP — archivo nuevo
 
-``` bash
-: > src/features/business/client/http/clients.create.http cat >> src/features/business/client/http/clients.create.http << 'EOF' ### Feature Client — CREATE ### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación) @baseUrl = http://localhost:4000  # @name createClient POST {{baseUrl}}/api/clientes Content-Type: application/json  {   "name": "Ana Pérez",   "address": "Calle 10 #20-30",   "phone": "3001234567",   "email": "ana.perez@example.com",   "password": "Password123!",   "status": "active" } EOF
-```
+![](images/clipboard-2725799390.png)
 
 ### Verificación
 
-``` bash
-curl -s -X POST http://localhost:4000/api/clientes \   -H 'Content-Type: application/json' \   -d '{"name":"Ana","phone":"3001","email":"ana@test.com","password":"Password123!","status":"active"}'
-```
+![](images/clipboard-3780338936.png)
 
 ### Cierre del ISS
 
@@ -648,4 +648,12 @@ curl -s -X POST http://localhost:4000/api/clientes \   -H 'Content-Type: applica
 npm run dev
 ```
 
-> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
+> ![](images/clipboard-3234504110.png)
+
+### Realizamos el commit
+
+``` bash
+git add .     
+git commit -m "ISS-03-C: Learner - Crear aprendiz vía API" 
+git push origin main
+```
