@@ -6,7 +6,7 @@ var cors = require("cors");
 import { sequelize, getDatabaseInfo, testConnection } from "../database/db";
 import "../features/business/learner/learner.model";
 import { Routes } from "../routes/index";
-
+import { setupSwagger } from "../swagger/index";
 dotenv.config();
 
 export class App {
@@ -18,6 +18,7 @@ export class App {
     this.settings();
     this.middlewares();
     this.routes();
+    this.docs();
     this.dbConnection();
   }
 
@@ -35,6 +36,10 @@ export class App {
   private routes(): void {
     this.routePrv.learnerRoutes.routes(this.app);
   }
+
+  private docs(): void {
+  setupSwagger(this.app);
+}
 
   private async dbConnection(): Promise<void> {
     try {
