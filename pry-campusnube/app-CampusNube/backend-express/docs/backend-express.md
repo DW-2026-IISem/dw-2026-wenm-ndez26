@@ -2053,3 +2053,49 @@ git add .
 git commit -m "ISS-08: Enrollment - CRUD, relaciones, seeder y Swagger"
 git push origin main
 ```
+
+![](images/clipboard-3246181657.png)
+
+# 14. ISS-09 — Modelo Evaluation
+
+**Objetivo:** CRUD + relación con Course + seeder + Swagger de Evaluation.
+
+**Bloqueado por:** ISS-08 — Enrollment.
+
+**Relación:**
+
+```         
+Course 1:N Evaluation
+```
+
+## 14.1 Modelo Evaluation
+
+Primero creamos la carpeta de la feature:
+
+```         
+mkdir -p src/features/business/evaluation/http
+```
+
+Ahora creamos el modelo
+
+![](images/clipboard-1051875776.png)
+
+## Verificamos el modelo
+
+Ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+Debe terminar **sin errores**.
+
+![](images/clipboard-855427330.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-09: Evaluation - Modelo" 
+git push origin main
+```
