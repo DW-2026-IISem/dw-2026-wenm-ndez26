@@ -1149,16 +1149,21 @@ git commit -m "ISS-06: Teacher - Seeder y SeedersRunner"
 git push origin main
 ```
 
-## 11.6 Swagger ProductType
+![](images/clipboard-59558932.png)
 
-``` bash
-: > src/features/business/product-type/product-type.swagger.ts cat >> src/features/business/product-type/product-type.swagger.ts << 'EOF' /**  * Documentación OpenAPI del feature ProductType.  * Se agrega desde `src/swagger` (registry externo), no se monta aquí.  *  * Leyenda: endpoints documentados como SIN AUTH (sin middleware JWT).  */  export const productTypeSwagger = {   tags: [     {       name: "TiposProducto",       description: "CRUD de tipos de producto — **SIN AUTH** (sin middleware JWT)",     },   ],   paths: {     "/api/tipos-producto": {       get: {         tags: ["TiposProducto"],         summary: "Listar tipos de producto activos",         description: "SIN AUTH — retorna tipos con status=active",         security: [],         responses: {           "200": {             description: "Lista de tipos de producto",             content: {               "application/json": {                 schema: {                   type: "object",                   properties: {                     product_types: {                       type: "array",                       items: { $ref: "#/components/schemas/ProductType" },                     },                   },                 },               },             },           },         },       },       post: {         tags: ["TiposProducto"],         summary: "Crear tipo de producto",         description: "SIN AUTH",         security: [],         requestBody: {           required: true,           content: {             "application/json": {               schema: { $ref: "#/components/schemas/ProductTypeCreate" },             },           },         },         responses: {           "201": {             description: "Tipo de producto creado",             content: {               "application/json": {                 schema: {                   type: "object",                   properties: {                     product_type: { $ref: "#/components/schemas/ProductType" },                   },                 },               },             },           },         },       },     },     "/api/tipos-producto/{id}": {       get: {         tags: ["TiposProducto"],         summary: "Obtener tipo de producto por id",         description: "SIN AUTH",         security: [],         parameters: [           {             name: "id",             in: "path",             required: true,             schema: { type: "integer" },           },         ],         responses: {           "200": {             description: "Tipo de producto encontrado",             content: {               "application/json": {                 schema: {                   type: "object",                   properties: {                     product_type: { $ref: "#/components/schemas/ProductType" },                   },                 },               },             },           },           "404": { description: "No encontrado" },         },       },       put: {         tags: ["TiposProducto"],         summary: "Actualizar tipo de producto (PUT — reemplazo)",         description: "SIN AUTH",         security: [],         parameters: [           {             name: "id",             in: "path",             required: true,             schema: { type: "integer" },           },         ],         requestBody: {           required: true,           content: {             "application/json": {               schema: { $ref: "#/components/schemas/ProductTypeUpdate" },             },           },         },         responses: {           "200": { description: "Actualizado" },           "404": { description: "No encontrado" },         },       },       patch: {         tags: ["TiposProducto"],         summary: "Actualizar tipo de producto (PATCH — parcial)",         description: "SIN AUTH",         security: [],         parameters: [           {             name: "id",             in: "path",             required: true,             schema: { type: "integer" },           },         ],         requestBody: {           required: true,           content: {             "application/json": {               schema: { $ref: "#/components/schemas/ProductTypePatch" },             },           },         },         responses: {           "200": { description: "Actualizado" },           "404": { description: "No encontrado" },         },       },       delete: {         tags: ["TiposProducto"],         summary: "Eliminar tipo de producto (físico)",         description: "SIN AUTH — borra la fila",         security: [],         parameters: [           {             name: "id",             in: "path",             required: true,             schema: { type: "integer" },           },         ],         responses: {           "200": { description: "Eliminado" },           "404": { description: "No encontrado" },         },       },     },     "/api/tipos-producto/{id}/deactivate": {       patch: {         tags: ["TiposProducto"],         summary: "Eliminar tipo de producto (lógico)",         description: "SIN AUTH — status = inactive",         security: [],         parameters: [           {             name: "id",             in: "path",             required: true,             schema: { type: "integer" },           },         ],         responses: {           "200": { description: "Desactivado" },           "404": { description: "No encontrado" },         },       },     },   },   components: {     schemas: {       ProductType: {         type: "object",         properties: {           id: { type: "integer", example: 1 },           name: { type: "string", example: "Electrónica" },           description: { type: "string", example: "Dispositivos y accesorios", nullable: true },           status: { type: "string", enum: ["active", "inactive"], example: "active" },           createdAt: { type: "string", format: "date-time" },           updatedAt: { type: "string", format: "date-time" },         },       },       ProductTypeCreate: {         type: "object",         required: ["name"],         properties: {           name: { type: "string" },           description: { type: "string" },           status: { type: "string", enum: ["active", "inactive"], default: "active" },         },       },       ProductTypeUpdate: {         type: "object",         required: ["name"],         properties: {           name: { type: "string" },           description: { type: "string" },           status: { type: "string", enum: ["active", "inactive"] },         },       },       ProductTypePatch: {         type: "object",         properties: {           name: { type: "string" },           description: { type: "string" },           status: { type: "string", enum: ["active", "inactive"] },         },       },     },   }, }; EOF
-```
+## 11.6 Swagger Teacher 
+
+![](images/clipboard-2417628166.png)
 
 **PARCHE** — `src/swagger/index.ts` **ya existe**.
 
-1.  **Debajo de** `import { clientSwagger } ...`, **añadir** import de `productTypeSwagger`.
-2.  **Dentro de** `featureSwaggerModules`, **debajo de** `clientSwagger,`, **añadir** `productTypeSwagger,`.
+1.  **Debajo de** `import { leanerSwagger } ...`, **añadir** import de `productTypeSwagger`.
+
+    ![](images/clipboard-4269622362.png)
+
+2.  **Dentro de** `featureSwaggerModules`, **debajo de** `leanerSwagger,`, **añadir** `teacherpeSwagger,`.
+
+![](images/clipboard-4277551330.png)
 
 ### Cierre del ISS
 
@@ -1166,4 +1171,12 @@ git push origin main
 npm run dev
 ```
 
-> El servidor debe arrancar sin error. Detenerlo con Ctrl+C antes de continuar.
+![](images/clipboard-984999072.png)
+
+### Realizamos el commit
+
+``` bash
+git add .    
+git commit -m "ISS-06: Teacher - Seeder y Swagger"
+git push origin main
+```
