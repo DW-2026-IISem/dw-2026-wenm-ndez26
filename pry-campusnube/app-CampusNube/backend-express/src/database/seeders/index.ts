@@ -6,6 +6,7 @@ import { seedLearners } from "../../features/business/learner/learner.seeder";
 import { resolveSeedCounts } from "./counts";
 import { seedTeachers } from "../../features/business/teacher/teacher.seeder";
 import { seedCourses } from "../../features/business/course/course.seeder";
+import { seedEnrollments } from "../../features/business/enrollment/enrollment.seeder";
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ export async function runAllSeeders(): Promise<void> {
   await seedLearners(counts.learners);
   await seedTeachers(counts.teachers);
   await seedCourses(counts.courses);
+  await seedEnrollments(counts.enrollments);
   console.log("🌱 SeedersRunner finalizado");
 }
 

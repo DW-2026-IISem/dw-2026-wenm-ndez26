@@ -1887,3 +1887,87 @@ git add .
 git commit -m "ISS-08: Enrollment - Relaciones"
 git push origin main
 ```
+
+![](images/clipboard-1207689855.png)
+
+# 13.6 Seeder Enrollment
+
+Aquí vamos a hacer el Seeder y los dos parches correspondientes:
+
+-  `rc/features/business/enrollment/enrollment.seeder.ts`
+
+-  `src/database/seeders/counts.ts`
+
+-  `src/database/seeders/index.ts`
+
+El orden será importante porque **Enrollment depende de Learner y Course**.
+
+## 13.6.1 Crear Enrollment Seeder
+
+Primero:
+
+```         
+: > src/features/business/enrollment/enrollment.seeder.ts
+```
+
+![](images/clipboard-1403089047.png)
+
+### 13.6.2 Parche — `src/database/seeders/counts.ts`
+
+### ![](images/clipboard-682677308.png)
+
+### 13.6.3 Parche — `src/database/seeders/index.ts`
+
+Abrimos:
+
+```         
+code src/database/seeders/index.ts
+```
+
+Busca los imports de los seeders actuales.
+
+**Debajo del import de `seedCourses`**, añade:
+
+```         
+import { seedEnrollments } from "../../features/business/enrollment/enrollment.seeder";
+```
+
+![](images/clipboard-1390120673.png)
+
+Después
+
+```         
+await seedCourses(...)
+```
+
+**Debajo de esa línea**, añadimos:
+
+```         
+await seedEnrollments(counts.enrollments);
+```
+
+![](images/clipboard-775678314.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Si queda limpio:
+
+```         
+npm run db:seed
+```
+
+![](images/clipboard-2018481557.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+git commit -m "ISS-08: Enrollment - Seeder y SeedersRunner"
+git push origin main
+```
