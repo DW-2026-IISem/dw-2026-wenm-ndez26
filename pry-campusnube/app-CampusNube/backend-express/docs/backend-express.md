@@ -2228,6 +2228,26 @@ git push origin main
 
 ![](images/clipboard-3035582096.png)
 
+### 14.5 Relación Course ↔ Evaluation
+
+La relación definida para Evaluation es:
+
+```         
+Course 1:N Evaluation
+```
+
+Esto significa que:
+
+-  Un **Course** puede tener muchas **Evaluations**.
+
+-  Una **Evaluation** pertenece a un **Course**.
+
+-  La clave foránea se encuentra en `evaluations.course_id`.
+
+![](images/clipboard-174198578.png)
+
+![](images/clipboard-4163034724.png)
+
 # 14.6 Seeder Evaluation
 
 La evaluación necesita un `course_id` válido.
@@ -2341,5 +2361,15 @@ npm run dev
 ``` bash
 git add .   
 git commit -m "ISS-09: Evaluation - Seeder y Swagger"
+git push origin main
+```
+
+![](images/clipboard-2467146845.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+git commit -m "ISS-09: Evaluation - Relaciones Course y Evaluation"
 git push origin main
 ```

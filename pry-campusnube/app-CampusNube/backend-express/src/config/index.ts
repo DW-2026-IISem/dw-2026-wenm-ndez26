@@ -11,6 +11,7 @@ import "../features/business/enrollment/enrollment.model";
 import "../features/business/evaluation/evaluation.model";
 import "../features/business/enrollment/enrollment.associations";
 import "../features/business/course/course.associations";
+import "../features/business/evaluation/evaluation.associations";
 import { Routes } from "../routes/index";
 import { setupSwagger } from "../swagger/index";
 dotenv.config();
