@@ -1,0 +1,12 @@
+### Feature Course — DELETE físico / DELETE lógico
+### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación)
+@baseUrl = http://localhost:4000
+@id = 1
+
+# @name deleteCoursePhysical
+DELETE {{baseUrl}}/api/cursos/{{id}}
+
+###
+
+# @name deleteCourseLogical
+PATCH {{baseUrl}}/api/cursos/{{id}}/deactivate

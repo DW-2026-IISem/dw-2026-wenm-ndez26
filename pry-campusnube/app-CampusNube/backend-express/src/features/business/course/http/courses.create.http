@@ -1,0 +1,13 @@
+### Feature Course — CREATE
+### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación)
+@baseUrl = http://localhost:4000
+
+# @name createCourse
+POST {{baseUrl}}/api/cursos
+Content-Type: application/json
+
+{
+  "name": "Introducción a la Seguridad y Salud en el Trabajo",
+  "description": "Curso introductorio de CampusNube",
+  "isActive": true
+}

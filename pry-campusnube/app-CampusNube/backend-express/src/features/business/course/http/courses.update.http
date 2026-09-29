@@ -1,0 +1,24 @@
+### Feature Course — UPDATE (PUT) / UPDATE (PATCH)
+### Leyenda: SIN AUTH (sin middleware JWT / sin autenticación)
+@baseUrl = http://localhost:4000
+@id = 1
+
+# @name updateCoursePut
+PUT {{baseUrl}}/api/cursos/{{id}}
+Content-Type: application/json
+
+{
+  "name": "Introducción a la Seguridad y Salud en el Trabajo - Actualizado",
+  "description": "Curso actualizado de CampusNube",
+  "isActive": true
+}
+
+###
+
+# @name updateCoursePatch
+PATCH {{baseUrl}}/api/cursos/{{id}}
+Content-Type: application/json
+
+{
+  "description": "Descripción actualizada parcialmente"
+}
