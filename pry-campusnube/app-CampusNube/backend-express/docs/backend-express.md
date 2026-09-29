@@ -1322,3 +1322,69 @@ git add .
 git commit -m "ISS-07: Course - Cableado Routes y Config"
 git push origin main
 ```
+
+![](images/clipboard-3209652655.png)
+
+# 12.5 Relación Teacher ↔ Course
+
+**Objetivo:** implementar la relación N:M entre `Teacher` y `Course`.
+
+**Relación:**
+
+```         
+Teacher N:M Course
+```
+
+**Tabla intermedia:**
+
+```         
+teacher_courses
+```
+
+**FK:**
+
+```         
+teacher_id course_id
+```
+
+## 12.5.1 Crear archivo de asociaciones
+
+Creamos el archivo nuevo:
+
+![](images/clipboard-1129267799.png)
+
+# 12.5.2 Cargar las asociaciones
+
+Ahora debemos hacer el mismo tipo de **PARCHE en `config/index.ts`**
+
+![](images/clipboard-1430860110.png)
+
+# 12.5.3 Verificar TypeScript
+
+Guarda todo y ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+# 12.5.4 Verificar que Sequelize cree la relación
+
+Ahora arrancamos:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-1166713527.png)
+
+#### 12.5.5 Verificar la tabla en MySQL
+
+![](images/clipboard-1331499103.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-07: Course - Relacion Teacher y Course"
+git push origin main
+```
