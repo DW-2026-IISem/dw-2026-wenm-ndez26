@@ -1180,3 +1180,25 @@ git add .
 git commit -m "ISS-06: Teacher - Seeder y Swagger"
 git push origin main
 ```
+
+![](images/clipboard-545633439.png)
+
+# 12. ISS-07 — Modelo Course
+
+### **Objetivo:** CRUD + seeder + swagger de Course y preparación de sus relaciones con las demás entidades de CampusNube.  **Bloqueado por:** ISS-06.  **API:** `/api/cursos` — **SIN AUTH**. 
+
+### 12.1 Modelo Course
+
+Primero creamos la carpeta HTTP.
+
+mkdir -p src/features/business/course/http
+
+![](images/clipboard-307959277.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+git commit -m "ISS-07: Course - Modelo"
+git push origin main
+```
