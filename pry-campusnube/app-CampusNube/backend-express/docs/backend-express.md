@@ -1220,3 +1220,105 @@ git add .
 git commit -m "ISS-07: Course - Controller y Routes CRUD"
 git push origin main
 ```
+
+![](images/clipboard-2899243514.png)
+
+# 12.3 HTTP COURSE
+
+Vamos a crear cuatro archivos:
+
+src/features/business/course/http/
+
+-  courses.get.http
+
+-  courses.create.http
+
+-  courses.update.http
+
+- courses.delete.http
+
+### 12.3.1 GET COURSE
+
+![](images/clipboard-3465822164.png)
+
+### 12.3.2 CREATE COURSE
+
+![](images/clipboard-766341712.png)
+
+### 12.3.3 UPDATE COURSE
+
+![](images/clipboard-4272210111.png)
+
+### 12.3.4 DELETE COURSE
+
+![](images/clipboard-2489402293.png)
+
+# VERIFICAMOS
+
+Primero:
+
+``` bash
+npx tsc --noEmit
+```
+
+Luego arrancamos
+
+``` bash
+npm run dev
+```
+
+![](images/clipboard-3090240670.png)
+
+### Realizamos el commit
+
+``` bash
+git add .    
+git commit -m "ISS-07: Course - Archivos HTTP CRUD"
+git push origin main
+```
+
+![](images/clipboard-2691832416.png)
+
+# 12.4 Cableado Routes + Config
+
+**Objetivo:** conectar `Course` con el agregador de rutas y con la configuración principal de Express.
+
+## 12.4.1 `src/routes/index.ts`
+
+Este archivo **ya existe**, por lo tanto hacemos **PARCHE**.
+
+1.  **Debajo de** `import { teacherSwagger } ...`, **añadir** import de `coursepeSwagger`.
+
+![](images/clipboard-1474879434.png)
+
+2.  **Debajo de** `class { teacherSwagger } ...`, **añadir** import de `coursepeSwagger`.
+
+![](images/clipboard-3295465254.png)
+
+## 12.4.2 `src/config/index.ts`
+
+Ahora abre:
+
+```         
+src/config/index.ts
+```
+
+Busca los imports de los modelos.
+
+![](images/clipboard-2432342714.png)
+
+### Modficamos  `routes()`
+
+![](images/clipboard-2702133662.png)
+
+### 12.4.4 Levantamos el servidor
+
+### ![](images/clipboard-2324486949.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-07: Course - Cableado Routes y Config"
+git push origin main
+```
