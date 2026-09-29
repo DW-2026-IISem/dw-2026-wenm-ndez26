@@ -1971,3 +1971,85 @@ git add .
 git commit -m "ISS-08: Enrollment - Seeder y SeedersRunner"
 git push origin main
 ```
+
+![](images/clipboard-675895015.png)
+
+# 13.7 Swagger Enrollment
+
+Primero vamos a crear el archivo Swagger de la entidad.
+
+## 13.7.1 Crear `enrollment.swagger.ts`
+
+Ejecuta:
+
+```         
+: > src/features/business/enrollment/enrollment.swagger.ts
+```
+
+![](images/clipboard-3911843994.png)
+
+# 13.7.2 Parche — `src/swagger/index.ts`
+
+Ahora abre:
+
+```         
+code src/swagger/index.ts
+```
+
+Buscamos el último import de Swagger
+
+```         
+import { courseSwagger } from "../features/business/course/course.swagger";
+```
+
+**Debajo de esa línea**, añadimos:
+
+```         
+import { enrollmentSwagger } from "../features/business/enrollment/enrollment.swagger";
+```
+
+![](images/clipboard-3862284558.png)
+
+Después:
+
+```         
+const featureSwaggerModules: FeatureSwaggerModule[] = [
+```
+
+Y dentro del arreglo, **debajo de**:
+
+```         
+courseSwagger,
+```
+
+añadimos:
+
+```         
+enrollmentSwagger,
+```
+
+![](images/clipboard-3984022984.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio, levanta:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-770501841.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-08: Enrollment - CRUD, relaciones, seeder y Swagger"
+git push origin main
+```
