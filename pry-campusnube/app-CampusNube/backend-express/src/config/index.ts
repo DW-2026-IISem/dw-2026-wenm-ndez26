@@ -7,6 +7,7 @@ import { sequelize, getDatabaseInfo, testConnection } from "../database/db";
 import "../features/business/learner/learner.model";
 import "../features/business/teacher/teacher.model";
 import "../features/business/course/course.model";
+import "../features/business/enrollment/enrollment.model";
 import "../features/business/course/course.associations";
 import { Routes } from "../routes/index";
 import { setupSwagger } from "../swagger/index";

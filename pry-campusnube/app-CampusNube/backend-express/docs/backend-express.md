@@ -1701,3 +1701,121 @@ git add .
 git commit -m "ISS-08: Enrollment - Archivos HTTP CRUD"
 git push origin main
 ```
+
+![](images/clipboard-3127842248.png)
+
+# 13.4 Cableado Routes + Config
+
+**Objetivo:** conectar `Enrollment` con el agregador de rutas y con la configuración principal de Express.
+
+## 13.4.1 `src/routes/index.ts`
+
+Este archivo **ya existe**, por lo tanto hacemos **PARCHE**.
+
+Abrimos:
+
+```         
+code src/routes/index.ts
+```
+
+### 1. Debajo de:
+
+```         
+import { CourseRoutes } from "../features/business/course/course.routes";
+```
+
+**añadir:**
+
+```         
+import { EnrollmentRoutes } from "../features/business/enrollment/enrollment.routes";
+```
+
+![](images/clipboard-1629872393.png)
+
+### 2. Dentro de la clase `Routes`
+
+Debajo de:
+
+```         
+public courseRoutes: CourseRoutes = new CourseRoutes();
+```
+
+**añadir:**
+
+```         
+public enrollmentRoutes: EnrollmentRoutes = new EnrollmentRoutes();
+```
+
+![](images/clipboard-2556936425.png)
+
+# 13.4.2 `src/config/index.ts`
+
+Ahora abrimos:
+
+```         
+code src/config/index.ts
+```
+
+Aquí también hacemos **PARCHE**.
+
+### 1. Imports del modelo
+
+Buscamos:
+
+```         
+import "../features/business/course/course.model";
+```
+
+**Debajo de esa línea**, añade:
+
+```         
+import "../features/business/enrollment/enrollment.model";
+```
+
+![](images/clipboard-3087037846.png)
+
+### 3. Modificar `routes()`
+
+Busca en `src/config/index.ts`:
+
+```         
+private routes(): void {   this.routePrv.learnerRoutes.routes(this.app);   this.routePrv.teacherRoutes.routes(this.app);   this.routePrv.courseRoutes.routes(this.app); }
+```
+
+**Debajo de:**
+
+```         
+this.routePrv.courseRoutes.routes(this.app);
+```
+
+añade:
+
+```         
+this.routePrv.enrollmentRoutes.routes(this.app);
+```
+
+![](images/clipboard-3292265295.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio, arrancamos:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-3574039499.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+}git commit -m "ISS-08: Enrollment - Cableado Routes y Config"
+git push origin main
+```
