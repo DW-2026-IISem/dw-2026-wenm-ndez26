@@ -1,0 +1,18 @@
+### UPDATE ENROLLMENT - PUT
+PUT http://localhost:4000/api/inscripciones/1
+Content-Type: application/json
+
+{
+  "learner_id": 1,
+  "course_id": 1,
+  "enrollment_date": "2026-09-29",
+  "status": "active"
+}
+
+### UPDATE ENROLLMENT - PATCH
+PATCH http://localhost:4000/api/inscripciones/1
+Content-Type: application/json
+
+{
+  "status": "inactive"
+}

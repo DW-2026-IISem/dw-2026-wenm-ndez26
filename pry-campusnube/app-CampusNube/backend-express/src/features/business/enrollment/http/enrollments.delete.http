@@ -1,0 +1,5 @@
+### DELETE ENROLLMENT - FÍSICO
+DELETE http://localhost:4000/api/inscripciones/1
+
+### DELETE ENROLLMENT - LÓGICO
+PATCH http://localhost:4000/api/inscripciones/1/deactivate

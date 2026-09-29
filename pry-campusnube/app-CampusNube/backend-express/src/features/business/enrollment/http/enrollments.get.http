@@ -1,0 +1,5 @@
+### GET ALL ENROLLMENTS
+GET http://localhost:4000/api/inscripciones
+
+### GET ENROLLMENT BY ID
+GET http://localhost:4000/api/inscripciones/1

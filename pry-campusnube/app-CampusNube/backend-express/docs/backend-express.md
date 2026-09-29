@@ -1621,3 +1621,83 @@ git add .
 git commit -m "ISS-08: Enrollment - Controller y Routes CRUD"
 git push origin main
 ```
+
+![](images/clipboard-1201463219.png)
+
+# 13.3 HTTP ENROLLMENT
+
+Vamos a crear los mismos **cuatro archivos HTTP** que utilizaste para Course:
+
+```         
+src/features/business/enrollment/http/
+├── enrollments.get.http 
+├── enrollments.create.http
+├── enrollments.update.http
+└── enrollments.delete.http
+```
+
+## 13.3.1 GET ENROLLMENT
+
+Primero creamos el archivo:
+
+```         
+: > src/features/business/enrollment/http/enrollments.get.http
+```
+
+![](images/clipboard-1734759317.png)
+
+## 13.3.2 CREATE ENROLLMENT
+
+Crea:
+
+```         
+: > src/features/business/enrollment/http/enrollments.create.http
+```
+
+![](images/clipboard-2631129223.png)
+
+## 13.3.3 UPDATE ENROLLMENT
+
+Crea:
+
+```         
+: > src/features/business/enrollment/http/enrollments.update.http
+```
+
+![](images/clipboard-3072730279.png)
+
+## 13.3.4 DELETE ENROLLMENT
+
+Crea:
+
+```         
+: > src/features/business/enrollment/http/enrollments.delete.http
+```
+
+![](images/clipboard-2009906784.png)
+
+# VERIFICAMOS
+
+Primero detén el servidor si está ejecutándose con `Ctrl + C`.
+
+Después:
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio, arrancamos:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-1540508040.png)
+
+### Realizamos el commit
+
+``` bash
+git add . 
+git commit -m "ISS-08: Enrollment - Archivos HTTP CRUD"
+git push origin main
+```
