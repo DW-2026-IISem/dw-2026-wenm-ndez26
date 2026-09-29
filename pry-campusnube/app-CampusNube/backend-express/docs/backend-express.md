@@ -1459,3 +1459,87 @@ git add .
 git commit -m "ISS-07: Course - Seeder y SeedersRunner"
 git push origin main
 ```
+
+![](images/clipboard-1977988299.png)
+
+# 12.7 — Swagger de Course
+
+El objetivo es documentar el CRUD de **Course** dentro de Swagger, igual que hicimos con las demás entidades.
+
+## 12.7.1 — Crear `course.swagger.ts`
+
+Primero creamos el archivo:
+
+![](images/clipboard-1305479582.png)
+
+### Verificamos
+
+Guardamos el archivo y ejecutamos:
+
+```         
+npx tsc --noEmit
+```
+
+## 12.7.2 — Agregar Course al registro central
+
+Vamos a modificar **solamente**:
+
+```         
+src/swagger/index.ts
+```
+
+### Abrir el archivo
+
+```         
+code src/swagger/index.ts
+```
+
+Busca exactamente esta línea:
+
+```         
+import { learnerSwagger } from "../features/business/learner/learner.swagger";
+```
+
+Y debajo de ella agrega:
+
+```         
+import { courseSwagger } from "../features/business/course/course.swagger";
+```
+
+![](images/clipboard-1681464652.png)
+
+### Agregar Course al registro
+
+Ahora buscamos exactamente este bloque:
+
+```         
+const featureSwaggerModules: FeatureSwaggerModule[] = [   learnerSwagger, ];
+```
+
+Reemplázalo **solamente por**:
+
+```         
+const featureSwaggerModules: FeatureSwaggerModule[] = [   learnerSwagger,   courseSwagger, ];
+```
+
+![](images/clipboard-3274998905.png)
+
+### Levantar el servidor
+
+```         
+npm run dev
+```
+
+![](images/clipboard-2730575770.png)
+
+## Verificar Swagger
+
+![](images/clipboard-655610776.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+git commit -m "ISS-07: Course - Swagger"
+git push origin main
+```

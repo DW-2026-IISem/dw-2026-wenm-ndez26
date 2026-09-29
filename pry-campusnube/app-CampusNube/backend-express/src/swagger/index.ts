@@ -1,6 +1,8 @@
 import { Application } from "express";
 import swaggerUi from "swagger-ui-express";
 import { learnerSwagger } from "../features/business/learner/learner.swagger";
+import { teacherSwagger } from "../features/business/teacher/teacher.swagger";
+import { courseSwagger } from "../features/business/course/course.swagger";
 
 export type FeatureSwaggerModule = {
   tags: unknown[];
@@ -16,6 +18,8 @@ export type FeatureSwaggerModule = {
  */
 const featureSwaggerModules: FeatureSwaggerModule[] = [
   learnerSwagger,
+  teacherSwagger,
+  courseSwagger,
 ];
 
 export function buildOpenApiDocument() {
