@@ -1819,3 +1819,71 @@ git add .
 }git commit -m "ISS-08: Enrollment - Cableado Routes y Config"
 git push origin main
 ```
+
+![](images/clipboard-4226343664.png)
+
+# 13.5 Relaciones Enrollment
+
+Aquí vamos a implementar la relación de **Enrollment con Learner y Course**, que es una parte fundamental de esta entidad.
+
+La estructura será:
+
+```         
+Learner 1:N Enrollment Course  1:N Enrollment
+```
+
+## 13.5.1 Crear `enrollment.associations.ts`
+
+Ejecuta:
+
+```         
+: > src/features/business/enrollment/enrollment.associations.ts
+```
+
+![](images/clipboard-994223245.png)
+
+# 13.5.2 Cablear las asociaciones en Config
+
+Ahora abrimos:
+
+```         
+code src/config/index.ts
+```
+
+Busca esta línea que agregamos anteriormente:
+
+```         
+import "../features/business/enrollment/enrollment.model";
+```
+
+**Debajo de esa línea**, añade:
+
+```         
+import "../features/business/enrollment/enrollment.associations";
+```
+
+![](images/clipboard-1664052715.png)
+
+# Verificamos
+
+Guarda todo y ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+Si queda limpio, levantamos:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-3445739870.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-08: Enrollment - Relaciones"
+git push origin main
+```
