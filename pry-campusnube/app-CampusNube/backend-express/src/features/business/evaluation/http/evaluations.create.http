@@ -1,0 +1,10 @@
+### CREATE EVALUATION
+POST http://localhost:4000/api/evaluaciones
+Content-Type: application/json
+
+{
+  "course_id": 1,
+  "name": "Evaluación de fundamentos",
+  "description": "Evaluación sobre los contenidos principales del curso",
+  "isActive": true
+}

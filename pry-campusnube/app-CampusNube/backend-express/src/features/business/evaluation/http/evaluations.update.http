@@ -1,0 +1,18 @@
+### UPDATE EVALUATION - PUT
+PUT http://localhost:4000/api/evaluaciones/1
+Content-Type: application/json
+
+{
+  "course_id": 1,
+  "name": "Evaluación final del curso",
+  "description": "Evaluación actualizada de los contenidos del curso",
+  "isActive": true
+}
+
+### UPDATE EVALUATION - PATCH
+PATCH http://localhost:4000/api/evaluaciones/1
+Content-Type: application/json
+
+{
+  "name": "Evaluación parcial del curso"
+}

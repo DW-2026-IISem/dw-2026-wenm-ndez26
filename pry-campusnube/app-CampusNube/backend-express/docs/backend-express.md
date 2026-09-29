@@ -2099,3 +2099,129 @@ git add .
 git commit -m "ISS-09: Evaluation - Modelo" 
 git push origin main
 ```
+
+![](images/clipboard-1807500425.png)
+
+# 14.2 Controller Evaluation
+
+La evaluación pertenece a un curso, así que al crear o actualizar una evaluación vamos a validar que `course_id` corresponda a un **curso existente y activo**.
+
+## 14.2.1 Crear `evaluation.controller.ts`
+
+![](images/clipboard-1296867231.png)
+
+### Verificación
+
+Ahora:
+
+```         
+npx tsc --noEmit
+```
+
+Debe terminar sin errores.
+
+![](images/clipboard-3012933165.png)
+
+# 14.2.2 Crear `evaluation.routes.ts`
+
+Creamos el archivo:
+
+![](images/clipboard-3517312292.png)
+
+### Verificación
+
+Ahora ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-3159149245.png)
+
+# 14.3 HTTP Evaluation 
+
+Ahora creamos los archivos de prueba HTTP.
+
+## 14.3.1 GET Evaluation
+
+Ejecutamos:
+
+![](images/clipboard-2880098177.png)
+
+## 14.3.2 CREATE Evaluation
+
+![](images/clipboard-2069380138.png)
+
+#### Aquí usamos `course_id: 1` porque Evaluation pertenece a Course.
+
+## 14.3.3 UPDATE Evaluation
+
+![](images/clipboard-354043733.png)
+
+## 14.3.4 DELETE Evaluation
+
+![](images/clipboard-1223353289.png)
+
+# Verificación
+
+Primero comprobamos TypeScript:
+
+```         
+npx tsc --noEmit
+```
+
+Después verifica que quedaron los cuatro archivos:
+
+```         
+ls -l src/features/business/evaluation/http/
+```
+
+![](images/clipboard-2942573665.png)
+
+# 14.4 Cableado Routes + Config
+
+Aquí vamos a registrar `EvaluationRoutes` en `src/routes/index.ts` y luego conectarlo en `src/config/index.ts`.
+
+## 14.4.1 Modificar `src/routes/index.ts`
+
+![](images/clipboard-3751828778.png)
+
+### 14.4.2 Modificar `src/config/index.ts`
+
+### Agregamos el import del modelo
+
+Junto a los otros modelos:
+
+![](images/clipboard-2528373747.png)
+
+### Agrega la ruta
+
+En `private routes()`:
+
+```         
+this.routePrv.evaluationRoutes.routes(this.app);
+```
+
+![](images/clipboard-65787696.png)
+
+### 14.4.3 Verificación
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio, inicia el servidor:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-4268753282.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+git commit -m "ISS-09: Evaluation - Controller, Routes, HTTP y Cableado" 
+git push origin main
+```

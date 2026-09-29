@@ -1,0 +1,5 @@
+### DELETE EVALUATION - FÍSICO
+DELETE http://localhost:4000/api/evaluaciones/1
+
+### DELETE EVALUATION - LÓGICO
+PATCH http://localhost:4000/api/evaluaciones/1/deactivate
