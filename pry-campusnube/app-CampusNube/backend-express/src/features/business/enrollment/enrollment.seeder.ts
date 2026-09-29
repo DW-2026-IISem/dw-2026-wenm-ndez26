@@ -19,8 +19,8 @@ export async function seedEnrollments(count: number): Promise<number> {
   }
 
   const learners = await Learner.findAll({
-    where: { isActive: true },
-  });
+  where: { status: "active" },
+});
 
   const courses = await Course.findAll({
     where: { isActive: true },

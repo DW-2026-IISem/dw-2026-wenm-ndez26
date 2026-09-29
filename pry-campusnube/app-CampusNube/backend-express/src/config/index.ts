@@ -8,6 +8,8 @@ import "../features/business/learner/learner.model";
 import "../features/business/teacher/teacher.model";
 import "../features/business/course/course.model";
 import "../features/business/enrollment/enrollment.model";
+import "../features/business/evaluation/evaluation.model";
+import "../features/business/enrollment/enrollment.associations";
 import "../features/business/course/course.associations";
 import { Routes } from "../routes/index";
 import { setupSwagger } from "../swagger/index";
@@ -41,6 +43,8 @@ export class App {
     this.routePrv.learnerRoutes.routes(this.app);
     this.routePrv.teacherRoutes.routes(this.app);
     this.routePrv.courseRoutes.routes(this.app);
+    this.routePrv.enrollmentRoutes.routes(this.app);
+    this.routePrv.evaluationRoutes.routes(this.app);
   }
 
   private docs(): void {

@@ -427,7 +427,7 @@ git push origin main
 **Objetivo:** dejar el feature listo para CRUD: modelo con columnas obligatorias, esqueleto controller/routes, carpeta `http/`, agregador y sync.\
 **Bloqueado por:** ISS-02.
 
-## 4.1 Modelo learners 
+## 4.1 Modelo learners
 
 **Criterios**
 
@@ -461,11 +461,11 @@ git push origin main
 mkdir -p src/features/business/learner/http
 ```
 
-> #### Evidencia  `leaner.controller.ts`
+> #### Evidencia `leaner.controller.ts`
 >
 > ![](images/clipboard-291041579.png)
 >
-> > #### Evidencia  `leaner.routes.ts`
+> > #### Evidencia `leaner.routes.ts`
 >
 > ![](images/clipboard-1929538768.png)
 >
@@ -796,7 +796,7 @@ git push origin main
 
 ![](images/clipboard-4293606642.png)
 
-# 9. ISS-04 — Seeders con Faker 
+# 9. ISS-04 — Seeders con Faker
 
 **Objetivo:** datos falsos por feature (Faker) y un orquestador externo que ejecuta todos los seeders enviando la **cantidad por entidad**.\
 **Bloqueado por:** ISS-03-A (modelo); recomendado tras ISS-03-E.
@@ -804,7 +804,7 @@ git push origin main
 **Diseño**
 
 | Pieza | Ubicación | Rol |
-|---------------------|---------------------------------|-------------------|
+|---------------------|--------------------------------|-------------------|
 | Seeder del feature | `src/features/business/leanrs/client.seeder.ts` | Genera filas falsas de learns |
 | Conteos | `src/database/seeders/counts.ts` | `learns: N` (y futuras entidades) |
 | Runner | `src/database/seeders/index.ts` | Importa seeders de features y los ejecuta en orden |
@@ -899,7 +899,7 @@ git push origin main
 **Diseño**
 
 | Pieza | Ubicación | Rol |
-|---------------------|---------------------------------|-------------------|
+|---------------------|--------------------------------|-------------------|
 | Docs del feature | `src/features/business/learn/leaner.swagger.ts` | Paths + schemas Leaner |
 | Registry | `src/swagger/index.ts` | Fusiona features + `setupSwagger(app)` |
 | UI | `/api/docs` | Swagger UI |
@@ -913,7 +913,7 @@ git push origin main
 
 - [ ] Exporta `clientSwagger` con `tags`, `paths`, `components.schemas`
 - [ ] Endpoints documentados como **SIN AUTH**
-- [ ] 
+- [ ]
 
 ``` bash
 # Paquetes (una vez) npm install swagger-ui-express@^5.0.1
@@ -1020,7 +1020,7 @@ git push origin main
 
 ![](images/clipboard-4176700479.png)
 
-### 11.2.1 crear teacher routers 
+### 11.2.1 crear teacher routers
 
 ![](images/clipboard-3526349902.png)
 
@@ -1036,15 +1036,15 @@ git push origin main
 
 ## 11.3 HTTP TEACHER
 
-### 1. GET TEACHER 
+### 1. GET TEACHER
 
 ![](images/clipboard-4100364245.png)
 
-### 2. CREATE TEACHER 
+### 2. CREATE TEACHER
 
 ![](images/clipboard-2686102223.png)
 
-### 3. UPDATE TECAHER 
+### 3. UPDATE TECAHER
 
 ![](images/clipboard-4183076279.png)
 
@@ -1052,7 +1052,7 @@ git push origin main
 
 ### ![](images/clipboard-3528468085.png)
 
-### VERIFICAMOS 
+### VERIFICAMOS
 
 ``` bash
 npm run dev 
@@ -1151,7 +1151,7 @@ git push origin main
 
 ![](images/clipboard-59558932.png)
 
-## 11.6 Swagger Teacher 
+## 11.6 Swagger Teacher
 
 ![](images/clipboard-2417628166.png)
 
@@ -1185,7 +1185,7 @@ git push origin main
 
 # 12. ISS-07 — Modelo Course
 
-### **Objetivo:** CRUD + seeder + swagger de Course y preparación de sus relaciones con las demás entidades de CampusNube.  **Bloqueado por:** ISS-06.  **API:** `/api/cursos` — **SIN AUTH**. 
+### **Objetivo:** CRUD + seeder + swagger de Course y preparación de sus relaciones con las demás entidades de CampusNube. **Bloqueado por:** ISS-06. **API:** `/api/cursos` — **SIN AUTH**.
 
 ### 12.1 Modelo Course
 
@@ -1229,11 +1229,11 @@ Vamos a crear cuatro archivos:
 
 src/features/business/course/http/
 
--  courses.get.http
+- courses.get.http
 
--  courses.create.http
+- courses.create.http
 
--  courses.update.http
+- courses.update.http
 
 - courses.delete.http
 
@@ -1307,7 +1307,7 @@ Busca los imports de los modelos.
 
 ![](images/clipboard-2432342714.png)
 
-### Modficamos  `routes()`
+### Modficamos `routes()`
 
 ![](images/clipboard-2702133662.png)
 
@@ -1584,19 +1584,19 @@ git push origin main
 
 Primero vamos a crear el controller siguiendo el mismo orden que hemos usado en las entidades anteriores:
 
-1.   `getAll`
+1.  `getAll`
 
-2.   `getOne`
+2.  `getOne`
 
-3.   `create`
+3.  `create`
 
-4.   `update` — PUT
+4.  `update` — PUT
 
-5.   `patch` — PATCH
+5.  `patch` — PATCH
 
-6.   `delete` físico
+6.  `delete` físico
 
-7.   `deactivate` — eliminación lógica
+7.  `deactivate` — eliminación lógica
 
 Creamos
 
@@ -1894,11 +1894,11 @@ git push origin main
 
 Aquí vamos a hacer el Seeder y los dos parches correspondientes:
 
--  `rc/features/business/enrollment/enrollment.seeder.ts`
+- `rc/features/business/enrollment/enrollment.seeder.ts`
 
--  `src/database/seeders/counts.ts`
+- `src/database/seeders/counts.ts`
 
--  `src/database/seeders/index.ts`
+- `src/database/seeders/index.ts`
 
 El orden será importante porque **Enrollment depende de Learner y Course**.
 
@@ -2138,7 +2138,7 @@ npx tsc --noEmit
 
 ![](images/clipboard-3159149245.png)
 
-# 14.3 HTTP Evaluation 
+# 14.3 HTTP Evaluation
 
 Ahora creamos los archivos de prueba HTTP.
 
@@ -2223,5 +2223,123 @@ npm run dev
 ``` bash
 git add .  
 git commit -m "ISS-09: Evaluation - Controller, Routes, HTTP y Cableado" 
+git push origin main
+```
+
+![](images/clipboard-3035582096.png)
+
+# 14.6 Seeder Evaluation
+
+La evaluación necesita un `course_id` válido.
+
+## 14.6.1 Crear `evaluation.seeder.ts`
+
+![](images/clipboard-3003870207.png)
+
+# 14.62 Agregar `evaluations` a `counts.ts`
+
+Abre:
+
+```         
+code src/database/seeders/counts.ts
+```
+
+En `SeedCounts` agrega:
+
+```         
+evaluations: number;
+```
+
+En `DEFAULT_SEED_COUNTS` agrega:
+
+```         
+evaluations: 10,
+```
+
+![](images/clipboard-1860319800.png)
+
+Y agrega la lectura del `.env`:
+
+![](images/clipboard-968287976.png)
+
+# 14.6.3 Modificar `seeders/index.ts`
+
+```         
+code src/database/seeders/index.ts
+```
+
+Agregamos el import:
+
+```         
+import { seedEvaluations } from "../../features/business/evaluation/evaluation.seeder";
+```
+
+![](images/clipboard-3119069480.png)
+
+Y después de ejecutar el seeder de Enrollment, agregamos:
+
+```         
+await seedEvaluations(counts.evaluations);
+```
+
+![](images/clipboard-12446795.png)
+
+# 14.6.4 Verificación TypeScript
+
+Ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+Debe quedar sin errores.
+
+Después:
+
+```         
+npm run db:seed
+```
+
+![](images/clipboard-899397318.png)
+
+# 14.7 — Swagger Evaluation
+
+Primero vamos a crear la documentación completa de Evaluation, igual que hicimos con Enrollment.
+
+![](images/clipboard-3201259436.png)
+
+## Ahora registramos Swagger
+
+Agregamos el import:
+
+## ![](images/clipboard-2883030978.png)
+
+Y en `featureSwaggerModules`:
+
+```         
+evaluationSwagger,
+```
+
+![](images/clipboard-3443069195.png)
+
+ejecutamos
+
+```         
+npx tsc --noEmit
+```
+
+```         
+npm run dev
+```
+
+![](images/clipboard-3841718597.png)
+
+![](images/clipboard-2648297653.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-09: Evaluation - Seeder y Swagger"
 git push origin main
 ```

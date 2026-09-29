@@ -1,0 +1,10 @@
+### CREATE ENROLLMENT
+POST http://localhost:4000/api/inscripciones
+Content-Type: application/json
+
+{
+  "learner_id": 1,
+  "course_id": 1,
+  "enrollment_date": "2026-09-29",
+  "status": "active"
+}

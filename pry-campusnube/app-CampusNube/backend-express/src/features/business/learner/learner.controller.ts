@@ -137,5 +137,61 @@ export class LearnerController {
   }
 
   // ================== DELETE ==================
-  // (rellenar en los siguientes ISS)
+    /** Eliminación física */
+  public async deletePhysical(req: Request, res: Response) {
+    try {
+      const id = paramId(req);
+
+      const learner = await Learner.findByPk(id);
+
+      if (!learner) {
+        res.status(404).json({ error: "Learner not found" });
+        return;
+      }
+
+      await learner.destroy();
+
+      res.status(200).json({
+        message: "Learner permanently deleted",
+        id,
+      });
+    } catch (error) {
+      res.status(500).json({
+        error: "Error deleting learner",
+        detail: String(error),
+      });
+    }
+  }
+
+  /** Eliminación lógica → status = inactive */
+  public async deleteLogical(req: Request, res: Response) {
+    try {
+      const id = paramId(req);
+
+      const learner = await Learner.findByPk(id);
+
+      if (!learner) {
+        res.status(404).json({ error: "Learner not found" });
+        return;
+      }
+
+      await learner.update({
+        status: "inactive",
+      });
+
+      const { password, ...safe } = learner.toJSON() as LearnerI & {
+        password?: string;
+      };
+
+      res.status(200).json({
+        message: "Learner deactivated (logical delete)",
+        learner: safe,
+      });
+    } catch (error) {
+      res.status(500).json({
+        error: "Error deactivating learner",
+        detail: String(error),
+      });
+    }
+  }
 }

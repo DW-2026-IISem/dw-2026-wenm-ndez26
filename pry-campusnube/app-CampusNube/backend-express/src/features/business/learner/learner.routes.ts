@@ -16,5 +16,26 @@ export class LearnerRoutes {
     app
       .route("/api/aprendices/:id")
       .get(this.learnerController.getOne.bind(this.learnerController));
+
+          // create
+    app
+      .route("/api/aprendices")
+      .post(this.learnerController.create.bind(this.learnerController));
+
+          // update (PUT / PATCH)
+    app
+      .route("/api/aprendices/:id")
+      .put(this.learnerController.updatePut.bind(this.learnerController))
+      .patch(this.learnerController.updatePatch.bind(this.learnerController));
+     
+      // delete físico
+    app
+      .route("/api/aprendices/:id")
+      .delete(this.learnerController.deletePhysical.bind(this.learnerController));
+
+    // delete lógico
+    app
+      .route("/api/aprendices/:id/deactivate")
+      .patch(this.learnerController.deleteLogical.bind(this.learnerController));
   }
 }
