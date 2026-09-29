@@ -1076,54 +1076,78 @@ git push origin main
 
 **PARCHE** — `src/routes/index.ts` **ya existe**.
 
-1.  **Debajo de** `import { leanerRoutes } ...`, **añadir**:
-
 ![](images/clipboard-2352344287.png)
-
-2.  **Dentro de** `export class Routes`, **debajo de** `leanerRoutes`, **añadir**:
 
 ![](images/clipboard-1059702087.png)
 
 **PARCHE** — `src/config/index.ts` **ya existe**.
 
-1.  **Debajo de** `import "../features/business/client/client.model";`, **añadir**:
+4.  **Dentro de** `routes()`, **debajo de** `this.routePrv.clientRoutes.routes(this.app);`, **añadir**:
 
-``` ts
-import "../features/business/product-type/product-type.model";
-```
-
-2.  **Dentro de** `routes()`, **debajo de** `this.routePrv.clientRoutes.routes(this.app);`, **añadir**:
-
-``` ts
-    this.routePrv.productTypeRoutes.routes(this.app);
-```
+    ![](images/clipboard-3712369330.png)
 
 ### Verificación
 
 ``` bash
-curl -s -X POST http://localhost:4000/api/tipos-producto -H 'Content-Type: application/json' \   -d '{"name":"Bebidas","description":"Refrescos","status":"active"}' curl -s http://localhost:4000/api/tipos-producto
+curl -s -X POST http://localhost:4000/api/docentes \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"Carlos Rodríguez","description":"Docente de CampusNube","isActive":true}'
+curl -s http://localhost:4000/api/docentes
 ```
+
+![](images/clipboard-3936777926.png)
+
+![](images/clipboard-4089557078.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-06: Teacher - Cableado Routes y Config"
+git push origin main
+```
+
+![](images/clipboard-944646274.png)
 
 ------------------------------------------------------------------------
 
-## 11.5 Seeder ProductType
+## 11.5 Seeder Teacher
 
-``` bash
-: > src/features/business/product-type/product-type.seeder.ts cat >> src/features/business/product-type/product-type.seeder.ts << 'EOF' import { faker } from "@faker-js/faker"; import { ProductType } from "./product-type.model";  /**  * Seeder del feature ProductType (datos falsos con @faker-js/faker).  * Se invoca desde `src/database/seeders` (SeedersRunner), no desde la App.  *  * Idempotente: si ya hay filas, no vuelve a insertar.  */ export async function seedProductTypes(count: number): Promise<number> {   if (count <= 0) {     console.log("⏭️  product_types: count=0, se omite");     return 0;   }    const existing = await ProductType.count();   if (existing > 0) {     console.log(`⏭️  product_types: ya hay ${existing} registro(s), se omite seeder`);     return 0;   }    const rows = Array.from({ length: count }, () => ({     name: faker.commerce.department(),     description: faker.commerce.productDescription(),     status: "active" as const,   }));    await ProductType.bulkCreate(rows);   console.log(`✅ product_types: insertados ${count} registro(s) falsos`);   return count; } EOF
-```
+![](images/clipboard-1493444869.png)
 
 **PARCHE** — `src/database/seeders/counts.ts` **ya existe**.
 
 - **Dentro de** `SeedCounts`, **añadir** `product_types: number;`
+
+  ![](images/clipboard-2959504469.png)
+
 - **Dentro de** `DEFAULT_SEED_COUNTS`, **añadir** `product_types: 25,`
+
+  ![](images/clipboard-2789759370.png)
+
 - **Dentro de** la resolución por env, **añadir** lectura de `SEED_PRODUCT_TYPES` (ver archivo final abajo en ISS-08 si consolidás).
+
+![](images/clipboard-2627503530.png)
 
 **PARCHE** — `src/database/seeders/index.ts` **ya existe**.
 
 1.  **Debajo de** imports de client, **añadir** import de `seedProductTypes`.
-2.  **Debajo de** `await seedClients(...)`, **añadir** `await seedProductTypes(counts.product_types);`
+
+    ![](images/clipboard-3525252515.png)
+
+2.  **Debajo de** `await seedClients(...)`, **añadir** `await`
+
+    ![](images/clipboard-1426080087.png)
 
 ------------------------------------------------------------------------
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-06: Teacher - Seeder y SeedersRunner"
+git push origin main
+```
 
 ## 11.6 Swagger ProductType
 
