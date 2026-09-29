@@ -1202,3 +1202,21 @@ git add .
 git commit -m "ISS-07: Course - Modelo"
 git push origin main
 ```
+
+![](images/clipboard-1114250294.png)
+
+### 12.2.1 Crear Course Controller
+
+![](images/clipboard-84589078.png)
+
+## 12.2.2 Crear Course Routes
+
+![](images/clipboard-692721454.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-07: Course - Controller y Routes CRUD"
+git push origin main
+```
