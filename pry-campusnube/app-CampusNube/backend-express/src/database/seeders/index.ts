@@ -1,8 +1,11 @@
 import dotenv from "dotenv";
 import { sequelize, testConnection } from "../db";
 import "../../features/business/learner/learner.model";
+import "../../features/business/teacher/teacher.model";
 import { seedLearners } from "../../features/business/learner/learner.seeder";
 import { resolveSeedCounts } from "./counts";
+import { seedTeachers } from "../../features/business/teacher/teacher.seeder";
+import { seedCourses } from "../../features/business/course/course.seeder";
 
 dotenv.config();
 
@@ -37,7 +40,8 @@ export async function runAllSeeders(): Promise<void> {
 
   // Orden: business (padres → hijos)
   await seedLearners(counts.learners);
-
+  await seedTeachers(counts.teachers);
+  await seedCourses(counts.courses);
   console.log("🌱 SeedersRunner finalizado");
 }
 

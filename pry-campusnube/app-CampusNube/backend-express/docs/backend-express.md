@@ -1388,3 +1388,74 @@ git add .
 git commit -m "ISS-07: Course - Relacion Teacher y Course"
 git push origin main
 ```
+
+![](images/clipboard-2668763039.png)
+
+# 12.6 Seeder + Swagger — Course
+
+**Objetivo:** generar datos falsos de `Course` de forma idempotente y documentar `/api/cursos` en Swagger.
+
+**API:** `/api/cursos` — **SIN AUTH**.
+
+## 12.6.1 Crear Course Seeder
+
+vamos a crear **solo el archivo del seeder**.
+
+![](images/clipboard-3333072460.png)
+
+## 12.6.2 Verificar el archivo
+
+Ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-1649920578.png)
+
+## 2.6.3 Ahora conectar Course al SeedersRunner
+
+Aquí hacemos el parche sobre **el archivo que ya existe**
+
+### Agrega Course DEBAJO de Teacher
+
+![](images/clipboard-486955957.png)
+
+Debajo de:
+
+```         
+teachers: number; y 
+Course: number;
+```
+
+![](images/clipboard-2244472399.png)
+
+Dentro del `SeedersRunner`
+
+```         
+await seedTeachers(counts.teachers);
+```
+
+**Debajo de esa línea**, agrega:
+
+```         
+await seedCourses(counts.courses);
+```
+
+![](images/clipboard-3323073835.png)
+
+Si `npm run dev` está ejecutándose
+
+![](images/clipboard-1403401226.png)
+
+### Comprobar en DBeaver
+
+![](images/clipboard-3479939616.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-07: Course - Seeder y SeedersRunner"
+git push origin main
+```
