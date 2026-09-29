@@ -1543,3 +1543,37 @@ git add .
 git commit -m "ISS-07: Course - Swagger"
 git push origin main
 ```
+
+![](images/clipboard-444407018.png)
+
+# 13. ISS-08 — Feature Enrollment + relaciones de aprendizaje
+
+**Objetivo:** implementar el proceso de **Inscripción (Enrollment)** de CampusNube y las relaciones que dependen de ella, manteniendo la estructura metodológica del ISS-08 del profesor.
+
+**Bloqueado por:** ISS-07 — Course.
+
+**API:** `/api/inscripciones` — **SIN AUTH**.
+
+# 13.1 — Modelo Enrollment
+
+Primero creamos la carpeta `enrollment` si no existe:
+
+```         
+mkdir -p src/features/business/enrollment/http
+```
+
+Ahora creamos el modelo:
+
+```         
+: > src/features/business/enrollment/enrollment.model.ts
+```
+
+![](images/clipboard-827921720.png)
+
+### Realizamos el commit
+
+``` bash
+git add .   
+git commit -m "ISS-08: Enrollment - Modelo"
+git push origin main
+```
