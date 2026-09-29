@@ -1577,3 +1577,47 @@ git add .
 git commit -m "ISS-08: Enrollment - Modelo"
 git push origin main
 ```
+
+![](images/clipboard-738222882.png)
+
+# 13.2 — Enrollment Controller + CRUD completo
+
+Primero vamos a crear el controller siguiendo el mismo orden que hemos usado en las entidades anteriores:
+
+1.   `getAll`
+
+2.   `getOne`
+
+3.   `create`
+
+4.   `update` — PUT
+
+5.   `patch` — PATCH
+
+6.   `delete` físico
+
+7.   `deactivate` — eliminación lógica
+
+Creamos
+
+```         
+: > src/features/business/enrollment/enrollment.controller.ts
+```
+
+![](images/clipboard-1843375658.png)
+
+### 13.2.2 Crear Enrollment Routes
+
+![](images/clipboard-713849685.png)
+
+## Verificamos
+
+![](images/clipboard-12193593.png)
+
+### Realizamos el commit
+
+``` bash
+git add .  
+git commit -m "ISS-08: Enrollment - Controller y Routes CRUD"
+git push origin main
+```
