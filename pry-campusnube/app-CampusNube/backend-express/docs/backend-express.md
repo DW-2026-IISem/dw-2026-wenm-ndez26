@@ -2673,3 +2673,203 @@ git add .
 git commit -m "ISS-10: Module - Relaciones" 
 git push origin main
 ```
+
+![](images/clipboard-2370516133.png)
+
+# 15.6 Seeder Module
+
+Aquí vamos a hacer el Seeder y los dos parches correspondientes:
+
+-  `src/features/business/module/module.seeder.ts`
+
+-  `src/database/seeders/counts.ts`
+
+-  `src/database/seeders/index.ts`
+
+El orden será importante porque **Module depende de Course**.
+
+## 15.6.1 Crear Module Seeder
+
+Primero:
+
+![](images/clipboard-1553502373.png)
+
+## 15.6.2 Parche — `src/database/seeders/counts.ts`
+
+Abrimos:
+
+```         
+code src/database/seeders/counts.ts
+```
+
+En `SeedCounts` añadimos:
+
+```         
+modules: number;
+```
+
+En `DEFAULT_SEED_COUNTS`:
+
+```         
+modules: 10,
+```
+
+![](images/clipboard-1378389194.png)
+
+#### Agregamos la lectura del `.env`:
+
+```         
+const envModules = process.env.SEED_MODULES;  if (envModules !== undefined && envModules !== "") {   counts.modules = Number(envModules); }
+```
+
+![](images/clipboard-2330760671.png)
+
+# 15.6.3 Parche — `src/database/seeders/index.ts`
+
+Abrimos:
+
+```         
+code src/database/seeders/index.ts
+```
+
+Debajo del import de `seedEvaluations`, añadimos:
+
+```         
+import { seedModules } from "../../features/business/module/module.seeder";
+```
+
+![](images/clipboard-970933076.png)
+
+Después de:
+
+```         
+await seedEvaluations(counts.evaluations);
+```
+
+añadimos:
+
+```         
+await seedModules(counts.modules);
+```
+
+![](images/clipboard-2407919668.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Debe quedar limpio.
+
+Después:
+
+```         
+npm run db:seed
+```
+
+La primera ejecución debe mostrar:
+
+```         
+✅ modules: insertados 10 registro(s) falsos
+```
+
+![](images/clipboard-1003192206.png)
+
+Volvemos a ejecutar:
+
+```         
+npm run db:seed
+```
+
+Y debe aparecer:
+
+```         
+⏭️  modules: ya hay 10 registro(s), se omite seeder
+```
+
+Esto confirma la **idempotencia del Seeder**.
+
+![](images/clipboard-664949764.png)
+
+# 15.7 Swagger Module
+
+Primero vamos a crear el archivo Swagger de la entidad.
+
+## 15.7.1 Crear `module.swagger.ts`
+
+![](images/clipboard-920157898.png)
+
+# 15.7.2 Parche — `src/swagger/index.ts`
+
+Abrimos:
+
+```         
+code src/swagger/index.ts
+```
+
+Buscamos el último import de Swagger:
+
+```         
+import { evaluationSwagger } from "../features/business/evaluation/evaluation.swagger";
+```
+
+Debajo añadimos:
+
+```         
+import { moduleSwagger } from "../features/business/module/module.swagger";
+```
+
+![](images/clipboard-3578756599.png)
+
+Después buscamos:
+
+```         
+const featureSwaggerModules: FeatureSwaggerModule[] = [
+```
+
+Debajo de:
+
+```         
+evaluationSwagger,
+```
+
+añadimos:
+
+```         
+moduleSwagger,
+```
+
+![](images/clipboard-1493584614.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Debe quedar limpio.
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-600430074.png)
+
+### Realizamos el commit de cierre
+
+Como acordamos con **Enrollment y Evaluation**, cerramos **Seeder + Swagger juntos**:
+
+```         
+git add . 
+git commit -m "ISS-10: Module - Seeder y Swagger" 
+git push origin main
+```
+
+[Captura del commit]
