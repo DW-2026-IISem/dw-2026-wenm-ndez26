@@ -3683,6 +3683,8 @@ git commit -m "ISS-12: Attempt - Relaciones Enrollment y Attempt"
 git push origin main
 ```
 
+![](images/clipboard-1973504096.png)
+
 # 17.6 — Seeder Attempt
 
 Attempt depende de `Enrollment`, por lo que el orden será:
@@ -3692,3 +3694,178 @@ Learner Teacher Course Enrollment Evaluation Module Lesson Attempt
 ```
 
 ## 17.6.1 Crear Attempt Seeder
+
+![](images/clipboard-2396843428.png)
+
+# 17.6.2 Parche — `src/database/seeders/counts.ts`
+
+Abrimos:
+
+```         
+code src/database/seeders/counts.ts
+```
+
+En `SeedCounts` añadimos:
+
+```         
+attempts: number;
+```
+
+En `DEFAULT_SEED_COUNTS`:
+
+```         
+attempts: 10,
+```
+
+![](images/clipboard-1985981356.png)
+
+Y en la resolución de variables de entorno:
+
+```         
+const envAttempts = process.env.SEED_ATTEMPTS;  if (envAttempts !== undefined && envAttempts !== "") {   counts.attempts = Number(envAttempts); }
+```
+
+![](images/clipboard-3475144956.png)
+
+# 17.6.3 Parche — `src/database/seeders/index.ts`
+
+Abrimos:
+
+```         
+code src/database/seeders/index.ts
+```
+
+Debajo del import de `seedLessons` añadimos:
+
+```         
+import { seedAttempts } from "../../features/business/attempt/attempt.seeder";
+```
+
+![](images/clipboard-2892205379.png)
+
+Después de:
+
+```         
+await seedLessons(counts.lessons);
+```
+
+añadimos:
+
+```         
+await seedAttempts(counts.attempts);
+```
+
+El orden final queda:
+
+![](images/clipboard-1751737065.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Después:
+
+```         
+npm run db:seed
+```
+
+Debe aparecer:
+
+```         
+
+✅ attempts: insertados 10 registro(s) falsos
+```
+
+![](images/clipboard-72330179.png)
+
+En la segunda ejecución:
+
+```         
+npm run db:seed
+```
+
+debe aparecer:
+
+```         
+⏭️  attempts: ya hay 10 registro(s), se omite seeder
+```
+
+![](images/clipboard-2540561546.png)
+
+# 17.7 — Swagger Attempt
+
+## 17.7.1 Crear `attempt.swagger.ts`
+
+![](images/clipboard-1184867829.png)
+
+## 7.7.2 Parche — `src/swagger/index.ts`
+
+Abre:
+
+```         
+code src/swagger/index.ts
+```
+
+Debajo de:
+
+```         
+import { lessonSwagger } from "../features/business/lesson/lesson.swagger";
+```
+
+añade:
+
+```         
+import { attemptSwagger } from "../features/business/attempt/attempt.swagger";
+```
+
+![](images/clipboard-1738453123.png)
+
+Después, dentro de:
+
+```         
+const featureSwaggerModules: FeatureSwaggerModule[] = [
+```
+
+debajo de:
+
+```         
+lessonSwagger,
+```
+
+añade:
+
+```         
+attemptSwagger,
+```
+
+Debe quedar:
+
+![](images/clipboard-3756343984.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-621656379.png)
+
+# Realizamos el commit de cierre
+
+Como venimos haciendo:
+
+```         
+git add . 
+git commit -m "ISS-12: Attempt - Seeder y Swagger" 
+git push origin main
+```

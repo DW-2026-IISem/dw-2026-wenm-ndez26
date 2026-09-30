@@ -9,6 +9,8 @@ import { seedCourses } from "../../features/business/course/course.seeder";
 import { seedEnrollments } from "../../features/business/enrollment/enrollment.seeder";
 import { seedEvaluations } from "../../features/business/evaluation/evaluation.seeder";
 import { seedModules } from "../../features/business/module/module.seeder";
+import { seedLessons } from "../../features/business/lesson/lesson.seeder";
+import { seedAttempts } from "../../features/business/attempt/attempt.seeder";
 dotenv.config();
 
 /**
@@ -47,6 +49,8 @@ export async function runAllSeeders(): Promise<void> {
   await seedEnrollments(counts.enrollments);
   await seedEvaluations(counts.evaluations);
   await seedModules(counts.modules);
+  await seedLessons(counts.lessons);
+  await seedAttempts(counts.attempts);
 
   console.log("🌱 SeedersRunner finalizado");
 }
