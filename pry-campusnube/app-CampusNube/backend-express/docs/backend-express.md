@@ -3622,3 +3622,73 @@ git add .
 git commit -m "ISS-12: Attempt - Controller, Routes, HTTP y Cableado"
 git push origin main
 ```
+
+![](images/clipboard-3022118355.png)
+
+# 17.5 — Relaciones Attempt
+
+Aquí implementamos la relación oficial:
+
+```         
+Enrollment 1:N Attempt
+```
+
+## 17.5.1 Crear `attempt.associations.ts`
+
+![](images/clipboard-1487758549.png)
+
+## 17.5.2 Cablear las asociaciones en Config
+
+Abre:
+
+```         
+code src/config/index.ts
+```
+
+Debajo de:
+
+```         
+import "../features/business/attempt/attempt.model";
+```
+
+añade:
+
+```         
+import "../features/business/attempt/attempt.associations";
+```
+
+Debe quedar:
+
+![](images/clipboard-1888220721.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-2080638667.png)
+
+### Commit
+
+```         
+git add 
+git commit -m "ISS-12: Attempt - Relaciones Enrollment y Attempt"
+git push origin main
+```
+
+# 17.6 — Seeder Attempt
+
+Attempt depende de `Enrollment`, por lo que el orden será:
+
+```         
+Learner Teacher Course Enrollment Evaluation Module Lesson Attempt
+```
+
+## 17.6.1 Crear Attempt Seeder
