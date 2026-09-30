@@ -4116,6 +4116,8 @@ git commit -m "ISS-13: Submission - Controller, Routes, HTTP y Cableado"
 git push origin main
 ```
 
+![](images/clipboard-1298763481.png)
+
 # 18.5 — Relaciones Submission
 
 Aquí implementamos las dos relaciones:
@@ -4128,4 +4130,50 @@ Lesson 1:N Submission Enrollment 1:N Submission
 
 ```         
 : > src/features/business/submission/submission.associations.ts
+```
+
+![](images/clipboard-3987806573.png)
+
+## 18.5.2 Cablear en Config
+
+Abre:
+
+```         
+code src/config/index.ts
+```
+
+Debajo de:
+
+```         
+import "../features/business/submission/submission.model";
+```
+
+añade:
+
+```         
+import "../features/business/submission/submission.associations";
+```
+
+![](images/clipboard-1623845397.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Luego:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-1979297660.png)
+
+### Commit
+
+```         
+git add 
+git commit -m "ISS-13: Submission - Relaciones Lesson y Enrollment" 
+git push origin main
 ```
