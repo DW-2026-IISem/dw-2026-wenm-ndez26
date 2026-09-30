@@ -4013,3 +4013,119 @@ git add .
 git commit -m "ISS-13: Submission - Archivos HTTP CRUD"
 git push origin main
 ```
+
+![](images/clipboard-298455264.png)
+
+# 18.4 — Cableado Routes + Config
+
+## 18.4.1 `src/routes/index.ts`
+
+Abrimos:
+
+```         
+code src/routes/index.ts
+```
+
+Debajo de:
+
+```         
+import { AttemptRoutes } from "../features/business/attempt/attempt.routes";
+```
+
+añadimos:
+
+```         
+import { SubmissionRoutes } from "../features/business/submission/submission.routes";
+```
+
+![](images/clipboard-3140558016.png)
+
+Dentro de `Routes`, debajo de:
+
+```         
+public attemptRoutes: AttemptRoutes = new AttemptRoutes();
+```
+
+añadimos:
+
+```         
+public submissionRoutes: SubmissionRoutes = new SubmissionRoutes();
+```
+
+Debe quedar:
+
+![](images/clipboard-3830842090.png)
+
+# 18.4.2 `src/config/index.ts`
+
+Abre:
+
+```         
+code src/config/index.ts
+```
+
+Debajo de:
+
+```         
+import "../features/business/attempt/attempt.model";
+```
+
+añade:
+
+```         
+import "../features/business/submission/submission.model";
+```
+
+![](images/clipboard-242069031.png)
+
+Y dentro de `routes()` debajo de:
+
+```         
+this.routePrv.attemptRoutes.routes(this.app);
+```
+
+añade:
+
+```         
+this.routePrv.submissionRoutes.routes(this.app);
+```
+
+Debe quedar:
+
+![](images/clipboard-2615102359.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Después:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-469140955.png)
+
+### Commit
+
+```         
+git add . 
+git commit -m "ISS-13: Submission - Controller, Routes, HTTP y Cableado"
+git push origin main
+```
+
+# 18.5 — Relaciones Submission
+
+Aquí implementamos las dos relaciones:
+
+```         
+Lesson 1:N Submission Enrollment 1:N Submission
+```
+
+## 18.5.1 Crear asociaciones
+
+```         
+: > src/features/business/submission/submission.associations.ts
+```

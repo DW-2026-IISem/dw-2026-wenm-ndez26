@@ -6,6 +6,7 @@ import { EvaluationRoutes } from "../features/business/evaluation/evaluation.rou
 import { ModuleRoutes } from "../features/business/module/module.routes";
 import { LessonRoutes } from "../features/business/lesson/lesson.routes";
 import { AttemptRoutes } from "../features/business/attempt/attempt.routes";
+import { SubmissionRoutes } from "../features/business/submission/submission.routes";
 
 export class Routes {
   public learnerRoutes: LearnerRoutes = new LearnerRoutes();
@@ -16,4 +17,5 @@ export class Routes {
   public moduleRoutes: ModuleRoutes = new ModuleRoutes();
   public lessonRoutes: LessonRoutes = new LessonRoutes();
   public attemptRoutes: AttemptRoutes = new AttemptRoutes();
+  public submissionRoutes: SubmissionRoutes = new SubmissionRoutes();
 }

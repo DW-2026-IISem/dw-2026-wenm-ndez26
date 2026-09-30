@@ -11,6 +11,7 @@ import "../features/business/enrollment/enrollment.model";
 import "../features/business/evaluation/evaluation.model";
 import "../features/business/lesson/lesson.model";
 import "../features/business/attempt/attempt.model";
+import "../features/business/submission/submission.model";
 import "../features/business/enrollment/enrollment.associations";
 import "../features/business/course/course.associations";
 import "../features/business/evaluation/evaluation.associations";
@@ -54,6 +55,7 @@ export class App {
     this.routePrv.moduleRoutes.routes(this.app);
     this.routePrv.lessonRoutes.routes(this.app);
     this.routePrv.attemptRoutes.routes(this.app);
+    this.routePrv.submissionRoutes.routes(this.app);
   }
 
   private docs(): void {
