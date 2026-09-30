@@ -3367,3 +3367,53 @@ git add .
 git commit -m "ISS-11: Lesson - Seeder y Swagger" 
 git push origin main
 ```
+
+![](images/clipboard-3643323556.png)
+
+# 17. ISS-12 — Feature Attempt + relaciones de aprendizaje
+
+**Objetivo:** implementar el proceso de **Intento (Attempt)** de CampusNube y su relación con Enrollment, manteniendo la misma estructura metodológica utilizada en los ISS anteriores.
+
+**Bloqueado por:** ISS-11 — Lesson.
+
+**API:** `/api/intentos` — **SIN AUTH**.
+
+**Relación:**
+
+```         
+Enrollment 1:N Attempt
+```
+
+Visualmente:
+
+```         
+Learner    │   
+└── Enrollment         
+│           └── 1:N Attempt
+```
+
+# 17.1 — Modelo Attempt
+
+Primero creamos la carpeta `attempt` si no existe:
+
+```         
+mkdir -p src/features/business/attempt/http
+```
+
+Ahora creamos el modelo:
+
+![](images/clipboard-3899176022.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+### Realizamos el commit
+
+```         
+git add . 
+git commit -m "ISS-12: Attempt - Modelo" 
+git push origin main
+```
