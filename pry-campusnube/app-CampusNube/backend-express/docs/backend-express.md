@@ -2373,3 +2373,5 @@ git add .
 git commit -m "ISS-09: Evaluation - Relaciones Course y Evaluation"
 git push origin main
 ```
+
+![](images/clipboard-4011687936.png)
