@@ -2611,3 +2611,65 @@ git add .
 git commit -m "ISS-10: Module - Controller, Routes, HTTP y Cableado"
 git push origin main
 ```
+
+![](images/clipboard-3726901604.png)
+
+# 15.5 Relaciones Module
+
+Aquí vamos a implementar la relación de **Module con Course**, definida en la ficha de CampusNube:
+
+```         
+Course 1:N Module
+```
+
+## 15.5.1 Crear `module.associations.ts`
+
+Ejecutamos:
+
+![](images/clipboard-4000042684.png)
+
+## 15.5.2 Cablear las asociaciones en Config
+
+Abrimos:
+
+```         
+code src/config/index.ts
+```
+
+Buscamos:
+
+```         
+import "../features/business/module/module.model";
+```
+
+Debajo añadimos:
+
+```         
+import "../features/business/module/module.associations";
+```
+
+![](images/clipboard-2461267233.png)
+
+# Verificamos
+
+Guardamos y ejecutamos:
+
+```         
+npx tsc --noEmit
+```
+
+Si queda limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-2112822934.png)
+
+### Realizamos el commit
+
+```         
+git add .
+git commit -m "ISS-10: Module - Relaciones" 
+git push origin main
+```
