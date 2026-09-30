@@ -2872,4 +2872,50 @@ git commit -m "ISS-10: Module - Seeder y Swagger"
 git push origin main
 ```
 
-[Captura del commit]
+![](images/clipboard-3426974619.png)
+
+# 16. ISS-11 — Feature Lesson + relaciones de aprendizaje
+
+**Objetivo:** implementar el proceso de **Lección (Lesson)** de CampusNube y su relación con Module, manteniendo la estructura metodológica utilizada en los ISS anteriores.
+
+**Bloqueado por:** ISS-10 — Module.
+
+**API:** `/api/lecciones` — **SIN AUTH**.
+
+**Relación:**
+
+```         
+Module 1:N Lesson
+```
+
+# 16.1 — Modelo Lesson
+
+Primero creamos la carpeta `lesson` si no existe:
+
+```         
+mkdir -p src/features/business/lesson/http
+```
+
+Ahora creamos el modelo:
+
+![](images/clipboard-2256723659.png)
+
+# Verificamos
+
+Ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+Debe quedar **sin errores**.
+
+![](images/clipboard-3619727796.png)
+
+# Realizamos el commit
+
+Si todo está limpio:
+
+```         
+git add . git commit -m "ISS-11: Lesson - Modelo" git push origin main
+```
