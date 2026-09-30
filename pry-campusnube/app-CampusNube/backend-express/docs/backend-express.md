@@ -4177,3 +4177,119 @@ git add
 git commit -m "ISS-13: Submission - Relaciones Lesson y Enrollment" 
 git push origin main
 ```
+
+![](images/clipboard-1847642096.png)
+
+# 18.6 — Seeder Submission
+
+Submission depende de:
+
+```         
+Lesson Enrollment
+```
+
+## 18.6.1 Crear Seeder
+
+```         
+: > src/features/business/submission/submission.seeder.ts
+```
+
+![](images/clipboard-2276283232.png)
+
+# 18.6.2 Parche — `counts.ts`
+
+Abre:
+
+```         
+code src/database/seeders/counts.ts
+```
+
+En `SeedCounts` agrega:
+
+```         
+submissions: number;
+```
+
+En `DEFAULT_SEED_COUNTS`:
+
+```         
+submissions: 10,
+```
+
+![](images/clipboard-4092605474.png)
+
+Y en la resolución de variables:
+
+![](images/clipboard-3699084433.png)
+
+### 18.6.3 Parche — `seeders/index.ts`
+
+Abre:
+
+```         
+code src/database/seeders/index.ts
+```
+
+Agrega el import:
+
+```         
+import { seedSubmissions } from "../../features/business/submission/submission.seeder";
+```
+
+![](images/clipboard-1876740424.png)
+
+Después de:
+
+```         
+await seedAttempts(counts.attempts);
+```
+
+añade:
+
+```         
+await seedSubmissions(counts.submissions);
+```
+
+El orden queda:
+
+![](images/clipboard-461082108.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Luego:
+
+```         
+npm run db:seed
+```
+
+Primera ejecución:
+
+```         
+✅ submissions: insertados 10 registro(s) falsos
+```
+
+![](images/clipboard-2377886622.png)
+
+Segunda ejecución:
+
+```         
+npm run db:seed
+```
+
+Debe aparecer:
+
+```         
+⏭️  submissions: ya hay 10 registro(s), se omite seeder
+```
+
+![](images/clipboard-26669523.png)
+
+### Commit
+
+```         
+git add . git commit -m "ISS-13: Submission - Seeder" git push origin main
+```
