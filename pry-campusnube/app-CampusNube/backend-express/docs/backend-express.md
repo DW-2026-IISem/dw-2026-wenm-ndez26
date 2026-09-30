@@ -3417,3 +3417,53 @@ git add .
 git commit -m "ISS-12: Attempt - Modelo" 
 git push origin main
 ```
+
+![](images/clipboard-2424919983.png)
+
+# 17.2 — Attempt Controller + CRUD completo
+
+Seguimos exactamente el mismo orden:
+
+1.   `getAll`
+
+2.   `getOne`
+
+3.   `create`
+
+4.   `update` — PUT
+
+5.   `patch` — PATCH
+
+6.   `delete` físico
+
+7.   `deactivate` — eliminación lógica
+
+## 17.2.1 Crear `attempt.controller.ts`
+
+![](images/clipboard-2554378447.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-291375139.png)
+
+## 17.2.2 Crear Attempt Routes
+
+![](images/clipboard-156728678.png)
+
+## erificamos
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add . 
+git commit -m "ISS-12: Attempt - Controller y Routes CRUD"
+git push origin main
+```
