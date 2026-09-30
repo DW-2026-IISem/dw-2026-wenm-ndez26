@@ -3518,3 +3518,107 @@ git add .
 git commit -m "ISS-12: Attempt - Archivos HTTP CRUD" 
 git push origin main
 ```
+
+![](images/clipboard-2726259734.png)
+
+# 17.4 — Cableado Routes + Config
+
+## 17.4.1 `src/routes/index.ts`
+
+Abrimos:
+
+```         
+code src/routes/index.ts
+```
+
+Debajo de:
+
+```         
+import { LessonRoutes } from "../features/business/lesson/lesson.routes";
+```
+
+añadimos:
+
+```         
+import { AttemptRoutes } from "../features/business/attempt/attempt.routes";
+```
+
+![](images/clipboard-917206102.png)
+
+![](images/clipboard-917206102.png)
+
+Dentro de `Routes`, debajo de:
+
+```         
+public lessonRoutes: LessonRoutes = new LessonRoutes();
+```
+
+añadimos:
+
+```         
+public attemptRoutes: AttemptRoutes = new AttemptRoutes();
+```
+
+Debe quedar:
+
+![](images/clipboard-719465401.png)
+
+# 17.4.2 `src/config/index.ts`
+
+Abrimos:
+
+```         
+code src/config/index.ts
+```
+
+Debajo de:
+
+```         
+import "../features/business/lesson/lesson.model";
+```
+
+añadimos:
+
+```         
+import "../features/business/attempt/attempt.model";
+```
+
+![](images/clipboard-2515940691.png)
+
+Y dentro de `private routes()`:
+
+```         
+this.routePrv.lessonRoutes.routes(this.app);
+```
+
+debajo agregamos:
+
+```         
+this.routePrv.attemptRoutes.routes(this.app);
+```
+
+Debe quedar:
+
+![](images/clipboard-2176016614.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-1039065183.png)
+
+### Commit
+
+```         
+git add . 
+git commit -m "ISS-12: Attempt - Controller, Routes, HTTP y Cableado"
+git push origin main
+```
