@@ -3025,3 +3025,117 @@ git add .
 git commit -m "ISS-11: Lesson - Archivos HTTP CRUD" 
 git push origin main
 ```
+
+![](images/clipboard-859006406.png)
+
+# 16.4 — Cableado Routes + Config
+
+**Objetivo:** conectar `Lesson` con el agregador de rutas y con la configuración principal de Express.
+
+## 16.4.1 `src/routes/index.ts`
+
+Este archivo ya existe, por lo tanto hacemos **PARCHE**.
+
+Abrimos:
+
+```         
+code src/routes/index.ts
+```
+
+Debajo de:
+
+```         
+import { ModuleRoutes } from "../features/business/module/module.routes";
+```
+
+añadimos:
+
+```         
+import { LessonRoutes } from "../features/business/lesson/lesson.routes";
+```
+
+![](images/clipboard-3662813357.png)
+
+Dentro de la clase `Routes`, debajo de:
+
+```         
+public moduleRoutes: ModuleRoutes = new ModuleRoutes();
+```
+
+añadimos:
+
+```         
+public lessonRoutes: LessonRoutes = new LessonRoutes();
+```
+
+![](images/clipboard-931504008.png)
+
+# 16.4.2 `src/config/index.ts`
+
+Abrimos:
+
+```         
+code src/config/index.ts
+```
+
+Debajo de:
+
+```         
+import "../features/business/module/module.model";
+```
+
+añadimos:
+
+```         
+import "../features/business/lesson/lesson.model";
+```
+
+![](images/clipboard-989233617.png)
+
+Después, dentro de `private routes()` buscamos:
+
+```         
+this.routePrv.moduleRoutes.routes(this.app);
+```
+
+Debajo agregamos:
+
+```         
+this.routePrv.lessonRoutes.routes(this.app);
+```
+
+Debe quedar:
+
+![](images/clipboard-25785905.png)
+
+Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+Y podemos verificar la API:
+
+```         
+curl -i http://localhost:4000/api/lecciones
+```
+
+![](images/clipboard-243499895.png)
+
+![](images/clipboard-2907917331.png)
+
+### Realizamos el commit
+
+```         
+git add .
+git commit -m "ISS-11: Lesson - Cableado Routes y Config"
+git push origin main
+```
+
+[Captura del commit]
