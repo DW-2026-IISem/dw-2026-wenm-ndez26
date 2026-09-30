@@ -14,6 +14,7 @@ export type SeedCounts = {
   enrollments: number;
   evaluations: number;
   modules: number;
+  lessons: number;
 };
 
 export const DEFAULT_SEED_COUNTS: SeedCounts = {
@@ -22,7 +23,8 @@ export const DEFAULT_SEED_COUNTS: SeedCounts = {
   courses: 10,
   enrollments: 20,
   evaluations: 10,
-  modules: 10
+  modules: 10,
+  lessons: 10
 };
 
 export function resolveSeedCounts(
@@ -64,6 +66,12 @@ const envModules = process.env.SEED_MODULES;
 
 if (envModules !== undefined && envModules !== "") {
   counts.modules = Number(envModules);
+}
+
+const envLessons = process.env.SEED_LESSONS;
+
+if (envLessons !== undefined && envLessons !== "") {
+  counts.lessons = Number(envLessons);
 }
 
   for (const arg of argv) {

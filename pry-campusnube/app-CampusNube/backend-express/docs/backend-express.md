@@ -3198,26 +3198,172 @@ git commit -m "ISS-11: Lesson - Relaciones Module y Lesson"
 git push origin main
 ```
 
-[Captura del commit]
+![](images/clipboard-3719944697.png)
 
 # 16.6 — Seeder Lesson
 
 Aquí hacemos el Seeder y los dos parches correspondientes:
 
-- 
-
 -  `src/features/business/lesson/lesson.seeder.ts`
-
-- 
 
 -  `src/database/seeders/counts.ts`
 
-- 
-
 -  `src/database/seeders/index.ts`
-
-- 
 
 El orden es importante porque **Lesson depende de Module**.
 
 ## 16.6.1 Crear Lesson Seeder
+
+![](images/clipboard-194322474.png)
+
+# 16.6.2 Parche — `src/database/seeders/counts.ts`
+
+Abrimos:
+
+```         
+code src/database/seeders/counts.ts
+```
+
+En `SeedCounts` agregamos:
+
+```         
+lessons: number;
+```
+
+En `DEFAULT_SEED_COUNTS` agregamos:
+
+```         
+lessons: 10,
+```
+
+![](images/clipboard-633023638.png)
+
+Y en la resolución de variables de entorno agregamos:
+
+![](images/clipboard-3687597246.png)
+
+# 16.6.3 Parche — `src/database/seeders/index.ts`
+
+Abrimos:
+
+```         
+code src/database/seeders/index.ts
+```
+
+Debajo del import de `seedModules` añadimos:
+
+```         
+import { seedLessons } from "../../features/business/lesson/lesson.seeder";
+```
+
+![](images/clipboard-2594076151.png)
+
+Después de:
+
+```         
+await seedModules(counts.modules);
+```
+
+añadimos:
+
+```         
+await seedLessons(counts.lessons);
+```
+
+![](images/clipboard-2538622345.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Debe quedar limpio.
+
+Después:
+
+```         
+npm run db:seed
+```
+
+![](images/clipboard-2833537235.png)
+
+![](images/clipboard-2432675166.png)
+
+# 16.7 — Swagger Lesson
+
+## 16.7.1 Crear `lesson.swagger.ts`
+
+![](images/clipboard-1897521689.png)
+
+# 16.7.2 Parche — `src/swagger/index.ts`
+
+Abrimos:
+
+```         
+code src/swagger/index.ts
+```
+
+Buscamos:
+
+```         
+import { moduleSwagger } from "../features/business/module/module.swagger";
+```
+
+Debajo añadimos:
+
+```         
+import { lessonSwagger } from "../features/business/lesson/lesson.swagger";
+```
+
+![](images/clipboard-1801738341.png)
+
+Después buscamos:
+
+```         
+const featureSwaggerModules: FeatureSwaggerModule[] = [
+```
+
+Debajo de:
+
+```         
+moduleSwagger,
+```
+
+añadimos:
+
+```         
+lessonSwagger,
+```
+
+![](images/clipboard-2229874212.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Debe quedar limpio.
+
+Después:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-1972174680.png)
+
+# Realizamos el commit de cierre
+
+Como hicimos con **Enrollment, Evaluation y Module**, cerramos **Seeder + Swagger juntos**:
+
+```         
+git add . 
+git commit -m "ISS-11: Lesson - Seeder y Swagger" 
+git push origin main
+```
