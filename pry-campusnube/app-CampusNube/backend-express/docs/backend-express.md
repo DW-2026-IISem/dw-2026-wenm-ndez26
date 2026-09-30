@@ -3138,4 +3138,86 @@ git commit -m "ISS-11: Lesson - Cableado Routes y Config"
 git push origin main
 ```
 
+![](images/clipboard-1270949521.png)
+
+# 16.5 — Relaciones Lesson
+
+Aquí implementamos la relación oficial:
+
+```         
+Module 1:N Lesson
+```
+
+### 16.5.1 Crear `lesson.associations.ts`
+
+![](images/clipboard-1599714935.png)
+
+## 16.5.2 Cablear las asociaciones en Config
+
+Abrimos:
+
+```         
+code src/config/index.ts
+```
+
+Buscamos:
+
+```         
+import "../features/business/lesson/lesson.model";
+```
+
+Debajo añadimos:
+
+```         
+import "../features/business/lesson/lesson.associations";
+```
+
+La parte de imports debe quedar aproximadamente:
+
+![](images/clipboard-3029079394.png)
+
+# Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-2636352747.png)
+
+### Realizamos el commit
+
+```         
+git add 
+git commit -m "ISS-11: Lesson - Relaciones Module y Lesson" 
+git push origin main
+```
+
 [Captura del commit]
+
+# 16.6 — Seeder Lesson
+
+Aquí hacemos el Seeder y los dos parches correspondientes:
+
+- 
+
+-  `src/features/business/lesson/lesson.seeder.ts`
+
+- 
+
+-  `src/database/seeders/counts.ts`
+
+- 
+
+-  `src/database/seeders/index.ts`
+
+- 
+
+El orden es importante porque **Lesson depende de Module**.
+
+## 16.6.1 Crear Lesson Seeder
