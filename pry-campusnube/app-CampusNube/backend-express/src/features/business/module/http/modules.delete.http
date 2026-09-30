@@ -1,0 +1,5 @@
+### DELETE MODULE - FÍSICO
+DELETE http://localhost:4000/api/modulos/1
+
+### DELETE MODULE - LÓGICO
+PATCH http://localhost:4000/api/modulos/1/deactivate

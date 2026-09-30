@@ -3,6 +3,7 @@ import { TeacherRoutes } from "../features/business/teacher/teacher.routes";
 import { CourseRoutes } from "../features/business/course/course.routes";
 import { EnrollmentRoutes } from "../features/business/enrollment/enrollment.routes";
 import { EvaluationRoutes } from "../features/business/evaluation/evaluation.routes";
+import { ModuleRoutes } from "../features/business/module/module.routes";
 
 export class Routes {
   public learnerRoutes: LearnerRoutes = new LearnerRoutes();
@@ -10,4 +11,5 @@ export class Routes {
   public courseRoutes: CourseRoutes = new CourseRoutes();
   public enrollmentRoutes: EnrollmentRoutes = new EnrollmentRoutes();
   public evaluationRoutes: EvaluationRoutes = new EvaluationRoutes();
+  public moduleRoutes: ModuleRoutes = new ModuleRoutes();
 }

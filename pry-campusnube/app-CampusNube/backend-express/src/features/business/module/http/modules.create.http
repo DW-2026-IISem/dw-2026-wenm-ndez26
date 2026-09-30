@@ -1,0 +1,10 @@
+### CREATE MODULE
+POST http://localhost:4000/api/modulos
+Content-Type: application/json
+
+{
+  "course_id": 1,
+  "name": "Introducción al curso",
+  "description": "Módulo introductorio del curso",
+  "isActive": true
+}

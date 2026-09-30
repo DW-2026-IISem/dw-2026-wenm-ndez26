@@ -1,0 +1,5 @@
+### GET ALL MODULES
+GET http://localhost:4000/api/modulos
+
+### GET MODULE BY ID
+GET http://localhost:4000/api/modulos/1

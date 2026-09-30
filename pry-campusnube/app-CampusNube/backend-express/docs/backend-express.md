@@ -2375,3 +2375,239 @@ git push origin main
 ```
 
 ![](images/clipboard-4011687936.png)
+
+# 15. ISS-10 — Feature Module + relaciones de aprendizaje
+
+**Objetivo:** implementar el proceso de **Módulo (Module)** de CampusNube y su relación con Course.
+
+**Bloqueado por:** ISS-09 — Evaluation.
+
+**API:** `/api/modulos` — **SIN AUTH**.
+
+**Relación:**
+
+```         
+Course 1:N Module
+```
+
+# 15.1 — Modelo Module
+
+Primero creamos la carpeta `module` si no existe:
+
+```         
+mkdir -p src/features/business/module/http
+```
+
+Ahora creamos el modelo:
+
+![](images/clipboard-2964453226.png)
+
+### Realizamos el commit
+
+``` bash
+git add .
+git commit -m "ISS-10: Module - Modelo"
+git push origin main
+```
+
+![](images/clipboard-727163890.png)
+
+# 15.2 Controller Module + CRUD completo
+
+El módulo pertenece a un curso, así que al crear o actualizar un módulo vamos a validar que `course_id` corresponda a un **curso existente y activo**.
+
+Primero vamos a crear el controller siguiendo el mismo orden utilizado en Enrollment:
+
+1.   `getAll`
+
+2.   `getOne`
+
+3.   `create`
+
+4.   `update` — PUT
+
+5.   `patch` — PATCH
+
+6.   `delete` físico
+
+7.   `deactivate` — eliminación lógica
+
+## 15.2.1 Crear `module.controller.ts`
+
+![](images/clipboard-2781980476.png)
+
+### Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Debe terminar sin errores.
+
+![](images/clipboard-3812053015.png)
+
+### 15.2.2 Crear Module Routes
+
+![](images/clipboard-2672316668.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-1629424229.png)
+
+# 15.3 HTTP MODULE
+
+Vamos a crear **cuatro archivos HTTP**.
+
+```         
+src/features/business/module/http/ 
+├── modules.get.http
+├── modules.create.http 
+├── modules.update.http 
+└── modules.delete.http
+```
+
+## 15.3.1 GET MODULE
+
+Primero:
+
+![](images/clipboard-3125272339.png)
+
+## 15.3.2 CREATE MODULE
+
+Creamos:
+
+![](images/clipboard-2432056643.png)
+
+## 15.3.3 UPDATE MODULE
+
+Creamos:
+
+![](images/clipboard-1484867970.png)
+
+### 15.3.4 DELETE MODULE
+
+### ![](images/clipboard-3570717726.png)
+
+# VERIFICAMOS
+
+![](images/clipboard-1841674154.png)
+
+i está limpio, arrancamos:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-168603312.png)
+
+# 15.4 Cableado Routes + Config
+
+**Objetivo:** conectar `Module` con el agregador de rutas y con la configuración principal de Express.
+
+## 15.4.1 `src/routes/index.ts`
+
+Este archivo ya existe, por lo tanto hacemos **PARCHE**.
+
+Abrimos:
+
+```         
+code src/routes/index.ts
+```
+
+Debajo de:
+
+```         
+import { EvaluationRoutes } from "../features/business/evaluation/evaluation.routes";
+```
+
+añadimos:
+
+```         
+import { ModuleRoutes } from "../features/business/module/module.routes";
+```
+
+![](images/clipboard-1907356906.png)
+
+Dentro de la clase `Routes`, debajo de:
+
+```         
+public evaluationRoutes: EvaluationRoutes = new EvaluationRoutes();
+```
+
+añadimos:
+
+```         
+public moduleRoutes: ModuleRoutes = new ModuleRoutes();
+```
+
+![](images/clipboard-3834350381.png)
+
+# 15.4.2 `src/config/index.ts`
+
+Abrimos:
+
+```         
+code src/config/index.ts
+```
+
+Aquí también hacemos **PARCHE**.
+
+### 1. Imports del modelo
+
+Debajo de:
+
+```         
+import "../features/business/evaluation/evaluation.model";
+```
+
+añadimos:
+
+```         
+import "../features/business/module/module.model";
+```
+
+![](images/clipboard-770662431.png)
+
+### 2. Agregamos la ruta
+
+En `private routes()` buscamos:
+
+```         
+this.routePrv.evaluationRoutes.routes(this.app);
+```
+
+Debajo añadimos:
+
+```         
+this.routePrv.moduleRoutes.routes(this.app);
+```
+
+![](images/clipboard-2162306655.png)
+
+# Verificamos
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio, arrancamos:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-3775526249.png)
+
+### Realizamos el commit
+
+```         
+git add .
+git commit -m "ISS-10: Module - Controller, Routes, HTTP y Cableado"
+git push origin main
+```
