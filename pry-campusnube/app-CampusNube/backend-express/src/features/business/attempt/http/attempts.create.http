@@ -1,0 +1,10 @@
+### CREATE ATTEMPT
+POST http://localhost:4000/api/intentos
+Content-Type: application/json
+
+{
+  "enrollment_id": 1,
+  "name": "Primer intento",
+  "description": "Primer intento de la actividad",
+  "isActive": true
+}

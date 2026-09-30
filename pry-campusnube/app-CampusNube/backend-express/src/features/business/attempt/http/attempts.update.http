@@ -1,0 +1,18 @@
+### UPDATE ATTEMPT - PUT
+PUT http://localhost:4000/api/intentos/1
+Content-Type: application/json
+
+{
+  "enrollment_id": 1,
+  "name": "Intento actualizado",
+  "description": "Descripción actualizada del intento",
+  "isActive": true
+}
+
+### UPDATE ATTEMPT - PATCH
+PATCH http://localhost:4000/api/intentos/1
+Content-Type: application/json
+
+{
+  "name": "Intento parcial actualizado"
+}

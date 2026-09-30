@@ -1,0 +1,5 @@
+### DELETE ATTEMPT - FÍSICO
+DELETE http://localhost:4000/api/intentos/1
+
+### DELETE ATTEMPT - LÓGICO
+PATCH http://localhost:4000/api/intentos/1/deactivate

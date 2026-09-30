@@ -3467,3 +3467,54 @@ git add .
 git commit -m "ISS-12: Attempt - Controller y Routes CRUD"
 git push origin main
 ```
+
+![](images/clipboard-522467104.png)
+
+# 17.3 — HTTP ATTEMPT
+
+Creamos los cuatro archivos:
+
+```         
+src/features/business/attempt/http/ 
+├── attempts.get.http 
+├── attempts.create.http 
+├── attempts.update.http └── attempts.delete.http
+```
+
+## 17.3.1 GET ATTEMPT
+
+![](images/clipboard-2030669679.png)
+
+### 17.3.2 CREATE ATTEMPT
+
+### ![](images/clipboard-2511096795.png)
+
+### 17.3.3 UPDATE ATTEMPT
+
+![](images/clipboard-1740569627.png)
+
+### 17.3.4 DELETE ATTEMPT
+
+![](images/clipboard-3899240221.png)
+
+# Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-2436807287.png)
+
+### Commit
+
+```         
+git add . 
+git commit -m "ISS-12: Attempt - Archivos HTTP CRUD" 
+git push origin main
+```
