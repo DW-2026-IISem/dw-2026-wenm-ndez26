@@ -4291,5 +4291,89 @@ Debe aparecer:
 ### Commit
 
 ```         
-git add . git commit -m "ISS-13: Submission - Seeder" git push origin main
+git add . 
+git commit -m "ISS-13: Submission - Seeder" 
+git push origin main
+```
+
+![](images/clipboard-3828211899.png)
+
+# 18.7 — Swagger Submission
+
+## 18.7.1 Crear `submission.swagger.ts`
+
+```         
+: > src/features/business/submission/submission.swagger.ts
+```
+
+![](images/clipboard-501263330.png)
+
+## 18.7.2 Registrar Swagger
+
+Abre:
+
+```         
+code src/swagger/index.ts
+```
+
+Debajo de:
+
+```         
+import { attemptSwagger } from "../features/business/attempt/attempt.swagger";
+```
+
+añade:
+
+```         
+import { submissionSwagger } from "../features/business/submission/submission.swagger";
+```
+
+![](images/clipboard-340666134.png)
+
+Y en:
+
+```         
+const featureSwaggerModules: FeatureSwaggerModule[] = [
+```
+
+debajo de:
+
+```         
+attemptSwagger,
+```
+
+añade:
+
+```         
+submissionSwagger,
+```
+
+Debe quedar:
+
+![](images/clipboard-985000127.png)
+
+# Verificamos Swagger
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-3456020565.png)
+
+# Commit final
+
+Como venimos haciendo:
+
+```         
+git add .
+git commit -m "ISS-13: Submission - Seeder y Swagger" 
+git push origin main
 ```
