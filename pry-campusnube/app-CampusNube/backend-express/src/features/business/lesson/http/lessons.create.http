@@ -1,0 +1,10 @@
+### CREATE LESSON
+POST http://localhost:4000/api/lecciones
+Content-Type: application/json
+
+{
+  "module_id": 1,
+  "name": "Introducción",
+  "description": "Lección introductoria del módulo",
+  "isActive": true
+}

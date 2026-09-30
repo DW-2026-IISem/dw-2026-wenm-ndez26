@@ -1,0 +1,18 @@
+### UPDATE LESSON - PUT
+PUT http://localhost:4000/api/lecciones/1
+Content-Type: application/json
+
+{
+  "module_id": 1,
+  "name": "Lección actualizada",
+  "description": "Descripción actualizada de la lección",
+  "isActive": true
+}
+
+### UPDATE LESSON - PATCH
+PATCH http://localhost:4000/api/lecciones/1
+Content-Type: application/json
+
+{
+  "name": "Lección parcial actualizada"
+}

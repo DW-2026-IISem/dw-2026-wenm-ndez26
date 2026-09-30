@@ -1,0 +1,5 @@
+### GET ALL LESSONS
+GET http://localhost:4000/api/lecciones
+
+### GET LESSON BY ID
+GET http://localhost:4000/api/lecciones/1

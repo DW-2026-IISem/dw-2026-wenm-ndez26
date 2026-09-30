@@ -2971,3 +2971,57 @@ git add .
 git commit -m "ISS-11: Lesson - Controller y Routes CRUD"
 git push origin main
 ```
+
+![](images/clipboard-950725434.png)
+
+# 16.3 — HTTP LESSON
+
+Vamos a crear los mismos cuatro archivos HTTP:
+
+```         
+src/features/business/lesson/http/ 
+├── lessons.get.http 
+├── lessons.create.http 
+├── lessons.update.http 
+└── lessons.delete.http
+```
+
+## 16.3.1 GET LESSON
+
+![](images/clipboard-1425951630.png)
+
+### 16.3.2 CREATE LESSON
+
+![](images/clipboard-3694894114.png)
+
+### 16.3.3 UPDATE LESSON
+
+![](images/clipboard-2555044099.png)
+
+### 16.3.4 DELETE LESSON
+
+![](images/clipboard-3670069056.png)
+
+# Verificamos
+
+Después:
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-3276883194.png)
+
+### Realizamos el commit
+
+```         
+git add .
+git commit -m "ISS-11: Lesson - Archivos HTTP CRUD" 
+git push origin main
+```
