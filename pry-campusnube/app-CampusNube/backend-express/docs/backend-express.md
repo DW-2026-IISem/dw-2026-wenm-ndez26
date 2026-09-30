@@ -3862,10 +3862,98 @@ npm run dev
 
 # Realizamos el commit de cierre
 
-Como venimos haciendo:
-
 ```         
 git add . 
 git commit -m "ISS-12: Attempt - Seeder y Swagger" 
+git push origin main
+```
+
+![](images/clipboard-867737329.png)
+
+# 18. ISS-13 — Feature Submission + relaciones de aprendizaje
+
+**Objetivo:** implementar el proceso de **Entrega (Submission)** de CampusNube y sus relaciones con Lesson y Enrollment.
+
+**Bloqueado por:** ISS-12 — Attempt.
+
+**API:** `/api/entregas` — **SIN AUTH**.
+
+**Relaciones:**
+
+```         
+Lesson 1:N Submission Enrollment 1:N Submission
+```
+
+# 18.1 — Modelo Submission
+
+Primero creamos la carpeta:
+
+```         
+mkdir -p src/features/business/submission/http
+```
+
+Ahora:
+
+```         
+: > src/features/business/submission/submission.model.ts
+```
+
+Y:
+
+![](images/clipboard-1649780897.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+git add . 
+git commit -m "ISS-13: Submission - Modelo" 
+git push origin main
+```
+
+![](images/clipboard-4196419509.png)
+
+# 18.2 — Submission Controller + CRUD completo
+
+Mismo orden que Attempt:
+
+1.   `getAll`
+
+2.   `getOne`
+
+3.   `create`
+
+4.   `update`
+
+5.   `patch`
+
+6.   `delete`
+
+7.   `deactivate`
+
+## 18.2.1 Crear Controller
+
+![](images/clipboard-3993581290.png)
+
+### 18.2.2 Crear Submission Routes
+
+![](images/clipboard-386269461.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add .
+git commit -m "ISS-13: Submission - Controller y Routes CRUD" 
 git push origin main
 ```
