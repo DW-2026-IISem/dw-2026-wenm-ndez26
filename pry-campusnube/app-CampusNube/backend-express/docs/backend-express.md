@@ -2914,8 +2914,60 @@ Debe quedar **sin errores**.
 
 # Realizamos el commit
 
-Si todo está limpio:
+```         
+git add . 
+git commit -m "ISS-11: Lesson - Modelo" 
+git push origin main
+```
+
+![](images/clipboard-1741357801.png)
+
+# 16.2 — Lesson Controller + CRUD completo
+
+Primero creamos el controller siguiendo el mismo orden utilizado en las entidades anteriores:
+
+1.   `getAll`
+
+2.   `getOne`
+
+3.   `create`
+
+4.   `update` — PUT
+
+5.   `patch` — PATCH
+
+6.   `delete` físico
+
+7.   `deactivate` — eliminación lógica
+
+## 16.2.1 Crear `lesson.controller.ts`
+
+![](images/clipboard-2565591652.png)
+
+## Verificamos
 
 ```         
-git add . git commit -m "ISS-11: Lesson - Modelo" git push origin main
+npx tsc --noEmit
+```
+
+![](images/clipboard-1238814040.png)
+
+### 16.2.2 Crear Lesson Routes
+
+![](images/clipboard-2028684756.png)
+
+## Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-2160269565.png)
+
+### Realizamos el commit
+
+```         
+git add . 
+git commit -m "ISS-11: Lesson - Controller y Routes CRUD"
+git push origin main
 ```
