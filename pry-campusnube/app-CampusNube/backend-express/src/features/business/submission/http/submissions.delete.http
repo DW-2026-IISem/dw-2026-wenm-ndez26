@@ -1,0 +1,5 @@
+### DELETE SUBMISSION - FÍSICO
+DELETE http://localhost:4000/api/entregas/1
+
+### DELETE SUBMISSION - LÓGICO
+PATCH http://localhost:4000/api/entregas/1/deactivate

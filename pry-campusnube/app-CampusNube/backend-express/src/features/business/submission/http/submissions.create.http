@@ -1,0 +1,14 @@
+### CREATE SUBMISSION
+POST http://localhost:4000/api/entregas
+Content-Type: application/json
+
+{
+  "referencia_id": 1,
+  "lesson_id": 1,
+  "enrollment_id": 1,
+  "fecha_inicio": "2026-09-29T08:00:00",
+  "fecha_fin": "2026-09-29T10:00:00",
+  "total": 95,
+  "estado": "completada",
+  "observaciones": "Entrega realizada correctamente"
+}

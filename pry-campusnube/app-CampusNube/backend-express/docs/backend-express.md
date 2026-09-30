@@ -3957,3 +3957,59 @@ git add .
 git commit -m "ISS-13: Submission - Controller y Routes CRUD" 
 git push origin main
 ```
+
+![](images/clipboard-814178512.png)
+
+# 18.3 — HTTP SUBMISSION
+
+Vamos a crear los cuatro archivos:
+
+```         
+src/features/business/submission/http/
+├── submissions.get.http 
+├── submissions.create.http 
+├── submissions.update.http 
+└── submissions.delete.http
+```
+
+## 18.3.1 GET
+
+![](images/clipboard-1092816176.png)
+
+### 18.3.2 CREATE
+
+### ![](images/clipboard-884635146.png)
+
+### 
+
+### 18.3.3 UPDATE
+
+![](images/clipboard-1100985819.png)
+
+### 18.3.4 DELETE
+
+![](images/clipboard-1353081933.png)
+
+# Verificamos
+
+Después:
+
+```         
+npx tsc --noEmit
+```
+
+Si está limpio:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-3354759093.png)
+
+### Commit
+
+```         
+git add .
+git commit -m "ISS-13: Submission - Archivos HTTP CRUD"
+git push origin main
+```

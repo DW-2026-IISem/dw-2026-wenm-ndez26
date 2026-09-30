@@ -1,0 +1,5 @@
+### GET ALL SUBMISSIONS
+GET http://localhost:4000/api/entregas
+
+### GET SUBMISSION BY ID
+GET http://localhost:4000/api/entregas/1
