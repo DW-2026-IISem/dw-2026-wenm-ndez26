@@ -4857,6 +4857,8 @@ git commit -m "ISS-15: Certificate - Cableado Routes y Config"
 git push origin main
 ```
 
+![](images/clipboard-3933038430.png)
+
 # 18.5 — Relaciones Certificate
 
 La imagen dice:
@@ -4869,9 +4871,7 @@ Creamos:
 : > src/features/business/certificate/certificate.associations.ts
 ```
 
-```         
-cat >> src/features/business/certificate/certificate.associations.ts <<'EOF' import { Certificate } from "./certificate.model"; import { Enrollment } from "../enrollment/enrollment.model";  Certificate.belongsTo(Enrollment, {   foreignKey: "enrollment_id",   as: "enrollment", });  Enrollment.hasOne(Certificate, {   foreignKey: "enrollment_id",   as: "certificate", }); EOF
-```
+![](images/clipboard-1255678670.png)
 
 En:
 
@@ -4885,11 +4885,16 @@ agrega:
 import "../features/business/certificate/certificate.associations";
 ```
 
+![](images/clipboard-2664692720.png)
+
 ### Verificación
 
 ```         
 npx tsc --noEmit
+npm run de
 ```
+
+![](images/clipboard-680634953.png)
 
 ### Commit
 

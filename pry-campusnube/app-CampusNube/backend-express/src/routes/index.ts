@@ -10,6 +10,7 @@ import { SubmissionRoutes } from "../features/business/submission/submission.rou
 import { ProgressRoutes } from "../features/business/progress/progress.routes";
 import { CertificateRoutes } from "../features/business/certificate/certificate.routes";
 
+
 export class Routes {
   public learnerRoutes: LearnerRoutes = new LearnerRoutes();
   public teacherRoutes: TeacherRoutes = new TeacherRoutes();
