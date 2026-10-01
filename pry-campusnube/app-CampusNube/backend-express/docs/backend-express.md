@@ -4415,8 +4415,232 @@ git commit -m "ISS-14: Progress - Modelo"
 git push origin main
 ```
 
+![](images/clipboard-3289831257.png)
+
 # 17.2 — Progress Controller + CRUD completo
 
 ```         
 : > src/features/business/progress/progress.controller.ts
+```
+
+![](images/clipboard-3349481159.png)
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-3798749391.png)
+
+### Commit
+
+```         
+git add 
+git commit -m "ISS-14: Progress - Controller CRUD"
+git push origin main
+```
+
+# 17.3 — Routes Progress
+
+```         
+: > src/features/business/progress/progress.routes.ts
+```
+
+```         
+cat >> src/features/business/progress/progress.routes.ts <<'EOF' import { Application } from "express"; import { ProgressController } from "./progress.controller";  export class ProgressRoutes {   public progressController: ProgressController =     new ProgressController();    public routes(app: Application): void {     app       .route("/api/progress")       .get(         this.progressController.getAll.bind(           this.progressController         )       )       .post(         this.progressController.create.bind(           this.progressController         )       );      app       .route("/api/progress/:id")       .get(         this.progressController.getOne.bind(           this.progressController         )       )       .put(         this.progressController.update.bind(           this.progressController         )       )       .patch(         this.progressController.patch.bind(           this.progressController         )       )       .delete(         this.progressController.delete.bind(           this.progressController         )       );   } } EOF
+```
+
+# 17.4 — HTTP Progress
+
+### `get.http`
+
+```         
+cat >> src/features/business/progress/http/get.http <<'EOF' ### GET ALL PROGRESS GET http://localhost:4000/api/progress  ### GET PROGRESS BY ID GET http://localhost:4000/api/progress/1 EOF
+```
+
+### `create.http`
+
+```         
+cat >> src/features/business/progress/http/create.http <<'EOF' ### CREATE PROGRESS POST http://localhost:4000/api/progress Content-Type: application/json  {   "enrollment_id": 1,   "name": "Progreso del curso",   "description": "Seguimiento del avance del aprendiz",   "isActive": true } EOF
+```
+
+### `update.http`
+
+```         
+cat >> src/features/business/progress/http/update.http <<'EOF' ### UPDATE PROGRESS - PUT PUT http://localhost:4000/api/progress/1 Content-Type: application/json  {   "enrollment_id": 1,   "name": "Progreso actualizado",   "description": "Seguimiento actualizado",   "isActive": true }  ### UPDATE PROGRESS - PATCH PATCH http://localhost:4000/api/progress/1 Content-Type: application/json  {   "name": "Progreso parcial actualizado" } EOF
+```
+
+### `delete.http`
+
+```         
+cat >> src/features/business/progress/http/delete.http <<'EOF' ### DELETE PROGRESS DELETE http://localhost:4000/api/progress/1 EOF
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add src/features/business/progress/progress.routes.ts src/features/business/progress/http git commit -m "ISS-14: Progress - Routes y HTTP CRUD" git push origin main
+```
+
+# 17.5 — Cableado Routes + Config
+
+### `src/routes/index.ts`
+
+Agrega:
+
+```         
+import { ProgressRoutes } from "../features/business/progress/progress.routes";
+```
+
+Dentro de `Routes`:
+
+```         
+public progressRoutes: ProgressRoutes = new ProgressRoutes();
+```
+
+### `src/config/index.ts`
+
+Agrega:
+
+```         
+import "../features/business/progress/progress.model";
+```
+
+Y dentro de `routes()`:
+
+```         
+this.routePrv.progressRoutes.routes(this.app);
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add src/routes/index.ts src/config/index.ts git commit -m "ISS-14: Progress - Cableado Routes y Config" git push origin main
+```
+
+# 17.6 — Relación Progress
+
+La imagen establece:
+
+**Inscripción 1:N Progreso**
+
+```         
+: > src/features/business/progress/progress.associations.ts
+```
+
+```         
+cat >> src/features/business/progress/progress.associations.ts <<'EOF' import { Progress } from "./progress.model"; import { Enrollment } from "../enrollment/enrollment.model";  Progress.belongsTo(Enrollment, {   foreignKey: "enrollment_id",   as: "enrollment", });  Enrollment.hasMany(Progress, {   foreignKey: "enrollment_id",   as: "progress", }); EOF
+```
+
+En `src/config/index.ts`:
+
+```         
+import "../features/business/progress/progress.associations";
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add src/features/business/progress/progress.associations.ts src/config/index.ts git commit -m "ISS-14: Progress - Relaciones Enrollment y Progress" git push origin main
+```
+
+# 17.7 — Seeder Progress
+
+Aquí también corregimos el seeder: **ya no generamos porcentaje ni status**, porque la imagen no los contempla.
+
+```         
+: > src/features/business/progress/progress.seeder.ts
+```
+
+```         
+cat >> src/features/business/progress/progress.seeder.ts <<'EOF' import { faker } from "@faker-js/faker"; import { Progress } from "./progress.model"; import { Enrollment } from "../enrollment/enrollment.model";  export async function seedProgress(count: number): Promise<number> {   if (count <= 0) {     console.log("⏭️  progress: count=0, se omite");     return 0;   }    const existing = await Progress.count();    if (existing > 0) {     console.log(       `⏭️  progress: ya hay ${existing} registro(s), se omite seeder`     );     return 0;   }    const enrollments = await Enrollment.findAll({     where: {       status: "active",     },   });    if (enrollments.length === 0) {     console.log(       "⏭️  progress: no hay inscripciones activas, se omite seeder"     );     return 0;   }    const rows = Array.from({ length: count }, (_, index) => {     const enrollment =       enrollments[index % enrollments.length];      return {       enrollment_id: enrollment.id,       name: faker.lorem.words(3),       description: faker.lorem.sentence(),       isActive: true,     };   });    await Progress.bulkCreate(rows);    console.log(     `✅ progress: insertados ${rows.length} registro(s) falsos`   );    return rows.length; } EOF
+```
+
+En `counts.ts`:
+
+```         
+progress: number;
+```
+
+y:
+
+```         
+progress: 20,
+```
+
+En el runner:
+
+```         
+import { seedProgress } from "../features/business/progress/progress.seeder";
+```
+
+y:
+
+```         
+await seedProgress(counts.progress);
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit npm run db:seed
+```
+
+### Commit
+
+```         
+git add src/features/business/progress/progress.seeder.ts src/database/seeders git commit -m "ISS-14: Progress - Seeder y SeedersRunner" git push origin main
+```
+
+# 17.8 — Swagger Progress
+
+```         
+: > src/features/business/progress/progress.swagger.ts
+```
+
+```         
+cat >> src/features/business/progress/progress.swagger.ts <<'EOF' export const progressSwagger = {   tags: [     {       name: "Progress",       description: "Gestión del progreso",     },   ],    paths: {     "/api/progress": {       get: {         tags: ["Progress"],         summary: "Obtener todos los progresos",         responses: {           200: {             description: "Lista de progresos",           },         },       },        post: {         tags: ["Progress"],         summary: "Crear un progreso",         requestBody: {           required: true,           content: {             "application/json": {               schema: {                 $ref: "#/components/schemas/ProgressCreate",               },             },           },         },         responses: {           201: {             description: "Progreso creado",           },         },       },     },      "/api/progress/{id}": {       get: {         tags: ["Progress"],         summary: "Obtener progreso por ID",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Progreso encontrado",           },         },       },        put: {         tags: ["Progress"],         summary: "Actualizar progreso",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Progreso actualizado",           },         },       },        patch: {         tags: ["Progress"],         summary: "Actualizar parcialmente progreso",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Progreso actualizado",           },         },       },        delete: {         tags: ["Progress"],         summary: "Eliminar progreso",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Progreso eliminado",           },         },       },     },   },    components: {     schemas: {       Progress: {         type: "object",         properties: {           id: {             type: "integer",           },           enrollment_id: {             type: "integer",           },           name: {             type: "string",           },           description: {             type: "string",           },           isActive: {             type: "boolean",           },         },       },        ProgressCreate: {         type: "object",         required: [           "enrollment_id",           "name",         ],         properties: {           enrollment_id: {             type: "integer",           },           name: {             type: "string",           },           description: {             type: "string",           },           isActive: {             type: "boolean",           },         },       },     },   }, }; EOF
+```
+
+En `src/swagger/index.ts`:
+
+```         
+import { progressSwagger } from "../features/business/progress/progress.swagger";
+```
+
+y:
+
+```         
+progressSwagger,
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add src/features/business/progress/progress.swagger.ts src/swagger/index.ts git commit -m "ISS-14: Progress - Swagger" git push origin main
 ```
