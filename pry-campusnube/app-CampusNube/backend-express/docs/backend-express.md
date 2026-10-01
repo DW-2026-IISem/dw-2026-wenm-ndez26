@@ -2238,11 +2238,11 @@ Course 1:N Evaluation
 
 Esto significa que:
 
--  Un **Course** puede tener muchas **Evaluations**.
+- Un **Course** puede tener muchas **Evaluations**.
 
--  Una **Evaluation** pertenece a un **Course**.
+- Una **Evaluation** pertenece a un **Course**.
 
--  La clave foránea se encuentra en `evaluations.course_id`.
+- La clave foránea se encuentra en `evaluations.course_id`.
 
 ![](images/clipboard-174198578.png)
 
@@ -2418,19 +2418,19 @@ El módulo pertenece a un curso, así que al crear o actualizar un módulo vamos
 
 Primero vamos a crear el controller siguiendo el mismo orden utilizado en Enrollment:
 
-1.   `getAll`
+1.  `getAll`
 
-2.   `getOne`
+2.  `getOne`
 
-3.   `create`
+3.  `create`
 
-4.   `update` — PUT
+4.  `update` — PUT
 
-5.   `patch` — PATCH
+5.  `patch` — PATCH
 
-6.   `delete` físico
+6.  `delete` físico
 
-7.   `deactivate` — eliminación lógica
+7.  `deactivate` — eliminación lógica
 
 ## 15.2.1 Crear `module.controller.ts`
 
@@ -2680,11 +2680,11 @@ git push origin main
 
 Aquí vamos a hacer el Seeder y los dos parches correspondientes:
 
--  `src/features/business/module/module.seeder.ts`
+- `src/features/business/module/module.seeder.ts`
 
--  `src/database/seeders/counts.ts`
+- `src/database/seeders/counts.ts`
 
--  `src/database/seeders/index.ts`
+- `src/database/seeders/index.ts`
 
 El orden será importante porque **Module depende de Course**.
 
@@ -2926,19 +2926,19 @@ git push origin main
 
 Primero creamos el controller siguiendo el mismo orden utilizado en las entidades anteriores:
 
-1.   `getAll`
+1.  `getAll`
 
-2.   `getOne`
+2.  `getOne`
 
-3.   `create`
+3.  `create`
 
-4.   `update` — PUT
+4.  `update` — PUT
 
-5.   `patch` — PATCH
+5.  `patch` — PATCH
 
-6.   `delete` físico
+6.  `delete` físico
 
-7.   `deactivate` — eliminación lógica
+7.  `deactivate` — eliminación lógica
 
 ## 16.2.1 Crear `lesson.controller.ts`
 
@@ -3204,11 +3204,11 @@ git push origin main
 
 Aquí hacemos el Seeder y los dos parches correspondientes:
 
--  `src/features/business/lesson/lesson.seeder.ts`
+- `src/features/business/lesson/lesson.seeder.ts`
 
--  `src/database/seeders/counts.ts`
+- `src/database/seeders/counts.ts`
 
--  `src/database/seeders/index.ts`
+- `src/database/seeders/index.ts`
 
 El orden es importante porque **Lesson depende de Module**.
 
@@ -3424,19 +3424,19 @@ git push origin main
 
 Seguimos exactamente el mismo orden:
 
-1.   `getAll`
+1.  `getAll`
 
-2.   `getOne`
+2.  `getOne`
 
-3.   `create`
+3.  `create`
 
-4.   `update` — PUT
+4.  `update` — PUT
 
-5.   `patch` — PATCH
+5.  `patch` — PATCH
 
-6.   `delete` físico
+6.  `delete` físico
 
-7.   `deactivate` — eliminación lógica
+7.  `deactivate` — eliminación lógica
 
 ## 17.2.1 Crear `attempt.controller.ts`
 
@@ -3922,19 +3922,19 @@ git push origin main
 
 Mismo orden que Attempt:
 
-1.   `getAll`
+1.  `getAll`
 
-2.   `getOne`
+2.  `getOne`
 
-3.   `create`
+3.  `create`
 
-4.   `update`
+4.  `update`
 
-5.   `patch`
+5.  `patch`
 
-6.   `delete`
+6.  `delete`
 
-7.   `deactivate`
+7.  `deactivate`
 
 ## 18.2.1 Crear Controller
 
@@ -4376,4 +4376,47 @@ Como venimos haciendo:
 git add .
 git commit -m "ISS-13: Submission - Seeder y Swagger" 
 git push origin main
+```
+
+![](images/clipboard-3171107828.png)
+
+# 17. ISS-14 — Feature Progress
+
+**Objetivo:** implementar el proceso de **Progreso (Progress)** de CampusNube, manteniendo exactamente la metodología aplicada en las entidades anteriores.
+
+**Bloqueado por:** ISS-08 — Enrollment.
+
+**Relación:** Inscripción 1:N Progreso.
+
+**API:** `/api/progress` — **SIN AUTH**.
+
+## 17.1 — Modelo Progress
+
+```         
+mkdir -p src/features/business/progress/http  
+: > src/features/business/progress/progress.model.ts
+```
+
+![](images/clipboard-1816271783.png)
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-2032838640.png)
+
+### Commit
+
+```         
+git add 
+git commit -m "ISS-14: Progress - Modelo" 
+git push origin main
+```
+
+# 17.2 — Progress Controller + CRUD completo
+
+```         
+: > src/features/business/progress/progress.controller.ts
 ```

@@ -18,6 +18,7 @@ import "../features/business/evaluation/evaluation.associations";
 import "../features/business/module/module.associations";
 import "../features/business/lesson/lesson.associations";
 import "../features/business/attempt/attempt.associations";
+import "../features/business/submission/submission.associations";
 import { Routes } from "../routes/index";
 import { setupSwagger } from "../swagger/index";
 dotenv.config();
