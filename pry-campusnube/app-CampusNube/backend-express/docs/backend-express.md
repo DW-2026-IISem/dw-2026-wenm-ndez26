@@ -4543,6 +4543,8 @@ git commit -m "ISS-14: Progress - Cableado Routes y Config"
 git push origin main
 ```
 
+![](images/clipboard-2774551862.png)
+
 # 17.6 — Relación Progress
 
 La imagen establece:
@@ -4553,9 +4555,7 @@ La imagen establece:
 : > src/features/business/progress/progress.associations.ts
 ```
 
-```         
-cat >> src/features/business/progress/progress.associations.ts <<'EOF' import { Progress } from "./progress.model"; import { Enrollment } from "../enrollment/enrollment.model";  Progress.belongsTo(Enrollment, {   foreignKey: "enrollment_id",   as: "enrollment", });  Enrollment.hasMany(Progress, {   foreignKey: "enrollment_id",   as: "progress", }); EOF
-```
+![](images/clipboard-1025170529.png)
 
 En `src/config/index.ts`:
 
@@ -4563,16 +4563,22 @@ En `src/config/index.ts`:
 import "../features/business/progress/progress.associations";
 ```
 
+![](images/clipboard-2874404994.png)
+
 ### Verificación
 
 ```         
 npx tsc --noEmit
 ```
 
+![](images/clipboard-2315070661.png)
+
 ### Commit
 
 ```         
-git add src/features/business/progress/progress.associations.ts src/config/index.ts git commit -m "ISS-14: Progress - Relaciones Enrollment y Progress" git push origin main
+git add 
+git commit -m "ISS-14: Progress - Relaciones Enrollment y Progress" 
+git push origin main
 ```
 
 # 17.7 — Seeder Progress
