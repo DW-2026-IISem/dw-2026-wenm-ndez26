@@ -1,0 +1,10 @@
+### CREATE PROGRESS
+POST http://localhost:4000/api/progress
+Content-Type: application/json
+
+{
+  "enrollment_id": 1,
+  "name": "Progreso del curso",
+  "description": "Seguimiento del avance del aprendiz",
+  "isActive": true
+}

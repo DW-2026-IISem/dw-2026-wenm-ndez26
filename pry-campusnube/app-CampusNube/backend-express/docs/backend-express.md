@@ -4441,41 +4441,35 @@ git commit -m "ISS-14: Progress - Controller CRUD"
 git push origin main
 ```
 
+![](images/clipboard-401533877.png)
+
 # 17.3 — Routes Progress
 
 ```         
 : > src/features/business/progress/progress.routes.ts
 ```
 
-```         
-cat >> src/features/business/progress/progress.routes.ts <<'EOF' import { Application } from "express"; import { ProgressController } from "./progress.controller";  export class ProgressRoutes {   public progressController: ProgressController =     new ProgressController();    public routes(app: Application): void {     app       .route("/api/progress")       .get(         this.progressController.getAll.bind(           this.progressController         )       )       .post(         this.progressController.create.bind(           this.progressController         )       );      app       .route("/api/progress/:id")       .get(         this.progressController.getOne.bind(           this.progressController         )       )       .put(         this.progressController.update.bind(           this.progressController         )       )       .patch(         this.progressController.patch.bind(           this.progressController         )       )       .delete(         this.progressController.delete.bind(           this.progressController         )       );   } } EOF
-```
+![](images/clipboard-2633741498.png)
 
 # 17.4 — HTTP Progress
 
+Creamos los 4 archivos
+
 ### `get.http`
 
-```         
-cat >> src/features/business/progress/http/get.http <<'EOF' ### GET ALL PROGRESS GET http://localhost:4000/api/progress  ### GET PROGRESS BY ID GET http://localhost:4000/api/progress/1 EOF
-```
+![](images/clipboard-2488240508.png)
 
 ### `create.http`
 
-```         
-cat >> src/features/business/progress/http/create.http <<'EOF' ### CREATE PROGRESS POST http://localhost:4000/api/progress Content-Type: application/json  {   "enrollment_id": 1,   "name": "Progreso del curso",   "description": "Seguimiento del avance del aprendiz",   "isActive": true } EOF
-```
+![](images/clipboard-2513763819.png)
 
 ### `update.http`
 
-```         
-cat >> src/features/business/progress/http/update.http <<'EOF' ### UPDATE PROGRESS - PUT PUT http://localhost:4000/api/progress/1 Content-Type: application/json  {   "enrollment_id": 1,   "name": "Progreso actualizado",   "description": "Seguimiento actualizado",   "isActive": true }  ### UPDATE PROGRESS - PATCH PATCH http://localhost:4000/api/progress/1 Content-Type: application/json  {   "name": "Progreso parcial actualizado" } EOF
-```
+![](images/clipboard-2726334705.png)
 
 ### `delete.http`
 
-```         
-cat >> src/features/business/progress/http/delete.http <<'EOF' ### DELETE PROGRESS DELETE http://localhost:4000/api/progress/1 EOF
-```
+![](images/clipboard-3805077919.png)
 
 ### Verificación
 
@@ -4483,10 +4477,14 @@ cat >> src/features/business/progress/http/delete.http <<'EOF' ### DELETE PROGRE
 npx tsc --noEmit
 ```
 
+![](images/clipboard-3178807679.png)
+
 ### Commit
 
 ```         
-git add src/features/business/progress/progress.routes.ts src/features/business/progress/http git commit -m "ISS-14: Progress - Routes y HTTP CRUD" git push origin main
+git add
+git commit -m "ISS-14: Progress - Routes y HTTP CRUD" 
+git push origin main
 ```
 
 # 17.5 — Cableado Routes + Config

@@ -1,0 +1,5 @@
+### GET ALL PROGRESS
+GET http://localhost:4000/api/progress
+
+### GET PROGRESS BY ID
+GET http://localhost:4000/api/progress/1
