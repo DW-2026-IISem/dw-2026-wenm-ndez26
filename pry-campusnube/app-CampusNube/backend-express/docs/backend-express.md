@@ -4899,8 +4899,12 @@ npm run de
 ### Commit
 
 ```         
-git add src/features/business/certificate/certificate.associations.ts src/config/index.ts git commit -m "ISS-15: Certificate - Relaciones" git push origin main
+git add 
+git commit -m "ISS-15: Certificate - Relaciones" 
+git push origin main
 ```
+
+![](images/clipboard-2486921860.png)
 
 # 18.6 — Seeder Certificate
 
@@ -4910,9 +4914,7 @@ Creamos:
 : > src/features/business/certificate/certificate.seeder.ts
 ```
 
-```         
-cat >> src/features/business/certificate/certificate.seeder.ts <<'EOF' import { faker } from "@faker-js/faker"; import { Certificate } from "./certificate.model"; import { Enrollment } from "../enrollment/enrollment.model";  export async function seedCertificates(   count: number ): Promise<number> {    if (count <= 0) {     console.log("⏭️  certificates: count=0, se omite");     return 0;   }    const existing = await Certificate.count();    if (existing > 0) {     console.log(       `⏭️  certificates: ya hay ${existing} registro(s), se omite seeder`     );     return 0;   }    const enrollments = await Enrollment.findAll({     where: {       status: "active",     },   });    if (enrollments.length === 0) {     console.log(       "⏭️  certificates: no hay inscripciones activas, se omite seeder"     );     return 0;   }    const rows = enrollments     .slice(0, count)     .map((enrollment) => ({       enrollment_id: enrollment.id,       name: faker.lorem.words(3),       description: faker.lorem.sentence(),       isActive: true,     }));    await Certificate.bulkCreate(rows);    console.log(     `✅ certificates: insertados ${rows.length} registro(s) falsos`   );    return rows.length; } EOF
-```
+![](images/clipboard-353672319.png)
 
 ## Modificamos `counts.ts`
 
@@ -4928,11 +4930,9 @@ Y en `DEFAULT_SEED_COUNTS`:
 certificates: 10,
 ```
 
-También agrega `SEED_CERTIFICATES` siguiendo exactamente el patrón de las demás variables.
+![](images/clipboard-484053629.png)
 
 ## Modificamos el Runner
-
-Otra vez: **NO creamos un Runner nuevo.**
 
 Abrimos:
 
@@ -4946,17 +4946,15 @@ Agregamos:
 import { seedCertificates } from "../../features/business/certificate/certificate.seeder";
 ```
 
+![](images/clipboard-1866752896.png)
+
 Y después de Progress:
 
 ```         
 await seedCertificates(counts.certificates);
 ```
 
-Así el flujo queda:
-
-```         
-Learner Teacher Course Enrollment Evaluation Progress Certificate
-```
+![](images/clipboard-31001637.png)
 
 ### Verificamos
 
@@ -4972,17 +4970,7 @@ npm run db:seed
 
 Debe aparecer:
 
-```         
-⏭️ learners: ya hay 10 registro(s), se omite seeder ⏭️ teachers: ya hay 10 registro(s), se omite seeder ⏭️ courses: ya hay 10 registro(s), se omite seeder ⏭️ enrollments: ya hay 20 registro(s), se omite seeder ⏭️ evaluations: ya hay 10 registro(s), se omite seeder ⏭️ progress: ya hay 20 registro(s), se omite seeder ✅ certificates: insertados 10 registro(s) falsos 🌱 SeedersRunner finalizado
-```
-
-📸 Captura.
-
-### Commit
-
-```         
-git add src/features/business/certificate/certificate.seeder.ts src/database/seeders git commit -m "ISS-15: Certificate - Seeder y SeedersRunner" git push origin main
-```
+![](images/clipboard-120589147.png)
 
 # 18.7 — Swagger Certificate
 
@@ -4992,9 +4980,7 @@ Creamos:
 : > src/features/business/certificate/certificate.swagger.ts
 ```
 
-```         
-cat >> src/features/business/certificate/certificate.swagger.ts <<'EOF' export const certificateSwagger = {   tags: [     {       name: "Certificate",       description: "Gestión de certificados",     },   ],    paths: {     "/api/certificates": {       get: {         tags: ["Certificate"],         summary: "Obtener todos los certificados",         responses: {           200: {             description: "Lista de certificados",           },         },       },        post: {         tags: ["Certificate"],         summary: "Crear certificado",         requestBody: {           required: true,           content: {             "application/json": {               schema: {                 $ref: "#/components/schemas/CertificateCreate",               },             },           },         },         responses: {           201: {             description: "Certificado creado",           },         },       },     },      "/api/certificates/{id}": {       get: {         tags: ["Certificate"],         summary: "Obtener certificado por ID",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Certificado encontrado",           },         },       },        put: {         tags: ["Certificate"],         summary: "Actualizar certificado",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Certificado actualizado",           },         },       },        patch: {         tags: ["Certificate"],         summary: "Actualizar parcialmente certificado",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Certificado actualizado",           },         },       },        delete: {         tags: ["Certificate"],         summary: "Eliminar certificado",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Certificado eliminado",           },         },       },     },   },    components: {     schemas: {       Certificate: {         type: "object",         properties: {           id: {             type: "integer",           },           enrollment_id: {             type: "integer",           },           name: {             type: "string",           },           description: {             type: "string",           },           isActive: {             type: "boolean",           },         },       },        CertificateCreate: {         type: "object",         required: [           "enrollment_id",           "name",         ],         properties: {           enrollment_id: {             type: "integer",           },           name: {             type: "string",           },           description: {             type: "string",           },           isActive: {             type: "boolean",           },         },       },     },   }, }; EOF
-```
+![](images/clipboard-1609262105.png)
 
 En:
 
@@ -5008,6 +4994,8 @@ agrega:
 import { certificateSwagger } from "../features/business/certificate/certificate.swagger";
 ```
 
+![](images/clipboard-3164646563.png)
+
 Y en:
 
 ```         
@@ -5019,6 +5007,8 @@ agrega:
 ```         
 certificateSwagger,
 ```
+
+![](images/clipboard-762300623.png)
 
 ### Verificación final
 
@@ -5032,18 +5022,22 @@ Luego:
 npm run dev
 ```
 
-Abre:
+![](images/clipboard-1591090400.png)
+
+Abrimos:
 
 ```         
 http://localhost:4000/api/docs
 ```
 
-Debes ver:
+![](images/clipboard-1876907088.png)
 
-```         
-Progress Certificate
-```
-
-📸 **Captura final de Swagger.**
+**Captura final de Swagger.**
 
 ### Commit final
+
+```         
+git add  
+git commit -m "ISS-15: Certificate - Seeder y Swagger" 
+git push origin main
+```
