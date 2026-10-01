@@ -4785,6 +4785,8 @@ git commit -m "ISS-15: Certificate - Archivos HTTP CRUD"
 git push origin main
 ```
 
+![](images/clipboard-2127019393.png)
+
 # 18.4 — Cableado Routes + Config
 
 Creamos:
@@ -4793,9 +4795,7 @@ Creamos:
 : > src/features/business/certificate/certificate.routes.ts
 ```
 
-```         
-cat >> src/features/business/certificate/certificate.routes.ts <<'EOF' import { Application } from "express"; import { CertificateController } from "./certificate.controller";  export class CertificateRoutes {   public certificateController: CertificateController =     new CertificateController();    public routes(app: Application): void {     app       .route("/api/certificates")       .get(         this.certificateController.getAll.bind(           this.certificateController         )       )       .post(         this.certificateController.create.bind(           this.certificateController         )       );      app       .route("/api/certificates/:id")       .get(         this.certificateController.getOne.bind(           this.certificateController         )       )       .put(         this.certificateController.update.bind(           this.certificateController         )       )       .patch(         this.certificateController.patch.bind(           this.certificateController         )       )       .delete(         this.certificateController.delete.bind(           this.certificateController         )       );   } } EOF
-```
+![](images/clipboard-290252466.png)
 
 En:
 
@@ -4803,11 +4803,13 @@ En:
 src/routes/index.ts
 ```
 
-agrega:
+agregamos:
 
 ```         
 import { CertificateRoutes } from "../features/business/certificate/certificate.routes";
 ```
+
+![](images/clipboard-2830622278.png)
 
 Dentro de `Routes`:
 
@@ -4815,17 +4817,21 @@ Dentro de `Routes`:
 public certificateRoutes: CertificateRoutes =   new CertificateRoutes();
 ```
 
+![](images/clipboard-1251760631.png)
+
 En:
 
 ```         
 src/config/index.ts
 ```
 
-agrega:
+agregamos:
 
 ```         
 import "../features/business/certificate/certificate.model";
 ```
+
+![](images/clipboard-746759553.png)
 
 Y en `routes()`:
 
@@ -4833,16 +4839,22 @@ Y en `routes()`:
 this.routePrv.certificateRoutes.routes(this.app);
 ```
 
+![](images/clipboard-2870487177.png)
+
 ### Verificación
 
 ```         
 npx tsc --noEmit
 ```
 
+![](images/clipboard-1157669992.png)
+
 ### Commit
 
 ```         
-git add src/features/business/certificate/certificate.routes.ts src/routes/index.ts src/config/index.ts git commit -m "ISS-15: Certificate - Cableado Routes y Config" git push origin main
+git add 
+git commit -m "ISS-15: Certificate - Cableado Routes y Config" 
+git push origin main
 ```
 
 # 18.5 — Relaciones Certificate

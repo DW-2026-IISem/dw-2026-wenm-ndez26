@@ -8,6 +8,7 @@ import { LessonRoutes } from "../features/business/lesson/lesson.routes";
 import { AttemptRoutes } from "../features/business/attempt/attempt.routes";
 import { SubmissionRoutes } from "../features/business/submission/submission.routes";
 import { ProgressRoutes } from "../features/business/progress/progress.routes";
+import { CertificateRoutes } from "../features/business/certificate/certificate.routes";
 
 export class Routes {
   public learnerRoutes: LearnerRoutes = new LearnerRoutes();
@@ -20,4 +21,5 @@ export class Routes {
   public attemptRoutes: AttemptRoutes = new AttemptRoutes();
   public submissionRoutes: SubmissionRoutes = new SubmissionRoutes();
   public progressRoutes: ProgressRoutes = new ProgressRoutes();
+  public certificateRoutes: CertificateRoutes =   new CertificateRoutes();
 }
