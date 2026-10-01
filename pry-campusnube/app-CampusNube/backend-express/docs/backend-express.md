@@ -4581,17 +4581,15 @@ git commit -m "ISS-14: Progress - Relaciones Enrollment y Progress"
 git push origin main
 ```
 
-# 17.7 — Seeder Progress
+![](images/clipboard-1651176704.png)
 
-Aquí también corregimos el seeder: **ya no generamos porcentaje ni status**, porque la imagen no los contempla.
+# 17.7 — Seeder Progress
 
 ```         
 : > src/features/business/progress/progress.seeder.ts
 ```
 
-```         
-cat >> src/features/business/progress/progress.seeder.ts <<'EOF' import { faker } from "@faker-js/faker"; import { Progress } from "./progress.model"; import { Enrollment } from "../enrollment/enrollment.model";  export async function seedProgress(count: number): Promise<number> {   if (count <= 0) {     console.log("⏭️  progress: count=0, se omite");     return 0;   }    const existing = await Progress.count();    if (existing > 0) {     console.log(       `⏭️  progress: ya hay ${existing} registro(s), se omite seeder`     );     return 0;   }    const enrollments = await Enrollment.findAll({     where: {       status: "active",     },   });    if (enrollments.length === 0) {     console.log(       "⏭️  progress: no hay inscripciones activas, se omite seeder"     );     return 0;   }    const rows = Array.from({ length: count }, (_, index) => {     const enrollment =       enrollments[index % enrollments.length];      return {       enrollment_id: enrollment.id,       name: faker.lorem.words(3),       description: faker.lorem.sentence(),       isActive: true,     };   });    await Progress.bulkCreate(rows);    console.log(     `✅ progress: insertados ${rows.length} registro(s) falsos`   );    return rows.length; } EOF
-```
+![](images/clipboard-355484514.png)
 
 En `counts.ts`:
 
@@ -4605,11 +4603,15 @@ y:
 progress: 20,
 ```
 
+![](images/clipboard-807181512.png)
+
 En el runner:
 
 ```         
 import { seedProgress } from "../features/business/progress/progress.seeder";
 ```
+
+![](images/clipboard-1014810007.png)
 
 y:
 
@@ -4617,17 +4619,18 @@ y:
 await seedProgress(counts.progress);
 ```
 
+![](images/clipboard-1195815122.png)
+
 ### Verificación
 
 ```         
-npx tsc --noEmit npm run db:seed
+npx tsc --noEmit
+npm run db:seed
 ```
 
-### Commit
+![](images/clipboard-2653822563.png)
 
-```         
-git add src/features/business/progress/progress.seeder.ts src/database/seeders git commit -m "ISS-14: Progress - Seeder y SeedersRunner" git push origin main
-```
+![](images/clipboard-3881257574.png)
 
 # 17.8 — Swagger Progress
 
@@ -4636,8 +4639,9 @@ git add src/features/business/progress/progress.seeder.ts src/database/seeders g
 ```
 
 ```         
-cat >> src/features/business/progress/progress.swagger.ts <<'EOF' export const progressSwagger = {   tags: [     {       name: "Progress",       description: "Gestión del progreso",     },   ],    paths: {     "/api/progress": {       get: {         tags: ["Progress"],         summary: "Obtener todos los progresos",         responses: {           200: {             description: "Lista de progresos",           },         },       },        post: {         tags: ["Progress"],         summary: "Crear un progreso",         requestBody: {           required: true,           content: {             "application/json": {               schema: {                 $ref: "#/components/schemas/ProgressCreate",               },             },           },         },         responses: {           201: {             description: "Progreso creado",           },         },       },     },      "/api/progress/{id}": {       get: {         tags: ["Progress"],         summary: "Obtener progreso por ID",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Progreso encontrado",           },         },       },        put: {         tags: ["Progress"],         summary: "Actualizar progreso",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Progreso actualizado",           },         },       },        patch: {         tags: ["Progress"],         summary: "Actualizar parcialmente progreso",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Progreso actualizado",           },         },       },        delete: {         tags: ["Progress"],         summary: "Eliminar progreso",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Progreso eliminado",           },         },       },     },   },    components: {     schemas: {       Progress: {         type: "object",         properties: {           id: {             type: "integer",           },           enrollment_id: {             type: "integer",           },           name: {             type: "string",           },           description: {             type: "string",           },           isActive: {             type: "boolean",           },         },       },        ProgressCreate: {         type: "object",         required: [           "enrollment_id",           "name",         ],         properties: {           enrollment_id: {             type: "integer",           },           name: {             type: "string",           },           description: {             type: "string",           },           isActive: {             type: "boolean",           },         },       },     },   }, }; EOF
 ```
+
+![](images/clipboard-2929632857.png)
 
 En `src/swagger/index.ts`:
 
@@ -4645,20 +4649,29 @@ En `src/swagger/index.ts`:
 import { progressSwagger } from "../features/business/progress/progress.swagger";
 ```
 
+![](images/clipboard-1188775934.png)
+
 y:
 
 ```         
 progressSwagger,
 ```
 
+![](images/clipboard-3029351598.png)
+
 ### Verificación
 
 ```         
 npx tsc --noEmit
+npm run dev
 ```
+
+![](images/clipboard-800543669.png)
 
 ### Commit
 
 ```         
-git add src/features/business/progress/progress.swagger.ts src/swagger/index.ts git commit -m "ISS-14: Progress - Swagger" git push origin main
+git add 
+git commit -m "ISS-14: Progress - Seeder y Swagger"
+git push origin main
 ```

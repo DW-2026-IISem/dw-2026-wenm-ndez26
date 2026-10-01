@@ -17,6 +17,8 @@ export type SeedCounts = {
   lessons: number;
   attempts: number;
   submissions: number;
+  progress: number;
+  certificates: number;
 };
 
 export const DEFAULT_SEED_COUNTS: SeedCounts = {
@@ -28,7 +30,9 @@ export const DEFAULT_SEED_COUNTS: SeedCounts = {
   modules: 10,
   lessons: 10,
   attempts: 10,
-  submissions: 10
+  submissions: 10,
+  progress: 10,
+  certificates: 10,
 };
 
 export function resolveSeedCounts(
@@ -62,33 +66,45 @@ export function resolveSeedCounts(
 
   const envEvaluations = process.env.SEED_EVALUATIONS;
 
-if (envEvaluations !== undefined && envEvaluations !== "") {
-  counts.evaluations = Number(envEvaluations);
-}
+  if (envEvaluations !== undefined && envEvaluations !== "") {
+    counts.evaluations = Number(envEvaluations);
+  }
 
-const envModules = process.env.SEED_MODULES;
+  const envModules = process.env.SEED_MODULES;
 
-if (envModules !== undefined && envModules !== "") {
-  counts.modules = Number(envModules);
-}
+  if (envModules !== undefined && envModules !== "") {
+    counts.modules = Number(envModules);
+  }
 
-const envLessons = process.env.SEED_LESSONS;
+  const envLessons = process.env.SEED_LESSONS;
 
-if (envLessons !== undefined && envLessons !== "") {
-  counts.lessons = Number(envLessons);
-}
+  if (envLessons !== undefined && envLessons !== "") {
+    counts.lessons = Number(envLessons);
+  }
 
-const envAttempts = process.env.SEED_ATTEMPTS;
+  const envAttempts = process.env.SEED_ATTEMPTS;
 
-if (envAttempts !== undefined && envAttempts !== "") {
-  counts.attempts = Number(envAttempts);
-}
+  if (envAttempts !== undefined && envAttempts !== "") {
+    counts.attempts = Number(envAttempts);
+  }
 
-const envSubmissions = process.env.SEED_SUBMISSIONS;
+  const envSubmissions = process.env.SEED_SUBMISSIONS;
 
-if (envSubmissions !== undefined && envSubmissions !== "") {
-  counts.submissions = Number(envSubmissions);
-}
+  if (envSubmissions !== undefined && envSubmissions !== "") {
+    counts.submissions = Number(envSubmissions);
+  }
+
+  const envProgress = process.env.SEED_PROGRESS;
+
+  if (envProgress !== undefined && envProgress !== "") {
+    counts.progress = Number(envProgress);
+  }
+
+  const envCertificates = process.env.SEED_CERTIFICATES;
+
+  if (envCertificates !== undefined && envCertificates !== "") {
+    counts.certificates = Number(envCertificates);
+  }
 
   for (const arg of argv) {
     const m = arg.match(/^--([a-zA-Z_]+)=(\d+)$/);
