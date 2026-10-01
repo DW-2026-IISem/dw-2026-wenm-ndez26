@@ -1,0 +1,10 @@
+### CREATE CERTIFICATE
+POST http://localhost:4000/api/certificates
+Content-Type: application/json
+
+{
+  "enrollment_id": 1,
+  "name": "Certificado de finalización",
+  "description": "Certificado de finalización del curso",
+  "isActive": true
+}

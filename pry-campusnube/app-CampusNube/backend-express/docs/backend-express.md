@@ -4742,35 +4742,32 @@ git commit -m "ISS-15: Certificate - Controller CRUD"
 git push origin main
 ```
 
+![](images/clipboard-1255376501.png)
+
 # 18.3 — HTTP CERTIFICATE
 
 ```         
-: > src/features/business/certificate/http/get.http : > src/features/business/certificate/http/create.http : > src/features/business/certificate/http/update.http : > src/features/business/certificate/http/delete.http
+: > src/features/business/certificate/http/get.http 
+: > src/features/business/certificate/http/create.http 
+: > src/features/business/certificate/http/update.http 
+: > src/features/business/certificate/http/delete.http
 ```
 
 ### `get.http`
 
-```         
-cat >> src/features/business/certificate/http/get.http <<'EOF' ### GET ALL CERTIFICATES GET http://localhost:4000/api/certificates  ### GET CERTIFICATE BY ID GET http://localhost:4000/api/certificates/1 EOF
-```
+![](images/clipboard-2406166233.png)
 
 ### `create.http`
 
-```         
-cat >> src/features/business/certificate/http/create.http <<'EOF' ### CREATE CERTIFICATE POST http://localhost:4000/api/certificates Content-Type: application/json  {   "enrollment_id": 1,   "name": "Certificado de finalización",   "description": "Certificado de finalización del curso",   "isActive": true } EOF
-```
+![](images/clipboard-172985788.png)
 
 ### `update.http`
 
-```         
-cat >> src/features/business/certificate/http/update.http <<'EOF' ### UPDATE CERTIFICATE - PUT PUT http://localhost:4000/api/certificates/1 Content-Type: application/json  {   "enrollment_id": 1,   "name": "Certificado actualizado",   "description": "Descripción actualizada",   "isActive": true }  ### UPDATE CERTIFICATE - PATCH PATCH http://localhost:4000/api/certificates/1 Content-Type: application/json  {   "name": "Certificado actualizado parcialmente" } EOF
-```
+![](images/clipboard-2033154974.png)
 
 ### `delete.http`
 
-```         
-cat >> src/features/business/certificate/http/delete.http <<'EOF' ### DELETE CERTIFICATE DELETE http://localhost:4000/api/certificates/1 EOF
-```
+![](images/clipboard-2180642170.png)
 
 ### Verificación
 
@@ -4778,10 +4775,14 @@ cat >> src/features/business/certificate/http/delete.http <<'EOF' ### DELETE CER
 npx tsc --noEmit
 ```
 
+![](images/clipboard-2602042781.png)
+
 ### Commit
 
 ```         
-git add src/features/business/certificate/http git commit -m "ISS-15: Certificate - Archivos HTTP CRUD" git push origin main
+git add 
+git commit -m "ISS-15: Certificate - Archivos HTTP CRUD" 
+git push origin main
 ```
 
 # 18.4 — Cableado Routes + Config
