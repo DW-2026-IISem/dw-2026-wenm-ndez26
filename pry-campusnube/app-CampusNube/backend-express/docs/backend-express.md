@@ -4675,3 +4675,350 @@ git add
 git commit -m "ISS-14: Progress - Seeder y Swagger"
 git push origin main
 ```
+
+![](images/clipboard-1874520566.png)
+
+# 18. ISS-15 — Feature Certificate + relación con Enrollment
+
+**Objetivo:** implementar el proceso de **Certificado (Certificate)** de CampusNube.
+
+**Bloqueado por:** ISS-14 — Progress.
+
+**Relación:** Inscripción 0:1 Certificado.
+
+**API:** `/api/certificates` — **SIN AUTH**.
+
+# 18.1 — Modelo Certificate
+
+```         
+mkdir -p src/features/business/certificate/http  
+: > src/features/business/certificate/certificate.model.ts
+```
+
+![](images/clipboard-1753065021.png)
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-529686696.png)
+
+### Commit
+
+```         
+git add 
+git commit -m "ISS-15: Certificate - Modelo" 
+git push origin main
+```
+
+# 18.2 — Certificate Controller + CRUD completo
+
+```         
+: > src/features/business/certificate/certificate.controller.ts
+```
+
+```         
+cat >> src/features/business/certificate/certificate.controller.ts <<'EOF' import { Request, Response } from "express"; import { Certificate } from "./certificate.model"; import { Enrollment } from "../enrollment/enrollment.model";  export class CertificateController {    public async getAll(_req: Request, res: Response): Promise<void> {     try {       const certificates = await Certificate.findAll();        res.status(200).json(certificates);     } catch (error) {       res.status(500).json({         message: "Error al obtener los certificados",         error,       });     }   }    public async getOne(req: Request, res: Response): Promise<void> {     try {       const certificate = await Certificate.findByPk(         Number(req.params.id)       );        if (!certificate) {         res.status(404).json({           message: "Certificado no encontrado",         });         return;       }        res.status(200).json(certificate);     } catch (error) {       res.status(500).json({         message: "Error al obtener el certificado",         error,       });     }   }    public async create(req: Request, res: Response): Promise<void> {     try {       const {         enrollment_id,         name,         description,         isActive,       } = req.body;        if (!enrollment_id) {         res.status(400).json({           message: "El campo enrollment_id es obligatorio",         });         return;       }        if (!name) {         res.status(400).json({           message: "El campo name es obligatorio",         });         return;       }        const enrollment = await Enrollment.findByPk(         Number(enrollment_id)       );        if (!enrollment) {         res.status(404).json({           message: "La inscripción indicada no existe",         });         return;       }        const existing = await Certificate.findOne({         where: {           enrollment_id,         },       });        if (existing) {         res.status(409).json({           message:             "La inscripción ya tiene un certificado asociado",         });         return;       }        const certificate = await Certificate.create({         enrollment_id,         name,         description,         isActive:           isActive !== undefined ? isActive : true,       });        res.status(201).json(certificate);     } catch (error) {       res.status(500).json({         message: "Error al crear el certificado",         error,       });     }   }    public async update(req: Request, res: Response): Promise<void> {     try {       const certificate = await Certificate.findByPk(         Number(req.params.id)       );        if (!certificate) {         res.status(404).json({           message: "Certificado no encontrado",         });         return;       }        if (req.body.enrollment_id !== undefined) {         const enrollment = await Enrollment.findByPk(           Number(req.body.enrollment_id)         );          if (!enrollment) {           res.status(404).json({             message: "La inscripción indicada no existe",           });           return;         }       }        await certificate.update(req.body);        res.status(200).json(certificate);     } catch (error) {       res.status(500).json({         message: "Error al actualizar el certificado",         error,       });     }   }    public async patch(req: Request, res: Response): Promise<void> {     try {       const certificate = await Certificate.findByPk(         Number(req.params.id)       );        if (!certificate) {         res.status(404).json({           message: "Certificado no encontrado",         });         return;       }        if (req.body.enrollment_id !== undefined) {         const enrollment = await Enrollment.findByPk(           Number(req.body.enrollment_id)         );          if (!enrollment) {           res.status(404).json({             message: "La inscripción indicada no existe",           });           return;         }       }        await certificate.update(req.body);        res.status(200).json(certificate);     } catch (error) {       res.status(500).json({         message: "Error al actualizar parcialmente el certificado",         error,       });     }   }    public async delete(req: Request, res: Response): Promise<void> {     try {       const certificate = await Certificate.findByPk(         Number(req.params.id)       );        if (!certificate) {         res.status(404).json({           message: "Certificado no encontrado",         });         return;       }        await certificate.destroy();        res.status(200).json({         message: "Certificado eliminado correctamente",       });     } catch (error) {       res.status(500).json({         message: "Error al eliminar el certificado",         error,       });     }   } } EOF
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add src/features/business/certificate/certificate.controller.ts git commit -m "ISS-15: Certificate - Controller CRUD" git push origin main
+```
+
+# 18.3 — HTTP CERTIFICATE
+
+```         
+: > src/features/business/certificate/http/get.http : > src/features/business/certificate/http/create.http : > src/features/business/certificate/http/update.http : > src/features/business/certificate/http/delete.http
+```
+
+### `get.http`
+
+```         
+cat >> src/features/business/certificate/http/get.http <<'EOF' ### GET ALL CERTIFICATES GET http://localhost:4000/api/certificates  ### GET CERTIFICATE BY ID GET http://localhost:4000/api/certificates/1 EOF
+```
+
+### `create.http`
+
+```         
+cat >> src/features/business/certificate/http/create.http <<'EOF' ### CREATE CERTIFICATE POST http://localhost:4000/api/certificates Content-Type: application/json  {   "enrollment_id": 1,   "name": "Certificado de finalización",   "description": "Certificado de finalización del curso",   "isActive": true } EOF
+```
+
+### `update.http`
+
+```         
+cat >> src/features/business/certificate/http/update.http <<'EOF' ### UPDATE CERTIFICATE - PUT PUT http://localhost:4000/api/certificates/1 Content-Type: application/json  {   "enrollment_id": 1,   "name": "Certificado actualizado",   "description": "Descripción actualizada",   "isActive": true }  ### UPDATE CERTIFICATE - PATCH PATCH http://localhost:4000/api/certificates/1 Content-Type: application/json  {   "name": "Certificado actualizado parcialmente" } EOF
+```
+
+### `delete.http`
+
+```         
+cat >> src/features/business/certificate/http/delete.http <<'EOF' ### DELETE CERTIFICATE DELETE http://localhost:4000/api/certificates/1 EOF
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add src/features/business/certificate/http git commit -m "ISS-15: Certificate - Archivos HTTP CRUD" git push origin main
+```
+
+# 18.4 — Cableado Routes + Config
+
+Creamos:
+
+```         
+: > src/features/business/certificate/certificate.routes.ts
+```
+
+```         
+cat >> src/features/business/certificate/certificate.routes.ts <<'EOF' import { Application } from "express"; import { CertificateController } from "./certificate.controller";  export class CertificateRoutes {   public certificateController: CertificateController =     new CertificateController();    public routes(app: Application): void {     app       .route("/api/certificates")       .get(         this.certificateController.getAll.bind(           this.certificateController         )       )       .post(         this.certificateController.create.bind(           this.certificateController         )       );      app       .route("/api/certificates/:id")       .get(         this.certificateController.getOne.bind(           this.certificateController         )       )       .put(         this.certificateController.update.bind(           this.certificateController         )       )       .patch(         this.certificateController.patch.bind(           this.certificateController         )       )       .delete(         this.certificateController.delete.bind(           this.certificateController         )       );   } } EOF
+```
+
+En:
+
+```         
+src/routes/index.ts
+```
+
+agrega:
+
+```         
+import { CertificateRoutes } from "../features/business/certificate/certificate.routes";
+```
+
+Dentro de `Routes`:
+
+```         
+public certificateRoutes: CertificateRoutes =   new CertificateRoutes();
+```
+
+En:
+
+```         
+src/config/index.ts
+```
+
+agrega:
+
+```         
+import "../features/business/certificate/certificate.model";
+```
+
+Y en `routes()`:
+
+```         
+this.routePrv.certificateRoutes.routes(this.app);
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add src/features/business/certificate/certificate.routes.ts src/routes/index.ts src/config/index.ts git commit -m "ISS-15: Certificate - Cableado Routes y Config" git push origin main
+```
+
+# 18.5 — Relaciones Certificate
+
+La imagen dice:
+
+**Inscripción 0:1 Certificado**
+
+Creamos:
+
+```         
+: > src/features/business/certificate/certificate.associations.ts
+```
+
+```         
+cat >> src/features/business/certificate/certificate.associations.ts <<'EOF' import { Certificate } from "./certificate.model"; import { Enrollment } from "../enrollment/enrollment.model";  Certificate.belongsTo(Enrollment, {   foreignKey: "enrollment_id",   as: "enrollment", });  Enrollment.hasOne(Certificate, {   foreignKey: "enrollment_id",   as: "certificate", }); EOF
+```
+
+En:
+
+```         
+src/config/index.ts
+```
+
+agrega:
+
+```         
+import "../features/business/certificate/certificate.associations";
+```
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+### Commit
+
+```         
+git add src/features/business/certificate/certificate.associations.ts src/config/index.ts git commit -m "ISS-15: Certificate - Relaciones" git push origin main
+```
+
+# 18.6 — Seeder Certificate
+
+Creamos:
+
+```         
+: > src/features/business/certificate/certificate.seeder.ts
+```
+
+```         
+cat >> src/features/business/certificate/certificate.seeder.ts <<'EOF' import { faker } from "@faker-js/faker"; import { Certificate } from "./certificate.model"; import { Enrollment } from "../enrollment/enrollment.model";  export async function seedCertificates(   count: number ): Promise<number> {    if (count <= 0) {     console.log("⏭️  certificates: count=0, se omite");     return 0;   }    const existing = await Certificate.count();    if (existing > 0) {     console.log(       `⏭️  certificates: ya hay ${existing} registro(s), se omite seeder`     );     return 0;   }    const enrollments = await Enrollment.findAll({     where: {       status: "active",     },   });    if (enrollments.length === 0) {     console.log(       "⏭️  certificates: no hay inscripciones activas, se omite seeder"     );     return 0;   }    const rows = enrollments     .slice(0, count)     .map((enrollment) => ({       enrollment_id: enrollment.id,       name: faker.lorem.words(3),       description: faker.lorem.sentence(),       isActive: true,     }));    await Certificate.bulkCreate(rows);    console.log(     `✅ certificates: insertados ${rows.length} registro(s) falsos`   );    return rows.length; } EOF
+```
+
+## Modificamos `counts.ts`
+
+Agrega:
+
+```         
+certificates: number;
+```
+
+Y en `DEFAULT_SEED_COUNTS`:
+
+```         
+certificates: 10,
+```
+
+También agrega `SEED_CERTIFICATES` siguiendo exactamente el patrón de las demás variables.
+
+## Modificamos el Runner
+
+Otra vez: **NO creamos un Runner nuevo.**
+
+Abrimos:
+
+```         
+src/database/seeders/index.ts
+```
+
+Agregamos:
+
+```         
+import { seedCertificates } from "../../features/business/certificate/certificate.seeder";
+```
+
+Y después de Progress:
+
+```         
+await seedCertificates(counts.certificates);
+```
+
+Así el flujo queda:
+
+```         
+Learner Teacher Course Enrollment Evaluation Progress Certificate
+```
+
+### Verificamos
+
+```         
+npx tsc --noEmit
+```
+
+Luego:
+
+```         
+npm run db:seed
+```
+
+Debe aparecer:
+
+```         
+⏭️ learners: ya hay 10 registro(s), se omite seeder ⏭️ teachers: ya hay 10 registro(s), se omite seeder ⏭️ courses: ya hay 10 registro(s), se omite seeder ⏭️ enrollments: ya hay 20 registro(s), se omite seeder ⏭️ evaluations: ya hay 10 registro(s), se omite seeder ⏭️ progress: ya hay 20 registro(s), se omite seeder ✅ certificates: insertados 10 registro(s) falsos 🌱 SeedersRunner finalizado
+```
+
+📸 Captura.
+
+### Commit
+
+```         
+git add src/features/business/certificate/certificate.seeder.ts src/database/seeders git commit -m "ISS-15: Certificate - Seeder y SeedersRunner" git push origin main
+```
+
+# 18.7 — Swagger Certificate
+
+Creamos:
+
+```         
+: > src/features/business/certificate/certificate.swagger.ts
+```
+
+```         
+cat >> src/features/business/certificate/certificate.swagger.ts <<'EOF' export const certificateSwagger = {   tags: [     {       name: "Certificate",       description: "Gestión de certificados",     },   ],    paths: {     "/api/certificates": {       get: {         tags: ["Certificate"],         summary: "Obtener todos los certificados",         responses: {           200: {             description: "Lista de certificados",           },         },       },        post: {         tags: ["Certificate"],         summary: "Crear certificado",         requestBody: {           required: true,           content: {             "application/json": {               schema: {                 $ref: "#/components/schemas/CertificateCreate",               },             },           },         },         responses: {           201: {             description: "Certificado creado",           },         },       },     },      "/api/certificates/{id}": {       get: {         tags: ["Certificate"],         summary: "Obtener certificado por ID",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Certificado encontrado",           },         },       },        put: {         tags: ["Certificate"],         summary: "Actualizar certificado",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Certificado actualizado",           },         },       },        patch: {         tags: ["Certificate"],         summary: "Actualizar parcialmente certificado",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Certificado actualizado",           },         },       },        delete: {         tags: ["Certificate"],         summary: "Eliminar certificado",         parameters: [           {             name: "id",             in: "path",             required: true,             schema: {               type: "integer",             },           },         ],         responses: {           200: {             description: "Certificado eliminado",           },         },       },     },   },    components: {     schemas: {       Certificate: {         type: "object",         properties: {           id: {             type: "integer",           },           enrollment_id: {             type: "integer",           },           name: {             type: "string",           },           description: {             type: "string",           },           isActive: {             type: "boolean",           },         },       },        CertificateCreate: {         type: "object",         required: [           "enrollment_id",           "name",         ],         properties: {           enrollment_id: {             type: "integer",           },           name: {             type: "string",           },           description: {             type: "string",           },           isActive: {             type: "boolean",           },         },       },     },   }, }; EOF
+```
+
+En:
+
+```         
+src/swagger/index.ts
+```
+
+agrega:
+
+```         
+import { certificateSwagger } from "../features/business/certificate/certificate.swagger";
+```
+
+Y en:
+
+```         
+const featureSwaggerModules: FeatureSwaggerModule[] = [
+```
+
+agrega:
+
+```         
+certificateSwagger,
+```
+
+### Verificación final
+
+```         
+npx tsc --noEmit
+```
+
+Luego:
+
+```         
+npm run dev
+```
+
+Abre:
+
+```         
+http://localhost:4000/api/docs
+```
+
+Debes ver:
+
+```         
+Progress Certificate
+```
+
+📸 **Captura final de Swagger.**
+
+### Commit final
