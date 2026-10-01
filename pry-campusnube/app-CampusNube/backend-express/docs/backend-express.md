@@ -4487,6 +4487,8 @@ git commit -m "ISS-14: Progress - Routes y HTTP CRUD"
 git push origin main
 ```
 
+![](images/clipboard-89573008.png)
+
 # 17.5 — Cableado Routes + Config
 
 ### `src/routes/index.ts`
@@ -4497,11 +4499,15 @@ Agrega:
 import { ProgressRoutes } from "../features/business/progress/progress.routes";
 ```
 
+![](images/clipboard-226610171.png)
+
 Dentro de `Routes`:
 
 ```         
 public progressRoutes: ProgressRoutes = new ProgressRoutes();
 ```
+
+![](images/clipboard-3457795460.png)
 
 ### `src/config/index.ts`
 
@@ -4511,11 +4517,15 @@ Agrega:
 import "../features/business/progress/progress.model";
 ```
 
+![](images/clipboard-4257971943.png)
+
 Y dentro de `routes()`:
 
 ```         
 this.routePrv.progressRoutes.routes(this.app);
 ```
+
+![](images/clipboard-893897126.png)
 
 ### Verificación
 
@@ -4523,10 +4533,14 @@ this.routePrv.progressRoutes.routes(this.app);
 npx tsc --noEmit
 ```
 
+![](images/clipboard-349900975.png)
+
 ### Commit
 
 ```         
-git add src/routes/index.ts src/config/index.ts git commit -m "ISS-14: Progress - Cableado Routes y Config" git push origin main
+git add 
+git commit -m "ISS-14: Progress - Cableado Routes y Config" 
+git push origin main
 ```
 
 # 17.6 — Relación Progress
