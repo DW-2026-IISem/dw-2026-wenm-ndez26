@@ -5282,6 +5282,28 @@ git commit -m "ISS-06-C: Migración Teacher - Service"
 git push origin main
 ```
 
+![](images/clipboard-3590206933.png)
+
+###  **ISS-06-D — Migración: Controller**.
+
+### 1. Reemplazar `teacher.controller.ts`
+
+![](images/clipboard-3775004450.png)
+
+### ![](images/clipboard-2290114063.png)
+
+verificamos
+
+![](images/clipboard-187754556.png)
+
+**ISS-06-D — Migración: Controller**.
+
+```         
+git add .
+git commit -m "ISS-06-D: Migración Teacher - Controller" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS

@@ -1,186 +1,133 @@
 import { Request, Response } from "express";
-import { Teacher, TeacherI } from "./teacher.model";
+import { BaseController } from "../../../shared/http/base-controller";
+import {
+  CreateTeacherDto,
+  PatchTeacherDto,
+  UpdateTeacherDto,
+} from "./dto";
+import { TeacherRepository } from "./teacher.repository";
+import { TeacherService } from "./teacher.service";
 
-function paramId(req: Request): number {
-  const raw = req.params.id;
-  const value = Array.isArray(raw) ? raw[0] : raw;
-  return Number(value);
-}
+export class TeacherController extends BaseController {
+  private readonly teacherService: TeacherService;
 
-export class TeacherController {
-  // ================== READ ==================
-
-  public async getAll(req: Request, res: Response) {
-    try {
-      const teachers = await Teacher.findAll({
-        where: { isActive: true },
-      });
-
-      res.status(200).json({ teachers });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error fetching teachers",
-        detail: String(error),
-      });
-    }
+  constructor() {
+    super();
+    this.teacherService = new TeacherService(
+      new TeacherRepository()
+    );
   }
 
-  public async getOne(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
+  // ================== READ ==================
 
-      const teacher = await Teacher.findByPk(id);
+  public async getAll(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const teachers = await this.teacherService.getAll();
 
-      if (!teacher) {
-        res.status(404).json({
-          error: "Teacher not found",
-        });
-        return;
-      }
+      res.status(200).json({ teachers });
+    });
+  }
+
+  public async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const teacher = await this.teacherService.getOne(id);
 
       res.status(200).json({ teacher });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error fetching teacher",
-        detail: String(error),
-      });
-    }
+    });
   }
 
   // ================== CREATE ==================
 
-  public async create(req: Request, res: Response) {
-    try {
-      const body = req.body as TeacherI;
+  public async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const dto = req.body as CreateTeacherDto;
 
-      const teacher = await Teacher.create({
-        name: body.name,
-        description: body.description ?? null,
-        isActive: body.isActive ?? true,
-      });
+      const teacher = await this.teacherService.create(dto);
 
       res.status(201).json({ teacher });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error creating teacher",
-        detail: String(error),
-      });
-    }
+    });
   }
 
   // ================== UPDATE ==================
 
-  public async updatePut(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
-      const body = req.body as TeacherI;
+  public async updatePut(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const dto = req.body as UpdateTeacherDto;
 
-      const teacher = await Teacher.findByPk(id);
-
-      if (!teacher) {
-        res.status(404).json({
-          error: "Teacher not found",
-        });
-        return;
-      }
-
-      await teacher.update({
-        name: body.name,
-        description: body.description ?? null,
-        isActive: body.isActive ?? teacher.isActive,
-      });
+      const teacher = await this.teacherService.updatePut(
+        id,
+        dto
+      );
 
       res.status(200).json({ teacher });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error updating teacher (PUT)",
-        detail: String(error),
-      });
-    }
+    });
   }
 
-  public async updatePatch(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
-      const body = req.body as Partial<TeacherI>;
+  public async updatePatch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const dto = req.body as PatchTeacherDto;
 
-      const teacher = await Teacher.findByPk(id);
-
-      if (!teacher) {
-        res.status(404).json({
-          error: "Teacher not found",
-        });
-        return;
-      }
-
-      await teacher.update(body);
+      const teacher = await this.teacherService.updatePatch(
+        id,
+        dto
+      );
 
       res.status(200).json({ teacher });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error updating teacher (PATCH)",
-        detail: String(error),
-      });
-    }
+    });
   }
 
   // ================== DELETE ==================
 
   /** Eliminación física */
-  public async deletePhysical(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
+  public async deletePhysical(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const teacher = await Teacher.findByPk(id);
-
-      if (!teacher) {
-        res.status(404).json({
-          error: "Teacher not found",
-        });
-        return;
-      }
-
-      await teacher.destroy();
+      await this.teacherService.deletePhysical(id);
 
       res.status(200).json({
         message: "Teacher permanently deleted",
         id,
       });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error deleting teacher",
-        detail: String(error),
-      });
-    }
+    });
   }
 
   /** Eliminación lógica → isActive = false */
-  public async deleteLogical(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
+  public async deleteLogical(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const teacher = await Teacher.findByPk(id);
-
-      if (!teacher) {
-        res.status(404).json({
-          error: "Teacher not found",
-        });
-        return;
-      }
-
-      await teacher.update({
-        isActive: false,
-      });
+      const teacher =
+        await this.teacherService.deleteLogical(id);
 
       res.status(200).json({
         message: "Teacher deactivated (logical delete)",
         teacher,
       });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error deactivating teacher",
-        detail: String(error),
-      });
-    }
+    });
   }
 }
