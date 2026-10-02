@@ -5689,10 +5689,35 @@ Dos usuarios de laboratorio, idempotentes (`findOrCreate` por `username`), con c
 
 ![](images/clipboard-4055807946.png)
 
+### Adaptación de los dos usuarios canónicos
+
+| Usuario   | Contraseña    | Rol       |
+|-----------|---------------|-----------|
+| `admin`   | `Admin123!`   | `ADMIN`   |
+| `docente` | `Docente123!` | `DOCENTE` |
+
 ### Commit del 15.6
 
 ```         
 git add 
 git commit -m "ISS-20: Users - Seeder" 
+git push origin main
+```
+
+![](images/clipboard-433339941.png)
+
+## 20.7 Swagger del feature
+
+Los 9 endpoints (`GET/POST /api/usuarios`, `GET/PUT/PATCH/DELETE /:id`, `/deactivate`, `/password`, `/:id/permisos`) documentados con `security: [{ bearerAuth: [] }]` y las respuestas `401`/`403` reutilizables.
+
+### Crea el archivo 20.7
+
+![](images/clipboard-469487280.png)
+
+### commit:
+
+```         
+git add
+git commit -m "ISS-20: Users - Swagger"
 git push origin main
 ```
