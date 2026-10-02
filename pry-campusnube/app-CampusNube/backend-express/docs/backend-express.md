@@ -5120,6 +5120,46 @@ git commit -m "ISS-03: Migración Learner - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-1104217572.png)
+
+### ISS-03-— Migración: Repository
+
+### Objetivo
+
+Crear `learner.repository.ts` y trasladar a esta capa las operaciones de persistencia de Learner que actualmente están directamente en el Controller.
+
+El Repository manejará:
+
+- Consulta de aprendices activos.
+
+- Consulta por ID.
+
+- Creación.
+
+- Actualización.
+
+- Eliminación física.
+
+La eliminación lógica seguirá utilizando `update`, pero la regla de negocio quedará posteriormente en el Service.
+
+### 1. Crear `learner.repository.ts`
+
+![](images/clipboard-286095686.png)
+
+# Verificar el archivo
+
+```         
+test -f src/features/business/learner/learner.repository.ts && echo "REPOSITORY_OK"
+```
+
+![](images/clipboard-2834940970.png)
+
+```         
+git add . 
+git commit -m "ISS-03: Migración Learner - Repository" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
