@@ -5643,4 +5643,20 @@ git commit -m "ISS-20: Users - Service"
 git push origin main
 ```
 
-### 
+![](images/clipboard-2281488030.png)
+
+## 20.4 Controller
+
+HTTP puro: `this.run(res, …)`, `this.paramId(req)` y `findOrFail` en el service. Expone dos operaciones que **no** son CRUD: cambio de contraseña y permisos efectivos.
+
+### 20.4.1 Creamos el archivo
+
+### ![](images/clipboard-374547386.png)
+
+### Commit ISS 20.4
+
+```         
+git add 
+git commit -m "ISS-20: Users - Controller" 
+git push origin main
+```
