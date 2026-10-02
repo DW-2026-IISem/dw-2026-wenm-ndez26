@@ -5160,7 +5160,7 @@ git push origin main
 
 ![](images/clipboard-2637705993.png)
 
-## 14.4 `resource-match.ts` — casar la petición con el recurso
+## 19.4 `resource-match.ts` — casar la petición con el recurso
 
 En este paso creamos rosource-match.ts
 
@@ -5188,7 +5188,7 @@ git push origin main
 
 ![](images/clipboard-251541019.png)
 
-## 14.5 `auth-user.ts` — la identidad en `Request`
+## 19.5 `auth-user.ts` — la identidad en `Request`
 
 19.5 — Crear `auth-user.ts`
 
@@ -5211,5 +5211,45 @@ Debe quedar **sin errores**.
 ```         
 git add 
 git commit -m "ISS-19: Auth base - auth user"  
+git push origin main
+```
+
+![](images/clipboard-2446587803.png)
+
+## 19.6 `error-response.ts` y PARCHE de `BaseController`
+
+El mapeo `error → HTTP` deja de vivir solo en el controller: lo necesitan también los middlewares `authenticate`/`authorize`. Se extrae a un único punto (`sendError`) y `BaseController` lo reutiliza.
+
+En este caso creamos basecontroller ya que no lo tenemos.
+
+#### 1. Crear `error-response.ts`
+
+![](images/clipboard-2600679197.png)
+
+#### 2. Crear `base-controller.ts`
+
+![](images/clipboard-4160233780.png)
+
+### 3. Verificar que quedaron los dos archivos
+
+![](images/clipboard-1149007256.png)
+
+###  Verificar TypeScript
+
+Ahora ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-3358203260.png)
+
+### Commit 19.6
+
+Siguiendo la metodología que estamos usando para ISS-19:
+
+```         
+git add .
+git commit -m "ISS-19: Auth base - error response" 
 git push origin main
 ```
