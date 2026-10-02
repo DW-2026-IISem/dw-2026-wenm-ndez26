@@ -5182,6 +5182,24 @@ git commit -m "ISS-03: Migración Learner - Service"
 git push origin main
 ```
 
+# ![](images/clipboard-321279026.png)
+
+### ISS-03-D — Migración: Controller
+
+En este paso solo vamos a reemplazar **solamente**:
+
+![](images/clipboard-200546993.png)
+
+![](images/clipboard-3585308512.png)
+
+### Commit:
+
+```         
+git add . 
+git commit -m "ISS-03-D: Migración Learner - Controller"
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS

@@ -1,197 +1,137 @@
 import { Request, Response } from "express";
-import { Learner, LearnerI } from "./learner.model";
+import { BaseController } from "../../../shared/http/base-controller";
+import {
+  CreateLearnerDto,
+  PatchLearnerDto,
+  UpdateLearnerDto,
+} from "./dto";
+import { LearnerService } from "./learner.service";
+import { LearnerRepository } from "./learner.repository";
 
-function paramId(req: Request): number {
-  const raw = req.params.id;
-  const value = Array.isArray(raw) ? raw[0] : raw;
-  return Number(value);
-}
+export class LearnerController extends BaseController {
+  private readonly learnerService: LearnerService;
 
-export class LearnerController {
-  // ================== READ ==================
-
-  public async getAll(req: Request, res: Response) {
-    try {
-      const learners = await Learner.findAll({
-        where: { status: "active" },
-        attributes: { exclude: ["password"] },
-      });
-
-      res.status(200).json({ learners });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error fetching learners",
-        detail: String(error),
-      });
-    }
+  constructor() {
+    super();
+    this.learnerService = new LearnerService(
+      new LearnerRepository()
+    );
   }
 
-  public async getOne(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
+  // ================== READ ==================
 
-      const learner = await Learner.findByPk(id, {
-        attributes: { exclude: ["password"] },
-      });
+  public async getAll(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const learners = await this.learnerService.getAll();
 
-      if (!learner) {
-        res.status(404).json({
-          error: "Learner not found",
-        });
-        return;
-      }
+      res.status(200).json({ learners });
+    });
+  }
+
+  public async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const learner = await this.learnerService.getOne(id);
 
       res.status(200).json({ learner });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error fetching learner",
-        detail: String(error),
-      });
-    }
+    });
   }
 
   // ================== CREATE ==================
-    public async create(req: Request, res: Response) {
-    try {
-      const body = req.body as LearnerI;
 
-      const learner = await Learner.create({
-        name: body.name,
-        description: body.description,
-        password: body.password,
-        status: body.status ?? "active",
-      });
+  public async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const dto = req.body as CreateLearnerDto;
 
-      const { password, ...safe } = learner.toJSON() as LearnerI & {
-        password?: string;
-      };
+      const learner = await this.learnerService.create(dto);
 
-      res.status(201).json({ learner: safe });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error creating learner",
-        detail: String(error),
-      });
-    }
+      res.status(201).json({ learner });
+    });
   }
-
 
   // ================== UPDATE ==================
-    public async updatePut(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
-      const body = req.body as LearnerI;
 
-      const learner = await Learner.findByPk(id);
+  public async updatePut(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const dto = req.body as UpdateLearnerDto;
 
-      if (!learner) {
-        res.status(404).json({ error: "Learner not found" });
-        return;
-      }
+      const learner = await this.learnerService.updatePut(
+        id,
+        dto
+      );
 
-      await learner.update({
-        name: body.name,
-        description: body.description,
-        password: body.password ?? learner.password,
-        status: body.status ?? learner.status,
-      });
-
-      const { password, ...safe } = learner.toJSON() as LearnerI & {
-        password?: string;
-      };
-
-      res.status(200).json({ learner: safe });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error updating learner (PUT)",
-        detail: String(error),
-      });
-    }
+      res.status(200).json({ learner });
+    });
   }
 
-  public async updatePatch(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
-      const body = req.body as Partial<LearnerI>;
+  public async updatePatch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const dto = req.body as PatchLearnerDto;
 
-      const learner = await Learner.findByPk(id);
+      const learner = await this.learnerService.updatePatch(
+        id,
+        dto
+      );
 
-      if (!learner) {
-        res.status(404).json({ error: "Learner not found" });
-        return;
-      }
-
-      await learner.update(body);
-
-      const { password, ...safe } = learner.toJSON() as LearnerI & {
-        password?: string;
-      };
-
-      res.status(200).json({ learner: safe });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error updating learner (PATCH)",
-        detail: String(error),
-      });
-    }
+      res.status(200).json({ learner });
+    });
   }
 
   // ================== DELETE ==================
-    /** Eliminación física */
-  public async deletePhysical(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
 
-      const learner = await Learner.findByPk(id);
+  /**
+   * Eliminación física.
+   */
+  public async deletePhysical(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!learner) {
-        res.status(404).json({ error: "Learner not found" });
-        return;
-      }
-
-      await learner.destroy();
+      await this.learnerService.deletePhysical(id);
 
       res.status(200).json({
         message: "Learner permanently deleted",
         id,
       });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error deleting learner",
-        detail: String(error),
-      });
-    }
+    });
   }
 
-  /** Eliminación lógica → status = inactive */
-  public async deleteLogical(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
+  /**
+   * Eliminación lógica → status = inactive.
+   */
+  public async deleteLogical(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const learner = await Learner.findByPk(id);
-
-      if (!learner) {
-        res.status(404).json({ error: "Learner not found" });
-        return;
-      }
-
-      await learner.update({
-        status: "inactive",
-      });
-
-      const { password, ...safe } = learner.toJSON() as LearnerI & {
-        password?: string;
-      };
+      const learner =
+        await this.learnerService.deleteLogical(id);
 
       res.status(200).json({
         message: "Learner deactivated (logical delete)",
-        learner: safe,
+        learner,
       });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error deactivating learner",
-        detail: String(error),
-      });
-    }
+    });
   }
 }
