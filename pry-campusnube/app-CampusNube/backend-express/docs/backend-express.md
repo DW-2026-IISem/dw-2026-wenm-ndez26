@@ -5160,6 +5160,28 @@ git commit -m "ISS-03: Migración Learner - Repository"
 git push origin main
 ```
 
+![](images/clipboard-1184233003.png)
+
+## SS-03-C — Migración: Service
+
+En este bloque vamos a crear `learner.service.ts`.
+
+La función del **Service** será contener la lógica de negocio y coordinar al Repository. No debe trabajar directamente con `req`, `res` ni con Sequelize.
+
+### 1. Crear `learner.service.ts`
+
+![](images/clipboard-3113110781.png)
+
+![](images/clipboard-3832448197.png)
+
+### Commit 
+
+```         
+git add . 
+git commit -m "ISS-03: Migración Learner - Service" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS

@@ -11,25 +11,26 @@ export class LearnerRepository {
   }
 
   async findById(
-    id: number,
-    transaction?: Transaction
-  ): Promise<LearnerI | null> {
-    return Learner.findOne({
-      where: {
-        id,
-        status: "active",
-      },
-      transaction,
-    });
-  }
+  id: number,
+  transaction?: Transaction,
+  onlyActive = true
+): Promise<LearnerI | null> {
+  return Learner.findOne({
+    where: {
+      id,
+      ...(onlyActive ? { status: "active" } : {}),
+    },
+    transaction,
+  });
+}
 
   async create(
     data: Partial<LearnerI>,
     transaction?: Transaction
   ): Promise<LearnerI> {
-    return Learner.create(data as LearnerI, {
-      transaction,
-    });
+    return Learner.create(data as any, {
+  transaction,
+});
   }
 
   async update(
