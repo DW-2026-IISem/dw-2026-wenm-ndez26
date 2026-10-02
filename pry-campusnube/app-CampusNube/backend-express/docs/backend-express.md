@@ -5721,3 +5721,27 @@ git add
 git commit -m "ISS-20: Users - Swagger"
 git push origin main
 ```
+
+![](images/clipboard-3889555113.png)
+
+## 20.8 Pruebas HTTP
+
+![](images/clipboard-1997105839.png)
+
+### users.create.http
+
+![](images/clipboard-2502980973.png)
+
+### Verificación
+
+![](images/clipboard-2345858317.png)
+
+![](images/clipboard-3403775900.png)
+
+###  Commit:
+
+```         
+git add 
+git commit -m "ISS-20: Users - HTTP tests" 
+git push origin main
+```
