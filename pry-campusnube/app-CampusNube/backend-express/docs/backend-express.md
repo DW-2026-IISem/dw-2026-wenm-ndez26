@@ -5315,6 +5315,10 @@ npx tsc --noEmit
 
 ![](images/clipboard-4221288123.png)
 
+### 19.8.2 — `Role`
+
+![](images/clipboard-141055249.png)
+
 ### 19.8.3 — `Resource`
 
 ![](images/clipboard-2925379995.png)
@@ -5376,5 +5380,39 @@ find src/features/auth -name "*.model.ts" -print
 ```         
 git add .
 git commit -m "ISS-19: Auth base - seis modelos Sequelize" 
+git push origin main
+```
+
+![](images/clipboard-2654649796.png)
+
+## 19.9 `rbac.associations.ts` — el grafo en un solo lugar
+
+Las asociaciones se declaran **después** de los modelos (referencian a los modelos, no al revés) y en un único archivo para que el grafo se lea entero:
+
+```         
+User N:M Role mediante RoleUser 
+User 1:N RefreshToken 
+Role N:M Resource mediante ResourceRole
+```
+
+### 19.9 — Crear `rbac.associations.ts`
+
+![](images/clipboard-1576697744.png)
+
+### Verificar TypeScript
+
+```         
+npx tsc --noEmit
+```
+
+Debe terminar sin errores.
+
+![](images/clipboard-2597434125.png)
+
+### Commit Final 19.9
+
+```         
+git add .
+git commit -m "ISS-19: Auth base - RBAC associations" 
 git push origin main
 ```
