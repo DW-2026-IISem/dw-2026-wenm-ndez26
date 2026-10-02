@@ -5250,6 +5250,22 @@ git commit -m "ISS-06-A: Migración Teacher - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-4282008999.png)
+
+###  **ISS-06-B — Migración: Repository**.
+
+### 1. Crear `teacher.repository.ts`
+
+![](images/clipboard-470278778.png)
+
+Cerramos **ISS-06-B — Migración: Repository**.
+
+```         
+git add . 
+git commit -m "ISS-06-B: Migración Teacher - Repository" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
