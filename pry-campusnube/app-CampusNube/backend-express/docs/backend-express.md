@@ -5588,3 +5588,29 @@ git add
 git commit -m "ISS-20: Users - DTOs"
 git push origin main
 ```
+
+![](images/clipboard-2467935658.png)
+
+## 20.2 Repository
+
+Única capa que usa Sequelize. Además del CRUD genérico, aporta `findByUsernameOrEmail`, que necesita el login (ISS-15): acepta usuario **o** correo en un solo campo.
+
+### 1. Crear `users.repository.ts`
+
+![](images/clipboard-3775576192.png)
+
+### Verificar 
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-3614339504.png)
+
+### Commit para el 20.2
+
+```         
+git add
+git commit -m "ISS-20: Users - Repository" 
+git push origin main
+```
