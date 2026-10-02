@@ -14,6 +14,15 @@ import { seedAttempts } from "../../features/business/attempt/attempt.seeder";
 import { seedSubmissions } from "../../features/business/submission/submission.seeder";
 import { seedProgress } from "../../features/business/progress/progress.seeder";
 import { seedCertificates } from "../../features/business/certificate/certificate.seeder";
+
+// Fase II — Auth con RBAC: primero los seis modelos, después las asociaciones
+import "../../features/auth/users/user.model";
+import "../../features/auth/roles/role.model";
+import "../../features/auth/resources/resource.model";
+import "../../features/auth/role-users/role-user.model";
+import "../../features/auth/resource-roles/resource-role.model";
+import "../../features/auth/refresh-tokens/refresh-token.model";
+import "../../features/auth/rbac.associations";
 dotenv.config();
 
 /**

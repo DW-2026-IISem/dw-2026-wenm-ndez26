@@ -5416,3 +5416,84 @@ git add .
 git commit -m "ISS-19: Auth base - RBAC associations" 
 git push origin main
 ```
+
+![](images/clipboard-1850601706.png)
+
+## 19.10 Cableado de modelos en `config` y `seeders`
+
+**PARCHE** en `src/config/index.ts` — los once modelos, y **después** las asociaciones:
+
+## 19.10 — `src/config/index.ts`
+
+En tu `config/index.ts` ya tenemos todos los imports de Business.
+
+Solo vamos a insertar este bloque **después de los imports de Business y antes de `Routes`**.
+
+![](images/clipboard-916277826.png)
+
+# 19.10 — `src/database/seeders/index.ts`
+
+El profesor indica que los seeders de Auth se irán incorporando en sus respectivos ISS.
+
+![](images/clipboard-3787842275.png)
+
+### Verificación TypeScript
+
+```         
+npx tsc --noEmit
+```
+
+Debe salir sin errores.
+
+![](images/clipboard-1608676951.png)
+
+### 19.10.Ejecutar el seeder
+
+Si `tsc` está limpio:
+
+```         
+npm run db:seed
+```
+
+![](images/clipboard-516655130.png)
+
+### el servidor debe arrancar
+
+npm run dev
+
+![](images/clipboard-2220384230.png)
+
+Las 6 tablas existen
+mysql -h 127.0.0.1 -P 3306 -u root -p campusnube -e "SHOW TABLES LIKE '%role%'; SHOW TABLES LIKE 'users';"
+
+![](images/clipboard-2749368306.png)
+
+### DoD del ISS-09
+
+- [ ] Todos los criterios de aceptación (19.1 … 19.10) cumplidos
+
+- [ ] `npx tsc --noEmit` sin errores
+
+- [ ] `npm run db:seed` crea `users`, `roles`, `resources`, `role_users`, `resource_roles`, `refresh_tokens` con sus UK
+
+- [ ] `npm run dev` arranca el servidor
+
+- [ ] Sin endpoints nuevos todavía: la API de Fase I sigue funcionando **SIN AUTH**
+
+### Ahora cerramos el 19.10
+
+Primero ejecuta:
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-340762479.png)
+
+### COMMIT FINAL ISS 19 
+
+```         
+git add 
+git commit -m "ISS-19: Auth base - config y seeders"
+git push origin main
+```
