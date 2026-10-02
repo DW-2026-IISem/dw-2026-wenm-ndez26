@@ -5660,3 +5660,23 @@ git add
 git commit -m "ISS-20: Users - Controller" 
 git push origin main
 ```
+
+![](images/clipboard-2109879634.png)
+
+## 20.5 Rutas (modalidad JWT + RBAC)
+
+Todos los endpoints de administración de identidades están ellos mismos protegidos por la matriz: no basta con estar autenticado, hay que tener la concesión concreta (`GET /api/usuarios`, `POST /api/usuarios`, …).
+
+### Paso 1
+
+Crear el archivo
+
+![](images/clipboard-793238204.png)
+
+### Commit iss 20.5
+
+```         
+git add 
+git commit -m "ISS-20: Users - Routes" 
+git push origin main
+```
