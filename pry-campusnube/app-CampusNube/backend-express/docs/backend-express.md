@@ -5089,3 +5089,41 @@ git add .
 git commit -m "ISS-19: Auth - Dependencias JWT"
 git push origin main
 ```
+
+![](images/clipboard-842149630.png)
+
+## 19.2 `password.ts` — hash de contraseña y hashes de tokens
+
+Tres responsabilidades, todas de la capa *shared* (no son propias de un feature):
+
+- `hashPassword`
+
+- `verifyPassword`
+
+- `sha256Hex`
+
+- `generateOpaqueToken`
+
+con bcrypt y hash SHA-256 para tokens.
+
+:   \> src/shared/auth/password.ts cat \>\> src/shared/auth/password.ts
+
+![](images/clipboard-2314195832.png)
+
+![](images/clipboard-268222341.png)
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-1284320509.png)
+
+### Commit 19.2
+
+```         
+git add 
+git commit -m "ISS-19: Auth base - password y tokens opacos" 
+git push origin main
+```
