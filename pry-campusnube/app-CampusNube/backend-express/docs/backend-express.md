@@ -5041,3 +5041,51 @@ git add
 git commit -m "ISS-15: Certificate - Seeder y Swagger" 
 git push origin main
 ```
+
+![](images/clipboard-2978704839.png)
+
+# Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
+
+## Contenido de este ISS
+
+- 19.1 Dependencias y variables de entorno
+
+- 19.2 `password.ts` (bcrypt 12 rondas + SHA-256 + token opaco)
+
+- 19.3 `jwt.ts` (firma/verificación HS256 con `iss`/`aud`/`exp`/`jti`)
+
+- 19.4 `resource-match.ts` (normalizador y matcher de rutas parametrizadas)
+
+- 19.5 `auth-user.ts` (extensión de `Request` + `requireAuthUser`)
+
+- 19.6 `error-response.ts` (mapper único error → HTTP) y PARCHE de `BaseController`
+
+- 19.7 `swagger-security.ts` (esquema `bearerAuth` + respuestas 401/403)
+
+- 19.8 Los seis modelos Sequelize
+
+- 19.9 `rbac.associations.ts` (grafo de relaciones)
+
+- 19.10 Cableado de modelos en `config` y `seeders`
+
+**19.1 — Dependencias y variables de entorno**
+
+```         
+# Paquetes (una vez). bcryptjs ya venía de Fase I.
+npm install jsonwebtoken@^9.0.3
+npm install -D @types/jsonwebtoken@^9.0.10 
+```
+
+![](images/clipboard-951728162.png)
+
+Variables nuevas del `.env` (**PARCHE**: se añaden al final, no reemplazan las de Fase I):
+
+![](images/clipboard-2939310010.png)
+
+## Commit
+
+```         
+git add .
+git commit -m "ISS-19: Auth - Dependencias JWT"
+git push origin main
+```
