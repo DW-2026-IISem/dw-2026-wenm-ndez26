@@ -5304,6 +5304,52 @@ git commit -m "ISS-06-D: Migración Teacher - Controller"
 git push origin main
 ```
 
+![](images/clipboard-3100760814.png)
+
+### ISS-07-A — Migración: Fundación y DTOs
+
+### 1. Crear carpeta DTO
+
+```         
+mkdir -p src/features/business/course/dto
+```
+
+### 2. Create DTO
+
+![](images/clipboard-2952303811.png)
+
+### 3. Update DTO
+
+![](images/clipboard-2572371509.png)
+
+### 4. Patch DTO
+
+### ![](images/clipboard-1847274960.png)
+
+### 5. Response DTO
+
+![](images/clipboard-3742989488.png)
+
+### 6. Barrel `index.ts`
+
+![](images/clipboard-4157346224.png)
+
+### Verificación
+
+```         
+find src/features/business/course/dto -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-4013784332.png)
+
+### Commit
+
+```         
+git add .
+git commit -m "ISS-07-A: Migración Course - Fundación y DTOs" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
