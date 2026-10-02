@@ -5157,3 +5157,31 @@ git add
 git commit -m "ISS-19: Auth base - JWT HS256" 
 git push origin main
 ```
+
+![](images/clipboard-2637705993.png)
+
+## 14.4 `resource-match.ts` — casar la petición con el recurso
+
+En este paso creamos rosource-match.ts
+
+![](images/clipboard-1020294056.png)
+
+### Verificación 19.4
+
+Primero:
+
+```         
+npx tsc --noEmit
+```
+
+Debe terminar así, **sin errores**:
+
+![](images/clipboard-2140006004.png)
+
+### Commit 19.4
+
+```         
+git add 
+git commit -m "ISS-19: Auth base - resource match"  
+git push origin main
+```
