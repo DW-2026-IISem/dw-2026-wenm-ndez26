@@ -5350,6 +5350,22 @@ git commit -m "ISS-07-A: Migración Course - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-2274360012.png)
+
+# ISS-07-B — Migración: Repository
+
+### 1. Crear `course.repository.ts`
+
+![](images/clipboard-392098268.png)
+
+Cerramos **ISS-07-B — Migración: Repository**.
+
+```         
+git add .
+git commit -m "ISS-07-B: Migración Course - Repository"
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
