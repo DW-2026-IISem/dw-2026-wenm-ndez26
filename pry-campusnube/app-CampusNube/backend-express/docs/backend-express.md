@@ -5680,3 +5680,19 @@ git add
 git commit -m "ISS-20: Users - Routes" 
 git push origin main
 ```
+
+![](images/clipboard-49295037.png)
+
+## 20.6 Seeder de usuarios canónicos
+
+Dos usuarios de laboratorio, idempotentes (`findOrCreate` por `username`), con contraseña hasheada. Son la puerta de entrada para probar las tres modalidades.
+
+![](images/clipboard-4055807946.png)
+
+### Commit del 15.6
+
+```         
+git add 
+git commit -m "ISS-20: Users - Seeder" 
+git push origin main
+```
