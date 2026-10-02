@@ -5185,3 +5185,31 @@ git add
 git commit -m "ISS-19: Auth base - resource match"  
 git push origin main
 ```
+
+![](images/clipboard-251541019.png)
+
+## 14.5 `auth-user.ts` — la identidad en `Request`
+
+19.5 — Crear `auth-user.ts`
+
+![](images/clipboard-1691730499.png)
+
+### Verificación 19.5
+
+Ahora ejecutamos:
+
+```         
+npx tsc --noEmit
+```
+
+Debe quedar **sin errores**.
+
+![](images/clipboard-1821730905.png)
+
+### Commit 19.5
+
+```         
+git add 
+git commit -m "ISS-19: Auth base - auth user"  
+git push origin main
+```
