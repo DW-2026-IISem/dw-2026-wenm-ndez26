@@ -5044,6 +5044,82 @@ git push origin main
 
 ![](images/clipboard-2978704839.png)
 
+# MIGRACIÓN DE ARQUITECTURA — FEATURES DE NEGOCIO
+
+## Migración progresiva a arquitectura por capas
+
+La primera implementación de las features de negocio se realizó siguiendo la estructura inicial del laboratorio.
+
+Posteriormente, tras revisar la especificación oficial ISS-03, se identificó que la arquitectura requerida contempla las capas:
+
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+
+↓
+
+Model
+
+↓
+
+Sequelize
+
+↓
+
+Base de datos
+
+## 1. Migración de Learner — Fundación
+
+### 1.1 Crear la carpeta `dto`
+
+```         
+mkdir -p src/features/business/learner/dto
+```
+
+Verificamos:
+
+```         
+test -d src/features/business/learner/dto && echo "DTO_FOLDER_OK"
+```
+
+![](images/clipboard-3051111486.png)
+
+### 1.2 Crear `create-learner.dto.ts`
+
+![](images/clipboard-2725830585.png)
+
+### 1.3 Crear `update-learner.dto.ts`
+
+![](images/clipboard-1955241327.png)
+
+### 1.4 Crear `patch-learner.dto.ts`
+
+### ![](images/clipboard-990005941.png)
+
+### 1.5 Crear `learner-response.dto.ts`
+
+### ![](images/clipboard-1171332853.png)
+
+### 1.6 Crear el `index.ts` de DTO
+
+![](images/clipboard-2769696851.png)
+
+# 1.7 Verificar los archivos
+
+![](images/clipboard-1495596424.png)
+
+```         
+git add . 
+git commit -m "ISS-03: Migración Learner - Fundación y DTOs" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
@@ -5745,3 +5821,15 @@ git add
 git commit -m "ISS-20: Users - HTTP tests" 
 git push origin main
 ```
+
+![](images/clipboard-1753052826.png)
+
+# Fase II: Auth con RBAC — ISS-21 — Features Roles y Resources (catálogo de autorización)
+
+| **Este ISS** |   |
+|:---|:---|
+| **Título** | Features Roles y Resources (catálogo de autorización) |
+| **Feature / tablas** | `features/auth/roles/` · `roles` — `features/auth/resources/` · `resources` |
+| **API** | `/api/roles…` y `/api/recursos…` (JWT + RBAC) |
+| **Depende de** | [ISS-20 — Feature Users](https://tecnogua.com/academic/site/backend2026/manual/12-ISS-10-auth-users/) |
+| **Habilita** | [ISS-22 — Asignaciones y concesiones](https://tecnogua.com/academic/site/backend2026/manual/14-ISS-12-auth-role-users-resource-roles/) |
