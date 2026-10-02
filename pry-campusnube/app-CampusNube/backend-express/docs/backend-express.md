@@ -5614,3 +5614,33 @@ git add
 git commit -m "ISS-20: Users - Repository" 
 git push origin main
 ```
+
+![](images/clipboard-736553402.png)
+
+## 20.3 Service
+
+Aquí viven las reglas de `User`:
+
+- **Nunca se guarda la contraseña en claro** (`hashPassword`, bcrypt 12).
+
+- `username` y `email` son **únicos**: si ya existen, `AppError(409, …)`.
+
+- Al actualizar, si llega `password` se vuelve a hashear; si no llega, se conserva.
+
+- El borrado lógico (`deactivate`) **no** borra el hash: el registro queda inactivo e invisible.
+
+- `getEffectivePermissions` recorre el grafo y devuelve la lista de `(method, path)` vigente
+
+### 1. Crear el Service
+
+### ![](images/clipboard-2447247234.png)
+
+### Commit 20.3
+
+```         
+git add 
+git commit -m "ISS-20: Users - Service" 
+git push origin main
+```
+
+### 
