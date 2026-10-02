@@ -5366,6 +5366,22 @@ git commit -m "ISS-07-B: Migración Course - Repository"
 git push origin main
 ```
 
+![](images/clipboard-2184087648.png)
+
+#### **ISS-07-C — Migración: Service**.
+
+### 1. Crear `course.service.ts`
+
+![](images/clipboard-19301559.png)
+
+### Cerramos commit
+
+```         
+git add .
+git commit -m "ISS-07-C: Migración Course - Service" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
