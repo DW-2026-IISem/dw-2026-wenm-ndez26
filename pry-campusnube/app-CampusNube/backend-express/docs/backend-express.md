@@ -5253,3 +5253,33 @@ git add .
 git commit -m "ISS-19: Auth base - error response" 
 git push origin main
 ```
+
+![](images/clipboard-2036749740.png)
+
+## 19.7 `swagger-security.ts` — seguridad reutilizable para OpenAPI
+
+| **Export** | **Para qué** |
+|:---|:---|
+| `bearerSecurityScheme` | Esquema `bearerAuth` (`Authorization: Bearer <token>`, RFC 6750) |
+| `unauthorizedResponse` | Respuesta `401` reutilizable (`$ref`) |
+| `forbiddenResponse` | Respuesta `403` reutilizable (`$ref`) |
+
+#### 1. Crear `swagger-security.ts`
+
+![](images/clipboard-1084072648.png)
+
+### 2. Verificar TypeScript
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-2577823380.png)
+
+#### Commit del 19.7
+
+```         
+git add .
+git commit -m "ISS-19: Auth base - Swagger security"
+git push origin main
+```
