@@ -5234,7 +5234,7 @@ En este caso creamos basecontroller ya que no lo tenemos.
 
 ![](images/clipboard-1149007256.png)
 
-###  Verificar TypeScript
+### Verificar TypeScript
 
 Ahora ejecuta:
 
@@ -5259,7 +5259,7 @@ git push origin main
 ## 19.7 `swagger-security.ts` — seguridad reutilizable para OpenAPI
 
 | **Export** | **Para qué** |
-|:---|:---|
+|:-----------------------------------|:-----------------------------------|
 | `bearerSecurityScheme` | Esquema `bearerAuth` (`Authorization: Bearer <token>`, RFC 6750) |
 | `unauthorizedResponse` | Respuesta `401` reutilizable (`$ref`) |
 | `forbiddenResponse` | Respuesta `403` reutilizable (`$ref`) |
@@ -5289,7 +5289,7 @@ git push origin main
 ## 19.8 Los seis modelos Sequelize
 
 | **Entidad** | **Tabla** | **Responsabilidad** |
-|:---|:---|:---|
+|:-----------------------|:-----------------------|:-----------------------|
 | `User` | `users` | identidad del usuario (contraseña **hasheada**) |
 | `Role` | `roles` | agrupación de responsabilidades |
 | `RoleUser` | `role_users` | asignación `User ↔ Role` (N:M) |
@@ -5463,8 +5463,7 @@ npm run dev
 
 ![](images/clipboard-2220384230.png)
 
-Las 6 tablas existen
-mysql -h 127.0.0.1 -P 3306 -u root -p campusnube -e "SHOW TABLES LIKE '%role%'; SHOW TABLES LIKE 'users';"
+Las 6 tablas existen mysql -h 127.0.0.1 -P 3306 -u root -p campusnube -e "SHOW TABLES LIKE '%role%'; SHOW TABLES LIKE 'users';"
 
 ![](images/clipboard-2749368306.png)
 
@@ -5490,10 +5489,102 @@ npx tsc --noEmit
 
 ![](images/clipboard-340762479.png)
 
-### COMMIT FINAL ISS 19 
+### COMMIT FINAL ISS 19
 
 ```         
 git add 
 git commit -m "ISS-19: Auth base - config y seeders"
+git push origin main
+```
+
+![](images/clipboard-1678950805.png)
+
+# Fase II: Auth con RBAC — ISS-20 — Feature Users (identidad y contraseña)
+
+| **Este ISS** |   |
+|:-----------------------------------|:-----------------------------------|
+| **Título** | Feature Users (identidad y contraseña) |
+| **Feature / tabla** | `features/auth/users/` · `users` |
+| **API** | `/api/usuarios…` (JWT + RBAC) |
+| **Depende de** | [ISS-19 — Base de seguridad y modelos Auth](https://tecnogua.com/academic/site/backend2026/manual/11-ISS-09-auth-base/) |
+| **Habilita** | [ISS-20 — Features Roles y Resources](https://tecnogua.com/academic/site/backend2026/manual/13-ISS-11-auth-roles-resources/) |
+
+## Contenido de este ISS
+
+- 20.1 DTOs del feature (`dto/`)
+
+- 20.2 Repository
+
+- 20.3 Service (hash, unicidad y permisos efectivos)
+
+- 20.4 Controller
+
+- 20.5 Rutas (JWT + RBAC)
+
+- 20.6 Seeder (usuarios canónicos)
+
+- 20.7 Swagger
+
+- 20.8 Pruebas HTTP
+
+## 20.1 DTOs del feature
+
+Contrato de la API (el repository **no** los conoce):
+
+## 20.1.1 — Crear la carpeta
+
+```         
+mkdir -p src/features/auth/users/dto
+```
+
+### 
+
+### 20.1.2 — `create-user.dto.ts`
+
+![](images/clipboard-449348089.png)
+
+### 20.1.3 — `update-user.dto.ts`
+
+![](images/clipboard-1822316861.png)
+
+### 20.1.4 — `patch-user.dto.ts`
+
+![](images/clipboard-1409803422.png)
+
+### 20.1.5 — `change-password.dto.ts`
+
+![](images/clipboard-3939489292.png)
+
+### 20.1.6 — `user-response.dto.ts`
+
+### 
+
+![](images/clipboard-1122882131.png)
+
+### 20.1.7 — `index.ts`
+
+![](images/clipboard-4247222596.png)
+
+### 20.1.8 — Comprobar los archivos
+
+```         
+find src/features/auth/users/dto -maxdepth 1 -type f -print
+```
+
+![](images/clipboard-277554082.png)
+
+# Verificar TypeScript
+
+```         
+npx tsc --noEmit
+```
+
+Debe terminar sin errores.
+
+**commit de el 20.1**:
+
+```         
+git add 
+git commit -m "ISS-20: Users - DTOs"
 git push origin main
 ```
