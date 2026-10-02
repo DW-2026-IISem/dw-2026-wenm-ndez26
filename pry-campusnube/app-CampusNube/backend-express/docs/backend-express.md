@@ -5200,6 +5200,56 @@ git commit -m "ISS-03-D: Migración Learner - Controller"
 git push origin main
 ```
 
+![](images/clipboard-2425596180.png)
+
+## ISS-03-E — Migración: Routes e integración
+
+El `learner.routes.ts` **ya está funcionalmente bien**: apunta a `LearnerController` y conserva todos los endpoints de Learner.
+
+## ISS-06— Migración: Fundación y DTOs
+
+### 1. Crea la carpeta
+
+```         
+mkdir -p src/features/business/teacher/dto
+```
+
+### 2. `create-teacher.dto.ts`
+
+![](images/clipboard-3444578923.png)
+
+### 3. `update-teacher.dto.ts`
+
+![](images/clipboard-2387143816.png)
+
+### 4. `patch-teacher.dto.ts`
+
+![](images/clipboard-1163578738.png)
+
+### 5. `teacher-response.dto.ts`
+
+### ![](images/clipboard-2014886362.png)
+
+### 6. `index.ts`
+
+### ![](images/clipboard-3249484779.png)
+
+### 7. Verificación
+
+```         
+find src/features/business/teacher/dto -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-2904744726.png)
+
+### Commit
+
+```         
+git add . 
+git commit -m "ISS-06-A: Migración Teacher - Fundación y DTOs" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
@@ -5623,7 +5673,7 @@ Las 6 tablas existen mysql -h 127.0.0.1 -P 3306 -u root -p campusnube -e "SHOW T
 
 ![](images/clipboard-2749368306.png)
 
-### DoD del ISS-09
+### DoD del ISS-19
 
 - [ ] Todos los criterios de aceptación (19.1 … 19.10) cumplidos
 
