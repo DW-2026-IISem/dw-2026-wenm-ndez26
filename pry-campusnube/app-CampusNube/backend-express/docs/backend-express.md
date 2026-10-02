@@ -5283,3 +5283,98 @@ git add .
 git commit -m "ISS-19: Auth base - Swagger security"
 git push origin main
 ```
+
+![![](images/clipboard-642630766.png)](images/clipboard-642630766.png)
+
+## 19.8 Los seis modelos Sequelize
+
+| **Entidad** | **Tabla** | **Responsabilidad** |
+|:---|:---|:---|
+| `User` | `users` | identidad del usuario (contraseña **hasheada**) |
+| `Role` | `roles` | agrupación de responsabilidades |
+| `RoleUser` | `role_users` | asignación `User ↔ Role` (N:M) |
+| `Resource` | `resources` | endpoint/acción protegible, `(method, path)` |
+| `ResourceRole` | `resource_roles` | **el permiso**: concesión `Role ↔ Resource` (N:M) |
+| `RefreshToken` | `refresh_tokens` | sesión renovable y revocable |
+
+## 19.8.1 — `User`
+
+Primero creamos las carpetas:
+
+```         
+mkdir -p src/features/auth/users
+```
+
+![](images/clipboard-2102282957.png)
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-4221288123.png)
+
+### 19.8.3 — `Resource`
+
+![](images/clipboard-2925379995.png)
+
+#### Verifica:
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-320300040.png)
+
+### 19.8.4 — `RoleUser`
+
+![](images/clipboard-2178496694.png)
+
+### Verifica:
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-931239334.png)
+
+### 19.8.5 — `ResourceRole`
+
+![](images/clipboard-1706414090.png)
+
+Verifica:
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-4047482045.png)
+
+### 19.8.6 — `RefreshToken`
+
+### ![](images/clipboard-3973690600.png)
+
+### Verifica:
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-2644083300.png)
+
+Comprobar que están los seis modelos:
+
+```         
+find src/features/auth -name "*.model.ts" -print
+```
+
+![](images/clipboard-3197692597.png)
+
+**Commit** **Final**
+
+```         
+git add .
+git commit -m "ISS-19: Auth base - seis modelos Sequelize" 
+git push origin main
+```
