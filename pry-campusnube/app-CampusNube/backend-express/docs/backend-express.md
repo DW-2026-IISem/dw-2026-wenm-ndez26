@@ -5127,3 +5127,33 @@ git add
 git commit -m "ISS-19: Auth base - password y tokens opacos" 
 git push origin main
 ```
+
+![](images/clipboard-1506555338.png)
+
+## 19.3 `jwt.ts` — firma y verificación del access token
+
+Creamos el archivo:
+
+```         
+: > src/shared/auth/jwt.ts
+```
+
+Después:
+
+![](images/clipboard-3051754124.png)
+
+### Verificación
+
+```         
+npx tsc --noEmit
+```
+
+![](images/clipboard-2151172493.png)
+
+### Commit
+
+```         
+git add 
+git commit -m "ISS-19: Auth base - JWT HS256" 
+git push origin main
+```
