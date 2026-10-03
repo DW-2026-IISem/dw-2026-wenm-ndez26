@@ -5646,6 +5646,38 @@ git commit -m "ISS-10-B: Migración Module - Repository"
 git push origin main
 ```
 
+![](images/clipboard-1719823041.png)
+
+### **ISS-10-C — Migración Module: Service**.
+
+#### 1. Crear `module.service.ts`
+
+![](images/clipboard-815814403.png)
+
+**Cerramos ISS-10-C — Migración Module: Service.**
+
+```         
+git add . 
+git commit -m "ISS-10-C: Migración Module - Service"
+git push origin main
+```
+
+![](images/clipboard-2113349199.png)
+
+### **ISS-10-D — Migración Module: Controller**.
+
+1\. Reemplazar `module.controller.ts`
+
+![](images/clipboard-3420453459.png)
+
+**Cerramos ISS-10-D — Migración Module: Controller.**
+
+```         
+git add . 
+git commit -m "ISS-10-D: Migración Module - Controller" 
+git push origin main
+```
+
 ### Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS

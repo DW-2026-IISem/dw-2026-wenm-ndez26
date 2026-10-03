@@ -1,227 +1,122 @@
 import { Request, Response } from "express";
-import { Module } from "./module.model";
-import { Course } from "../course/course.model";
+import { BaseController } from "../../../shared/http/base-controller";
+import {
+  CreateModuleDto,
+  PatchModuleDto,
+  UpdateModuleDto,
+} from "./dto";
+import { ModuleRepository } from "./module.repository";
+import { ModuleService } from "./module.service";
 
-export class ModuleController {
-  async getAll(_req: Request, res: Response): Promise<Response> {
-    try {
-      const modules = await Module.findAll();
+export class ModuleController extends BaseController {
+  private readonly moduleService: ModuleService;
 
-      return res.status(200).json(modules);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener los módulos",
-        error,
-      });
-    }
+  constructor() {
+    super();
+    this.moduleService = new ModuleService(
+      new ModuleRepository()
+    );
   }
 
-  async getOne(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async getAll(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const modules = await this.moduleService.getAll();
 
-      const module = await Module.findByPk(id);
-
-      if (!module) {
-        return res.status(404).json({
-          message: "Módulo no encontrado",
-        });
-      }
-
-      return res.status(200).json(module);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener el módulo",
-        error,
-      });
-    }
+      res.status(200).json({ modules });
+    });
   }
 
-  async create(req: Request, res: Response): Promise<Response> {
-    try {
-      const { course_id, name, description, isActive } = req.body;
+  public async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!course_id || !name) {
-        return res.status(400).json({
-          message: "course_id y name son obligatorios",
-        });
-      }
+      const module = await this.moduleService.getOne(id);
 
-      const course = await Course.findOne({
-        where: {
-          id: Number(course_id),
-          isActive: true,
-        },
-      });
-
-      if (!course) {
-        return res.status(400).json({
-          message: "El curso no existe o no está activo",
-        });
-      }
-
-      const module = await Module.create({
-        course_id: Number(course_id),
-        name,
-        description: description ?? null,
-        isActive: isActive ?? true,
-      });
-
-      return res.status(201).json(module);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al crear el módulo",
-        error,
-      });
-    }
+      res.status(200).json({ module });
+    });
   }
 
-  async update(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const dto = req.body as CreateModuleDto;
 
-      const module = await Module.findByPk(id);
+      const module = await this.moduleService.create(dto);
 
-      if (!module) {
-        return res.status(404).json({
-          message: "Módulo no encontrado",
-        });
-      }
-
-      const { course_id, name, description, isActive } = req.body;
-
-      if (!course_id || !name) {
-        return res.status(400).json({
-          message: "course_id y name son obligatorios",
-        });
-      }
-
-      const course = await Course.findOne({
-        where: {
-          id: Number(course_id),
-          isActive: true,
-        },
-      });
-
-      if (!course) {
-        return res.status(400).json({
-          message: "El curso no existe o no está activo",
-        });
-      }
-
-      await module.update({
-        course_id: Number(course_id),
-        name,
-        description: description ?? null,
-        isActive: isActive ?? true,
-      });
-
-      return res.status(200).json(module);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar el módulo",
-        error,
-      });
-    }
+      res.status(201).json({ module });
+    });
   }
 
-  async patch(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async update(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const module = await Module.findByPk(id);
+      const dto = req.body as UpdateModuleDto;
 
-      if (!module) {
-        return res.status(404).json({
-          message: "Módulo no encontrado",
-        });
-      }
+      const module =
+        await this.moduleService.updatePut(id, dto);
 
-      const { course_id, name, description, isActive } = req.body;
-
-      if (course_id !== undefined) {
-        const course = await Course.findOne({
-          where: {
-            id: Number(course_id),
-            isActive: true,
-          },
-        });
-
-        if (!course) {
-          return res.status(400).json({
-            message: "El curso no existe o no está activo",
-          });
-        }
-      }
-
-      await module.update({
-        ...(course_id !== undefined && {
-          course_id: Number(course_id),
-        }),
-        ...(name !== undefined && { name }),
-        ...(description !== undefined && { description }),
-        ...(isActive !== undefined && { isActive }),
-      });
-
-      return res.status(200).json(module);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar parcialmente el módulo",
-        error,
-      });
-    }
+      res.status(200).json({ module });
+    });
   }
 
-  async delete(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async patch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const module = await Module.findByPk(id);
+      const dto = req.body as PatchModuleDto;
 
-      if (!module) {
-        return res.status(404).json({
-          message: "Módulo no encontrado",
-        });
-      }
+      const module =
+        await this.moduleService.updatePatch(id, dto);
 
-      await module.destroy();
-
-      return res.status(200).json({
-        message: "Módulo eliminado correctamente",
-      });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al eliminar el módulo",
-        error,
-      });
-    }
+      res.status(200).json({ module });
+    });
   }
 
-  async deactivate(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async delete(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const module = await Module.findByPk(id);
+      await this.moduleService.deletePhysical(id);
 
-      if (!module) {
-        return res.status(404).json({
-          message: "Módulo no encontrado",
-        });
-      }
-
-      await module.update({
-        isActive: false,
+      res.status(200).json({
+        message: "Module permanently deleted",
+        id,
       });
+    });
+  }
 
-      return res.status(200).json({
-        message: "Módulo desactivado correctamente",
+  public async deactivate(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+
+      const module =
+        await this.moduleService.deleteLogical(id);
+
+      res.status(200).json({
+        message: "Module deactivated (logical delete)",
         module,
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al desactivar el módulo",
-        error,
-      });
-    }
+    });
   }
 }
