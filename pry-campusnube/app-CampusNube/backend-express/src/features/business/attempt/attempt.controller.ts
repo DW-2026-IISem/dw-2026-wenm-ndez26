@@ -1,227 +1,123 @@
 import { Request, Response } from "express";
-import { Attempt } from "./attempt.model";
-import { Enrollment } from "../enrollment/enrollment.model";
+import { AppError } from "../../../shared/errors/app-error";
+import { BaseController } from "../../../shared/http/base-controller";
+import { AttemptService } from "./attempt.service";
+import {
+  CreateAttemptDto,
+  PatchAttemptDto,
+  UpdateAttemptDto,
+} from "./dto";
 
-export class AttemptController {
-  async getAll(_req: Request, res: Response): Promise<Response> {
-    try {
-      const attempts = await Attempt.findAll();
+export class AttemptController extends BaseController {
+  private readonly service = new AttemptService();
 
-      return res.status(200).json(attempts);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener los intentos",
-        error,
-      });
-    }
+  async getAll(
+    _req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const attempts = await this.service.getAll();
+
+      res.status(200).json(attempts);
+    });
   }
 
-  async getOne(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const attempt = await Attempt.findByPk(id);
+      const attempt = await this.service.getOne(id);
 
-      if (!attempt) {
-        return res.status(404).json({
-          message: "Intento no encontrado",
-        });
-      }
-
-      return res.status(200).json(attempt);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener el intento",
-        error,
-      });
-    }
+      res.status(200).json(attempt);
+    });
   }
 
-  async create(req: Request, res: Response): Promise<Response> {
-    try {
-      const { enrollment_id, name, description, isActive } = req.body;
+  async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const data = req.body as CreateAttemptDto;
 
-      if (!enrollment_id || !name) {
-        return res.status(400).json({
-          message: "enrollment_id y name son obligatorios",
-        });
+      if (!data.enrollment_id || !data.name) {
+        throw new AppError(
+          400,
+          "enrollment_id y name son obligatorios"
+        );
       }
 
-      const enrollment = await Enrollment.findOne({
-        where: {
-          id: Number(enrollment_id),
-          status: "active",
-        },
-      });
+      const attempt = await this.service.create(data);
 
-      if (!enrollment) {
-        return res.status(400).json({
-          message: "La inscripción no existe o no está activa",
-        });
-      }
-
-      const attempt = await Attempt.create({
-        enrollment_id: Number(enrollment_id),
-        name,
-        description: description ?? null,
-        isActive: isActive ?? true,
-      });
-
-      return res.status(201).json(attempt);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al crear el intento",
-        error,
-      });
-    }
+      res.status(201).json(attempt);
+    });
   }
 
-  async update(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async update(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const data = req.body as UpdateAttemptDto;
 
-      const attempt = await Attempt.findByPk(id);
-
-      if (!attempt) {
-        return res.status(404).json({
-          message: "Intento no encontrado",
-        });
+      if (!data.enrollment_id || !data.name) {
+        throw new AppError(
+          400,
+          "enrollment_id y name son obligatorios"
+        );
       }
 
-      const { enrollment_id, name, description, isActive } = req.body;
+      const attempt = await this.service.update(id, data);
 
-      if (!enrollment_id || !name) {
-        return res.status(400).json({
-          message: "enrollment_id y name son obligatorios",
-        });
-      }
-
-      const enrollment = await Enrollment.findOne({
-        where: {
-          id: Number(enrollment_id),
-          status: "active",
-        },
-      });
-
-      if (!enrollment) {
-        return res.status(400).json({
-          message: "La inscripción no existe o no está activa",
-        });
-      }
-
-      await attempt.update({
-        enrollment_id: Number(enrollment_id),
-        name,
-        description: description ?? null,
-        isActive: isActive ?? true,
-      });
-
-      return res.status(200).json(attempt);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar el intento",
-        error,
-      });
-    }
+      res.status(200).json(attempt);
+    });
   }
 
-  async patch(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async patch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const data = req.body as PatchAttemptDto;
 
-      const attempt = await Attempt.findByPk(id);
+      const attempt = await this.service.patch(id, data);
 
-      if (!attempt) {
-        return res.status(404).json({
-          message: "Intento no encontrado",
-        });
-      }
-
-      const { enrollment_id, name, description, isActive } = req.body;
-
-      if (enrollment_id !== undefined) {
-        const enrollment = await Enrollment.findOne({
-          where: {
-            id: Number(enrollment_id),
-            status: "active",
-          },
-        });
-
-        if (!enrollment) {
-          return res.status(400).json({
-            message: "La inscripción no existe o no está activa",
-          });
-        }
-      }
-
-      await attempt.update({
-        ...(enrollment_id !== undefined && {
-          enrollment_id: Number(enrollment_id),
-        }),
-        ...(name !== undefined && { name }),
-        ...(description !== undefined && { description }),
-        ...(isActive !== undefined && { isActive }),
-      });
-
-      return res.status(200).json(attempt);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar parcialmente el intento",
-        error,
-      });
-    }
+      res.status(200).json(attempt);
+    });
   }
 
-  async delete(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async delete(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const attempt = await Attempt.findByPk(id);
+      await this.service.delete(id);
 
-      if (!attempt) {
-        return res.status(404).json({
-          message: "Intento no encontrado",
-        });
-      }
-
-      await attempt.destroy();
-
-      return res.status(200).json({
+      res.status(200).json({
         message: "Intento eliminado correctamente",
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al eliminar el intento",
-        error,
-      });
-    }
+    });
   }
 
-  async deactivate(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async deactivate(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const attempt = await Attempt.findByPk(id);
+      const attempt = await this.service.deactivate(id);
 
-      if (!attempt) {
-        return res.status(404).json({
-          message: "Intento no encontrado",
-        });
-      }
-
-      await attempt.update({
-        isActive: false,
-      });
-
-      return res.status(200).json({
+      res.status(200).json({
         message: "Intento desactivado correctamente",
         attempt,
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al desactivar el intento",
-        error,
-      });
-    }
+    });
   }
 }
