@@ -1,188 +1,125 @@
 import { Request, Response } from "express";
-import { Enrollment } from "./enrollment.model";
+import { BaseController } from "../../../shared/http/base-controller";
+import {
+  CreateEnrollmentDto,
+  PatchEnrollmentDto,
+  UpdateEnrollmentDto,
+} from "./dto";
+import { EnrollmentRepository } from "./enrollment.repository";
+import { EnrollmentService } from "./enrollment.service";
 
-export class EnrollmentController {
-  async getAll(req: Request, res: Response): Promise<void> {
-    try {
-      const enrollments = await Enrollment.findAll({
-        order: [["id", "ASC"]],
-      });
+export class EnrollmentController extends BaseController {
+  private readonly enrollmentService: EnrollmentService;
 
-      res.status(200).json(enrollments);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al obtener las inscripciones",
-        error,
-      });
-    }
+  constructor() {
+    super();
+    this.enrollmentService = new EnrollmentService(
+      new EnrollmentRepository()
+    );
   }
 
-  async getOne(req: Request, res: Response): Promise<void> {
-    try {
-      const enrollment = await Enrollment.findByPk(
-        Number(req.params.id)
-      );
+  public async getAll(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const enrollments =
+        await this.enrollmentService.getAll();
 
-      if (!enrollment) {
-        res.status(404).json({
-          message: "Inscripción no encontrada",
-        });
-        return;
-      }
-
-      res.status(200).json(enrollment);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al obtener la inscripción",
-        error,
-      });
-    }
+      res.status(200).json({ enrollments });
+    });
   }
 
-  async create(req: Request, res: Response): Promise<void> {
-    try {
-      const {
-        learner_id,
-        course_id,
-        enrollment_date,
-        status,
-      } = req.body;
+  public async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!learner_id || !course_id) {
-        res.status(400).json({
-          message: "learner_id y course_id son obligatorios",
-        });
-        return;
-      }
+      const enrollment =
+        await this.enrollmentService.getOne(id);
 
-      const enrollment = await Enrollment.create({
-        learner_id,
-        course_id,
-        enrollment_date: enrollment_date || new Date(),
-        status: status || "active",
-      });
-
-      res.status(201).json(enrollment);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al crear la inscripción",
-        error,
-      });
-    }
+      res.status(200).json({ enrollment });
+    });
   }
 
-  async update(req: Request, res: Response): Promise<void> {
-    try {
-      const enrollment = await Enrollment.findByPk(
-        Number(req.params.id)
-      );
+  public async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const dto = req.body as CreateEnrollmentDto;
 
-      if (!enrollment) {
-        res.status(404).json({
-          message: "Inscripción no encontrada",
-        });
-        return;
-      }
+      const enrollment =
+        await this.enrollmentService.create(dto);
 
-      const {
-        learner_id,
-        course_id,
-        enrollment_date,
-        status,
-      } = req.body;
-
-      await enrollment.update({
-        learner_id,
-        course_id,
-        enrollment_date,
-        status,
-      });
-
-      res.status(200).json(enrollment);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al actualizar la inscripción",
-        error,
-      });
-    }
+      res.status(201).json({ enrollment });
+    });
   }
 
-  async patch(req: Request, res: Response): Promise<void> {
-    try {
-      const enrollment = await Enrollment.findByPk(
-        Number(req.params.id)
-      );
+  public async update(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!enrollment) {
-        res.status(404).json({
-          message: "Inscripción no encontrada",
-        });
-        return;
-      }
+      const dto = req.body as UpdateEnrollmentDto;
 
-      await enrollment.update(req.body);
+      const enrollment =
+        await this.enrollmentService.updatePut(id, dto);
 
-      res.status(200).json(enrollment);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al actualizar parcialmente la inscripción",
-        error,
-      });
-    }
+      res.status(200).json({ enrollment });
+    });
   }
 
-  async delete(req: Request, res: Response): Promise<void> {
-    try {
-      const enrollment = await Enrollment.findByPk(
-        Number(req.params.id)
-      );
+  public async patch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!enrollment) {
-        res.status(404).json({
-          message: "Inscripción no encontrada",
-        });
-        return;
-      }
+      const dto = req.body as PatchEnrollmentDto;
 
-      await enrollment.destroy();
+      const enrollment =
+        await this.enrollmentService.updatePatch(id, dto);
+
+      res.status(200).json({ enrollment });
+    });
+  }
+
+  public async delete(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+
+      await this.enrollmentService.deletePhysical(id);
 
       res.status(200).json({
-        message: "Inscripción eliminada correctamente",
+        message: "Enrollment permanently deleted",
+        id,
       });
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al eliminar la inscripción",
-        error,
-      });
-    }
+    });
   }
 
-  async deactivate(req: Request, res: Response): Promise<void> {
-    try {
-      const enrollment = await Enrollment.findByPk(
-        Number(req.params.id)
-      );
+  public async deactivate(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!enrollment) {
-        res.status(404).json({
-          message: "Inscripción no encontrada",
-        });
-        return;
-      }
-
-      await enrollment.update({
-        status: "inactive",
-      });
+      const enrollment =
+        await this.enrollmentService.deleteLogical(id);
 
       res.status(200).json({
-        message: "Inscripción desactivada correctamente",
+        message: "Enrollment deactivated (logical delete)",
         enrollment,
       });
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al desactivar la inscripción",
-        error,
-      });
-    }
+    });
   }
 }
