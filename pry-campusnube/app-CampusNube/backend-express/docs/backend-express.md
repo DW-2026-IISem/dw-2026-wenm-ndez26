@@ -5782,6 +5782,22 @@ git commit -m "ISS-11-C: Migración Lesson - Service"
 git push origin main
 ```
 
+![](images/clipboard-3742435774.png)
+
+### ISS-11-D — Migración Lesson: Controller
+
+```         
+code src/features/business/lesson/lesson.controller.ts
+```
+
+![](images/clipboard-2560240596.png)
+
+```         
+git add . 
+git commit -m "ISS-11-D: Migración Lesson - Controller" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS

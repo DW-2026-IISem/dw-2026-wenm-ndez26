@@ -1,227 +1,122 @@
 import { Request, Response } from "express";
-import { Lesson } from "./lesson.model";
-import { Module } from "../module/module.model";
+import { AppError } from "../../../shared/errors/app-error";
+import { BaseController } from "../../../shared/http/base-controller";
+import { LessonService } from "./lesson.service";
+import {
+  CreateLessonDto,
+  PatchLessonDto,
+  UpdateLessonDto,
+} from "./dto";
 
-export class LessonController {
-  async getAll(_req: Request, res: Response): Promise<Response> {
-    try {
-      const lessons = await Lesson.findAll();
+export class LessonController extends BaseController {
+  private readonly service = new LessonService();
 
-      return res.status(200).json(lessons);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener las lecciones",
-        error,
-      });
-    }
+  async getAll(
+    _req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const lessons = await this.service.getAll();
+
+      res.status(200).json(lessons);
+    });
   }
 
-  async getOne(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const lesson = await this.service.getOne(id);
 
-      const lesson = await Lesson.findByPk(id);
-
-      if (!lesson) {
-        return res.status(404).json({
-          message: "Lección no encontrada",
-        });
-      }
-
-      return res.status(200).json(lesson);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener la lección",
-        error,
-      });
-    }
+      res.status(200).json(lesson);
+    });
   }
 
-  async create(req: Request, res: Response): Promise<Response> {
-    try {
-      const { module_id, name, description, isActive } = req.body;
+  async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const data = req.body as CreateLessonDto;
 
-      if (!module_id || !name) {
-        return res.status(400).json({
-          message: "module_id y name son obligatorios",
-        });
+      if (!data.module_id || !data.name) {
+        throw new AppError(
+          400,
+          "module_id y name son obligatorios"
+        );
       }
 
-      const module = await Module.findOne({
-        where: {
-          id: Number(module_id),
-          isActive: true,
-        },
-      });
+      const lesson = await this.service.create(data);
 
-      if (!module) {
-        return res.status(400).json({
-          message: "El módulo no existe o no está activo",
-        });
-      }
-
-      const lesson = await Lesson.create({
-        module_id: Number(module_id),
-        name,
-        description: description ?? null,
-        isActive: isActive ?? true,
-      });
-
-      return res.status(201).json(lesson);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al crear la lección",
-        error,
-      });
-    }
+      res.status(201).json(lesson);
+    });
   }
 
-  async update(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async update(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const data = req.body as UpdateLessonDto;
 
-      const lesson = await Lesson.findByPk(id);
-
-      if (!lesson) {
-        return res.status(404).json({
-          message: "Lección no encontrada",
-        });
+      if (!data.module_id || !data.name) {
+        throw new AppError(
+          400,
+          "module_id y name son obligatorios"
+        );
       }
 
-      const { module_id, name, description, isActive } = req.body;
+      const lesson = await this.service.update(id, data);
 
-      if (!module_id || !name) {
-        return res.status(400).json({
-          message: "module_id y name son obligatorios",
-        });
-      }
-
-      const module = await Module.findOne({
-        where: {
-          id: Number(module_id),
-          isActive: true,
-        },
-      });
-
-      if (!module) {
-        return res.status(400).json({
-          message: "El módulo no existe o no está activo",
-        });
-      }
-
-      await lesson.update({
-        module_id: Number(module_id),
-        name,
-        description: description ?? null,
-        isActive: isActive ?? true,
-      });
-
-      return res.status(200).json(lesson);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar la lección",
-        error,
-      });
-    }
+      res.status(200).json(lesson);
+    });
   }
 
-  async patch(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async patch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const data = req.body as PatchLessonDto;
 
-      const lesson = await Lesson.findByPk(id);
+      const lesson = await this.service.patch(id, data);
 
-      if (!lesson) {
-        return res.status(404).json({
-          message: "Lección no encontrada",
-        });
-      }
-
-      const { module_id, name, description, isActive } = req.body;
-
-      if (module_id !== undefined) {
-        const module = await Module.findOne({
-          where: {
-            id: Number(module_id),
-            isActive: true,
-          },
-        });
-
-        if (!module) {
-          return res.status(400).json({
-            message: "El módulo no existe o no está activo",
-          });
-        }
-      }
-
-      await lesson.update({
-        ...(module_id !== undefined && {
-          module_id: Number(module_id),
-        }),
-        ...(name !== undefined && { name }),
-        ...(description !== undefined && { description }),
-        ...(isActive !== undefined && { isActive }),
-      });
-
-      return res.status(200).json(lesson);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar parcialmente la lección",
-        error,
-      });
-    }
+      res.status(200).json(lesson);
+    });
   }
 
-  async delete(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async delete(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const lesson = await Lesson.findByPk(id);
+      await this.service.delete(id);
 
-      if (!lesson) {
-        return res.status(404).json({
-          message: "Lección no encontrada",
-        });
-      }
-
-      await lesson.destroy();
-
-      return res.status(200).json({
+      res.status(200).json({
         message: "Lección eliminada correctamente",
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al eliminar la lección",
-        error,
-      });
-    }
+    });
   }
 
-  async deactivate(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  async deactivate(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const lesson = await Lesson.findByPk(id);
+      const lesson = await this.service.deactivate(id);
 
-      if (!lesson) {
-        return res.status(404).json({
-          message: "Lección no encontrada",
-        });
-      }
-
-      await lesson.update({
-        isActive: false,
-      });
-
-      return res.status(200).json({
+      res.status(200).json({
         message: "Lección desactivada correctamente",
         lesson,
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al desactivar la lección",
-        error,
-      });
-    }
+    });
   }
 }
