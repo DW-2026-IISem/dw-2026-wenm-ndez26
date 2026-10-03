@@ -5584,7 +5584,53 @@ git push origin main
 
 ![](images/clipboard-287955127.png)
 
-# Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
+###  Commit de ISS-09-D
+
+```         
+git add .
+git commit -m "ISS-09-D: Migración Evaluation - Controller"
+git push origin main
+```
+
+![](images/clipboard-341083977.png)
+
+### ISS-09-E — Verificación de integración
+
+![](images/clipboard-158874291.png)
+
+## ISS-10-A — Migración Module: Fundación y DTOs
+
+### 1. Crear carpeta DTO
+
+```         
+mkdir -p src/features/business/module/dto
+```
+
+### 2. `create-module.dto.ts`
+
+![](images/clipboard-2322937657.png)
+
+### 3. `update-module.dto.ts`
+
+![](images/clipboard-2798724156.png)
+
+### 4. `patch-module.dto.ts`5. `module-response.dto.ts`
+
+![](images/clipboard-3952764550.png)
+
+### 6. `index.ts`
+
+![](images/clipboard-506968285.png)
+
+###  Cerramos **ISS-10-A — Migración Module: Fundación y DTOs**.
+
+```         
+git add .
+git commit -m "ISS-10-A: Migración Module - Fundación y DTOs"
+git push origin main
+```
+
+### Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
 
