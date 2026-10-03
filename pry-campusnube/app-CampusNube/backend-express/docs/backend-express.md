@@ -5886,6 +5886,24 @@ git commit -m "ISS-12-B: Migración Attempt - Repository"
 git push origin main
 ```
 
+![](images/clipboard-1804500996.png)
+
+### ISS-12-C — Migración Attempt: Service
+
+![](images/clipboard-498838790.png)
+
+### Commit
+
+```         
+Cerramos ISS-12-C — Migración Attempt: Service.
+```
+
+```         
+git add .
+git commit -m "ISS-12-C: Migración Attempt - Service" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
