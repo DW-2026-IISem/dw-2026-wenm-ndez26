@@ -5446,6 +5446,22 @@ git commit -m "ISS-08-A: Migración Enrollment - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-44345032.png)
+
+###  **ISS-08-B — Repository**. 
+
+### 1. Crear `enrollment.repository.ts`
+
+![](images/clipboard-2805771179.png)
+
+###  Commit de ISS-08-B
+
+```         
+git add .
+git commit -m "ISS-08-B: Migración Enrollment - Repository"
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
