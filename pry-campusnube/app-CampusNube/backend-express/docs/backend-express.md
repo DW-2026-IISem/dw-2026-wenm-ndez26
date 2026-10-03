@@ -5174,7 +5174,7 @@ La función del **Service** será contener la lógica de negocio y coordinar al 
 
 ![](images/clipboard-3832448197.png)
 
-### Commit 
+### Commit
 
 ```         
 git add . 
@@ -5252,7 +5252,7 @@ git push origin main
 
 ![](images/clipboard-4282008999.png)
 
-###  **ISS-06-B — Migración: Repository**.
+### **ISS-06-B — Migración: Repository**.
 
 ### 1. Crear `teacher.repository.ts`
 
@@ -5268,7 +5268,7 @@ git push origin main
 
 ![](images/clipboard-2568849583.png)
 
-###  **ISS-06-C — Migración: Service**.
+### **ISS-06-C — Migración: Service**.
 
 ### 1. Crear `teacher.service.ts`
 
@@ -5284,7 +5284,7 @@ git push origin main
 
 ![](images/clipboard-3590206933.png)
 
-###  **ISS-06-D — Migración: Controller**.
+### **ISS-06-D — Migración: Controller**.
 
 ### 1. Reemplazar `teacher.controller.ts`
 
@@ -5379,6 +5379,70 @@ git push origin main
 ```         
 git add .
 git commit -m "ISS-07-C: Migración Course - Service" 
+git push origin main
+```
+
+![](images/clipboard-1107989331.png)
+
+**ISS-07-D — Migración: Controller**.
+
+Vamos a reutilizar `course.controller.ts` existente y reemplazar el acceso directo a Sequelize por `CourseService`
+
+### 1. Reemplaza `course.controller.ts`
+
+![](images/clipboard-239929622.png)
+
+![](images/clipboard-165893770.png)
+
+### Cerramos con Commit
+
+```         
+git add .
+git commit -m "ISS-07-D: Migración Course - Controller" 
+git push origin main
+```
+
+![](images/clipboard-488386650.png)
+
+##  **ISS-08-A — Fundación y DTOs**.
+
+### 1. Crear la carpeta DTO
+
+```         
+mkdir -p src/features/business/enrollment/dto
+```
+
+![](images/clipboard-2085358337.png)
+
+### 2. Crear `create-enrollment.dto.ts`
+
+![](images/clipboard-3899982401.png)
+
+### 3. Crear `update-enrollment.dto.ts`
+
+Aquí dejamos fuera `status`, porque el cambio de estado se realiza mediante la operación específica de desactivación.
+
+![](images/clipboard-848936943.png)
+
+### 4. Crear `patch-enrollment.dto.ts`
+
+![](images/clipboard-2484599347.png)
+
+### 5. Crear `enrollment-response.dto.ts`
+
+La respuesta conserva la información de la inscripción, incluido su estado.
+
+![](images/clipboard-1376712894.png)
+
+### 6. Crear `index.ts`
+
+![](images/clipboard-2118176722.png)
+
+### **Commit  ISS-08-A**:
+
+```         
+git add .
+git commit -m "ISS-08-A: Migración Enrollment - Fundación y DTOs"
 git push origin main
 ```
 
@@ -5937,7 +6001,7 @@ git push origin main
 
 ![](images/clipboard-3775576192.png)
 
-### Verificar 
+### Verificar
 
 ```         
 npx tsc --noEmit
@@ -6076,7 +6140,7 @@ git push origin main
 
 ![](images/clipboard-3403775900.png)
 
-###  Commit:
+### Commit:
 
 ```         
 git add 
@@ -6089,7 +6153,7 @@ git push origin main
 # Fase II: Auth con RBAC — ISS-21 — Features Roles y Resources (catálogo de autorización)
 
 | **Este ISS** |   |
-|:---|:---|
+|:-----------------------------------|:-----------------------------------|
 | **Título** | Features Roles y Resources (catálogo de autorización) |
 | **Feature / tablas** | `features/auth/roles/` · `roles` — `features/auth/resources/` · `resources` |
 | **API** | `/api/roles…` y `/api/recursos…` (JWT + RBAC) |
