@@ -1,233 +1,125 @@
 import { Request, Response } from "express";
-import { Evaluation } from "./evaluation.model";
-import { Course } from "../course/course.model";
+import { BaseController } from "../../../shared/http/base-controller";
+import {
+  CreateEvaluationDto,
+  PatchEvaluationDto,
+  UpdateEvaluationDto,
+} from "./dto";
+import { EvaluationRepository } from "./evaluation.repository";
+import { EvaluationService } from "./evaluation.service";
 
-export class EvaluationController {
-  // GET ALL
-  async getAll(_req: Request, res: Response): Promise<Response> {
-    try {
-      const evaluations = await Evaluation.findAll();
-      return res.status(200).json(evaluations);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener las evaluaciones",
-        error,
-      });
-    }
+export class EvaluationController extends BaseController {
+  private readonly evaluationService: EvaluationService;
+
+  constructor() {
+    super();
+    this.evaluationService = new EvaluationService(
+      new EvaluationRepository()
+    );
   }
 
-  // GET ONE
-  async getOne(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async getAll(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const evaluations =
+        await this.evaluationService.getAll();
 
-      const evaluation = await Evaluation.findByPk(id);
-
-      if (!evaluation) {
-        return res.status(404).json({
-          message: "Evaluación no encontrada",
-        });
-      }
-
-      return res.status(200).json(evaluation);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener la evaluación",
-        error,
-      });
-    }
+      res.status(200).json({ evaluations });
+    });
   }
 
-  // CREATE
-  async create(req: Request, res: Response): Promise<Response> {
-    try {
-      const { course_id, name, description, isActive } = req.body;
+  public async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!course_id || !name) {
-        return res.status(400).json({
-          message: "course_id y name son obligatorios",
-        });
-      }
+      const evaluation =
+        await this.evaluationService.getOne(id);
 
-      const course = await Course.findOne({
-        where: {
-          id: Number(course_id),
-          isActive: true,
-        },
-      });
-
-      if (!course) {
-        return res.status(400).json({
-          message: "El curso no existe o no está activo",
-        });
-      }
-
-      const evaluation = await Evaluation.create({
-        course_id: Number(course_id),
-        name,
-        description: description ?? null,
-        isActive: isActive ?? true,
-      });
-
-      return res.status(201).json(evaluation);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al crear la evaluación",
-        error,
-      });
-    }
+      res.status(200).json({ evaluation });
+    });
   }
 
-  // UPDATE PUT
-  async update(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const dto = req.body as CreateEvaluationDto;
 
-      const evaluation = await Evaluation.findByPk(id);
+      const evaluation =
+        await this.evaluationService.create(dto);
 
-      if (!evaluation) {
-        return res.status(404).json({
-          message: "Evaluación no encontrada",
-        });
-      }
-
-      const { course_id, name, description, isActive } = req.body;
-
-      if (!course_id || !name) {
-        return res.status(400).json({
-          message: "course_id y name son obligatorios",
-        });
-      }
-
-      const course = await Course.findOne({
-        where: {
-          id: Number(course_id),
-          isActive: true,
-        },
-      });
-
-      if (!course) {
-        return res.status(400).json({
-          message: "El curso no existe o no está activo",
-        });
-      }
-
-      await evaluation.update({
-        course_id: Number(course_id),
-        name,
-        description: description ?? null,
-        isActive: isActive ?? true,
-      });
-
-      return res.status(200).json(evaluation);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar la evaluación",
-        error,
-      });
-    }
+      res.status(201).json({ evaluation });
+    });
   }
 
-  // UPDATE PATCH
-  async patch(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async update(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const evaluation = await Evaluation.findByPk(id);
+      const dto = req.body as UpdateEvaluationDto;
 
-      if (!evaluation) {
-        return res.status(404).json({
-          message: "Evaluación no encontrada",
-        });
-      }
+      const evaluation =
+        await this.evaluationService.updatePut(id, dto);
 
-      const { course_id, name, description, isActive } = req.body;
-
-      if (course_id !== undefined) {
-        const course = await Course.findOne({
-          where: {
-            id: Number(course_id),
-            isActive: true,
-          },
-        });
-
-        if (!course) {
-          return res.status(400).json({
-            message: "El curso no existe o no está activo",
-          });
-        }
-      }
-
-      await evaluation.update({
-        ...(course_id !== undefined && {
-          course_id: Number(course_id),
-        }),
-        ...(name !== undefined && { name }),
-        ...(description !== undefined && { description }),
-        ...(isActive !== undefined && { isActive }),
-      });
-
-      return res.status(200).json(evaluation);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar parcialmente la evaluación",
-        error,
-      });
-    }
+      res.status(200).json({ evaluation });
+    });
   }
 
-  // DELETE FÍSICO
-  async delete(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async patch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const evaluation = await Evaluation.findByPk(id);
+      const dto = req.body as PatchEvaluationDto;
 
-      if (!evaluation) {
-        return res.status(404).json({
-          message: "Evaluación no encontrada",
-        });
-      }
+      const evaluation =
+        await this.evaluationService.updatePatch(id, dto);
 
-      await evaluation.destroy();
-
-      return res.status(200).json({
-        message: "Evaluación eliminada correctamente",
-      });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al eliminar la evaluación",
-        error,
-      });
-    }
+      res.status(200).json({ evaluation });
+    });
   }
 
-  // DELETE LÓGICO
-  async deactivate(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
+  public async delete(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const evaluation = await Evaluation.findByPk(id);
+      await this.evaluationService.deletePhysical(id);
 
-      if (!evaluation) {
-        return res.status(404).json({
-          message: "Evaluación no encontrada",
-        });
-      }
-
-      await evaluation.update({
-        isActive: false,
+      res.status(200).json({
+        message: "Evaluation permanently deleted",
+        id,
       });
+    });
+  }
 
-      return res.status(200).json({
-        message: "Evaluación desactivada correctamente",
+  public async deactivate(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+
+      const evaluation =
+        await this.evaluationService.deleteLogical(id);
+
+      res.status(200).json({
+        message: "Evaluation deactivated (logical delete)",
         evaluation,
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al desactivar la evaluación",
-        error,
-      });
-    }
+    });
   }
 }

@@ -5576,6 +5576,14 @@ git commit -m "ISS-09-C: Migración Evaluation - Service"
 git push origin main
 ```
 
+![](images/clipboard-2951286268.png)
+
+### **ISS-09-D — Controller**.
+
+### 1. Reemplazar `evaluation.controller.ts`
+
+![](images/clipboard-287955127.png)
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
