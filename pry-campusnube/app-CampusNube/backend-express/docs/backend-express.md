@@ -5462,6 +5462,88 @@ git commit -m "ISS-08-B: Migración Enrollment - Repository"
 git push origin main
 ```
 
+![](images/clipboard-3208391606.png)
+
+##  **ISS-08-C — Service**.
+
+1\. Crear `enrollment.service.ts`
+
+![](images/clipboard-174707248.png)
+
+### Commit de ISS-08-C
+
+```         
+git add .
+git commit -m "ISS-08-C: Migración Enrollment - Service"
+git push origin main
+```
+
+![](images/clipboard-2970149164.png)
+
+##  **ISS-08-D — Controller**. 
+
+#### 1. Reemplazar `enrollment.controller.ts`
+
+![](images/clipboard-1231287153.png)
+
+### Commit de ISS-08-D
+
+```         
+git add .
+git commit -m "ISS-08-D: Migración Enrollment - Controller"
+git push origin main
+```
+
+![](images/clipboard-2149634498.png)
+
+### ISS-08-E — Verificación de integración
+
+### levantamos el backend:
+
+```         
+npm run dev
+```
+
+![](images/clipboard-2783302393.png)
+
+### ISS-09-A — Fundación y DTOs
+
+### 1. Crear la carpeta
+
+```         
+mkdir -p src/features/business/evaluation/dto
+```
+
+![](images/clipboard-3653842445.png)
+
+### 2. Crear `create-evaluation.dto.ts`
+
+![](images/clipboard-4023171609.png)
+
+### 3. Crear `update-evaluation.dto.ts`
+
+![](images/clipboard-2998095900.png)
+
+### 4. Crear `patch-evaluation.dto.ts`
+
+![](images/clipboard-4177331778.png)
+
+### 5. Crear `evaluation-response.dto.ts`
+
+![](images/clipboard-2305770374.png)
+
+### 6. Crear `index.ts`
+
+![](images/clipboard-14690411.png)
+
+### Cerramos **ISS-09-A — Fundación y DTOs** 
+
+```         
+git add .
+git commit -m "ISS-09-A: Migración Evaluation - Fundación y DTOs"
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
