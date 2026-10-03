@@ -5746,6 +5746,24 @@ git commit -m "ISS-11-A: Migración Lesson - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-2600783152.png)
+
+## ISS-11-B — Migración Lesson: Repository
+
+## 1. Reemplazar `lesson.repository.ts`
+
+![](images/clipboard-3173315832.png)
+
+![](images/clipboard-728940577.png)
+
+#### Cerramos **ISS-11-B — Migración Lesson: Repository**.
+
+```         
+git add .
+git commit -m "ISS-11-B: Migración Lesson - Repository" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
