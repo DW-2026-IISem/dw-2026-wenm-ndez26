@@ -5630,6 +5630,22 @@ git commit -m "ISS-10-A: Migración Module - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-1968272623.png)
+
+### **ISS-10-B — Migración Module: Repository**.
+
+### 1. Crear `module.repository.ts`
+
+![](images/clipboard-3779007702.png)
+
+### **Cerramos ISS-10-B — Migración Module: Repository.**
+
+```         
+git add . 
+git commit -m "ISS-10-B: Migración Module - Repository" 
+git push origin main
+```
+
 ### Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
