@@ -5692,7 +5692,61 @@ git commit -m "fix: completar PatchModuleDto de ISS-10-A"
 git push origin main
 ```
 
-### Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
+![](images/clipboard-4083488943.png)
+
+## ISS-11-A — Migración Lesson: Fundación y DTOs
+
+## 1. Crear la estructura DTO
+
+```         
+mkdir -p src/features/business/lesson/dto
+```
+
+### 2. Crear `create-lesson.dto.ts`
+
+![](images/clipboard-176657359.png)
+
+### 3. Crear `update-lesson.dto.ts`
+
+![](images/clipboard-621881535.png)
+
+### 4. Crear `patch-lesson.dto.ts`
+
+![](images/clipboard-348070856.png)
+
+### 5. Crear `lesson-response.dto.ts`
+
+![](images/clipboard-2571244622.png)
+
+### 6. Crear el mapper7. 
+
+![](images/clipboard-378466779.png)
+
+### 7. Crear el barrel `index.ts`
+
+![](images/clipboard-3380936444.png)
+
+## 8. Verificar estructura
+
+Ejecuta:
+
+```         
+find src/features/business/lesson -maxdepth 2 -type f | sort
+```
+
+![](images/clipboard-4093341746.png)
+
+![](images/clipboard-4093341746.png)
+
+## Cerramos ISS-11-A — Migración Lesson: Fundación y DTOs.
+
+```         
+git add . 
+git commit -m "ISS-11-A: Migración Lesson - Fundación y DTOs"
+git push origin main
+```
+
+# Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
 
