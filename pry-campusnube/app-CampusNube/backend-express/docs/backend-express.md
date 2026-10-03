@@ -5544,6 +5544,38 @@ git commit -m "ISS-09-A: Migración Evaluation - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-2305173657.png)
+
+##  **ISS-09-B — Repository**.
+
+1\. Crear `evaluation.repository.ts`
+
+![](images/clipboard-488255451.png)
+
+###  Commit
+
+```         
+git add .
+git commit -m "ISS-09-B: Migración Evaluation - Repository"
+git push origin main
+```
+
+![](images/clipboard-2494394303.png)
+
+##  **ISS-09-C — Service**.
+
+#### 1. Crear `evaluation.service.ts`
+
+![](images/clipboard-2058598905.png)
+
+### Commit de ISS-09-C
+
+```         
+git add .
+git commit -m "ISS-09-C: Migración Evaluation - Service"
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
