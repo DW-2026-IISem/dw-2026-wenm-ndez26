@@ -1,176 +1,133 @@
 import { Request, Response } from "express";
-import { Course, CourseI } from "./course.model";
+import { BaseController } from "../../../shared/http/base-controller";
+import {
+  CreateCourseDto,
+  PatchCourseDto,
+  UpdateCourseDto,
+} from "./dto";
+import { CourseRepository } from "./course.repository";
+import { CourseService } from "./course.service";
 
-function paramId(req: Request): number {
-  const raw = req.params.id;
-  const value = Array.isArray(raw) ? raw[0] : raw;
-  return Number(value);
-}
+export class CourseController extends BaseController {
+  private readonly courseService: CourseService;
 
-export class CourseController {
-  public async getAll(req: Request, res: Response) {
-    try {
-      const courses = await Course.findAll({
-        where: { isActive: true },
-      });
+  constructor() {
+    super();
+    this.courseService = new CourseService(
+      new CourseRepository()
+    );
+  }
+
+  // ================== READ ==================
+
+  public async getAll(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const courses = await this.courseService.getAll();
 
       res.status(200).json({ courses });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error fetching courses",
-        detail: String(error),
-      });
-    }
+    });
   }
 
-  public async getOne(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
-
-      const course = await Course.findByPk(id);
-
-      if (!course) {
-        res.status(404).json({
-          error: "Course not found",
-        });
-        return;
-      }
+  public async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const course = await this.courseService.getOne(id);
 
       res.status(200).json({ course });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error fetching course",
-        detail: String(error),
-      });
-    }
+    });
   }
 
-  public async create(req: Request, res: Response) {
-    try {
-      const body = req.body as CourseI;
+  // ================== CREATE ==================
 
-      const course = await Course.create({
-        name: body.name,
-        description: body.description ?? null,
-        isActive: body.isActive ?? true,
-      });
+  public async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const dto = req.body as CreateCourseDto;
+
+      const course = await this.courseService.create(dto);
 
       res.status(201).json({ course });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error creating course",
-        detail: String(error),
-      });
-    }
+    });
   }
 
-  public async updatePut(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
-      const body = req.body as CourseI;
+  // ================== UPDATE ==================
 
-      const course = await Course.findByPk(id);
+  public async updatePut(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const dto = req.body as UpdateCourseDto;
 
-      if (!course) {
-        res.status(404).json({
-          error: "Course not found",
-        });
-        return;
-      }
-
-      await course.update({
-        name: body.name,
-        description: body.description ?? null,
-        isActive: body.isActive ?? course.isActive,
-      });
+      const course = await this.courseService.updatePut(
+        id,
+        dto
+      );
 
       res.status(200).json({ course });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error updating course (PUT)",
-        detail: String(error),
-      });
-    }
+    });
   }
 
-  public async updatePatch(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
-      const body = req.body as Partial<CourseI>;
+  public async updatePatch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+      const dto = req.body as PatchCourseDto;
 
-      const course = await Course.findByPk(id);
-
-      if (!course) {
-        res.status(404).json({
-          error: "Course not found",
-        });
-        return;
-      }
-
-      await course.update(body);
+      const course = await this.courseService.updatePatch(
+        id,
+        dto
+      );
 
       res.status(200).json({ course });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error updating course (PATCH)",
-        detail: String(error),
-      });
-    }
+    });
   }
 
-  public async deletePhysical(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
+  // ================== DELETE ==================
 
-      const course = await Course.findByPk(id);
+  /** Eliminación física */
+  public async deletePhysical(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!course) {
-        res.status(404).json({
-          error: "Course not found",
-        });
-        return;
-      }
-
-      await course.destroy();
+      await this.courseService.deletePhysical(id);
 
       res.status(200).json({
         message: "Course permanently deleted",
         id,
       });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error deleting course",
-        detail: String(error),
-      });
-    }
+    });
   }
 
-  public async deleteLogical(req: Request, res: Response) {
-    try {
-      const id = paramId(req);
+  /** Eliminación lógica → isActive = false */
+  public async deleteLogical(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      const course = await Course.findByPk(id);
-
-      if (!course) {
-        res.status(404).json({
-          error: "Course not found",
-        });
-        return;
-      }
-
-      await course.update({
-        isActive: false,
-      });
+      const course =
+        await this.courseService.deleteLogical(id);
 
       res.status(200).json({
         message: "Course deactivated (logical delete)",
         course,
       });
-    } catch (error) {
-      res.status(500).json({
-        error: "Error deactivating course",
-        detail: String(error),
-      });
-    }
+    });
   }
 }
