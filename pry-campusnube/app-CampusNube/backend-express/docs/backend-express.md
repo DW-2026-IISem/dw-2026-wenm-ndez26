@@ -5678,6 +5678,20 @@ git commit -m "ISS-10-D: Migración Module - Controller"
 git push origin main
 ```
 
+![](images/clipboard-1472443755.png)
+
+**verificación final de ISS-10-E**:
+
+![](images/clipboard-3205078378.png)
+
+**Cerramos la corrección de ISS-10-A — Migración Module: Fundación y DTOs.**
+
+```         
+git add .
+git commit -m "fix: completar PatchModuleDto de ISS-10-A" 
+git push origin main
+```
+
 ### Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
