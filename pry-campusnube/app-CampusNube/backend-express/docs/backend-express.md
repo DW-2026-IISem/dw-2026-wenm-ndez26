@@ -5798,6 +5798,76 @@ git commit -m "ISS-11-D: Migración Lesson - Controller"
 git push origin main
 ```
 
+![](images/clipboard-3530491852.png)
+
+# ISS-12-A — Migración Attempt: Fundación y DTOs
+
+### 1. Crear DTOs
+
+```         
+mkdir -p src/features/business/attempt/dto
+```
+
+### `create-attempt.dto.ts`
+
+![](images/clipboard-872754583.png)
+
+### `update-attempt.dto.ts`
+
+![](images/clipboard-311181126.png)
+
+### `patch-attempt.dto.ts`
+
+![](images/clipboard-2849973504.png)
+
+### `attempt-response.dto.ts`
+
+![](images/clipboard-3410326696.png)
+
+### `attempt.mapper.ts`
+
+![](images/clipboard-4179497992.png)
+
+### `index.ts`
+
+![](images/clipboard-1730851436.png)
+
+### Verificar
+
+```         
+find src/features/business/attempt/dto -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-246354679.png)
+
+```         
+Cerramos ISS-12-A — Migración Attempt: Fundación y DTOs.
+```
+
+```         
+git add . 
+git commit -m "ISS-12-A: Migración Attempt - Fundación y DTOs" 
+git push origin main
+```
+
+![](images/clipboard-4275126575.png)
+
+## ISS-12-B — Migración Attempt: Repository
+
+![](images/clipboard-4202536273.png)
+
+![](images/clipboard-2164427720.png)
+
+```         
+Cerramos ISS-12-B — Migración Attempt: Repository.
+```
+
+```         
+git add .
+git commit -m "ISS-12-B: Migración Attempt - Repository" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
