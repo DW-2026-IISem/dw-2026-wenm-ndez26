@@ -6046,6 +6046,22 @@ git commit -m "ISS-14-A: Migración Progress - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-3593619029.png)
+
+### ISS-14-B — REPOSITORY
+
+#### 1. Crear Repository
+
+![](images/clipboard-930371150.png)
+
+### Commit B
+
+```         
+git add . 
+git commit -m "ISS-14-B: Migración Progress - Repository" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
