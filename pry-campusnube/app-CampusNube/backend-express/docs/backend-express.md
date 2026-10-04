@@ -6004,6 +6004,48 @@ git commit -m "ISS-13-D: Migración Submission - Controller"
 git push origin main
 ```
 
+![](images/clipboard-4067022283.png)
+
+# ISS-14 — MIGRACIÓN PROGRESS
+
+### ISS-14-A — FUNDACIÓN Y DTOs
+
+#### 1. Crear carpetas
+
+![](images/clipboard-879744527.png)
+
+## Crear `create-progress.dto.ts`
+
+![](images/clipboard-3048074206.png)
+
+##  Crear `update-progress.dto.ts`
+
+![](images/clipboard-2167722855.png)
+
+## Crear `patch-progress.dto.ts`
+
+![](images/clipboard-218710388.png)
+
+## Crear `progress-response.dto.ts`
+
+![](images/clipboard-1330809574.png)
+
+## Crear `progress.mapper.ts`
+
+![](images/clipboard-2445776104.png)
+
+##  Crear `index.ts`
+
+![](images/clipboard-1606048621.png)
+
+### Commit A
+
+```         
+git add . 
+git commit -m "ISS-14-A: Migración Progress - Fundación y DTOs" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
