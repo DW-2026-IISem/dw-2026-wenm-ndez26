@@ -7255,3 +7255,43 @@ git add .
 git commit -m "ISS-19: RoleUsers - DTOs" 
 git push origin main
 ```
+
+![](images/clipboard-4239129448.png)
+
+## 19.2 RoleUsers — repository, service, controller y rutas
+
+**Asignar un rol es un *upsert* lógico**, no un alta a ciegas:
+
+| **Situación de `(user_id, role_id)`** | **Resultado**                   |
+|:--------------------------------------|:--------------------------------|
+| No existe                             | se crea la fila `active`        |
+| Existe `active`                       | **409** (ya está asignado)      |
+| Existe `inactive`                     | se **reactiva** (no se duplica) |
+
+###  Repository
+
+![](images/clipboard-3690225026.png)
+
+####  Service
+
+![](images/clipboard-2655888664.png)
+
+### Controller
+
+![](images/clipboard-3898735772.png)
+
+### Routes
+
+### ![](images/clipboard-3354846693.png)
+
+### Verificación completa del ISS-19.2
+
+![](images/clipboard-3486319429.png)
+
+### Cerramos ISS-19.2
+
+```         
+git add . 
+git commit -m "ISS-19: RoleUsers - Repository, Service, Controller y Routes" 
+git push origin main
+```
