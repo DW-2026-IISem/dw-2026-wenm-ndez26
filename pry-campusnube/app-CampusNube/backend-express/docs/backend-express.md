@@ -6963,3 +6963,67 @@ git add .
 git commit -m "ISS-17: Migración Role - DTOs"
 git push origin main
 ```
+
+![](images/clipboard-916906083.png)
+
+## 17.2 Feature Roles — repository, service, controller y rutas
+
+#### 17.2.1 Repository
+
+![](images/clipboard-2509166654.png)
+
+### 17.2.2 Service
+
+![](images/clipboard-1973396921.png)
+
+### 17.2.3 Controller
+
+![](images/clipboard-2643892089.png)
+
+### 17.2.4 Routes
+
+![](images/clipboard-1732206880.png)
+
+### verificamos el 17.2
+
+```         
+find src/features/auth/roles -maxdepth 2 -type f | sort
+```
+
+![](images/clipboard-570043586.png)
+
+### Cerramos 17.2
+
+```         
+git add . 
+git commit -m "ISS-17: Role - Repository, Service, Controller y Routes"
+git push origin main
+```
+
+![](images/clipboard-299627370.png)
+
+## 17.3 Feature Roles — seeder y swagger
+
+### 17.3.1 Seeder de Roles
+
+![](images/clipboard-2416609615.png)
+
+#### 17.3.2 Swagger de Roles
+
+![](images/clipboard-4002444278.png)
+
+### Verificación del 17.3
+
+```         
+find src/features/auth/roles -maxdepth 2 -type f | sort
+```
+
+![](images/clipboard-3528516052.png)
+
+### Cerramos **ISS-17.3**:
+
+```         
+git add .
+git commit -m "ISS-17: Role - Seeder y Swagger"
+git push origin main
+```
