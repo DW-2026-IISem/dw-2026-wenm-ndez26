@@ -6188,31 +6188,31 @@ git commit -m "ISS-15-D: Migración Certificate - Controller"
 git push origin main
 ```
 
-# Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
+# Fase II: Auth con RBAC — ISS-16 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
 
-- 19.1 Dependencias y variables de entorno
+- 16.1 Dependencias y variables de entorno
 
-- 19.2 `password.ts` (bcrypt 12 rondas + SHA-256 + token opaco)
+- 16.2 `password.ts` (bcrypt 12 rondas + SHA-256 + token opaco)
 
-- 19.3 `jwt.ts` (firma/verificación HS256 con `iss`/`aud`/`exp`/`jti`)
+- 16.3 `jwt.ts` (firma/verificación HS256 con `iss`/`aud`/`exp`/`jti`)
 
-- 19.4 `resource-match.ts` (normalizador y matcher de rutas parametrizadas)
+- 16.4 `resource-match.ts` (normalizador y matcher de rutas parametrizadas)
 
-- 19.5 `auth-user.ts` (extensión de `Request` + `requireAuthUser`)
+- 16.5 `auth-user.ts` (extensión de `Request` + `requireAuthUser`)
 
-- 19.6 `error-response.ts` (mapper único error → HTTP) y PARCHE de `BaseController`
+- 16.6 `error-response.ts` (mapper único error → HTTP) y PARCHE de `BaseController`
 
-- 19.7 `swagger-security.ts` (esquema `bearerAuth` + respuestas 401/403)
+- 16.7 `swagger-security.ts` (esquema `bearerAuth` + respuestas 401/403)
 
-- 19.8 Los seis modelos Sequelize
+- 16.8 Los seis modelos Sequelize
 
-- 19.9 `rbac.associations.ts` (grafo de relaciones)
+- 16.9 `rbac.associations.ts` (grafo de relaciones)
 
 - 19.10 Cableado de modelos en `config` y `seeders`
 
-**19.1 — Dependencias y variables de entorno**
+**16.1 — Dependencias y variables de entorno**
 
 ```         
 # Paquetes (una vez). bcryptjs ya venía de Fase I.
@@ -6230,13 +6230,13 @@ Variables nuevas del `.env` (**PARCHE**: se añaden al final, no reemplazan las 
 
 ```         
 git add .
-git commit -m "ISS-19: Auth - Dependencias JWT"
+git commit -m "ISS-16: Auth - Dependencias JWT"
 git push origin main
 ```
 
 ![](images/clipboard-842149630.png)
 
-## 19.2 `password.ts` — hash de contraseña y hashes de tokens
+## 16.2 `password.ts` — hash de contraseña y hashes de tokens
 
 Tres responsabilidades, todas de la capa *shared* (no son propias de un feature):
 
@@ -6268,13 +6268,13 @@ npx tsc --noEmit
 
 ```         
 git add 
-git commit -m "ISS-19: Auth base - password y tokens opacos" 
+git commit -m "ISS-16: Auth base - password y tokens opacos" 
 git push origin main
 ```
 
 ![](images/clipboard-1506555338.png)
 
-## 19.3 `jwt.ts` — firma y verificación del access token
+## 16.3 `jwt.ts` — firma y verificación del access token
 
 Creamos el archivo:
 
@@ -6298,19 +6298,19 @@ npx tsc --noEmit
 
 ```         
 git add 
-git commit -m "ISS-19: Auth base - JWT HS256" 
+git commit -m "ISS-16: Auth base - JWT HS256" 
 git push origin main
 ```
 
 ![](images/clipboard-2637705993.png)
 
-## 19.4 `resource-match.ts` — casar la petición con el recurso
+## 16.4 `resource-match.ts` — casar la petición con el recurso
 
 En este paso creamos rosource-match.ts
 
 ![](images/clipboard-1020294056.png)
 
-### Verificación 19.4
+### Verificación 16.4
 
 Primero:
 
@@ -6322,23 +6322,23 @@ Debe terminar así, **sin errores**:
 
 ![](images/clipboard-2140006004.png)
 
-### Commit 19.4
+### Commit 16.4
 
 ```         
 git add 
-git commit -m "ISS-19: Auth base - resource match"  
+git commit -m "ISS-16: Auth base - resource match"  
 git push origin main
 ```
 
 ![](images/clipboard-251541019.png)
 
-## 19.5 `auth-user.ts` — la identidad en `Request`
+## 16.5 `auth-user.ts` — la identidad en `Request`
 
-19.5 — Crear `auth-user.ts`
+16.5 — Crear `auth-user.ts`
 
 ![](images/clipboard-1691730499.png)
 
-### Verificación 19.5
+### Verificación 16.5
 
 Ahora ejecutamos:
 
@@ -6350,17 +6350,17 @@ Debe quedar **sin errores**.
 
 ![](images/clipboard-1821730905.png)
 
-### Commit 19.5
+### Commit 16.5
 
 ```         
 git add 
-git commit -m "ISS-19: Auth base - auth user"  
+git commit -m "ISS-16: Auth base - auth user"  
 git push origin main
 ```
 
 ![](images/clipboard-2446587803.png)
 
-## 19.6 `error-response.ts` y PARCHE de `BaseController`
+## 16.6 `error-response.ts` y PARCHE de `BaseController`
 
 El mapeo `error → HTTP` deja de vivir solo en el controller: lo necesitan también los middlewares `authenticate`/`authorize`. Se extrae a un único punto (`sendError`) y `BaseController` lo reutiliza.
 
@@ -6388,19 +6388,19 @@ npx tsc --noEmit
 
 ![](images/clipboard-3358203260.png)
 
-### Commit 19.6
+### Commit 16.6
 
-Siguiendo la metodología que estamos usando para ISS-19:
+Siguiendo la metodología que estamos usando para ISS-16:
 
 ```         
 git add .
-git commit -m "ISS-19: Auth base - error response" 
+git commit -m "ISS-16: Auth base - error response" 
 git push origin main
 ```
 
 ![](images/clipboard-2036749740.png)
 
-## 19.7 `swagger-security.ts` — seguridad reutilizable para OpenAPI
+## 16.7 `swagger-security.ts` — seguridad reutilizable para OpenAPI
 
 | **Export** | **Para qué** |
 |:-----------------------------------|:-----------------------------------|
@@ -6420,17 +6420,17 @@ npx tsc --noEmit
 
 ![](images/clipboard-2577823380.png)
 
-#### Commit del 19.7
+#### Commit del 16.7
 
 ```         
 git add .
-git commit -m "ISS-19: Auth base - Swagger security"
+git commit -m "ISS-16: Auth base - Swagger security"
 git push origin main
 ```
 
 ![![](images/clipboard-642630766.png)](images/clipboard-642630766.png)
 
-## 19.8 Los seis modelos Sequelize
+## 16.8 Los seis modelos Sequelize
 
 | **Entidad** | **Tabla** | **Responsabilidad** |
 |:-----------------------|:-----------------------|:-----------------------|
@@ -6441,7 +6441,7 @@ git push origin main
 | `ResourceRole` | `resource_roles` | **el permiso**: concesión `Role ↔ Resource` (N:M) |
 | `RefreshToken` | `refresh_tokens` | sesión renovable y revocable |
 
-## 19.8.1 — `User`
+## 16.8.1 — `User`
 
 Primero creamos las carpetas:
 
@@ -6459,7 +6459,7 @@ npx tsc --noEmit
 
 ![](images/clipboard-4221288123.png)
 
-### 19.8.2 — `Role`
+### 16.8.2 — `Role`
 
 ![](images/clipboard-141055249.png)
 
@@ -6475,7 +6475,7 @@ npx tsc --noEmit
 
 ![](images/clipboard-320300040.png)
 
-### 19.8.4 — `RoleUser`
+### 16.8.4 — `RoleUser`
 
 ![](images/clipboard-2178496694.png)
 
@@ -6487,7 +6487,7 @@ npx tsc --noEmit
 
 ![](images/clipboard-931239334.png)
 
-### 19.8.5 — `ResourceRole`
+### 16.8.5 — `ResourceRole`
 
 ![](images/clipboard-1706414090.png)
 
@@ -6499,7 +6499,7 @@ npx tsc --noEmit
 
 ![](images/clipboard-4047482045.png)
 
-### 19.8.6 — `RefreshToken`
+### 16.8.6 — `RefreshToken`
 
 ### ![](images/clipboard-3973690600.png)
 
@@ -6523,13 +6523,13 @@ find src/features/auth -name "*.model.ts" -print
 
 ```         
 git add .
-git commit -m "ISS-19: Auth base - seis modelos Sequelize" 
+git commit -m "ISS-16: Auth base - seis modelos Sequelize" 
 git push origin main
 ```
 
 ![](images/clipboard-2654649796.png)
 
-## 19.9 `rbac.associations.ts` — el grafo en un solo lugar
+## 16.9 `rbac.associations.ts` — el grafo en un solo lugar
 
 Las asociaciones se declaran **después** de los modelos (referencian a los modelos, no al revés) y en un único archivo para que el grafo se lea entero:
 
@@ -6553,21 +6553,21 @@ Debe terminar sin errores.
 
 ![](images/clipboard-2597434125.png)
 
-### Commit Final 19.9
+### Commit Final 16.9
 
 ```         
 git add .
-git commit -m "ISS-19: Auth base - RBAC associations" 
+git commit -m "ISS-16: Auth base - RBAC associations" 
 git push origin main
 ```
 
 ![](images/clipboard-1850601706.png)
 
-## 19.10 Cableado de modelos en `config` y `seeders`
+## 16.10 Cableado de modelos en `config` y `seeders`
 
 **PARCHE** en `src/config/index.ts` — los once modelos, y **después** las asociaciones:
 
-## 19.10 — `src/config/index.ts`
+## 16.10 — `src/config/index.ts`
 
 En tu `config/index.ts` ya tenemos todos los imports de Business.
 
@@ -6575,7 +6575,7 @@ Solo vamos a insertar este bloque **después de los imports de Business y antes 
 
 ![](images/clipboard-916277826.png)
 
-# 19.10 — `src/database/seeders/index.ts`
+# 16.10 — `src/database/seeders/index.ts`
 
 El profesor indica que los seeders de Auth se irán incorporando en sus respectivos ISS.
 
@@ -6591,7 +6591,7 @@ Debe salir sin errores.
 
 ![](images/clipboard-1608676951.png)
 
-### 19.10.Ejecutar el seeder
+### 16.10.Ejecutar el seeder
 
 Si `tsc` está limpio:
 
@@ -6611,9 +6611,9 @@ Las 6 tablas existen mysql -h 127.0.0.1 -P 3306 -u root -p campusnube -e "SHOW T
 
 ![](images/clipboard-2749368306.png)
 
-### DoD del ISS-19
+### DoD del ISS-16
 
-- [ ] Todos los criterios de aceptación (19.1 … 19.10) cumplidos
+- [ ] Todos los criterios de aceptación (16.1 … 16.10) cumplidos
 
 - [ ] `npx tsc --noEmit` sin errores
 
@@ -6623,7 +6623,7 @@ Las 6 tablas existen mysql -h 127.0.0.1 -P 3306 -u root -p campusnube -e "SHOW T
 
 - [ ] Sin endpoints nuevos todavía: la API de Fase I sigue funcionando **SIN AUTH**
 
-### Ahora cerramos el 19.10
+### Ahora cerramos el 16.10
 
 Primero ejecuta:
 
@@ -6633,11 +6633,11 @@ npx tsc --noEmit
 
 ![](images/clipboard-340762479.png)
 
-### COMMIT FINAL ISS 19
+### COMMIT FINAL ISS 16
 
 ```         
 git add 
-git commit -m "ISS-19: Auth base - config y seeders"
+git commit -m "ISS-16: Auth base - config y seeders"
 git push origin main
 ```
 
@@ -6888,35 +6888,35 @@ git push origin main
 
 ![](images/clipboard-1753052826.png)
 
-# Fase II: Auth con RBAC — ISS-17 — Features Roles y Resources (catálogo de autorización)
+# Fase II: Auth con RBAC — ISS-18 — Features Roles y Resources (catálogo de autorización)
 
 | **Este ISS** |   |
 |:-----------------------------------|:-----------------------------------|
 | **Título** | Features Roles y Resources (catálogo de autorización) |
 | **Feature / tablas** | `features/auth/roles/` · `roles` — `features/auth/resources/` · `resources` |
 | **API** | `/api/roles…` y `/api/recursos…` (JWT + RBAC) |
-| **Depende de** | [ISS-16 — Feature Users](https://tecnogua.com/academic/site/backend2026/manual/12-ISS-10-auth-users/) |
-| **Habilita** | [ISS-19 — Asignaciones y concesiones](https://tecnogua.com/academic/site/backend2026/manual/14-ISS-12-auth-role-users-resource-roles/) |
+| **Depende de** | [ISS-17— Feature Users](https://tecnogua.com/academic/site/backend2026/manual/12-ISS-10-auth-users/) |
+| **Habilita** | [ISS-1 — Asignaciones y concesiones](https://tecnogua.com/academic/site/backend2026/manual/14-ISS-12-auth-role-users-resource-roles/) |
 
 ## Contenido de este ISS
 
-- 17.1 Feature Roles — DTOs
+- 18.1 Feature Roles — DTOs
 
-- 17.2 Feature Roles — repository, service, controller y rutas
+- 18.2 Feature Roles — repository, service, controller y rutas
 
-- 17.3 Feature Roles — seeder y swagger
+- 18.3 Feature Roles — seeder y swagger
 
-- 17.4 Feature Resources — DTOs y catálogo semilla
+- 18.4 Feature Resources — DTOs y catálogo semilla
 
-- 17.5 Feature Resources — repository, service, controller y rutas
+- 18.5 Feature Resources — repository, service, controller y rutas
 
-- 17.6 Feature Resources — seeder y swagger
+- 18.6 Feature Resources — seeder y swagger
 
-- 17.7 Pruebas HTTP
+- 18.7 Pruebas HTTP
 
-## 17.1 Feature Roles — DTOs
+## 18.1 Feature Roles — DTOs
 
-### 17.1.1 Crear carpeta `dto`
+### 18.1.1 Crear carpeta `dto`
 
 Ejecuta:
 
@@ -6924,27 +6924,27 @@ Ejecuta:
 mkdir -p src/features/auth/roles/dto
 ```
 
-#### 17.1.2 `create-role.dto.ts`
+#### 18.1.2 `create-role.dto.ts`
 
 ![](images/clipboard-2845208151.png)
 
-#### 17.1.3 `update-role.dto.ts`
+#### 18.1.3 `update-role.dto.ts`
 
 ![](images/clipboard-452382275.png)
 
-#### 17.1.4 Crear `patch-role.dto.ts`
+#### 18.1.4 Crear `patch-role.dto.ts`
 
 ![](images/clipboard-1173905959.png)
 
-#### 17.1.5 Crear `role-response.dto.ts`
+#### 18.1.5 Crear `role-response.dto.ts`
 
 ![](images/clipboard-102615263.png)
 
-### 17.1.6 Crear `index.ts`
+### 18.1.6 Crear `index.ts`
 
 ![](images/clipboard-2434449687.png)
 
-### 17.1.7 Verificación del 17.1
+### 18.1.7 Verificación del 18.1
 
 Primero:
 
@@ -6954,37 +6954,37 @@ find src/features/auth/roles/dto -maxdepth 1 -type f | sort
 
 ![](images/clipboard-2192052694.png)
 
-### Commit ISS-17 — 17.1 Feature Roles: DTOs
+### Commit ISS-18 — 18.1 Feature Roles: DTOs
 
 Ejecuta:
 
 ```         
 git add .
-git commit -m "ISS-17: Migración Role - DTOs"
+git commit -m "ISS-18: Migración Role - DTOs"
 git push origin main
 ```
 
 ![](images/clipboard-916906083.png)
 
-## 17.2 Feature Roles — repository, service, controller y rutas
+## 18.2 Feature Roles — repository, service, controller y rutas
 
-#### 17.2.1 Repository
+#### 18.2.1 Repository
 
 ![](images/clipboard-2509166654.png)
 
-### 17.2.2 Service
+### 18.2.2 Service
 
 ![](images/clipboard-1973396921.png)
 
-### 17.2.3 Controller
+### 18.2.3 Controller
 
 ![](images/clipboard-2643892089.png)
 
-### 17.2.4 Routes
+### 18.2.4 Routes
 
 ![](images/clipboard-1732206880.png)
 
-### verificamos el 17.2
+### verificamos el 18.2
 
 ```         
 find src/features/auth/roles -maxdepth 2 -type f | sort
@@ -6992,27 +6992,27 @@ find src/features/auth/roles -maxdepth 2 -type f | sort
 
 ![](images/clipboard-570043586.png)
 
-### Cerramos 17.2
+### Cerramos 18.2
 
 ```         
 git add . 
-git commit -m "ISS-17: Role - Repository, Service, Controller y Routes"
+git commit -m "ISS-18: Role - Repository, Service, Controller y Routes"
 git push origin main
 ```
 
 ![](images/clipboard-299627370.png)
 
-## 17.3 Feature Roles — seeder y swagger
+## 18.3 Feature Roles — seeder y swagger
 
-### 17.3.1 Seeder de Roles
+### 18.3.1 Seeder de Roles
 
 ![](images/clipboard-2416609615.png)
 
-#### 17.3.2 Swagger de Roles
+#### 18.3.2 Swagger de Roles
 
 ![](images/clipboard-4002444278.png)
 
-### Verificación del 17.3
+### Verificación del 18.3
 
 ```         
 find src/features/auth/roles -maxdepth 2 -type f | sort
@@ -7020,45 +7020,45 @@ find src/features/auth/roles -maxdepth 2 -type f | sort
 
 ![](images/clipboard-3528516052.png)
 
-### Cerramos **ISS-17.3**:
+### Cerramos **ISS-18.3**:
 
 ```         
 git add .
-git commit -m "ISS-17: Role - Seeder y Swagger"
+git commit -m "ISS-18: Role - Seeder y Swagger"
 git push origin main
 ```
 
 ![](images/clipboard-4057944175.png)
 
-## 17.4 Feature Resources — DTOs y catálogo semilla
+## 18.4 Feature Resources — DTOs y catálogo semilla
 
-## 17.4.1 — Crear la carpeta `dto`
+## 18.4.1 — Crear la carpeta `dto`
 
 ```         
 mkdir -p src/features/auth/resources/dto
 ```
 
-## 17.4.2 — `create-resource.dto.ts`
+## 18.4.2 — `create-resource.dto.ts`
 
 ![](images/clipboard-3131371227.png)
 
-### 17.4.3 — `update-resource.dto.ts`
+### 18.4.3 — `update-resource.dto.ts`
 
 ![](images/clipboard-2659135871.png)
 
-#### 17.4.4 — `patch-resource.dto.ts`
+#### 18.4.4 — `patch-resource.dto.ts`
 
 ![](images/clipboard-3251652170.png)
 
-### 17.4.5 — `resource-response.dto.ts`
+### 18.4.5 — `resource-response.dto.ts`
 
 ![](images/clipboard-1054825122.png)
 
-### 17.4.6 — `index.ts`
+### 18.4.6 — `index.ts`
 
 ![](images/clipboard-878439047.png)
 
-#### 17.4.7 — Verificación de los DTOs
+#### 18.4.7 — Verificación de los DTOs
 
 ```         
 find src/features/auth/resources/dto -maxdepth 1 -type f | sort
@@ -7066,11 +7066,11 @@ find src/features/auth/resources/dto -maxdepth 1 -type f | sort
 
 ![](images/clipboard-3451803446.png)
 
-### 17.4.8 — `resource-catalog.ts`
+### 18.4.8 — `resource-catalog.ts`
 
 ![](images/clipboard-2538180290.png)
 
-### 17.4.9 — Verificación
+### 18.4.9 — Verificación
 
 ```         
 find src/features/auth/resources -maxdepth 2 -type f | sort
@@ -7084,35 +7084,35 @@ grep -c 'method: "' src/features/auth/resources/resource-catalog.ts
 
 ![](images/clipboard-1135231540.png)
 
-Cerramos **ISS-17 — 17.4 Resources: DTOs y catálogo semilla**.
+Cerramos **ISS-18 — 18.4 Resources: DTOs y catálogo semilla**.
 
 ```         
 git add . 
-git commit -m "ISS-17: Resources - DTOs y catálogo semilla"
+git commit -m "ISS-18: Resources - DTOs y catálogo semilla"
 git push origin main
 ```
 
 ![](images/clipboard-3288263540.png)
 
-## 17.5 Feature Resources — repository, service, controller y rutas
+## 18.5 Feature Resources — repository, service, controller y rutas
 
-### 17.5.1 — Repository
+### 18.5.1 — Repository
 
 ![](images/clipboard-1310456153.png)
 
-### 17.5.3 — Controller
+### 18.5.3 — Controller
 
 ![](images/clipboard-1779445607.png)
 
-### 17.5.4 — Routes
+### 18.5.4 — Routes
 
 ![](images/clipboard-3406741738.png)
 
-### 17.5.2 — Crear correctamente `resources.service.ts`
+### 18.5.2 — Crear correctamente `resources.service.ts`
 
 ![](images/clipboard-794659075.png)
 
-## Verificación del 17.5
+## Verificación del 18.5
 
 ```         
 find src/features/auth/resources -maxdepth 2 -type f | sort
@@ -7120,27 +7120,27 @@ find src/features/auth/resources -maxdepth 2 -type f | sort
 
 ![](images/clipboard-3773124490.png)
 
-### Cerramos 17.5
+### Cerramos 18.5
 
 ```         
 git add . 
-git commit -m "ISS-17: Resources - Repository, Service, Controller y Routes" 
+git commit -m "ISS-18: Resources - Repository, Service, Controller y Routes" 
 git push origin main
 ```
 
 ![](images/clipboard-2774473050.png)
 
-## **ISS-17 — 17.6 Feature Resources: Seeder y Swagger**.
+## **ISS-18 — 18.6 Feature Resources: Seeder y Swagger**.
 
-### 17.6.1 — `resources.seeder.ts`
+### 18.6.1 — `resources.seeder.ts`
 
 ![](images/clipboard-2625196664.png)
 
-## 17.6.2 — `resources.swagger.ts`
+## 18.6.2 — `resources.swagger.ts`
 
 ![](images/clipboard-3997481221.png)
 
-### Verificación del 17.6
+### Verificación del 18.6
 
 Ahora ejecuta:
 
@@ -7150,17 +7150,17 @@ find src/features/auth/resources -maxdepth 2 -type f | sort
 
 ![](images/clipboard-254971452.png)
 
-### Cerramos el bloque 17.6
+### Cerramos el bloque 18.6
 
 ```         
 git add . 
-git commit -m "ISS-17: Resources - Seeder y Swagger" 
+git commit -m "ISS-18: Resources - Seeder y Swagger" 
 git push origin main
 ```
 
 ![](images/clipboard-436971529.png)
 
-## 17.7 — Pruebas HTTP de Roles y Resources
+## 18.7 — Pruebas HTTP de Roles y Resources
 
 ### 1. Crear pruebas HTTP de Roles
 
@@ -7178,7 +7178,7 @@ find src/features/auth/roles/http src/features/auth/resources/http -type f | sor
 
 ![](images/clipboard-1743255377.png)
 
-###  Ejecutar el seeder
+### Ejecutar el seeder
 
 ```         
 npm run db:seed
@@ -7192,10 +7192,66 @@ Y luego verificar en PostgreSQL:
 SELECT COUNT(*) FROM resources; SELECT COUNT(*) FROM roles; SELECT name, status FROM roles;
 ```
 
-Cerramos **ISS-17.7 — Pruebas HTTP** con:
+Cerramos **ISS-18.7 — Pruebas HTTP** con:
 
 ```         
 git add . 
-git commit -m "ISS-17: Resources - Pruebas HTTP"
+git commit -m "ISS-18: Resources - Pruebas HTTP"
+git push origin main
+```
+
+# Fase II: Auth con RBAC — ISS-19 — Features RoleUsers y ResourceRoles (asignar roles y conceder permisos)
+
+| **Este ISS** |   |
+|:---|:---|
+| **Título** | Features RoleUsers y ResourceRoles |
+| **Feature / tablas** | `features/auth/role-users/` · `role_users` — `features/auth/resource-roles/` · `resource_roles` |
+| **API** | `/api/asignaciones-rol…` y `/api/concesiones-rol…` (JWT + RBAC) |
+
+## Contenido de este ISS
+
+- 19.1 DTOs de RoleUsers
+
+- 19.2 Repository, service, controller y rutas de RoleUsers
+
+- 19.3 Seeder y swagger de RoleUsers
+
+- 19.4 DTOs de ResourceRoles
+
+- 19.5 Repository, service, controller y rutas de ResourceRoles
+
+- 19.6 `reconcileRole` — la matriz determinista
+
+- 19.7 Seeder de la matriz + swagger
+
+- 19.8 Pruebas HTTP
+
+## 19.1 DTOs de RoleUsers
+
+### 19.1.1 — `create-role-user.dto.ts`
+
+![](images/clipboard-2442408836.png)
+
+#### 19.1.2 — `role-user-response.dto.ts`
+
+![](images/clipboard-1264668968.png)
+
+#### 19.1.3 — `index.ts`
+
+![](images/clipboard-931266142.png)
+
+### 19.1.4 — Verificación
+
+```         
+find src/features/auth/role-users/dto -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-146280153.png)
+
+### Cerramos ISS-19.1
+
+```         
+git add . 
+git commit -m "ISS-19: RoleUsers - DTOs" 
 git push origin main
 ```
