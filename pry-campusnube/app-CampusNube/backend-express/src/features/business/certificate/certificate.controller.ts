@@ -1,206 +1,164 @@
 import { Request, Response } from "express";
-import { Certificate } from "./certificate.model";
-import { Enrollment } from "../enrollment/enrollment.model";
+import { AppError } from "../../../shared/errors/app-error";
+import { BaseController } from "../../../shared/http/base-controller";
+import {
+  CreateCertificateDto,
+  PatchCertificateDto,
+  UpdateCertificateDto,
+} from "./dto";
+import { CertificateService } from "./certificate.service";
 
-export class CertificateController {
+export class CertificateController extends BaseController {
+  private readonly service = new CertificateService();
 
-  public async getAll(_req: Request, res: Response): Promise<void> {
-    try {
-      const certificates = await Certificate.findAll();
+  public async getAll(
+    _req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const certificates = await this.service.getAll();
 
       res.status(200).json(certificates);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al obtener los certificados",
-        error,
-      });
-    }
+    });
   }
 
-  public async getOne(req: Request, res: Response): Promise<void> {
-    try {
-      const certificate = await Certificate.findByPk(
-        Number(req.params.id)
-      );
+  public async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!certificate) {
-        res.status(404).json({
-          message: "Certificado no encontrado",
-        });
-        return;
-      }
+      const certificate =
+        await this.service.getOne(id);
 
       res.status(200).json(certificate);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al obtener el certificado",
-        error,
-      });
-    }
+    });
   }
 
-  public async create(req: Request, res: Response): Promise<void> {
-    try {
+  public async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
       const {
         enrollment_id,
         name,
         description,
         isActive,
-      } = req.body;
+      } = req.body as Partial<CreateCertificateDto>;
 
       if (!enrollment_id) {
-        res.status(400).json({
-          message: "El campo enrollment_id es obligatorio",
-        });
-        return;
+        throw new AppError(
+          400,
+          "The enrollment_id field is required"
+        );
       }
 
       if (!name) {
-        res.status(400).json({
-          message: "El campo name es obligatorio",
-        });
-        return;
+        throw new AppError(
+          400,
+          "The name field is required"
+        );
       }
 
-      const enrollment = await Enrollment.findByPk(
-        Number(enrollment_id)
-      );
-
-      if (!enrollment) {
-        res.status(404).json({
-          message: "La inscripción indicada no existe",
-        });
-        return;
-      }
-
-      const existing = await Certificate.findOne({
-        where: {
-          enrollment_id,
-        },
-      });
-
-      if (existing) {
-        res.status(409).json({
-          message:
-            "La inscripción ya tiene un certificado asociado",
-        });
-        return;
-      }
-
-      const certificate = await Certificate.create({
+      const data: CreateCertificateDto = {
         enrollment_id,
         name,
         description,
-        isActive:
-          isActive !== undefined ? isActive : true,
-      });
+        isActive,
+      };
+
+      const certificate =
+        await this.service.create(data);
 
       res.status(201).json(certificate);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al crear el certificado",
-        error,
-      });
-    }
+    });
   }
 
-  public async update(req: Request, res: Response): Promise<void> {
-    try {
-      const certificate = await Certificate.findByPk(
-        Number(req.params.id)
-      );
+  public async update(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!certificate) {
-        res.status(404).json({
-          message: "Certificado no encontrado",
-        });
-        return;
-      }
+      const {
+        enrollment_id,
+        name,
+        description,
+      } = req.body as Partial<UpdateCertificateDto>;
 
-      if (req.body.enrollment_id !== undefined) {
-        const enrollment = await Enrollment.findByPk(
-          Number(req.body.enrollment_id)
+      if (!enrollment_id) {
+        throw new AppError(
+          400,
+          "The enrollment_id field is required"
         );
-
-        if (!enrollment) {
-          res.status(404).json({
-            message: "La inscripción indicada no existe",
-          });
-          return;
-        }
       }
 
-      await certificate.update(req.body);
+      if (!name) {
+        throw new AppError(
+          400,
+          "The name field is required"
+        );
+      }
+
+      const data: UpdateCertificateDto = {
+        enrollment_id,
+        name,
+        description,
+      };
+
+      const certificate =
+        await this.service.update(id, data);
 
       res.status(200).json(certificate);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al actualizar el certificado",
-        error,
-      });
-    }
+    });
   }
 
-  public async patch(req: Request, res: Response): Promise<void> {
-    try {
-      const certificate = await Certificate.findByPk(
-        Number(req.params.id)
-      );
+  public async patch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!certificate) {
-        res.status(404).json({
-          message: "Certificado no encontrado",
-        });
-        return;
-      }
+      const data =
+        req.body as PatchCertificateDto;
 
-      if (req.body.enrollment_id !== undefined) {
-        const enrollment = await Enrollment.findByPk(
-          Number(req.body.enrollment_id)
-        );
-
-        if (!enrollment) {
-          res.status(404).json({
-            message: "La inscripción indicada no existe",
-          });
-          return;
-        }
-      }
-
-      await certificate.update(req.body);
+      const certificate =
+        await this.service.patch(id, data);
 
       res.status(200).json(certificate);
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al actualizar parcialmente el certificado",
-        error,
-      });
-    }
+    });
   }
 
-  public async delete(req: Request, res: Response): Promise<void> {
-    try {
-      const certificate = await Certificate.findByPk(
-        Number(req.params.id)
-      );
+  public async delete(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (!certificate) {
-        res.status(404).json({
-          message: "Certificado no encontrado",
-        });
-        return;
-      }
-
-      await certificate.destroy();
+      await this.service.delete(id);
 
       res.status(200).json({
-        message: "Certificado eliminado correctamente",
+        message: "Certificate deleted successfully",
       });
-    } catch (error) {
-      res.status(500).json({
-        message: "Error al eliminar el certificado",
-        error,
-      });
-    }
+    });
+  }
+
+  public async deactivate(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+
+      const certificate =
+        await this.service.deactivate(id);
+
+      res.status(200).json(certificate);
+    });
   }
 }

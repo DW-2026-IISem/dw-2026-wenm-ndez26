@@ -6172,6 +6172,22 @@ git commit -m "ISS-15-C: Migración Certificate - Service"
 git push origin main
 ```
 
+![](images/clipboard-2184592908.png)
+
+**ISS-15-D-controller**
+
+hora sustituimos el controller antiguo por el controller por capas
+
+![](images/clipboard-2576370855.png)
+
+**ISS-15-D — Controller**
+
+```         
+git add .
+git commit -m "ISS-15-D: Migración Certificate - Controller"
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
