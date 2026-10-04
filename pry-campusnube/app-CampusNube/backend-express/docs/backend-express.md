@@ -5962,6 +5962,20 @@ git commit -m "ISS-13-A: Migración Submission - Fundación y DTOs"
 git push origin main
 ```
 
+![](images/clipboard-22517387.png)
+
+## ISS-13-B — REPOSITORY
+
+![](images/clipboard-2289691189.png)
+
+### Commit B
+
+```         
+git add . 
+git commit -m "ISS-13-B: Migración Submission - Repository" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
