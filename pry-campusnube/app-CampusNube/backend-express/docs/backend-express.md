@@ -7315,3 +7315,81 @@ git add .
 git commit -m "ISS-19: RoleUsers - Seeder y Swagger" 
 git push origin main
 ```
+
+![](images/clipboard-2800540398.png)
+
+## 19.4 DTOs de ResourceRoles
+
+### 1. Create DTO
+
+![](images/clipboard-2943183703.png)
+
+### 2. List DTO
+
+![](images/clipboard-1004759787.png)
+
+### 3. Response DTO
+
+![](images/clipboard-2273419793.png)
+
+### 4. Index
+
+![](images/clipboard-1572742325.png)
+
+### Verificación
+
+```         
+find src/features/auth/resource-roles/dto -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-627941684.png)
+
+### Cerramos ISS-19.4
+
+```         
+git add .
+git commit -m "ISS-19: ResourceRoles - DTOs" 
+git push origin main
+```
+
+![](images/clipboard-149021516.png)
+
+## 19.5 ResourceRoles — repository, service, controller y rutas
+
+### 1. Repository
+
+![](images/clipboard-2666156306.png)
+
+### 2. Service
+
+![](images/clipboard-2224130825.png)
+
+### 3. Controller
+
+![](images/clipboard-1923722948.png)
+
+### 4. Routes
+
+![](images/clipboard-1624818361.png)
+
+## Verificación completa de ISS-19.5
+
+Ahora ejecuta:
+
+```         
+find src/features/auth/resource-roles -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-531508719.png)
+
+## 1. Crear `with-transaction.ts`
+
+![](images/clipboard-518384368.png)
+
+### Cerramos ISS-19.5
+
+```         
+git add .
+git commit -m "ISS-19: ResourceRoles - Repository, Service, Controller y Routes" 
+git push origin main
+```
