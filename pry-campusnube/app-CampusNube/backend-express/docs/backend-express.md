@@ -6078,6 +6078,64 @@ git commit -m "ISS-14-C: Migración Progress - Service"
 git push origin main
 ```
 
+![](images/clipboard-2938789607.png)
+
+### ISS-14-D — CONTROLLER
+
+![](images/clipboard-1138282007.png)
+
+### Commit D
+
+```         
+git add . 
+git commit -m "ISS-14-D: Migración Progress - Controller" 
+git push origin main
+```
+
+![](images/clipboard-3997052959.png)
+
+# ISS-15 — Certificate
+
+## A — DTOs + fundación
+
+Primero crea la carpeta DTO:
+
+```         
+mkdir -p src/features/business/certificate/dto
+```
+
+### 1. Create DTO
+
+![](images/clipboard-3750645408.png)
+
+### 2. Update DTO
+
+![](images/clipboard-3149675699.png)
+
+### 3. Patch DTO
+
+![](images/clipboard-3625876240.png)
+
+### 4. Response DTO
+
+![](images/clipboard-931881340.png)
+
+### 5. Mapper
+
+![](images/clipboard-2376676308.png)
+
+###  Barrel `index.ts`
+
+![](images/clipboard-1270755909.png)
+
+**ISS-15-A — DTOs / fundación**
+
+```         
+git add .
+git commit -m "ISS-15-A: Migración Certificate - DTOs" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
