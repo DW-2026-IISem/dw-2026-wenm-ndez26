@@ -7027,3 +7027,69 @@ git add .
 git commit -m "ISS-17: Role - Seeder y Swagger"
 git push origin main
 ```
+
+![](images/clipboard-4057944175.png)
+
+## 17.4 Feature Resources — DTOs y catálogo semilla
+
+## 17.4.1 — Crear la carpeta `dto`
+
+```         
+mkdir -p src/features/auth/resources/dto
+```
+
+## 17.4.2 — `create-resource.dto.ts`
+
+![](images/clipboard-3131371227.png)
+
+### 17.4.3 — `update-resource.dto.ts`
+
+![](images/clipboard-2659135871.png)
+
+#### 17.4.4 — `patch-resource.dto.ts`
+
+![](images/clipboard-3251652170.png)
+
+### 17.4.5 — `resource-response.dto.ts`
+
+![](images/clipboard-1054825122.png)
+
+### 17.4.6 — `index.ts`
+
+![](images/clipboard-878439047.png)
+
+#### 17.4.7 — Verificación de los DTOs
+
+```         
+find src/features/auth/resources/dto -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-3451803446.png)
+
+### 17.4.8 — `resource-catalog.ts`
+
+![](images/clipboard-2538180290.png)
+
+### 17.4.9 — Verificación
+
+```         
+find src/features/auth/resources -maxdepth 2 -type f | sort
+```
+
+contamos los recursos del catálogo:
+
+```         
+grep -c 'method: "' src/features/auth/resources/resource-catalog.ts
+```
+
+![](images/clipboard-1135231540.png)
+
+Cerramos **ISS-17 — 17.4 Resources: DTOs y catálogo semilla**.
+
+```         
+git add . 
+git commit -m "ISS-17: Resources - DTOs y catálogo semilla"
+git push origin main
+```
+
+![](images/clipboard-3288263540.png)
