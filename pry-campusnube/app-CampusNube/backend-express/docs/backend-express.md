@@ -6154,6 +6154,24 @@ git commit -m "ISS-15-B: Migración Certificate - Repository"
 git push origin main
 ```
 
+![](images/clipboard-941029953.png)
+
+**ISS-15-B-Service**
+
+```         
+certificate.service.ts
+```
+
+![](images/clipboard-2534993894.png)
+
+**ISS-15-C — Service Commit**
+
+```         
+git add . 
+git commit -m "ISS-15-C: Migración Certificate - Service" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
