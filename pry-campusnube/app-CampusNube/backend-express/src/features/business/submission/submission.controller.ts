@@ -1,321 +1,185 @@
 import { Request, Response } from "express";
-import { Submission } from "./submission.model";
-import { Lesson } from "../lesson/lesson.model";
-import { Enrollment } from "../enrollment/enrollment.model";
+import { AppError } from "../../../shared/errors/app-error";
+import { BaseController } from "../../../shared/http/base-controller";
+import { SubmissionService } from "./submission.service";
+import {
+  CreateSubmissionDto,
+  PatchSubmissionDto,
+  UpdateSubmissionDto,
+} from "./dto";
 
-export class SubmissionController {
-  async getAll(_req: Request, res: Response): Promise<Response> {
-    try {
-      const submissions = await Submission.findAll();
-
-      return res.status(200).json(submissions);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener las entregas",
-        error,
-      });
-    }
+/**
+ * Controller de Submission.
+ *
+ * Solo maneja HTTP:
+ * req -> service -> res.
+ */
+export class SubmissionController
+  extends BaseController
+{
+  public constructor(
+    private readonly service: SubmissionService =
+      new SubmissionService()
+  ) {
+    super();
   }
 
-  async getOne(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
-      const submission = await Submission.findByPk(id);
+  // ================== READ ==================
 
-      if (!submission) {
-        return res.status(404).json({
-          message: "Entrega no encontrada",
-        });
-      }
+  public async getAll(
+    _req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const submissions =
+        await this.service.getAll();
 
-      return res.status(200).json(submission);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al obtener la entrega",
-        error,
+      res.status(200).json({
+        submissions,
       });
-    }
+    });
   }
 
-  async create(req: Request, res: Response): Promise<Response> {
-    try {
-      const {
-        referencia_id,
-        lesson_id,
-        enrollment_id,
-        fecha_inicio,
-        fecha_fin,
-        total,
-        estado,
-        observaciones,
-      } = req.body;
+  public async getOne(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
 
-      if (
-        referencia_id === undefined ||
-        !lesson_id ||
-        !enrollment_id ||
-        !fecha_inicio ||
-        !estado
-      ) {
-        return res.status(400).json({
-          message:
-            "referencia_id, lesson_id, enrollment_id, fecha_inicio y estado son obligatorios",
-        });
-      }
+      const submission =
+        await this.service.getOne(id);
 
-      const lesson = await Lesson.findOne({
-        where: {
-          id: Number(lesson_id),
-          isActive: true,
-        },
-      });
-
-      if (!lesson) {
-        return res.status(400).json({
-          message: "La lección no existe o no está activa",
-        });
-      }
-
-      const enrollment = await Enrollment.findOne({
-        where: {
-          id: Number(enrollment_id),
-          status: "active",
-        },
-      });
-
-      if (!enrollment) {
-        return res.status(400).json({
-          message: "La inscripción no existe o no está activa",
-        });
-      }
-
-      const submission = await Submission.create({
-        referencia_id: Number(referencia_id),
-        lesson_id: Number(lesson_id),
-        enrollment_id: Number(enrollment_id),
-        fecha_inicio,
-        fecha_fin: fecha_fin ?? null,
-        total: total ?? null,
-        estado,
-        observaciones: observaciones ?? null,
-      });
-
-      return res.status(201).json(submission);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al crear la entrega",
-        error,
-      });
-    }
-  }
-
-  async update(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
-      const submission = await Submission.findByPk(id);
-
-      if (!submission) {
-        return res.status(404).json({
-          message: "Entrega no encontrada",
-        });
-      }
-
-      const {
-        referencia_id,
-        lesson_id,
-        enrollment_id,
-        fecha_inicio,
-        fecha_fin,
-        total,
-        estado,
-        observaciones,
-      } = req.body;
-
-      if (
-        referencia_id === undefined ||
-        !lesson_id ||
-        !enrollment_id ||
-        !fecha_inicio ||
-        !estado
-      ) {
-        return res.status(400).json({
-          message:
-            "referencia_id, lesson_id, enrollment_id, fecha_inicio y estado son obligatorios",
-        });
-      }
-
-      const lesson = await Lesson.findOne({
-        where: {
-          id: Number(lesson_id),
-          isActive: true,
-        },
-      });
-
-      if (!lesson) {
-        return res.status(400).json({
-          message: "La lección no existe o no está activa",
-        });
-      }
-
-      const enrollment = await Enrollment.findOne({
-        where: {
-          id: Number(enrollment_id),
-          status: "active",
-        },
-      });
-
-      if (!enrollment) {
-        return res.status(400).json({
-          message: "La inscripción no existe o no está activa",
-        });
-      }
-
-      await submission.update({
-        referencia_id: Number(referencia_id),
-        lesson_id: Number(lesson_id),
-        enrollment_id: Number(enrollment_id),
-        fecha_inicio,
-        fecha_fin: fecha_fin ?? null,
-        total: total ?? null,
-        estado,
-        observaciones: observaciones ?? null,
-      });
-
-      return res.status(200).json(submission);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar la entrega",
-        error,
-      });
-    }
-  }
-
-  async patch(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
-      const submission = await Submission.findByPk(id);
-
-      if (!submission) {
-        return res.status(404).json({
-          message: "Entrega no encontrada",
-        });
-      }
-
-      const {
-        referencia_id,
-        lesson_id,
-        enrollment_id,
-        fecha_inicio,
-        fecha_fin,
-        total,
-        estado,
-        observaciones,
-      } = req.body;
-
-      if (lesson_id !== undefined) {
-        const lesson = await Lesson.findOne({
-          where: {
-            id: Number(lesson_id),
-            isActive: true,
-          },
-        });
-
-        if (!lesson) {
-          return res.status(400).json({
-            message: "La lección no existe o no está activa",
-          });
-        }
-      }
-
-      if (enrollment_id !== undefined) {
-        const enrollment = await Enrollment.findOne({
-          where: {
-            id: Number(enrollment_id),
-            status: "active",
-          },
-        });
-
-        if (!enrollment) {
-          return res.status(400).json({
-            message: "La inscripción no existe o no está activa",
-          });
-        }
-      }
-
-      await submission.update({
-        ...(referencia_id !== undefined && {
-          referencia_id: Number(referencia_id),
-        }),
-        ...(lesson_id !== undefined && {
-          lesson_id: Number(lesson_id),
-        }),
-        ...(enrollment_id !== undefined && {
-          enrollment_id: Number(enrollment_id),
-        }),
-        ...(fecha_inicio !== undefined && { fecha_inicio }),
-        ...(fecha_fin !== undefined && { fecha_fin }),
-        ...(total !== undefined && { total }),
-        ...(estado !== undefined && { estado }),
-        ...(observaciones !== undefined && { observaciones }),
-      });
-
-      return res.status(200).json(submission);
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al actualizar parcialmente la entrega",
-        error,
-      });
-    }
-  }
-
-  async delete(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
-      const submission = await Submission.findByPk(id);
-
-      if (!submission) {
-        return res.status(404).json({
-          message: "Entrega no encontrada",
-        });
-      }
-
-      await submission.destroy();
-
-      return res.status(200).json({
-        message: "Entrega eliminada correctamente",
-      });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al eliminar la entrega",
-        error,
-      });
-    }
-  }
-
-  async deactivate(req: Request, res: Response): Promise<Response> {
-    try {
-      const id = Number(req.params.id);
-      const submission = await Submission.findByPk(id);
-
-      if (!submission) {
-        return res.status(404).json({
-          message: "Entrega no encontrada",
-        });
-      }
-
-      await submission.update({
-        estado: "inactivo",
-      });
-
-      return res.status(200).json({
-        message: "Entrega desactivada correctamente",
+      res.status(200).json({
         submission,
       });
-    } catch (error) {
-      return res.status(500).json({
-        message: "Error al desactivar la entrega",
-        error,
+    });
+  }
+
+  // ================== CREATE ==================
+
+  public async create(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const body =
+        req.body as CreateSubmissionDto;
+
+      if (
+        body.referencia_id === undefined ||
+        !body.lesson_id ||
+        !body.enrollment_id ||
+        !body.fecha_inicio ||
+        !body.estado
+      ) {
+        throw new AppError(
+          400,
+          "referencia_id, lesson_id, enrollment_id, fecha_inicio y estado son obligatorios"
+        );
+      }
+
+      const submission =
+        await this.service.create(body);
+
+      res.status(201).json({
+        submission,
       });
-    }
+    });
+  }
+
+  // ================== UPDATE ==================
+
+  public async update(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+
+      const body =
+        req.body as UpdateSubmissionDto;
+
+      if (
+        body.referencia_id === undefined ||
+        !body.lesson_id ||
+        !body.enrollment_id ||
+        !body.fecha_inicio
+      ) {
+        throw new AppError(
+          400,
+          "referencia_id, lesson_id, enrollment_id y fecha_inicio son obligatorios"
+        );
+      }
+
+      const submission =
+        await this.service.update(
+          id,
+          body
+        );
+
+      res.status(200).json({
+        submission,
+      });
+    });
+  }
+
+  public async patch(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+
+      const body =
+        req.body as PatchSubmissionDto;
+
+      const submission =
+        await this.service.patch(
+          id,
+          body
+        );
+
+      res.status(200).json({
+        submission,
+      });
+    });
+  }
+
+  // ================== DELETE ==================
+
+  public async delete(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+
+      await this.service.delete(id);
+
+      res.status(200).json({
+        message:
+          "Entrega eliminada correctamente",
+        id,
+      });
+    });
+  }
+
+  public async deactivate(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    await this.run(res, async () => {
+      const id = this.paramId(req);
+
+      const submission =
+        await this.service.deactivate(id);
+
+      res.status(200).json({
+        message:
+          "Entrega desactivada correctamente",
+        submission,
+      });
+    });
   }
 }

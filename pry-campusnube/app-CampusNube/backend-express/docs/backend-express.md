@@ -5990,6 +5990,20 @@ git commit -m "ISS-13-C: Migración Submission - Service"
 git push origin main
 ```
 
+![](images/clipboard-1141542557.png)
+
+### ISS-13-D — CONTROLLER
+
+![](images/clipboard-3048204134.png)
+
+### Commit D
+
+```         
+git add . 
+git commit -m "ISS-13-D: Migración Submission - Controller" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
