@@ -5404,7 +5404,7 @@ git push origin main
 
 ![](images/clipboard-488386650.png)
 
-##  **ISS-08-A — Fundación y DTOs**.
+## **ISS-08-A — Fundación y DTOs**.
 
 ### 1. Crear la carpeta DTO
 
@@ -5438,7 +5438,7 @@ La respuesta conserva la información de la inscripción, incluido su estado.
 
 ![](images/clipboard-2118176722.png)
 
-### **Commit  ISS-08-A**:
+### **Commit ISS-08-A**:
 
 ```         
 git add .
@@ -5448,13 +5448,13 @@ git push origin main
 
 ![](images/clipboard-44345032.png)
 
-###  **ISS-08-B — Repository**. 
+### **ISS-08-B — Repository**.
 
 ### 1. Crear `enrollment.repository.ts`
 
 ![](images/clipboard-2805771179.png)
 
-###  Commit de ISS-08-B
+### Commit de ISS-08-B
 
 ```         
 git add .
@@ -5464,7 +5464,7 @@ git push origin main
 
 ![](images/clipboard-3208391606.png)
 
-##  **ISS-08-C — Service**.
+## **ISS-08-C — Service**.
 
 1\. Crear `enrollment.service.ts`
 
@@ -5480,7 +5480,7 @@ git push origin main
 
 ![](images/clipboard-2970149164.png)
 
-##  **ISS-08-D — Controller**. 
+## **ISS-08-D — Controller**.
 
 #### 1. Reemplazar `enrollment.controller.ts`
 
@@ -5536,7 +5536,7 @@ mkdir -p src/features/business/evaluation/dto
 
 ![](images/clipboard-14690411.png)
 
-### Cerramos **ISS-09-A — Fundación y DTOs** 
+### Cerramos **ISS-09-A — Fundación y DTOs**
 
 ```         
 git add .
@@ -5546,13 +5546,13 @@ git push origin main
 
 ![](images/clipboard-2305173657.png)
 
-##  **ISS-09-B — Repository**.
+## **ISS-09-B — Repository**.
 
 1\. Crear `evaluation.repository.ts`
 
 ![](images/clipboard-488255451.png)
 
-###  Commit
+### Commit
 
 ```         
 git add .
@@ -5562,7 +5562,7 @@ git push origin main
 
 ![](images/clipboard-2494394303.png)
 
-##  **ISS-09-C — Service**.
+## **ISS-09-C — Service**.
 
 #### 1. Crear `evaluation.service.ts`
 
@@ -5584,7 +5584,7 @@ git push origin main
 
 ![](images/clipboard-287955127.png)
 
-###  Commit de ISS-09-D
+### Commit de ISS-09-D
 
 ```         
 git add .
@@ -5622,7 +5622,7 @@ mkdir -p src/features/business/module/dto
 
 ![](images/clipboard-506968285.png)
 
-###  Cerramos **ISS-10-A — Migración Module: Fundación y DTOs**.
+### Cerramos **ISS-10-A — Migración Module: Fundación y DTOs**.
 
 ```         
 git add .
@@ -5718,7 +5718,7 @@ mkdir -p src/features/business/lesson/dto
 
 ![](images/clipboard-2571244622.png)
 
-### 6. Crear el mapper7. 
+### 6. Crear el mapper7.
 
 ![](images/clipboard-378466779.png)
 
@@ -5926,15 +5926,15 @@ mkdir -p src/features/business/submission/dto
 
 ![](images/clipboard-2568428047.png)
 
-##  `update-submission.dto.ts`
+## `update-submission.dto.ts`
 
 ![](images/clipboard-2869726437.png)
 
-##  `patch-submission.dto.ts`
+## `patch-submission.dto.ts`
 
 ![](images/clipboard-331954534.png)
 
-##  `submission-response.dto.ts`
+## `submission-response.dto.ts`
 
 ![](images/clipboard-2413794426.png)
 
@@ -6018,7 +6018,7 @@ git push origin main
 
 ![](images/clipboard-3048074206.png)
 
-##  Crear `update-progress.dto.ts`
+## Crear `update-progress.dto.ts`
 
 ![](images/clipboard-2167722855.png)
 
@@ -6034,7 +6034,7 @@ git push origin main
 
 ![](images/clipboard-2445776104.png)
 
-##  Crear `index.ts`
+## Crear `index.ts`
 
 ![](images/clipboard-1606048621.png)
 
@@ -6124,7 +6124,7 @@ mkdir -p src/features/business/certificate/dto
 
 ![](images/clipboard-2376676308.png)
 
-###  Barrel `index.ts`
+### Barrel `index.ts`
 
 ![](images/clipboard-1270755909.png)
 
@@ -6643,73 +6643,69 @@ git push origin main
 
 ![](images/clipboard-1678950805.png)
 
-# Fase II: Auth con RBAC — ISS-20 — Feature Users (identidad y contraseña)
+# Fase II: Auth con RBAC — ISS-17 — Feature Users (identidad y contraseña)
 
 | **Este ISS** |   |
 |:-----------------------------------|:-----------------------------------|
 | **Título** | Feature Users (identidad y contraseña) |
 | **Feature / tabla** | `features/auth/users/` · `users` |
 | **API** | `/api/usuarios…` (JWT + RBAC) |
-| **Depende de** | [ISS-19 — Base de seguridad y modelos Auth](https://tecnogua.com/academic/site/backend2026/manual/11-ISS-09-auth-base/) |
-| **Habilita** | [ISS-20 — Features Roles y Resources](https://tecnogua.com/academic/site/backend2026/manual/13-ISS-11-auth-roles-resources/) |
+| **Depende de** | [ISS-16 — Base de seguridad y modelos Auth](https://tecnogua.com/academic/site/backend2026/manual/11-ISS-09-auth-base/) |
+| **Habilita** | [ISS-17 — Features Roles y Resources](https://tecnogua.com/academic/site/backend2026/manual/13-ISS-11-auth-roles-resources/) |
 
 ## Contenido de este ISS
 
-- 20.1 DTOs del feature (`dto/`)
+- 17.1 DTOs del feature (`dto/`)
 
-- 20.2 Repository
+- 17.2 Repository
 
-- 20.3 Service (hash, unicidad y permisos efectivos)
+- 17.3 Service (hash, unicidad y permisos efectivos)
 
-- 20.4 Controller
+- 17.4 Controller
 
-- 20.5 Rutas (JWT + RBAC)
+- 17.5 Rutas (JWT + RBAC)
 
-- 20.6 Seeder (usuarios canónicos)
+- 17.6 Seeder (usuarios canónicos)
 
-- 20.7 Swagger
+- 17.7 Swagger
 
-- 20.8 Pruebas HTTP
+- 17.8 Pruebas HTTP
 
-## 20.1 DTOs del feature
+## 17.1 DTOs del feature
 
 Contrato de la API (el repository **no** los conoce):
 
-## 20.1.1 — Crear la carpeta
+## 17.1.1 — Crear la carpeta
 
 ```         
 mkdir -p src/features/auth/users/dto
 ```
 
-### 
-
-### 20.1.2 — `create-user.dto.ts`
+### 27.1.2 — `create-user.dto.ts`
 
 ![](images/clipboard-449348089.png)
 
-### 20.1.3 — `update-user.dto.ts`
+### 17.1.3 — `update-user.dto.ts`
 
 ![](images/clipboard-1822316861.png)
 
-### 20.1.4 — `patch-user.dto.ts`
+### 17.1.4 — `patch-user.dto.ts`
 
 ![](images/clipboard-1409803422.png)
 
-### 20.1.5 — `change-password.dto.ts`
+### 17.1.5 — `change-password.dto.ts`
 
 ![](images/clipboard-3939489292.png)
 
-### 20.1.6 — `user-response.dto.ts`
-
-### 
+### 17.1.6 — `user-response.dto.ts`
 
 ![](images/clipboard-1122882131.png)
 
-### 20.1.7 — `index.ts`
+### 17.1.7 — `index.ts`
 
 ![](images/clipboard-4247222596.png)
 
-### 20.1.8 — Comprobar los archivos
+### 17.1.8 — Comprobar los archivos
 
 ```         
 find src/features/auth/users/dto -maxdepth 1 -type f -print
@@ -6725,17 +6721,17 @@ npx tsc --noEmit
 
 Debe terminar sin errores.
 
-**commit de el 20.1**:
+**commit de el 17.1**:
 
 ```         
 git add 
-git commit -m "ISS-20: Users - DTOs"
+git commit -m "ISS-17: Users - DTOs"
 git push origin main
 ```
 
 ![](images/clipboard-2467935658.png)
 
-## 20.2 Repository
+## 17.2 Repository
 
 Única capa que usa Sequelize. Además del CRUD genérico, aporta `findByUsernameOrEmail`, que necesita el login (ISS-15): acepta usuario **o** correo en un solo campo.
 
@@ -6751,17 +6747,17 @@ npx tsc --noEmit
 
 ![](images/clipboard-3614339504.png)
 
-### Commit para el 20.2
+### Commit para el 17.2
 
 ```         
 git add
-git commit -m "ISS-20: Users - Repository" 
+git commit -m "ISS-17: Users - Repository" 
 git push origin main
 ```
 
 ![](images/clipboard-736553402.png)
 
-## 20.3 Service
+## 17.3 Service
 
 Aquí viven las reglas de `User`:
 
@@ -6779,35 +6775,35 @@ Aquí viven las reglas de `User`:
 
 ### ![](images/clipboard-2447247234.png)
 
-### Commit 20.3
+### Commit 17.3
 
 ```         
 git add 
-git commit -m "ISS-20: Users - Service" 
+git commit -m "ISS-17: Users - Service" 
 git push origin main
 ```
 
 ![](images/clipboard-2281488030.png)
 
-## 20.4 Controller
+## 17.4 Controller
 
 HTTP puro: `this.run(res, …)`, `this.paramId(req)` y `findOrFail` en el service. Expone dos operaciones que **no** son CRUD: cambio de contraseña y permisos efectivos.
 
-### 20.4.1 Creamos el archivo
+### 17.4.1 Creamos el archivo
 
 ### ![](images/clipboard-374547386.png)
 
-### Commit ISS 20.4
+### Commit ISS 17.4
 
 ```         
 git add 
-git commit -m "ISS-20: Users - Controller" 
+git commit -m "ISS-17: Users - Controller" 
 git push origin main
 ```
 
 ![](images/clipboard-2109879634.png)
 
-## 20.5 Rutas (modalidad JWT + RBAC)
+## 17.5 Rutas (modalidad JWT + RBAC)
 
 Todos los endpoints de administración de identidades están ellos mismos protegidos por la matriz: no basta con estar autenticado, hay que tener la concesión concreta (`GET /api/usuarios`, `POST /api/usuarios`, …).
 
@@ -6817,17 +6813,17 @@ Crear el archivo
 
 ![](images/clipboard-793238204.png)
 
-### Commit iss 20.5
+### Commit iss 17.5
 
 ```         
 git add 
-git commit -m "ISS-20: Users - Routes" 
+git commit -m "ISS-17: Users - Routes" 
 git push origin main
 ```
 
 ![](images/clipboard-49295037.png)
 
-## 20.6 Seeder de usuarios canónicos
+## 17.6 Seeder de usuarios canónicos
 
 Dos usuarios de laboratorio, idempotentes (`findOrCreate` por `username`), con contraseña hasheada. Son la puerta de entrada para probar las tres modalidades.
 
@@ -6840,21 +6836,21 @@ Dos usuarios de laboratorio, idempotentes (`findOrCreate` por `username`), con c
 | `admin`   | `Admin123!`   | `ADMIN`   |
 | `docente` | `Docente123!` | `DOCENTE` |
 
-### Commit del 15.6
+### Commit del 17.6
 
 ```         
 git add 
-git commit -m "ISS-20: Users - Seeder" 
+git commit -m "ISS-17: Users - Seeder" 
 git push origin main
 ```
 
 ![](images/clipboard-433339941.png)
 
-## 20.7 Swagger del feature
+## 17.7 Swagger del feature
 
 Los 9 endpoints (`GET/POST /api/usuarios`, `GET/PUT/PATCH/DELETE /:id`, `/deactivate`, `/password`, `/:id/permisos`) documentados con `security: [{ bearerAuth: [] }]` y las respuestas `401`/`403` reutilizables.
 
-### Crea el archivo 20.7
+### Crea el archivo 17.7
 
 ![](images/clipboard-469487280.png)
 
@@ -6862,13 +6858,13 @@ Los 9 endpoints (`GET/POST /api/usuarios`, `GET/PUT/PATCH/DELETE /:id`, `/deacti
 
 ```         
 git add
-git commit -m "ISS-20: Users - Swagger"
+git commit -m "ISS-17: Users - Swagger"
 git push origin main
 ```
 
 ![](images/clipboard-3889555113.png)
 
-## 20.8 Pruebas HTTP
+## 17.8 Pruebas HTTP
 
 ![](images/clipboard-1997105839.png)
 
@@ -6886,18 +6882,84 @@ git push origin main
 
 ```         
 git add 
-git commit -m "ISS-20: Users - HTTP tests" 
+git commit -m "ISS-17: Users - HTTP tests" 
 git push origin main
 ```
 
 ![](images/clipboard-1753052826.png)
 
-# Fase II: Auth con RBAC — ISS-21 — Features Roles y Resources (catálogo de autorización)
+# Fase II: Auth con RBAC — ISS-17 — Features Roles y Resources (catálogo de autorización)
 
 | **Este ISS** |   |
 |:-----------------------------------|:-----------------------------------|
 | **Título** | Features Roles y Resources (catálogo de autorización) |
 | **Feature / tablas** | `features/auth/roles/` · `roles` — `features/auth/resources/` · `resources` |
 | **API** | `/api/roles…` y `/api/recursos…` (JWT + RBAC) |
-| **Depende de** | [ISS-20 — Feature Users](https://tecnogua.com/academic/site/backend2026/manual/12-ISS-10-auth-users/) |
-| **Habilita** | [ISS-22 — Asignaciones y concesiones](https://tecnogua.com/academic/site/backend2026/manual/14-ISS-12-auth-role-users-resource-roles/) |
+| **Depende de** | [ISS-16 — Feature Users](https://tecnogua.com/academic/site/backend2026/manual/12-ISS-10-auth-users/) |
+| **Habilita** | [ISS-19 — Asignaciones y concesiones](https://tecnogua.com/academic/site/backend2026/manual/14-ISS-12-auth-role-users-resource-roles/) |
+
+## Contenido de este ISS
+
+- 17.1 Feature Roles — DTOs
+
+- 17.2 Feature Roles — repository, service, controller y rutas
+
+- 17.3 Feature Roles — seeder y swagger
+
+- 17.4 Feature Resources — DTOs y catálogo semilla
+
+- 17.5 Feature Resources — repository, service, controller y rutas
+
+- 17.6 Feature Resources — seeder y swagger
+
+- 17.7 Pruebas HTTP
+
+## 17.1 Feature Roles — DTOs
+
+### 17.1.1 Crear carpeta `dto`
+
+Ejecuta:
+
+```         
+mkdir -p src/features/auth/roles/dto
+```
+
+#### 17.1.2 `create-role.dto.ts`
+
+![](images/clipboard-2845208151.png)
+
+#### 17.1.3 `update-role.dto.ts`
+
+![](images/clipboard-452382275.png)
+
+#### 17.1.4 Crear `patch-role.dto.ts`
+
+![](images/clipboard-1173905959.png)
+
+#### 17.1.5 Crear `role-response.dto.ts`
+
+![](images/clipboard-102615263.png)
+
+### 17.1.6 Crear `index.ts`
+
+![](images/clipboard-2434449687.png)
+
+### 17.1.7 Verificación del 17.1
+
+Primero:
+
+```         
+find src/features/auth/roles/dto -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-2192052694.png)
+
+### Commit ISS-17 — 17.1 Feature Roles: DTOs
+
+Ejecuta:
+
+```         
+git add .
+git commit -m "ISS-17: Migración Role - DTOs"
+git push origin main
+```
