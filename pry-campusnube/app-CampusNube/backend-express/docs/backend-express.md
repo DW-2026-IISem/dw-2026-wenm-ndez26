@@ -5904,6 +5904,64 @@ git commit -m "ISS-12-C: Migración Attempt - Service"
 git push origin main
 ```
 
+![](images/clipboard-3077637758.png)
+
+### ISS-12-D — Migración Attempt: Controller
+
+![](images/clipboard-2683722043.png)
+
+![](images/clipboard-1229447434.png)
+
+## ISS-13 — Migración Submission
+
+# ISS-13-A — Fundación y DTOs
+
+## 1. Crear carpeta DTO
+
+```         
+mkdir -p src/features/business/submission/dto
+```
+
+### `create-submission.dto.ts`
+
+![](images/clipboard-2568428047.png)
+
+##  `update-submission.dto.ts`
+
+![](images/clipboard-2869726437.png)
+
+##  `patch-submission.dto.ts`
+
+![](images/clipboard-331954534.png)
+
+##  `submission-response.dto.ts`
+
+![](images/clipboard-2413794426.png)
+
+## `submission.mapper.ts`
+
+![](images/clipboard-382421859.png)
+
+## PASO 7. Crear `index.ts`
+
+![](images/clipboard-3222587106.png)
+
+## Verificar ISS-13-A
+
+```         
+find src/features/business/submission/dto -maxdepth 1 -type f | sort
+```
+
+![](images/clipboard-3706361201.png)
+
+### Cerrar ISS-13-A
+
+```         
+git add . 
+git commit -m "ISS-13-A: Migración Submission - Fundación y DTOs" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
