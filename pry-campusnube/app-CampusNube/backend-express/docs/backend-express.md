@@ -7093,3 +7093,109 @@ git push origin main
 ```
 
 ![](images/clipboard-3288263540.png)
+
+## 17.5 Feature Resources — repository, service, controller y rutas
+
+### 17.5.1 — Repository
+
+![](images/clipboard-1310456153.png)
+
+### 17.5.3 — Controller
+
+![](images/clipboard-1779445607.png)
+
+### 17.5.4 — Routes
+
+![](images/clipboard-3406741738.png)
+
+### 17.5.2 — Crear correctamente `resources.service.ts`
+
+![](images/clipboard-794659075.png)
+
+## Verificación del 17.5
+
+```         
+find src/features/auth/resources -maxdepth 2 -type f | sort
+```
+
+![](images/clipboard-3773124490.png)
+
+### Cerramos 17.5
+
+```         
+git add . 
+git commit -m "ISS-17: Resources - Repository, Service, Controller y Routes" 
+git push origin main
+```
+
+![](images/clipboard-2774473050.png)
+
+## **ISS-17 — 17.6 Feature Resources: Seeder y Swagger**.
+
+### 17.6.1 — `resources.seeder.ts`
+
+![](images/clipboard-2625196664.png)
+
+## 17.6.2 — `resources.swagger.ts`
+
+![](images/clipboard-3997481221.png)
+
+### Verificación del 17.6
+
+Ahora ejecuta:
+
+```         
+find src/features/auth/resources -maxdepth 2 -type f | sort
+```
+
+![](images/clipboard-254971452.png)
+
+### Cerramos el bloque 17.6
+
+```         
+git add . 
+git commit -m "ISS-17: Resources - Seeder y Swagger" 
+git push origin main
+```
+
+![](images/clipboard-436971529.png)
+
+## 17.7 — Pruebas HTTP de Roles y Resources
+
+### 1. Crear pruebas HTTP de Roles
+
+![](images/clipboard-767940.png)
+
+### 2. Crear pruebas HTTP de Resources
+
+![](images/clipboard-1090577200.png)
+
+### Verificar archivos
+
+```         
+find src/features/auth/roles/http src/features/auth/resources/http -type f | sort
+```
+
+![](images/clipboard-1743255377.png)
+
+###  Ejecutar el seeder
+
+```         
+npm run db:seed
+```
+
+![](images/clipboard-1514763876.png)
+
+Y luego verificar en PostgreSQL:
+
+```         
+SELECT COUNT(*) FROM resources; SELECT COUNT(*) FROM roles; SELECT name, status FROM roles;
+```
+
+Cerramos **ISS-17.7 — Pruebas HTTP** con:
+
+```         
+git add . 
+git commit -m "ISS-17: Resources - Pruebas HTTP"
+git push origin main
+```
