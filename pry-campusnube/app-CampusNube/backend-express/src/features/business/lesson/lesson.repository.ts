@@ -1,3 +1,4 @@
+import { Module } from "../module/module.model";
 import { Lesson } from "./lesson.model";
 import {
   CreateLessonDto,
@@ -22,14 +23,23 @@ export class LessonRepository {
     });
   }
 
+  async findActiveModule(moduleId: number): Promise<Module | null> {
+    return Module.findOne({
+      where: {
+        id: moduleId,
+        isActive: true,
+      },
+    });
+  }
+
   async create(data: CreateLessonDto): Promise<Lesson> {
-  return Lesson.create({
-    module_id: data.module_id,
-    name: data.name,
-    description: data.description ?? null,
-    isActive: data.isActive ?? true,
-  });
-}
+    return Lesson.create({
+      module_id: data.module_id,
+      name: data.name,
+      description: data.description ?? null,
+      isActive: data.isActive ?? true,
+    });
+  }
 
   async update(
     lesson: Lesson,
