@@ -7295,3 +7295,23 @@ git add .
 git commit -m "ISS-19: RoleUsers - Repository, Service, Controller y Routes" 
 git push origin main
 ```
+
+![](images/clipboard-2921154420.png)
+
+## 19.3 RoleUsers — seeder y swagger
+
+### 1. Seeder
+
+![](images/clipboard-442287395.png)
+
+### 2. Swagger
+
+![](images/clipboard-165210683.png)
+
+### Cerramos **ISS-19.3 — RoleUsers: Seeder y Swagger**.
+
+```         
+git add . 
+git commit -m "ISS-19: RoleUsers - Seeder y Swagger" 
+git push origin main
+```
