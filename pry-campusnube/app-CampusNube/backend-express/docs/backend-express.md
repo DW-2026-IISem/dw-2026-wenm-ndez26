@@ -6062,6 +6062,22 @@ git commit -m "ISS-14-B: Migración Progress - Repository"
 git push origin main
 ```
 
+![](images/clipboard-534285433.png)
+
+## ISS-14-C — SERVICE
+
+### Crear `progress.service.ts`
+
+![](images/clipboard-3648305744.png)
+
+### Commit C
+
+```         
+git add . 
+git commit -m "ISS-14-C: Migración Progress - Service" 
+git push origin main
+```
+
 # Fase II: Auth con RBAC — ISS-19 — Base de seguridad compartida y modelos Auth
 
 ## Contenido de este ISS
