@@ -7203,7 +7203,7 @@ git push origin main
 # Fase II: Auth con RBAC — ISS-19 — Features RoleUsers y ResourceRoles (asignar roles y conceder permisos)
 
 | **Este ISS** |   |
-|:---|:---|
+|:-----------------------------------|:-----------------------------------|
 | **Título** | Features RoleUsers y ResourceRoles |
 | **Feature / tablas** | `features/auth/role-users/` · `role_users` — `features/auth/resource-roles/` · `resource_roles` |
 | **API** | `/api/asignaciones-rol…` y `/api/concesiones-rol…` (JWT + RBAC) |
@@ -7268,11 +7268,11 @@ git push origin main
 | Existe `active`                       | **409** (ya está asignado)      |
 | Existe `inactive`                     | se **reactiva** (no se duplica) |
 
-###  Repository
+### Repository
 
 ![](images/clipboard-3690225026.png)
 
-####  Service
+#### Service
 
 ![](images/clipboard-2655888664.png)
 
@@ -7391,5 +7391,25 @@ find src/features/auth/resource-roles -maxdepth 1 -type f | sort
 ```         
 git add .
 git commit -m "ISS-19: ResourceRoles - Repository, Service, Controller y Routes" 
+git push origin main
+```
+
+![](images/clipboard-670555951.png)
+
+## 19.7 Seeder de la matriz y swagger
+
+### 1. Seeder
+
+![](images/clipboard-3797329221.png)
+
+### 2. Swagger
+
+![](images/clipboard-330886400.png)
+
+### Cerramos ISS-19.7
+
+```         
+git add . 
+git commit -m "ISS-19: ResourceRoles - Seeder y Swagger" 
 git push origin main
 ```
