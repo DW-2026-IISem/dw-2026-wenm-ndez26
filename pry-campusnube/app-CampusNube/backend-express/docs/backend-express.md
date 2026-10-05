@@ -7413,3 +7413,76 @@ git add .
 git commit -m "ISS-19: ResourceRoles - Seeder y Swagger" 
 git push origin main
 ```
+
+![](images/clipboard-2598873784.png)
+
+## ISS-19.8 — Pruebas HTTP
+
+### 1. RoleUsers
+
+![](images/clipboard-684146419.png)
+
+### 2. ResourceRoles
+
+![](images/clipboard-3110077321.png)
+
+### Verificación
+
+```         
+npx tsc --noEmit
+npm run db:seed
+```
+
+![](images/clipboard-2266268948.png)
+
+![](images/clipboard-1108963624.png)
+
+### Cerramos 
+
+```         
+git add .
+git commit -m "ISS-19: RoleUsers y ResourceRoles - Pruebas HTTP" 
+git push origin main
+```
+
+![](images/clipboard-3708290103.png)
+
+### DoD del ISS-19
+
+- [ ] Todos los criterios de aceptación (19.1 … 19.8) cumplidos
+
+- [ ] Reasignar un rol ya activo → **409**; sobre uno inactivo → **reactiva**
+
+- [ ] Reejecutar `npm run db:seed` deja `resource_roles` en **65** filas activas exactas
+
+- [ ] `npx tsc --noEmit` sin errores y `npm run dev` arranca
+
+# Fase II: Auth con RBAC — ISS-20 — Middlewares de acceso y las tres modalidades en rutas
+
+### Criterios de aceptación (ISS-20) — consolidados
+
+- [ ] **20.1** `authenticate` valida el Bearer token, verifica algoritmo/issuer/audience/exp y carga el usuario activo en `req.auth`
+
+- [ ] **20.2** `authorize` resuelve `(method, path)` y busca concesión activa; **deny by default** → 403
+
+- [ ] **20.3** `access/index.ts` reexporta ambos middlewares
+
+- [ ] **20.4** las 5 features de negocio (`clients`, `product-types`, `products`, `sales`, `product-sales`) aplican `authenticate, authorize`
+
+- [ ] **20.5** documentadas las tres modalidades y qué códigos produce cada una
+
+- [ ] **20.6** sin token → **401**; con token pero sin concesión → **403**; con concesión → **200/201**
+
+- [ ] `npx tsc --noEmit` OK
+
+### ISS-20.1 — `authenticate` — modalidad JWT
+
+![](images/clipboard-2405779650.png)
+
+### Cerramos ISS-20.1 — Authenticate middleware
+
+```         
+git add .
+git commit -m "ISS-20: Access - Authenticate middleware" 
+git push origin main
+```
