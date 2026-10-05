@@ -1,16 +1,37 @@
 import { Application } from "express";
 import swaggerUi from "swagger-ui-express";
+
+// ============================================================
+// Fase I — Business
+// ============================================================
 import { learnerSwagger } from "../features/business/learner/learner.swagger";
 import { teacherSwagger } from "../features/business/teacher/teacher.swagger";
 import { courseSwagger } from "../features/business/course/course.swagger";
-import { enrollmentSwagger } from "../features/business/enrollment/enrollment.swagger";
-import { evaluationSwagger } from "../features/business/evaluation/evaluation.swagger";
 import { moduleSwagger } from "../features/business/module/module.swagger";
 import { lessonSwagger } from "../features/business/lesson/lesson.swagger";
+import { enrollmentSwagger } from "../features/business/enrollment/enrollment.swagger";
+import { evaluationSwagger } from "../features/business/evaluation/evaluation.swagger";
 import { attemptSwagger } from "../features/business/attempt/attempt.swagger";
 import { submissionSwagger } from "../features/business/submission/submission.swagger";
 import { progressSwagger } from "../features/business/progress/progress.swagger";
 import { certificateSwagger } from "../features/business/certificate/certificate.swagger";
+
+// ============================================================
+// Fase II — Auth con RBAC
+// ============================================================
+import { sessionSwagger } from "../features/auth/session/session.swagger";
+import { refreshTokensSwagger } from "../features/auth/refresh-tokens/refresh-tokens.swagger";
+import { usersSwagger } from "../features/auth/users/users.swagger";
+import { rolesSwagger } from "../features/auth/roles/roles.swagger";
+import { resourcesSwagger } from "../features/auth/resources/resources.swagger";
+import { roleUsersSwagger } from "../features/auth/role-users/role-users.swagger";
+import { resourceRolesSwagger } from "../features/auth/resource-roles/resource-roles.swagger";
+
+import { bearerSecurityScheme } from "../shared/http/swagger-security";
+import {
+  unauthorizedResponse,
+  forbiddenResponse,
+} from "../shared/http/swagger-security";
 
 export type FeatureSwaggerModule = {
   tags: unknown[];
@@ -21,17 +42,35 @@ export type FeatureSwaggerModule = {
 };
 
 /**
- * Registry externo: importa la documentación OpenAPI
- * de cada feature.
+ * Registry externo:
+ * importa la documentación OpenAPI de cada feature.
+ *
+ * Orden:
+ * primero los módulos de seguridad,
+ * después los módulos de negocio.
  */
 const featureSwaggerModules: FeatureSwaggerModule[] = [
+  // ==========================================================
+  // Fase II — Auth con RBAC
+  // ==========================================================
+  sessionSwagger,
+  refreshTokensSwagger,
+  usersSwagger,
+  rolesSwagger,
+  resourcesSwagger,
+  roleUsersSwagger,
+  resourceRolesSwagger,
+
+  // ==========================================================
+  // Fase I — Business
+  // ==========================================================
   learnerSwagger,
   teacherSwagger,
   courseSwagger,
-  enrollmentSwagger,
-  evaluationSwagger,
   moduleSwagger,
   lessonSwagger,
+  enrollmentSwagger,
+  evaluationSwagger,
   attemptSwagger,
   submissionSwagger,
   progressSwagger,
@@ -45,6 +84,7 @@ export function buildOpenApiDocument() {
 
   for (const mod of featureSwaggerModules) {
     tags.push(...mod.tags);
+
     Object.assign(paths, mod.paths);
 
     if (mod.components?.schemas) {
@@ -57,9 +97,23 @@ export function buildOpenApiDocument() {
 
     info: {
       title: "CampusNube API",
-      version: "1.0.0",
-      description:
-        "API CampusNube — Aprendizaje virtual. Los endpoints de Learner están documentados como SIN AUTH.",
+      version: "2.0.0",
+      description: [
+        "API CampusNube (Express + Sequelize) con **Auth con RBAC**.",
+        "",
+        "**Las tres modalidades de acceso** (se declaran por operación, no globalmente):",
+        "",
+        "- **OPEN** — sin identidad previa: `POST /api/sesion/login`, `/refresh`, `/logout`.",
+        "- **JWT** — token de acceso válido: `/api/sesion/perfil`, `/api/permisos`, `/api/sesiones/*`.",
+        "- **JWT + RBAC** — token válido **y** concesión activa de `(method, path)`.",
+        "",
+        "Autenticación: obtener el `access_token` en `POST /api/sesion/login` y pulsar **Authorize** con " +
+          "`Bearer <access_token>`.",
+        "",
+        "La autorización aplica **deny by default**: sin concesión explícita, 403.",
+        "",
+        "CampusNube — Aprendizaje virtual.",
+      ].join("\n"),
     },
 
     servers: [
@@ -70,16 +124,41 @@ export function buildOpenApiDocument() {
     ],
 
     tags,
+
     paths,
 
+    // Postura *secure by default*:
+    // cualquier operación que no declare su propio `security`
+    // exige el access token.
+    //
+    // Los endpoints OPEN (login/refresh/logout)
+    // lo anulan explícitamente con `security: []`.
+    security: [{ bearerAuth: [] }],
+
     components: {
+      // Esquema único de seguridad:
+      // Authorization: Bearer <access_token>
+      bearerSecurityScheme,
+
+      // Respuestas reutilizables.
+      responses: {
+        Unauthorized: unauthorizedResponse,
+        Forbidden: forbiddenResponse,
+      },
+
       schemas,
     },
   };
 }
 
 /**
- * Monta Swagger UI y el documento JSON OpenAPI.
+ * Monta Swagger UI y el JSON OpenAPI.
+ *
+ * UI:
+ *   GET /api/docs
+ *
+ * JSON:
+ *   GET /api/docs.json
  */
 export function setupSwagger(app: Application): void {
   const document = buildOpenApiDocument();
@@ -95,6 +174,6 @@ export function setupSwagger(app: Application): void {
   });
 
   console.log(
-    "📘 Swagger UI: /api/docs | OpenAPI JSON: /api/docs.json"
+    "📘 Swagger UI: /api/docs  |  OpenAPI JSON: /api/docs.json"
   );
 }

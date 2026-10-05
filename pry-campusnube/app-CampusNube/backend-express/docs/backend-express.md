@@ -7656,7 +7656,7 @@ git push origin main
 
 ![](images/clipboard-1614542312.png)
 
-### DoD del ISS-14
+### DoD del ISS-21
 
 - [ ] Todos los criterios de aceptación (21.1 … 21.6) cumplidos
 
@@ -7673,5 +7673,225 @@ git push origin main
 ```         
 git add . 
 git commit -m "ISS-21: RefreshTokens - Sesiones renovables y revocables" 
+git push origin main
+```
+
+![](images/clipboard-323760925.png)
+
+# Fase II: Auth con RBAC — ISS-22 — Feature Session (login, refresh, logout, perfil y permisos)
+
+### 22.1 — DTOs
+
+```         
+mkdir -p src/features/auth/session/dto
+```
+
+#### `login.dto.ts`
+
+![](images/clipboard-2875180525.png)
+
+### refresh-session.dto.ts
+
+### ![](images/clipboard-3202555789.png)
+
+#### `logout-session.dto.ts`
+
+![](images/clipboard-3649709028.png)
+
+### session-response.dto.ts
+
+![](images/clipboard-3635445590.png)
+
+#### `index.ts`
+
+![](images/clipboard-3030119893.png)
+
+### 22.2 — Service
+
+![](images/clipboard-2560529153.png)
+
+### 22.3 — Controller
+
+![](images/clipboard-3249646411.png)
+
+# 22.4 — Routes
+
+Aquí respetamos las tres modalidades:
+
+| Ruta                       | Modalidad |
+|----------------------------|-----------|
+| `POST /api/sesion/login`   | OPEN      |
+| `POST /api/sesion/refresh` | OPEN      |
+| `POST /api/sesion/logout`  | OPEN      |
+| `GET /api/sesion/perfil`   | JWT       |
+| `GET /api/permisos`        |           |
+
+![](images/clipboard-4274983939.png)
+
+# 22.5 — Swagger
+
+![](images/clipboard-2121874266.png)
+
+### 22.6 — Pruebas HTTP
+
+![](images/clipboard-3478249211.png)
+
+### Refresh
+
+![](images/clipboard-2587507691.png)
+
+### Perfil / permisos / logout
+
+![](images/clipboard-2257656811.png)
+
+### 22.7 — Verificación E2E
+
+```         
+npx tsc --noEmit
+```
+
+```         
+npm run db:seed 
+npm run dev
+```
+
+![](images/clipboard-2161686932.png)
+
+## 22.7 Verificación end-to-end de las tres modalidades
+
+1\. OPEN — login
+
+![](images/clipboard-3039597006.png)
+
+2\. JWT — perfil
+
+![](images/clipboard-4110381690.png)
+
+3\. JWT — permisos
+
+![](images/clipboard-2206440161.png)
+
+4\. JWT + RBAC — negocio
+
+![](images/clipboard-3069011665.png)
+
+### 5. Refresh
+
+![](images/clipboard-2994128561.png)
+
+###  Commit Final 
+
+```         
+git add . 
+git commit -m "ISS-22: Session - Login, refresh, logout, perfil y permisos"
+git push origin main
+```
+
+![](images/clipboard-3957278236.png)
+
+# Fase II: Auth con RBAC — Cierre del laboratorio (backend completo)
+
+# ISS-23 — Cierre Fase II Auth + RBAC
+
+### 23.1 — Cableado final de `config/index.ts`
+
+![](images/clipboard-3724346042.png)
+
+### 23.2 — Reemplaza `src/routes/index.ts`
+
+![](images/clipboard-2079254744.png)
+
+### 23.3 — `src/swagger/index.ts`
+
+![](images/clipboard-1929263105.png)
+
+#### 23.4 — `src/database/seeders/index.ts`
+
+![](images/clipboard-4190357067.png)
+
+**ISS-23.5 — `counts.ts`**.
+
+![](images/clipboard-3220027146.png)
+
+## Las tres modalidades — mapa definitivo de rutas
+
+| **Modalidad** | **Middlewares** | **Rutas** |
+|:-------------------|:----------------------------------|:----------------|
+| **OPEN** | — | `POST /api/sesion/login` · `/refresh` · `/logout` · `GET /api/docs` · `/api/docs.json` |
+| **JWT** | `authenticate` | `GET /api/sesion/perfil` · `/api/permisos` · `GET /api/sesiones` · `/:id` · `PATCH /api/sesiones/:id/deactivate` · `/deactivate-all` · `DELETE /api/sesiones` |
+| **JWT + RBAC** | `authenticate, authorize` | `/api/aprendices…` · `/api/docentes…` · `/api/cursos…` · `/api/modulos…` · `/api/lecciones…` · `/api/inscripciones…` · `/api/evaluaciones…` · `/api/intentos…` · `/api/entregas…` · `/api/progress…` · `/api/certificates…` · `/api/usuarios…` · `/api/roles…` · `/api/recursos…` · `/api/asignaciones-rol…` · `/api/concesiones-rol…` |
+
+### 23.8 — Estructura final de CampusNube
+
+## Estructura final (Fase II en negrita)
+
+``` text
+src/
+├── config/index.ts
+├── database/seeders/{counts,index}.ts
+├── routes/index.ts
+├── shared/
+│   ├── auth/{password,jwt,resource-match,auth-user}.ts          # ← Fase II
+│   ├── http/{base-controller,error-response,swagger-security}.ts
+│   ├── database/with-transaction.ts
+│   └── errors/app-error.ts
+├── features/
+│   ├── business/                                                # Fase I
+│   │   ├── learner/ teacher/ course/ module/ lesson/
+│   │   ├── enrollment/ evaluation/ attempt/ submission/
+│   │   ├── progress/ certificate/
+│   │   └── (cada feature: model, dto/, repository, service, controller, routes, seeder, swagger, http/)
+│   └── auth/                                                    # ← Fase II
+│       ├── access/{authenticate,authorize}.middleware.ts
+│       ├── rbac.associations.ts
+│       ├── users/ roles/ resources/ role-users/ resource-roles/ refresh-tokens/ session/
+│       └── (cada feature: dto/, repository, service, controller, routes, ...[.seeder,.swagger], http/)
+├── swagger/index.ts
+└── server.ts
+```
+
+## DoD del laboratorio (Fase I + Fase II)
+
+- [ ] **18 features** (11 business + 7 auth), cada uno con sus capas `controller → service → repository → model`
+- [ ] **17 tablas**: `learners`, `teachers`, `courses`, `modules`, `lessons`, `enrollments`, `evaluations`, `attempts`, `submissions`, `progress`, `certificates`, `users`, `roles`, `resources`, `role_users`, `resource_roles`, `refresh_tokens`
+- [ ] **3 modalidades** aplicadas por ruta: OPEN, JWT, JWT + RBAC
+- [ ] **No** existe entidad `Permission`; el permiso es `resource_roles (role_id, resource_id)`
+- [ ] `deny by default`: sin concesión activa → **403**
+- [ ] Access token **corto** (HS256, `iss`/`aud`/`exp`/`jti`), refresh token **opaco, hasheado, rotativo y revocable**
+- [ ] `role_users` y `resource_roles` soportan **asignar / retirar / reactivar** y `reconcileRole`
+- [ ] Seeders deterministas para roles, recursos, usuarios, asignaciones de rol y concesiones de recursos, además de los datos de las features de CampusNube
+- [ ] Swagger `/api/docs` con `bearerAuth`, 401/403 y las 3 modalidades por operación
+- [ ] `npx tsc --noEmit` OK
+- [ ] Smoke test E2E de las tres modalidades en verde
+
+## Referencia rápida de paquetes
+
+```         
+npm install express@^5.2.1 cors@^2.8.6 dotenv@^17.4.2 morgan@^1.12.1 \   sequelize@^6.37.8 mysql2@^3.24.4 pg@^8.23.0 pg-hstore@^2.3.4 \   tedious@^20.0.0 oracledb@^7.0.1 bcryptjs@^3.0.3 \   jsonwebtoken@^9.0.3 swagger-ui-express@^5.0.1  npm install -D typescript@~5.9.2 ts-node@^10.9.2 nodemon@^3.1.14 \   @types/node@^22.20.4 @types/express@^5.0.6 \   @types/cors@^2.8.19 @types/morgan@^1.9.10 \   @types/sequelize@^6.12.0 @types/bcryptjs@^3.0.0 \   @types/jsonwebtoken@^9.0.10 @types/swagger-ui-express@^4.1.8 \   @faker-js/faker@^10.6.0 
+```
+
+## Fuentes
+
+- **Este manual** es la única guía de construcción (ISS, `cat >>`, **PARCHE**).
+
+- [`bd-storelab.md`](https://tecnogua.com/academic/site/backend2026/bd-storelab/) — **solo consulta**: entidades y campos (Fase I y Fase II).
+
+- [RFC 7519 — JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519)
+
+- [RFC 8725 — JWT Best Current Practices](https://www.rfc-editor.org/rfc/rfc8725)
+
+- [RFC 6749 — OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749) · [RFC 6750 — Bearer Token Usage](https://www.rfc-editor.org/rfc/rfc6750)
+
+- [OWASP — Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) · [Session Management](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) · [Authorization](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
+
+- [NIST SP 800-63B — Digital Identity Guidelines](https://pages.nist.gov/800-63-3/sp800-63b.html)
+
+- [Express — Middleware](https://expressjs.com/en/guide/using-middleware.html)
+
+**ISS-23 — Cierre Auth: Backend completo con RBAC.**
+
+```         
+git add . 
+git commit -m "ISS-23: Cierre Auth - Backend completo con RBAC" 
 git push origin main
 ```

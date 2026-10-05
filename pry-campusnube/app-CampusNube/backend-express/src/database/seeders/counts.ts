@@ -1,20 +1,33 @@
 /**
- * Cantidad de registros por feature/entidad.
+ * Cantidad de registros por tabla.
  *
  * Prioridad:
- * CLI (--learners=N) > env (SEED_LEARNERS) > default.
+ * CLI (--learners=N)
+ * >
+ * env (SEED_LEARNERS)
+ * >
+ * default de este archivo.
  *
- * Cuando agreguemos las otras entidades de CampusNube,
- * añadiremos sus respectivas claves aquí.
+ * Los catálogos de seguridad:
+ * roles, resources, role_users y resource_roles
+ * son deterministas y no tienen conteo.
+ *
+ * refresh_tokens no tiene seeder:
+ * lo puebla el login.
+ *
+ * Cuando agregues features, suma aquí la clave
+ * correspondiente y léela en el SeedersRunner.
  */
+
 export type SeedCounts = {
+  users: number;
   learners: number;
   teachers: number;
   courses: number;
-  enrollments: number;
-  evaluations: number;
   modules: number;
   lessons: number;
+  enrollments: number;
+  evaluations: number;
   attempts: number;
   submissions: number;
   progress: number;
@@ -22,97 +35,68 @@ export type SeedCounts = {
 };
 
 export const DEFAULT_SEED_COUNTS: SeedCounts = {
-  learners: 10,
-  teachers: 10,
+  // ==========================================================
+  // Fase II — Auth
+  // ==========================================================
+  users: 2,
+
+  // ==========================================================
+  // Fase I — Business CampusNube
+  // ==========================================================
+  learners: 20,
+  teachers: 5,
   courses: 10,
-  enrollments: 20,
+  modules: 20,
+  lessons: 40,
+  enrollments: 30,
   evaluations: 10,
-  modules: 10,
-  lessons: 10,
-  attempts: 10,
-  submissions: 10,
-  progress: 10,
+  attempts: 20,
+  submissions: 20,
+  progress: 30,
   certificates: 10,
 };
 
 export function resolveSeedCounts(
   argv: string[] = process.argv.slice(2)
 ): SeedCounts {
-  const counts: SeedCounts = { ...DEFAULT_SEED_COUNTS };
+  const counts: SeedCounts = {
+    ...DEFAULT_SEED_COUNTS,
+  };
 
-  const envLearners = process.env.SEED_LEARNERS;
+  const envMap: Array<
+    [keyof SeedCounts, string | undefined]
+  > = [
+    ["users", process.env.SEED_USERS],
+    ["learners", process.env.SEED_LEARNERS],
+    ["teachers", process.env.SEED_TEACHERS],
+    ["courses", process.env.SEED_COURSES],
+    ["modules", process.env.SEED_MODULES],
+    ["lessons", process.env.SEED_LESSONS],
+    ["enrollments", process.env.SEED_ENROLLMENTS],
+    ["evaluations", process.env.SEED_EVALUATIONS],
+    ["attempts", process.env.SEED_ATTEMPTS],
+    ["submissions", process.env.SEED_SUBMISSIONS],
+    ["progress", process.env.SEED_PROGRESS],
+    ["certificates", process.env.SEED_CERTIFICATES],
+  ];
 
-  if (envLearners !== undefined && envLearners !== "") {
-    counts.learners = Number(envLearners);
-  }
-
-  const envTeachers = process.env.SEED_TEACHERS;
-
-  if (envTeachers !== undefined && envTeachers !== "") {
-    counts.teachers = Number(envTeachers);
-  }
-
-  const envCourses = process.env.SEED_COURSES;
-
-  if (envCourses !== undefined && envCourses !== "") {
-    counts.courses = Number(envCourses);
-  }
-
-  const envEnrollments = process.env.SEED_ENROLLMENTS;
-
-  if (envEnrollments !== undefined && envEnrollments !== "") {
-    counts.enrollments = Number(envEnrollments);
-  }
-
-  const envEvaluations = process.env.SEED_EVALUATIONS;
-
-  if (envEvaluations !== undefined && envEvaluations !== "") {
-    counts.evaluations = Number(envEvaluations);
-  }
-
-  const envModules = process.env.SEED_MODULES;
-
-  if (envModules !== undefined && envModules !== "") {
-    counts.modules = Number(envModules);
-  }
-
-  const envLessons = process.env.SEED_LESSONS;
-
-  if (envLessons !== undefined && envLessons !== "") {
-    counts.lessons = Number(envLessons);
-  }
-
-  const envAttempts = process.env.SEED_ATTEMPTS;
-
-  if (envAttempts !== undefined && envAttempts !== "") {
-    counts.attempts = Number(envAttempts);
-  }
-
-  const envSubmissions = process.env.SEED_SUBMISSIONS;
-
-  if (envSubmissions !== undefined && envSubmissions !== "") {
-    counts.submissions = Number(envSubmissions);
-  }
-
-  const envProgress = process.env.SEED_PROGRESS;
-
-  if (envProgress !== undefined && envProgress !== "") {
-    counts.progress = Number(envProgress);
-  }
-
-  const envCertificates = process.env.SEED_CERTIFICATES;
-
-  if (envCertificates !== undefined && envCertificates !== "") {
-    counts.certificates = Number(envCertificates);
+  for (const [key, value] of envMap) {
+    if (value !== undefined && value !== "") {
+      counts[key] = Number(value);
+    }
   }
 
   for (const arg of argv) {
-    const m = arg.match(/^--([a-zA-Z_]+)=(\d+)$/);
+    const match = arg.match(
+      /^--([a-zA-Z_]+)=(\d+)$/
+    );
 
-    if (!m) continue;
+    if (!match) {
+      continue;
+    }
 
-    const key = m[1] as keyof SeedCounts;
-    const value = Number(m[2]);
+    const key = match[1] as keyof SeedCounts;
+    const value = Number(match[2]);
 
     if (key in counts) {
       counts[key] = value;
