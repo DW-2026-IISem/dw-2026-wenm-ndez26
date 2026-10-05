@@ -1,0 +1,49 @@
+### Feature Session — PERFIL, PERMISOS Y LOGOUT
+
+@baseUrl = http://localhost:4000
+
+# @name loginAdmin
+POST {{baseUrl}}/api/sesion/login
+Content-Type: application/json
+
+{
+  "identifier": "admin",
+  "password": "Admin123!"
+}
+
+###
+
+### PERFIL — JWT
+GET {{baseUrl}}/api/sesion/perfil
+Authorization: Bearer {{loginAdmin.response.body.$.access_token}}
+
+###
+
+### MIS PERMISOS — JWT
+GET {{baseUrl}}/api/permisos
+Authorization: Bearer {{loginAdmin.response.body.$.access_token}}
+
+###
+
+### PERFIL sin token -> 401
+GET {{baseUrl}}/api/sesion/perfil
+
+###
+
+### LOGOUT — OPEN
+POST {{baseUrl}}/api/sesion/logout
+Content-Type: application/json
+
+{
+  "refresh_token": "{{loginAdmin.response.body.$.refresh_token}}"
+}
+
+###
+
+### Refresh después de logout -> 401
+POST {{baseUrl}}/api/sesion/refresh
+Content-Type: application/json
+
+{
+  "refresh_token": "{{loginAdmin.response.body.$.refresh_token}}"
+}

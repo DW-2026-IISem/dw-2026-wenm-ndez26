@@ -1,0 +1,38 @@
+### Feature Session — REFRESH
+### Modalidad OPEN con credencial de sesión
+
+@baseUrl = http://localhost:4000
+
+# @name loginAdmin
+POST {{baseUrl}}/api/sesion/login
+Content-Type: application/json
+
+{
+  "identifier": "admin",
+  "password": "Admin123!"
+}
+
+###
+
+# @name refresh
+POST {{baseUrl}}/api/sesion/refresh
+Content-Type: application/json
+
+{
+  "refresh_token": "{{loginAdmin.response.body.$.refresh_token}}"
+}
+
+###
+
+GET {{baseUrl}}/api/sesion/perfil
+Authorization: Bearer {{refresh.response.body.$.access_token}}
+
+###
+
+# Reutilización del refresh anterior -> 401
+POST {{baseUrl}}/api/sesion/refresh
+Content-Type: application/json
+
+{
+  "refresh_token": "{{loginAdmin.response.body.$.refresh_token}}"
+}
