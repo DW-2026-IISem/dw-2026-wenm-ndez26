@@ -7601,3 +7601,77 @@ git add .
 git commit -m "ISS-20: Access - Verificación de modalidades 401 y 403" 
 git push origin main
 ```
+
+![](images/clipboard-2821449983.png)
+
+# Fase II: Auth con RBAC — ISS-21 — Feature RefreshTokens (sesiones renovables y revocables)
+
+## Contenido de este ISS
+
+- 21.1 DTOs del feature
+
+- 21.2 Repository (búsqueda por hash, bloqueo pesimista y revocación por familia)
+
+- 21.3 Service (emitir, rotar con detección de reuso y revocar)
+
+- 21.4 Controller y rutas (sesiones propias, modalidad JWT)
+
+- 21.5 Swagger
+
+- 21.6 Pruebas HTTP
+
+## 21.1 DTOs del feature
+
+![](images/clipboard-3121561671.png)
+
+### index.ts
+
+![](images/clipboard-623812478.png)
+
+## 21.2 Repository
+
+![](images/clipboard-1863611860.png)
+
+## 21.3 Service — emitir, rotar, revocar
+
+![](images/clipboard-84117713.png)
+
+## 21.4 Controller y rutas
+
+![](images/clipboard-49466738.png)
+
+### Routes
+
+![](images/clipboard-4241108526.png)
+
+## 21.5 Swagger
+
+![](images/clipboard-3028140010.png)
+
+### 21.6 — Pruebas HTTP
+
+![](images/clipboard-3635593500.png)
+
+# Verificación general de ISS-21
+
+![](images/clipboard-1614542312.png)
+
+### DoD del ISS-14
+
+- [ ] Todos los criterios de aceptación (21.1 … 21.6) cumplidos
+
+- [ ] En BD **nunca** hay un refresh token en claro: solo `token_hash`
+
+- [ ] Rotar dos veces el mismo token dispara la **revocación de la familia**
+
+- [ ] `PATCH /api/sesiones/:id/deactivate` solo afecta a una sesión **propia**
+
+- [ ] `npx tsc --noEmit` sin errores y `npm run dev` arranca
+
+**ISS-21 — Commit Feature RefreshTokens: sesiones renovables y revocables**
+
+```         
+git add . 
+git commit -m "ISS-21: RefreshTokens - Sesiones renovables y revocables" 
+git push origin main
+```
