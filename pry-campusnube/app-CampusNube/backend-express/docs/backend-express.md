@@ -7486,3 +7486,17 @@ git add .
 git commit -m "ISS-20: Access - Authenticate middleware" 
 git push origin main
 ```
+
+![](images/clipboard-2692591065.png)
+
+### ISS-20.2 — `authorize` — modalidad JWT + RBAC
+
+![](images/clipboard-1779540243.png)
+
+### Cerramos ISS-20.2 — Authorize middleware
+
+```         
+git add . 
+git commit -m "ISS-20: Access - Authorize middleware" 
+git push origin main
+```
