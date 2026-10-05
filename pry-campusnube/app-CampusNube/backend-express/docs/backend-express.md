@@ -7500,3 +7500,71 @@ git add .
 git commit -m "ISS-20: Access - Authorize middleware" 
 git push origin main
 ```
+
+![](images/clipboard-4036520739.png)
+
+### ISS-20.3 — Barrel de acceso
+
+![](images/clipboard-2631603140.png)
+
+### Cerramos ISS-20.3 — Barrel de acceso
+
+```         
+git add . 
+git commit -m "ISS-20: Access - Barrel de acceso" 
+git push origin main
+```
+
+![](images/clipboard-2703754760.png)
+
+## 20.4 PARCHE: las 5 rutas de negocio pasan a JWT + RBAC
+
+El cambio es **quirúrgico**: se importa `authenticate, authorize` desde el barrel de auth y se insertan entre la ruta y el controller. Ni el contrato de la API ni las capas de negocio cambian.
+
+### 1. Learner
+
+![](images/clipboard-4275950045.png)
+
+### 3. Course
+
+![](images/clipboard-2171164067.png)
+
+### `4. Module`
+
+![](images/clipboard-555459858.png)
+
+### 5. Lesson
+
+![](images/clipboard-1960746240.png)
+
+### 6. Enrollment
+
+![](images/clipboard-3504945000.png)
+
+## 7. Evaluation
+
+![](images/clipboard-1133986358.png)
+
+### 8. Attempt
+
+![](images/clipboard-2814138598.png)
+
+## 9. Submission
+
+![](images/clipboard-913438645.png)
+
+### 10. Progress
+
+![](images/clipboard-2882401662.png)
+
+### 11. Certificate
+
+![](images/clipboard-2393035632.png)
+
+### Cerramos ISS-20.4 — Parche de rutas de negocio a JWT + RBAC
+
+```         
+git add . 
+git commit -m "ISS-20: Access - Parche de rutas de negocio JWT + RBAC" 
+git push origin main
+```

@@ -1,41 +1,68 @@
 import { Application } from "express";
 import { LearnerController } from "./learner.controller";
+import { authenticate, authorize } from "../../auth/access";
 
 export class LearnerRoutes {
   public learnerController: LearnerController = new LearnerController();
 
   public routes(app: Application): void {
-        // ================== RUTAS SIN AUTENTICACIÓN ==================
-
     // getAll
     app
       .route("/api/aprendices")
-      .get(this.learnerController.getAll.bind(this.learnerController));
+      .get(
+        authenticate,
+        authorize,
+        this.learnerController.getAll.bind(this.learnerController)
+      );
 
     // getOne
     app
       .route("/api/aprendices/:id")
-      .get(this.learnerController.getOne.bind(this.learnerController));
+      .get(
+        authenticate,
+        authorize,
+        this.learnerController.getOne.bind(this.learnerController)
+      );
 
-          // create
+    // create
     app
       .route("/api/aprendices")
-      .post(this.learnerController.create.bind(this.learnerController));
+      .post(
+        authenticate,
+        authorize,
+        this.learnerController.create.bind(this.learnerController)
+      );
 
-          // update (PUT / PATCH)
+    // update PUT / PATCH
     app
       .route("/api/aprendices/:id")
-      .put(this.learnerController.updatePut.bind(this.learnerController))
-      .patch(this.learnerController.updatePatch.bind(this.learnerController));
-     
-      // delete físico
+      .put(
+        authenticate,
+        authorize,
+        this.learnerController.updatePut.bind(this.learnerController)
+      )
+      .patch(
+        authenticate,
+        authorize,
+        this.learnerController.updatePatch.bind(this.learnerController)
+      );
+
+    // delete físico
     app
       .route("/api/aprendices/:id")
-      .delete(this.learnerController.deletePhysical.bind(this.learnerController));
+      .delete(
+        authenticate,
+        authorize,
+        this.learnerController.deletePhysical.bind(this.learnerController)
+      );
 
     // delete lógico
     app
       .route("/api/aprendices/:id/deactivate")
-      .patch(this.learnerController.deleteLogical.bind(this.learnerController));
+      .patch(
+        authenticate,
+        authorize,
+        this.learnerController.deleteLogical.bind(this.learnerController)
+      );
   }
 }

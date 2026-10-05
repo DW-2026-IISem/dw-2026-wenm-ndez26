@@ -1,5 +1,6 @@
 import { Application } from "express";
 import { SubmissionController } from "./submission.controller";
+import { authenticate, authorize } from "../../auth/access";
 
 export class SubmissionRoutes {
   public submissionController: SubmissionController =
@@ -9,42 +10,44 @@ export class SubmissionRoutes {
     app
       .route("/api/entregas")
       .get(
-        this.submissionController.getAll.bind(
-          this.submissionController
-        )
+        authenticate,
+        authorize,
+        this.submissionController.getAll.bind(this.submissionController)
       )
       .post(
-        this.submissionController.create.bind(
-          this.submissionController
-        )
+        authenticate,
+        authorize,
+        this.submissionController.create.bind(this.submissionController)
       );
 
     app
       .route("/api/entregas/:id")
       .get(
-        this.submissionController.getOne.bind(
-          this.submissionController
-        )
+        authenticate,
+        authorize,
+        this.submissionController.getOne.bind(this.submissionController)
       )
       .put(
-        this.submissionController.update.bind(
-          this.submissionController
-        )
+        authenticate,
+        authorize,
+        this.submissionController.update.bind(this.submissionController)
       )
       .patch(
-        this.submissionController.patch.bind(
-          this.submissionController
-        )
+        authenticate,
+        authorize,
+        this.submissionController.patch.bind(this.submissionController)
       )
       .delete(
-        this.submissionController.delete.bind(
-          this.submissionController
-        )
+        authenticate,
+        authorize,
+        this.submissionController.delete.bind(this.submissionController)
       );
 
     app
       .route("/api/entregas/:id/deactivate")
       .patch(
+        authenticate,
+        authorize,
         this.submissionController.deactivate.bind(
           this.submissionController
         )
