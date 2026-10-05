@@ -7568,3 +7568,36 @@ git add .
 git commit -m "ISS-20: Access - Parche de rutas de negocio JWT + RBAC" 
 git push origin main
 ```
+
+![](images/clipboard-557445676.png)
+
+## ISS-20.5 Las tres modalidades en CampusNube
+
+| **Modalidad** | **Middleware en la ruta** | **Qué exige** | **Sin cumplir** |
+|:--------------|:--------------|:------------------------|:------------------|
+| **OPEN** | — | nada | — |
+| **JWT** | `authenticate` | access token válido y usuario activo | **401** |
+| **JWT + RBAC** | `authenticate, authorize` | token válido y concesión activa de `(method, path)` | **401** (sin token) / **403** (sin permiso) |
+
+### Ejemplos CampusNube
+
+| **Petición**                                      | **Resultado** |
+|:--------------------------------------------------|:--------------|
+| `GET /api/cursos` sin `Authorization`             | **401**       |
+| `GET /api/cursos` con token válido y concesión    | **200**       |
+| `POST /api/cursos` con token válido sin concesión | **403**       |
+| `POST /api/cursos` con token ADMIN y concesión    | **201**       |
+| `GET /api/cursos/abc` con token válido            | **400**       |
+| Ruta con token caducado o manipulado              | **401**       |
+
+### ISS-20.6 — Verificación de 401 y 403
+
+![](images/clipboard-1653166122.png)
+
+### Cerramos ISS-20.5 / ISS-20.6
+
+```         
+git add .
+git commit -m "ISS-20: Access - Verificación de modalidades 401 y 403" 
+git push origin main
+```

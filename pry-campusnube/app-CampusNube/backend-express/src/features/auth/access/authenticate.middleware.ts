@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AppError } from "../../../shared/errors/app-error";
 import { sendError } from "../../../shared/http/error-response";
 import { extractBearerToken, verifyAccessToken } from "../../../shared/auth/jwt";
+import "../../../shared/auth/auth-user";
 import { UsersRepository } from "../users/users.repository";
 
 /**
