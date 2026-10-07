@@ -135,19 +135,19 @@ export function buildOpenApiDocument() {
     // lo anulan explícitamente con `security: []`.
     security: [{ bearerAuth: [] }],
 
-    components: {
-      // Esquema único de seguridad:
-      // Authorization: Bearer <access_token>
-      bearerSecurityScheme,
+  components: {
+  // Esquemas de seguridad:
+  // Authorization: Bearer <access_token>
+  securitySchemes: bearerSecurityScheme,
 
-      // Respuestas reutilizables.
-      responses: {
-        Unauthorized: unauthorizedResponse,
-        Forbidden: forbiddenResponse,
-      },
+  // Respuestas reutilizables.
+  responses: {
+    Unauthorized: unauthorizedResponse,
+    Forbidden: forbiddenResponse,
+  },
 
-      schemas,
-    },
+  schemas,
+},
   };
 }
 

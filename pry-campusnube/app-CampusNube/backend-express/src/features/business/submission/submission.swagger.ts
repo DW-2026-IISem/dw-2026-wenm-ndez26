@@ -1,8 +1,19 @@
+/**
+ * Documentación OpenAPI del feature Submission.
+ *
+ * Se agrega desde `src/swagger` (registry externo),
+ * no se monta aquí.
+ *
+ * Leyenda: endpoints protegidos con JWT + RBAC.
+ */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
+
 export const submissionSwagger = {
   tags: [
     {
       name: "Entregas",
-      description: "Operaciones CRUD de entregas",
+      description: "CRUD de entregas — JWT + RBAC",
     },
   ],
 
@@ -11,10 +22,17 @@ export const submissionSwagger = {
       get: {
         tags: ["Entregas"],
         summary: "Obtener todas las entregas",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         responses: {
           200: {
             description: "Lista de entregas",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -22,7 +40,8 @@ export const submissionSwagger = {
       post: {
         tags: ["Entregas"],
         summary: "Crear una entrega",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -40,6 +59,12 @@ export const submissionSwagger = {
           400: {
             description: "Datos inválidos",
           },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
     },
@@ -48,7 +73,8 @@ export const submissionSwagger = {
       get: {
         tags: ["Entregas"],
         summary: "Obtener una entrega por ID",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -56,12 +82,22 @@ export const submissionSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Entrega encontrada",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Entrega no encontrada",
@@ -72,7 +108,8 @@ export const submissionSwagger = {
       put: {
         tags: ["Entregas"],
         summary: "Actualizar una entrega",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -80,6 +117,7 @@ export const submissionSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -97,13 +135,26 @@ export const submissionSwagger = {
           200: {
             description: "Entrega actualizada correctamente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
+          404: {
+            description: "Entrega no encontrada",
+          },
         },
       },
 
       patch: {
         tags: ["Entregas"],
         summary: "Actualizar parcialmente una entrega",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -111,6 +162,7 @@ export const submissionSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -128,13 +180,26 @@ export const submissionSwagger = {
           200: {
             description: "Entrega actualizada parcialmente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
+          404: {
+            description: "Entrega no encontrada",
+          },
         },
       },
 
       delete: {
         tags: ["Entregas"],
         summary: "Eliminar físicamente una entrega",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -142,12 +207,25 @@ export const submissionSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Entrega eliminada correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
+          404: {
+            description: "Entrega no encontrada",
           },
         },
       },
@@ -157,7 +235,8 @@ export const submissionSwagger = {
       patch: {
         tags: ["Entregas"],
         summary: "Desactivar una entrega",
-        security: [],
+        description: "JWT + RBAC — desactiva la entrega",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -165,12 +244,25 @@ export const submissionSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Entrega desactivada correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
+          404: {
+            description: "Entrega no encontrada",
           },
         },
       },
@@ -233,7 +325,7 @@ export const submissionSwagger = {
           "lesson_id",
           "enrollment_id",
           "fecha_inicio",
-          "estado"
+          "estado",
         ],
         properties: {
           referencia_id: {
@@ -273,7 +365,7 @@ export const submissionSwagger = {
           "lesson_id",
           "enrollment_id",
           "fecha_inicio",
-          "estado"
+          "estado",
         ],
         properties: {
           referencia_id: {

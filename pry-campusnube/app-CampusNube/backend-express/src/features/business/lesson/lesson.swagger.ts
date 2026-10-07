@@ -1,8 +1,19 @@
+/**
+ * Documentación OpenAPI del feature Lesson.
+ *
+ * Se agrega desde `src/swagger` (registry externo),
+ * no se monta aquí.
+ *
+ * Leyenda: endpoints protegidos con JWT + RBAC.
+ */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
+
 export const lessonSwagger = {
   tags: [
     {
       name: "Lecciones",
-      description: "Operaciones CRUD de lecciones",
+      description: "CRUD de lecciones — JWT + RBAC",
     },
   ],
 
@@ -11,10 +22,17 @@ export const lessonSwagger = {
       get: {
         tags: ["Lecciones"],
         summary: "Obtener todas las lecciones",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         responses: {
           200: {
             description: "Lista de lecciones",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -22,7 +40,8 @@ export const lessonSwagger = {
       post: {
         tags: ["Lecciones"],
         summary: "Crear una lección",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -40,6 +59,12 @@ export const lessonSwagger = {
           400: {
             description: "Datos obligatorios faltantes o módulo inválido",
           },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
     },
@@ -48,7 +73,8 @@ export const lessonSwagger = {
       get: {
         tags: ["Lecciones"],
         summary: "Obtener una lección por ID",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -56,12 +82,22 @@ export const lessonSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Lección encontrada",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Lección no encontrada",
@@ -72,7 +108,8 @@ export const lessonSwagger = {
       put: {
         tags: ["Lecciones"],
         summary: "Actualizar una lección",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -80,6 +117,7 @@ export const lessonSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -97,6 +135,15 @@ export const lessonSwagger = {
           200: {
             description: "Lección actualizada correctamente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Lección no encontrada",
           },
@@ -106,7 +153,8 @@ export const lessonSwagger = {
       patch: {
         tags: ["Lecciones"],
         summary: "Actualizar parcialmente una lección",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -114,6 +162,7 @@ export const lessonSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -131,6 +180,15 @@ export const lessonSwagger = {
           200: {
             description: "Lección actualizada parcialmente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Lección no encontrada",
           },
@@ -140,7 +198,8 @@ export const lessonSwagger = {
       delete: {
         tags: ["Lecciones"],
         summary: "Eliminar físicamente una lección",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -148,12 +207,22 @@ export const lessonSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Lección eliminada correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Lección no encontrada",
@@ -166,7 +235,8 @@ export const lessonSwagger = {
       patch: {
         tags: ["Lecciones"],
         summary: "Desactivar una lección",
-        security: [],
+        description: "JWT + RBAC — isActive = false",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -174,12 +244,22 @@ export const lessonSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Lección desactivada correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Lección no encontrada",

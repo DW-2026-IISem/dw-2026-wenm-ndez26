@@ -1,8 +1,19 @@
+/**
+ * Documentación OpenAPI del feature Evaluation.
+ *
+ * Se agrega desde `src/swagger` (registry externo),
+ * no se monta aquí.
+ *
+ * Leyenda: endpoints protegidos con JWT + RBAC.
+ */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
+
 export const evaluationSwagger = {
   tags: [
     {
       name: "Evaluaciones",
-      description: "Operaciones CRUD de evaluaciones",
+      description: "CRUD de evaluaciones — JWT + RBAC",
     },
   ],
 
@@ -11,10 +22,17 @@ export const evaluationSwagger = {
       get: {
         tags: ["Evaluaciones"],
         summary: "Obtener todas las evaluaciones",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         responses: {
           200: {
             description: "Lista de evaluaciones",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -22,7 +40,8 @@ export const evaluationSwagger = {
       post: {
         tags: ["Evaluaciones"],
         summary: "Crear una evaluación",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -40,6 +59,12 @@ export const evaluationSwagger = {
           400: {
             description: "Datos obligatorios faltantes o curso inválido",
           },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
     },
@@ -48,7 +73,8 @@ export const evaluationSwagger = {
       get: {
         tags: ["Evaluaciones"],
         summary: "Obtener una evaluación por ID",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -56,12 +82,22 @@ export const evaluationSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Evaluación encontrada",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Evaluación no encontrada",
@@ -72,7 +108,8 @@ export const evaluationSwagger = {
       put: {
         tags: ["Evaluaciones"],
         summary: "Actualizar una evaluación",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -80,6 +117,7 @@ export const evaluationSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -97,6 +135,15 @@ export const evaluationSwagger = {
           200: {
             description: "Evaluación actualizada correctamente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Evaluación no encontrada",
           },
@@ -106,7 +153,8 @@ export const evaluationSwagger = {
       patch: {
         tags: ["Evaluaciones"],
         summary: "Actualizar parcialmente una evaluación",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -114,6 +162,7 @@ export const evaluationSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -131,6 +180,15 @@ export const evaluationSwagger = {
           200: {
             description: "Evaluación actualizada parcialmente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Evaluación no encontrada",
           },
@@ -140,7 +198,8 @@ export const evaluationSwagger = {
       delete: {
         tags: ["Evaluaciones"],
         summary: "Eliminar físicamente una evaluación",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -148,12 +207,22 @@ export const evaluationSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Evaluación eliminada correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Evaluación no encontrada",
@@ -166,7 +235,8 @@ export const evaluationSwagger = {
       patch: {
         tags: ["Evaluaciones"],
         summary: "Desactivar una evaluación",
-        security: [],
+        description: "JWT + RBAC — isActive = false",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -174,12 +244,22 @@ export const evaluationSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Evaluación desactivada correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Evaluación no encontrada",

@@ -1,8 +1,19 @@
+/**
+ * Documentación OpenAPI del feature Enrollment.
+ *
+ * Se agrega desde `src/swagger` (registry externo),
+ * no se monta aquí.
+ *
+ * Leyenda: endpoints protegidos con JWT + RBAC.
+ */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
+
 export const enrollmentSwagger = {
   tags: [
     {
       name: "Inscripciones",
-      description: "Operaciones CRUD de inscripciones",
+      description: "CRUD de inscripciones — JWT + RBAC",
     },
   ],
 
@@ -11,10 +22,17 @@ export const enrollmentSwagger = {
       get: {
         tags: ["Inscripciones"],
         summary: "Obtener todas las inscripciones",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         responses: {
           200: {
             description: "Lista de inscripciones",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -22,7 +40,8 @@ export const enrollmentSwagger = {
       post: {
         tags: ["Inscripciones"],
         summary: "Crear una inscripción",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -40,6 +59,12 @@ export const enrollmentSwagger = {
           400: {
             description: "Datos obligatorios faltantes",
           },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
     },
@@ -48,7 +73,8 @@ export const enrollmentSwagger = {
       get: {
         tags: ["Inscripciones"],
         summary: "Obtener una inscripción por ID",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -56,12 +82,22 @@ export const enrollmentSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Inscripción encontrada",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Inscripción no encontrada",
@@ -72,7 +108,8 @@ export const enrollmentSwagger = {
       put: {
         tags: ["Inscripciones"],
         summary: "Actualizar una inscripción",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -80,6 +117,7 @@ export const enrollmentSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -97,6 +135,15 @@ export const enrollmentSwagger = {
           200: {
             description: "Inscripción actualizada correctamente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Inscripción no encontrada",
           },
@@ -106,7 +153,8 @@ export const enrollmentSwagger = {
       patch: {
         tags: ["Inscripciones"],
         summary: "Actualizar parcialmente una inscripción",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -114,6 +162,7 @@ export const enrollmentSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -131,6 +180,15 @@ export const enrollmentSwagger = {
           200: {
             description: "Inscripción actualizada parcialmente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Inscripción no encontrada",
           },
@@ -140,7 +198,8 @@ export const enrollmentSwagger = {
       delete: {
         tags: ["Inscripciones"],
         summary: "Eliminar físicamente una inscripción",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -148,12 +207,22 @@ export const enrollmentSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Inscripción eliminada correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Inscripción no encontrada",
@@ -166,7 +235,8 @@ export const enrollmentSwagger = {
       patch: {
         tags: ["Inscripciones"],
         summary: "Desactivar una inscripción",
-        security: [],
+        description: "JWT + RBAC — status = inactive",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -174,12 +244,22 @@ export const enrollmentSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Inscripción desactivada correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Inscripción no encontrada",

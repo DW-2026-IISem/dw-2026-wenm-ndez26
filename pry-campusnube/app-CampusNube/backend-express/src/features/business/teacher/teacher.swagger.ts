@@ -1,15 +1,19 @@
 /**
  * Documentación OpenAPI del feature Teacher.
- * Se agrega desde `src/swagger` (registry externo), no se monta aquí.
  *
- * Leyenda: endpoints documentados como SIN AUTH (sin middleware JWT).
+ * Se agrega desde `src/swagger` (registry externo),
+ * no se monta aquí.
+ *
+ * Leyenda: endpoints protegidos con JWT + RBAC.
  */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
 
 export const teacherSwagger = {
   tags: [
     {
       name: "Docentes",
-      description: "CRUD de docentes — **SIN AUTH** (sin middleware JWT)",
+      description: "CRUD de docentes — JWT + RBAC",
     },
   ],
 
@@ -18,8 +22,9 @@ export const teacherSwagger = {
       get: {
         tags: ["Docentes"],
         summary: "Listar docentes activos",
-        description: "SIN AUTH — retorna docentes con isActive=true",
-        security: [],
+        description:
+          "JWT + RBAC — retorna docentes con status=active",
+        security: bearerSecurity,
         responses: {
           "200": {
             description: "Lista de docentes",
@@ -31,7 +36,7 @@ export const teacherSwagger = {
                     teachers: {
                       type: "array",
                       items: {
-                        $ref: "#/components/schemas/Teacher",
+                        $ref: "#/components/schemas/TeacherResponse",
                       },
                     },
                   },
@@ -39,14 +44,20 @@ export const teacherSwagger = {
               },
             },
           },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
 
       post: {
         tags: ["Docentes"],
         summary: "Crear docente",
-        description: "SIN AUTH",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -66,12 +77,21 @@ export const teacherSwagger = {
                   type: "object",
                   properties: {
                     teacher: {
-                      $ref: "#/components/schemas/Teacher",
+                      $ref: "#/components/schemas/TeacherResponse",
                     },
                   },
                 },
               },
             },
+          },
+          "400": {
+            description: "Datos inválidos",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -81,8 +101,8 @@ export const teacherSwagger = {
       get: {
         tags: ["Docentes"],
         summary: "Obtener docente por id",
-        description: "SIN AUTH",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -90,6 +110,7 @@ export const teacherSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -102,15 +123,24 @@ export const teacherSwagger = {
                   type: "object",
                   properties: {
                     teacher: {
-                      $ref: "#/components/schemas/Teacher",
+                      $ref: "#/components/schemas/TeacherResponse",
                     },
                   },
                 },
               },
             },
           },
+          "400": {
+            description: "id inválido",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
+          },
           "404": {
-            description: "No encontrado",
+            description: "Docente no encontrado",
           },
         },
       },
@@ -118,8 +148,8 @@ export const teacherSwagger = {
       put: {
         tags: ["Docentes"],
         summary: "Actualizar docente (PUT — reemplazo)",
-        description: "SIN AUTH",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -127,6 +157,7 @@ export const teacherSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -142,10 +173,19 @@ export const teacherSwagger = {
         },
         responses: {
           "200": {
-            description: "Actualizado",
+            description: "Docente actualizado",
+          },
+          "400": {
+            description: "Datos inválidos",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
           "404": {
-            description: "No encontrado",
+            description: "Docente no encontrado",
           },
         },
       },
@@ -153,8 +193,8 @@ export const teacherSwagger = {
       patch: {
         tags: ["Docentes"],
         summary: "Actualizar docente (PATCH — parcial)",
-        description: "SIN AUTH",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -162,6 +202,7 @@ export const teacherSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -177,10 +218,19 @@ export const teacherSwagger = {
         },
         responses: {
           "200": {
-            description: "Actualizado",
+            description: "Docente actualizado",
+          },
+          "400": {
+            description: "Datos inválidos",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
           "404": {
-            description: "No encontrado",
+            description: "Docente no encontrado",
           },
         },
       },
@@ -188,8 +238,8 @@ export const teacherSwagger = {
       delete: {
         tags: ["Docentes"],
         summary: "Eliminar docente (físico)",
-        description: "SIN AUTH — borra la fila",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -197,15 +247,25 @@ export const teacherSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
-          "200": {
-            description: "Eliminado",
+          "204": {
+            description: "Docente eliminado",
+          },
+          "400": {
+            description: "id inválido",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
           "404": {
-            description: "No encontrado",
+            description: "Docente no encontrado",
           },
         },
       },
@@ -214,9 +274,9 @@ export const teacherSwagger = {
     "/api/docentes/{id}/deactivate": {
       patch: {
         tags: ["Docentes"],
-        summary: "Desactivar docente (eliminación lógica)",
-        description: "SIN AUTH — isActive = false",
-        security: [],
+        summary: "Eliminar docente (lógico)",
+        description: "JWT + RBAC — status = inactive",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -224,15 +284,25 @@ export const teacherSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           "200": {
-            description: "Desactivado",
+            description: "Docente desactivado",
+          },
+          "400": {
+            description: "id inválido",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
           "404": {
-            description: "No encontrado",
+            description: "Docente no encontrado",
           },
         },
       },
@@ -241,7 +311,67 @@ export const teacherSwagger = {
 
   components: {
     schemas: {
-      Teacher: {
+      TeacherCreate: {
+        type: "object",
+        required: ["name"],
+        properties: {
+          name: {
+            type: "string",
+            example: "Juan Pérez",
+          },
+          description: {
+            type: "string",
+            nullable: true,
+            example: "Docente del área de Seguridad y Salud en el Trabajo",
+          },
+          isActive: {
+            type: "boolean",
+            example: true,
+            default: true,
+          },
+        },
+      },
+
+      TeacherUpdate: {
+        type: "object",
+        required: ["name", "description", "isActive"],
+        properties: {
+          name: {
+            type: "string",
+            example: "Juan Pérez",
+          },
+          description: {
+            type: "string",
+            nullable: true,
+            example: "Docente del área de Seguridad y Salud en el Trabajo",
+          },
+          isActive: {
+            type: "boolean",
+            example: true,
+          },
+        },
+      },
+
+      TeacherPatch: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+            example: "Juan Pérez",
+          },
+          description: {
+            type: "string",
+            nullable: true,
+            example: "Docente del área de Seguridad y Salud en el Trabajo",
+          },
+          isActive: {
+            type: "boolean",
+            example: true,
+          },
+        },
+      },
+
+      TeacherResponse: {
         type: "object",
         properties: {
           id: {
@@ -250,12 +380,12 @@ export const teacherSwagger = {
           },
           name: {
             type: "string",
-            example: "Carlos Rodríguez",
+            example: "Juan Pérez",
           },
           description: {
             type: "string",
-            example: "Docente del programa de Seguridad y Salud en el Trabajo",
             nullable: true,
+            example: "Docente del área de Seguridad y Salud en el Trabajo",
           },
           isActive: {
             type: "boolean",
@@ -268,54 +398,6 @@ export const teacherSwagger = {
           updatedAt: {
             type: "string",
             format: "date-time",
-          },
-        },
-      },
-
-      TeacherCreate: {
-        type: "object",
-        required: ["name"],
-        properties: {
-          name: {
-            type: "string",
-          },
-          description: {
-            type: "string",
-          },
-          isActive: {
-            type: "boolean",
-            default: true,
-          },
-        },
-      },
-
-      TeacherUpdate: {
-        type: "object",
-        required: ["name"],
-        properties: {
-          name: {
-            type: "string",
-          },
-          description: {
-            type: "string",
-          },
-          isActive: {
-            type: "boolean",
-          },
-        },
-      },
-
-      TeacherPatch: {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-          },
-          description: {
-            type: "string",
-          },
-          isActive: {
-            type: "boolean",
           },
         },
       },

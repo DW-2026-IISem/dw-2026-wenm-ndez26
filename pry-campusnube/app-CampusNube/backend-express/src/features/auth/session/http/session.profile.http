@@ -47,3 +47,9 @@ Content-Type: application/json
 {
   "refresh_token": "{{loginAdmin.response.body.$.refresh_token}}"
 }
+
+###
+
+### CURSOS — JWT + RBAC
+GET {{baseUrl}}/api/cursos
+Authorization: Bearer {{loginAdmin.response.body.$.access_token}}

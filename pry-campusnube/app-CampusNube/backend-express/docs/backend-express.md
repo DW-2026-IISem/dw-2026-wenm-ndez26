@@ -7437,7 +7437,7 @@ npm run db:seed
 
 ![](images/clipboard-1108963624.png)
 
-### Cerramos 
+### Cerramos
 
 ```         
 git add .
@@ -7574,7 +7574,7 @@ git push origin main
 ## ISS-20.5 Las tres modalidades en CampusNube
 
 | **Modalidad** | **Middleware en la ruta** | **Qué exige** | **Sin cumplir** |
-|:--------------|:--------------|:------------------------|:------------------|
+|:----------------|:----------------|:----------------------|:----------------|
 | **OPEN** | — | nada | — |
 | **JWT** | `authenticate` | access token válido y usuario activo | **401** |
 | **JWT + RBAC** | `authenticate, authorize` | token válido y concesión activa de `(method, path)` | **401** (sin token) / **403** (sin permiso) |
@@ -7779,7 +7779,7 @@ npm run dev
 
 ![](images/clipboard-2994128561.png)
 
-###  Commit Final 
+### Commit Final
 
 ```         
 git add . 
@@ -7816,7 +7816,7 @@ git push origin main
 ## Las tres modalidades — mapa definitivo de rutas
 
 | **Modalidad** | **Middlewares** | **Rutas** |
-|:-------------------|:----------------------------------|:----------------|
+|:-------------------|:---------------------------------|:-----------------|
 | **OPEN** | — | `POST /api/sesion/login` · `/refresh` · `/logout` · `GET /api/docs` · `/api/docs.json` |
 | **JWT** | `authenticate` | `GET /api/sesion/perfil` · `/api/permisos` · `GET /api/sesiones` · `/:id` · `PATCH /api/sesiones/:id/deactivate` · `/deactivate-all` · `DELETE /api/sesiones` |
 | **JWT + RBAC** | `authenticate, authorize` | `/api/aprendices…` · `/api/docentes…` · `/api/cursos…` · `/api/modulos…` · `/api/lecciones…` · `/api/inscripciones…` · `/api/evaluaciones…` · `/api/intentos…` · `/api/entregas…` · `/api/progress…` · `/api/certificates…` · `/api/usuarios…` · `/api/roles…` · `/api/recursos…` · `/api/asignaciones-rol…` · `/api/concesiones-rol…` |
@@ -7893,5 +7893,41 @@ npm install express@^5.2.1 cors@^2.8.6 dotenv@^17.4.2 morgan@^1.12.1 \   sequeli
 ```         
 git add . 
 git commit -m "ISS-23: Cierre Auth - Backend completo con RBAC" 
+git push origin main
+```
+
+![](images/clipboard-1199619301.png)
+
+# Corrección de seguridad JWT + RBAC en entidades de negocio
+
+## Actualización de rutas y documentación Swagger
+
+Se revisaron y ajustaron las entidades de **Docentes, Cursos, Módulos, Lecciones, Inscripciones, Evaluaciones, Intentos y Entregas**, verificando que sus rutas estuvieran protegidas mediante los middlewares `authenticate` y `authorize`.
+
+También se actualizó la documentación **Swagger/OpenAPI** de cada entidad, reemplazando la configuración `security: []` por `bearerSecurity` y documentando las respuestas **401 Unauthorized** y **403 Forbidden**, manteniendo la correspondencia entre las rutas reales y la documentación de la API.
+
+### Entidades ajustadas
+
+- Docentes → `Teacher`
+
+- Cursos → `Course`
+
+- Módulos → `Module`
+
+- Lecciones → `Lesson`
+
+- Inscripciones → `Enrollment`
+
+- Evaluaciones → `Evaluation`
+
+- Intentos → `Attempt`
+
+- Entregas → `Submission`
+
+## Commit
+
+```         
+git add . 
+git commit -m "ISS-20: Business - Corrección JWT y Swagger en entidades"
 git push origin main
 ```

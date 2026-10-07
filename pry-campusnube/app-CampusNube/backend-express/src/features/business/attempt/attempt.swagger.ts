@@ -1,8 +1,19 @@
+/**
+ * Documentación OpenAPI del feature Attempt.
+ *
+ * Se agrega desde `src/swagger` (registry externo),
+ * no se monta aquí.
+ *
+ * Leyenda: endpoints protegidos con JWT + RBAC.
+ */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
+
 export const attemptSwagger = {
   tags: [
     {
       name: "Intentos",
-      description: "Operaciones CRUD de intentos",
+      description: "CRUD de intentos — JWT + RBAC",
     },
   ],
 
@@ -11,10 +22,17 @@ export const attemptSwagger = {
       get: {
         tags: ["Intentos"],
         summary: "Obtener todos los intentos",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         responses: {
           200: {
             description: "Lista de intentos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -22,7 +40,8 @@ export const attemptSwagger = {
       post: {
         tags: ["Intentos"],
         summary: "Crear un intento",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -41,6 +60,12 @@ export const attemptSwagger = {
             description:
               "Datos obligatorios faltantes o inscripción inválida",
           },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
     },
@@ -49,7 +74,8 @@ export const attemptSwagger = {
       get: {
         tags: ["Intentos"],
         summary: "Obtener un intento por ID",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -57,12 +83,22 @@ export const attemptSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Intento encontrado",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Intento no encontrado",
@@ -73,7 +109,8 @@ export const attemptSwagger = {
       put: {
         tags: ["Intentos"],
         summary: "Actualizar un intento",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -81,6 +118,7 @@ export const attemptSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -98,6 +136,15 @@ export const attemptSwagger = {
           200: {
             description: "Intento actualizado correctamente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Intento no encontrado",
           },
@@ -107,7 +154,8 @@ export const attemptSwagger = {
       patch: {
         tags: ["Intentos"],
         summary: "Actualizar parcialmente un intento",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -115,6 +163,7 @@ export const attemptSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -132,6 +181,15 @@ export const attemptSwagger = {
           200: {
             description: "Intento actualizado parcialmente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Intento no encontrado",
           },
@@ -141,7 +199,8 @@ export const attemptSwagger = {
       delete: {
         tags: ["Intentos"],
         summary: "Eliminar físicamente un intento",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -149,12 +208,22 @@ export const attemptSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Intento eliminado correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Intento no encontrado",
@@ -167,7 +236,8 @@ export const attemptSwagger = {
       patch: {
         tags: ["Intentos"],
         summary: "Desactivar un intento",
-        security: [],
+        description: "JWT + RBAC — isActive = false",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -175,12 +245,22 @@ export const attemptSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Intento desactivado correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Intento no encontrado",

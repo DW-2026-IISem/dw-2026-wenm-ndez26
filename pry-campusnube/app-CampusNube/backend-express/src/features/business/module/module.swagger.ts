@@ -1,8 +1,19 @@
+/**
+ * Documentación OpenAPI del feature Module.
+ *
+ * Se agrega desde `src/swagger` (registry externo),
+ * no se monta aquí.
+ *
+ * Leyenda: endpoints protegidos con JWT + RBAC.
+ */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
+
 export const moduleSwagger = {
   tags: [
     {
       name: "Módulos",
-      description: "Operaciones CRUD de módulos",
+      description: "CRUD de módulos — JWT + RBAC",
     },
   ],
 
@@ -11,10 +22,17 @@ export const moduleSwagger = {
       get: {
         tags: ["Módulos"],
         summary: "Obtener todos los módulos",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         responses: {
           200: {
             description: "Lista de módulos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -22,7 +40,8 @@ export const moduleSwagger = {
       post: {
         tags: ["Módulos"],
         summary: "Crear un módulo",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -40,6 +59,12 @@ export const moduleSwagger = {
           400: {
             description: "Datos obligatorios faltantes o curso inválido",
           },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
     },
@@ -48,7 +73,8 @@ export const moduleSwagger = {
       get: {
         tags: ["Módulos"],
         summary: "Obtener un módulo por ID",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -56,12 +82,22 @@ export const moduleSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Módulo encontrado",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Módulo no encontrado",
@@ -72,7 +108,8 @@ export const moduleSwagger = {
       put: {
         tags: ["Módulos"],
         summary: "Actualizar un módulo",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -80,6 +117,7 @@ export const moduleSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -97,6 +135,15 @@ export const moduleSwagger = {
           200: {
             description: "Módulo actualizado correctamente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Módulo no encontrado",
           },
@@ -106,7 +153,8 @@ export const moduleSwagger = {
       patch: {
         tags: ["Módulos"],
         summary: "Actualizar parcialmente un módulo",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -114,6 +162,7 @@ export const moduleSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -131,6 +180,15 @@ export const moduleSwagger = {
           200: {
             description: "Módulo actualizado parcialmente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Módulo no encontrado",
           },
@@ -140,7 +198,8 @@ export const moduleSwagger = {
       delete: {
         tags: ["Módulos"],
         summary: "Eliminar físicamente un módulo",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -148,12 +207,22 @@ export const moduleSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Módulo eliminado correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Módulo no encontrado",
@@ -166,7 +235,8 @@ export const moduleSwagger = {
       patch: {
         tags: ["Módulos"],
         summary: "Desactivar un módulo",
-        security: [],
+        description: "JWT + RBAC — isActive = false",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -174,12 +244,22 @@ export const moduleSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Módulo desactivado correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Módulo no encontrado",

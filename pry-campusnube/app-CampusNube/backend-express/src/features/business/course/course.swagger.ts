@@ -1,8 +1,19 @@
+/**
+ * Documentación OpenAPI del feature Course.
+ *
+ * Se agrega desde `src/swagger` (registry externo),
+ * no se monta aquí.
+ *
+ * Leyenda: endpoints protegidos con JWT + RBAC.
+ */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
+
 export const courseSwagger = {
   tags: [
     {
       name: "Cursos",
-      description: "Operaciones CRUD de cursos de CampusNube",
+      description: "CRUD de cursos — JWT + RBAC",
     },
   ],
 
@@ -11,10 +22,17 @@ export const courseSwagger = {
       get: {
         tags: ["Cursos"],
         summary: "Obtener todos los cursos activos",
-        security: [],
+        description: "JWT + RBAC — retorna cursos activos",
+        security: bearerSecurity,
         responses: {
           200: {
             description: "Lista de cursos obtenida correctamente",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -22,7 +40,8 @@ export const courseSwagger = {
       post: {
         tags: ["Cursos"],
         summary: "Crear un curso",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -40,6 +59,12 @@ export const courseSwagger = {
           400: {
             description: "Datos inválidos",
           },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
     },
@@ -48,7 +73,8 @@ export const courseSwagger = {
       get: {
         tags: ["Cursos"],
         summary: "Obtener un curso por ID",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -56,12 +82,22 @@ export const courseSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Curso encontrado",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Curso no encontrado",
@@ -72,7 +108,8 @@ export const courseSwagger = {
       put: {
         tags: ["Cursos"],
         summary: "Actualizar completamente un curso",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -80,6 +117,7 @@ export const courseSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -97,6 +135,15 @@ export const courseSwagger = {
           200: {
             description: "Curso actualizado correctamente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Curso no encontrado",
           },
@@ -106,7 +153,8 @@ export const courseSwagger = {
       patch: {
         tags: ["Cursos"],
         summary: "Actualizar parcialmente un curso",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -114,6 +162,7 @@ export const courseSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -131,6 +180,15 @@ export const courseSwagger = {
           200: {
             description: "Curso actualizado correctamente",
           },
+          400: {
+            description: "Datos inválidos",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
+          },
           404: {
             description: "Curso no encontrado",
           },
@@ -140,7 +198,8 @@ export const courseSwagger = {
       delete: {
         tags: ["Cursos"],
         summary: "Eliminar físicamente un curso",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -148,12 +207,22 @@ export const courseSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Curso eliminado correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Curso no encontrado",
@@ -166,7 +235,8 @@ export const courseSwagger = {
       patch: {
         tags: ["Cursos"],
         summary: "Desactivar lógicamente un curso",
-        security: [],
+        description: "JWT + RBAC — isActive = false",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -174,12 +244,22 @@ export const courseSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           200: {
             description: "Curso desactivado correctamente",
+          },
+          400: {
+            description: "id inválido",
+          },
+          401: {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          403: {
+            $ref: "#/components/responses/Forbidden",
           },
           404: {
             description: "Curso no encontrado",

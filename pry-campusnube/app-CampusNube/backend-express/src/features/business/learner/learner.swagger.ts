@@ -4,15 +4,16 @@
  * Se agrega desde `src/swagger` (registry externo),
  * no se monta aquí.
  *
- * Leyenda: endpoints documentados como SIN AUTH
- * (sin middleware JWT / sin autenticación).
+ * Leyenda: endpoints protegidos con JWT + RBAC.
  */
+
+import { bearerSecurity } from "../../../shared/http/swagger-security";
 
 export const learnerSwagger = {
   tags: [
     {
       name: "Aprendices",
-      description: "CRUD de aprendices — SIN AUTH",
+      description: "CRUD de aprendices — JWT + RBAC",
     },
   ],
 
@@ -22,8 +23,8 @@ export const learnerSwagger = {
         tags: ["Aprendices"],
         summary: "Listar aprendices activos",
         description:
-          "SIN AUTH — retorna aprendices con status=active (sin password)",
-        security: [],
+          "JWT + RBAC — retorna aprendices con status=active (sin password)",
+        security: bearerSecurity,
         responses: {
           "200": {
             description: "Lista de aprendices",
@@ -35,7 +36,7 @@ export const learnerSwagger = {
                     learners: {
                       type: "array",
                       items: {
-                        $ref: "#/components/schemas/Learner",
+                        $ref: "#/components/schemas/LearnerResponse",
                       },
                     },
                   },
@@ -43,14 +44,20 @@ export const learnerSwagger = {
               },
             },
           },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
+          },
         },
       },
 
       post: {
         tags: ["Aprendices"],
         summary: "Crear aprendiz",
-        description: "SIN AUTH",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         requestBody: {
           required: true,
           content: {
@@ -70,12 +77,21 @@ export const learnerSwagger = {
                   type: "object",
                   properties: {
                     learner: {
-                      $ref: "#/components/schemas/Learner",
+                      $ref: "#/components/schemas/LearnerResponse",
                     },
                   },
                 },
               },
             },
+          },
+          "400": {
+            description: "Datos inválidos",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
         },
       },
@@ -85,8 +101,8 @@ export const learnerSwagger = {
       get: {
         tags: ["Aprendices"],
         summary: "Obtener aprendiz por id",
-        description: "SIN AUTH",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -94,6 +110,7 @@ export const learnerSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -106,15 +123,24 @@ export const learnerSwagger = {
                   type: "object",
                   properties: {
                     learner: {
-                      $ref: "#/components/schemas/Learner",
+                      $ref: "#/components/schemas/LearnerResponse",
                     },
                   },
                 },
               },
             },
           },
+          "400": {
+            description: "id inválido",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
+          },
           "404": {
-            description: "No encontrado",
+            description: "Aprendiz no encontrado",
           },
         },
       },
@@ -122,8 +148,8 @@ export const learnerSwagger = {
       put: {
         tags: ["Aprendices"],
         summary: "Actualizar aprendiz (PUT — reemplazo)",
-        description: "SIN AUTH",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -131,6 +157,7 @@ export const learnerSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -146,10 +173,19 @@ export const learnerSwagger = {
         },
         responses: {
           "200": {
-            description: "Actualizado",
+            description: "Aprendiz actualizado",
+          },
+          "400": {
+            description: "Datos inválidos",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
           "404": {
-            description: "No encontrado",
+            description: "Aprendiz no encontrado",
           },
         },
       },
@@ -157,8 +193,8 @@ export const learnerSwagger = {
       patch: {
         tags: ["Aprendices"],
         summary: "Actualizar aprendiz (PATCH — parcial)",
-        description: "SIN AUTH",
-        security: [],
+        description: "JWT + RBAC",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -166,6 +202,7 @@ export const learnerSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
@@ -174,17 +211,26 @@ export const learnerSwagger = {
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/LearnerPatch",
+                $ref: "#/components/schemas/LearnerUpdate",
               },
             },
           },
         },
         responses: {
           "200": {
-            description: "Actualizado",
+            description: "Aprendiz actualizado",
+          },
+          "400": {
+            description: "Datos inválidos",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
           "404": {
-            description: "No encontrado",
+            description: "Aprendiz no encontrado",
           },
         },
       },
@@ -192,8 +238,8 @@ export const learnerSwagger = {
       delete: {
         tags: ["Aprendices"],
         summary: "Eliminar aprendiz (físico)",
-        description: "SIN AUTH — borra la fila",
-        security: [],
+        description: "JWT + RBAC — elimina la fila",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -201,15 +247,25 @@ export const learnerSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
-          "200": {
-            description: "Eliminado",
+          "204": {
+            description: "Aprendiz eliminado",
+          },
+          "400": {
+            description: "id inválido",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
           "404": {
-            description: "No encontrado",
+            description: "Aprendiz no encontrado",
           },
         },
       },
@@ -219,8 +275,8 @@ export const learnerSwagger = {
       patch: {
         tags: ["Aprendices"],
         summary: "Eliminar aprendiz (lógico)",
-        description: "SIN AUTH — status = inactive",
-        security: [],
+        description: "JWT + RBAC — status = inactive",
+        security: bearerSecurity,
         parameters: [
           {
             name: "id",
@@ -228,15 +284,25 @@ export const learnerSwagger = {
             required: true,
             schema: {
               type: "integer",
+              minimum: 1,
             },
           },
         ],
         responses: {
           "200": {
-            description: "Desactivado",
+            description: "Aprendiz desactivado",
+          },
+          "400": {
+            description: "id inválido",
+          },
+          "401": {
+            $ref: "#/components/responses/Unauthorized",
+          },
+          "403": {
+            $ref: "#/components/responses/Forbidden",
           },
           "404": {
-            description: "No encontrado",
+            description: "Aprendiz no encontrado",
           },
         },
       },
@@ -245,25 +311,41 @@ export const learnerSwagger = {
 
   components: {
     schemas: {
-      Learner: {
+      LearnerCreate: {
+        type: "object",
+        required: ["userId"],
+        properties: {
+          userId: {
+            type: "integer",
+            example: 1,
+          },
+        },
+      },
+
+      LearnerUpdate: {
+        type: "object",
+        properties: {
+          userId: {
+            type: "integer",
+            example: 1,
+          },
+        },
+      },
+
+      LearnerResponse: {
         type: "object",
         properties: {
           id: {
             type: "integer",
             example: 1,
           },
-          name: {
-            type: "string",
-            example: "Ana Pérez",
+          userId: {
+            type: "integer",
+            example: 1,
           },
-          description: {
-            type: "string",
-            example: "Aprendiz de CampusNube",
-          },
-          status: {
-            type: "string",
-            enum: ["active", "inactive"],
-            example: "active",
+          isActive: {
+            type: "boolean",
+            example: true,
           },
           createdAt: {
             type: "string",
@@ -272,69 +354,6 @@ export const learnerSwagger = {
           updatedAt: {
             type: "string",
             format: "date-time",
-          },
-        },
-      },
-
-      LearnerCreate: {
-        type: "object",
-        required: ["name", "password"],
-        properties: {
-          name: {
-            type: "string",
-          },
-          description: {
-            type: "string",
-          },
-          password: {
-            type: "string",
-            format: "password",
-          },
-          status: {
-            type: "string",
-            enum: ["active", "inactive"],
-            default: "active",
-          },
-        },
-      },
-
-      LearnerUpdate: {
-        type: "object",
-        required: ["name"],
-        properties: {
-          name: {
-            type: "string",
-          },
-          description: {
-            type: "string",
-          },
-          password: {
-            type: "string",
-            format: "password",
-          },
-          status: {
-            type: "string",
-            enum: ["active", "inactive"],
-          },
-        },
-      },
-
-      LearnerPatch: {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-          },
-          description: {
-            type: "string",
-          },
-          password: {
-            type: "string",
-            format: "password",
-          },
-          status: {
-            type: "string",
-            enum: ["active", "inactive"],
           },
         },
       },
