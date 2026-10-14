@@ -1,11 +1,26 @@
-import { LearnerI } from "../learner.model";
 
-export type LearnerResponseDto = Omit<LearnerI, "password">;
+import { Learner } from "../learner.model";
+
+export type LearnerResponseDto = {
+  id: number;
+  name: string;
+  description: string;
+  status: "active" | "inactive";
+  createdAt?: Date;
+  updatedAt?: Date;
+};
 
 export const toLearnerResponseDto = (
-  learner: LearnerI
+  learner: Learner
 ): LearnerResponseDto => {
-  const { password, ...response } = learner;
+  const data = learner.get({ plain: true });
 
-  return response;
+  return {
+    id: data.id,
+    name: data.name,
+    description: data.description,
+    status: data.status,
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt,
+  };
 };

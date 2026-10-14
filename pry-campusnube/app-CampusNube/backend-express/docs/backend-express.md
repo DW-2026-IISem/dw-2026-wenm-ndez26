@@ -7574,7 +7574,7 @@ git push origin main
 ## ISS-20.5 Las tres modalidades en CampusNube
 
 | **Modalidad** | **Middleware en la ruta** | **Qué exige** | **Sin cumplir** |
-|:----------------|:----------------|:----------------------|:----------------|
+|:-----------------|:-----------------|:-------------------|:-----------------|
 | **OPEN** | — | nada | — |
 | **JWT** | `authenticate` | access token válido y usuario activo | **401** |
 | **JWT + RBAC** | `authenticate, authorize` | token válido y concesión activa de `(method, path)` | **401** (sin token) / **403** (sin permiso) |
@@ -7929,5 +7929,450 @@ También se actualizó la documentación **Swagger/OpenAPI** de cada entidad, re
 ```         
 git add . 
 git commit -m "ISS-20: Business - Corrección JWT y Swagger en entidades"
+git push origin main
+```
+
+![![](images/clipboard-2435536807.png)](images/clipboard-2435536807.png)
+
+# Actividad Semana 9 — Pruebas de autenticación, JWT, Refresh Token y RBAC
+
+## 1. Objetivo
+
+Verificar el funcionamiento de los mecanismos de autenticación y autorización del backend de CampusNube mediante pruebas HTTP y Swagger sobre dos entidades importantes del negocio: Cursos (`Course`) y Aprendices (`Learner`).
+
+Se realizarán pruebas exitosas y fallidas para las siguientes modalidades de acceso:
+
+1.  Sin autenticación.
+
+2.  Solo autenticación.
+
+3.  Autenticación con JWT Access Token y Refresh Token.
+
+4.  Autenticación con JWT Access Token, Refresh Token y autorización RBAC.
+
+## 2. Entidades seleccionadas
+
+- **Cursos:** `GET /api/cursos`
+
+- **Aprendices:** `GET /api/aprendices`
+
+## 3. Evidencias de pruebas HTTP y Swagger
+
+### 3.1. Modalidad 1 — Sin autenticación
+
+#### Evidencia 1. Cursos sin autenticación — HTTP REST Client
+
+**Objetivo:** comprobar que el endpoint de Cursos permita consultar los registros sin presentar credenciales de acceso.
+
+**Método:** GET\
+**Endpoint:** `/api/cursos`\
+**Herramienta:** REST Client de Visual Studio Code\
+**Autenticación:** no se envió token Bearer.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió un objeto JSON con la colección `courses` y los datos de los cursos registrados.
+
+**Conclusión:** la prueba fue exitosa. Durante esta configuración temporal, el endpoint permitió consultar los cursos sin autenticación.
+
+![](images/clipboard-691329749.png)
+
+Evidencia 2. Cursos sin autenticación — Swagger
+
+#### Evidencia 2. Consulta de Cursos sin autenticación mediante Swagger
+
+**Objetivo:** verificar que el endpoint de Cursos permita consultar los registros sin presentar credenciales de acceso.
+
+**Herramienta:** Swagger UI.\
+**Método:** `GET`.\
+**Endpoint:** `/api/cursos`.\
+**Autorización:** no se envió token Bearer.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió un objeto JSON con la colección `courses` y los datos de los cursos registrados.
+
+**Conclusión:** la prueba fue exitosa. Durante la configuración temporal de acceso abierto, el endpoint permitió consultar los cursos sin autenticación.
+
+![](images/clipboard-3165762789.png)
+
+#### Evidencia 3. Aprendices sin autenticación — HTTP REST Client
+
+**Objetivo:** comprobar que el endpoint de Aprendices permita consultar los registros sin presentar credenciales de acceso.
+
+**Método:** GET\
+**Endpoint:** `/api/aprendices`\
+**Herramienta:** REST Client de Visual Studio Code\
+**Autenticación:** no se envió token Bearer.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió un objeto JSON con la colección `learners` y los datos de los aprendices registrados.
+
+**Conclusión:** la prueba fue exitosa. En la configuración observada, el endpoint permitió consultar los aprendices sin enviar un token Bearer.
+
+**Evidencia:** captura de REST Client con la solicitud y la respuesta `200 OK`.
+
+![](images/clipboard-2144032004.png)
+
+![](images/clipboard-1584074089.png)
+
+#### Evidencia 4. Consulta de Aprendices sin autenticación mediante Swagger
+
+**Objetivo:** verificar el comportamiento del endpoint de Aprendices cuando se realiza una consulta sin presentar credenciales de acceso.
+
+**Herramienta:** Swagger UI.\
+**Método:** `GET`.\
+**Endpoint:** `/api/aprendices`.\
+**Autorización:** no se envió token Bearer.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió un objeto JSON con la colección `learners` y los datos de los aprendices registrados.
+
+**Conclusión:** la prueba fue exitosa. Durante esta ejecución, el endpoint permitió consultar los aprendices sin enviar un token Bearer.
+
+**Evidencia:** captura de Swagger con el código `200` y el cuerpo JSON de la respuesta.
+
+![](images/clipboard-646121338.png)
+
+#### videncia 5. Inicio de sesión exitoso mediante Thunder Client
+
+**Objetivo:** comprobar que un usuario administrador válido pueda autenticarse en CampusNube y obtener los tokens necesarios para gestionar su sesión.
+
+**Herramienta:** Thunder Client.\
+**Método:** `POST`.\
+**Endpoint:** `/api/sesion/login`.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió una respuesta JSON con los campos correspondientes al `access_token` y al `refresh_token`, junto con la información de expiración de la sesión.
+
+**Conclusión:** la prueba fue exitosa. El backend aceptó las credenciales del administrador y generó los tokens para las siguientes pruebas de autenticación y autorización.
+
+**Evidencia:** captura de Thunder Client con el código `200 OK`.
+
+![](images/clipboard-1123080397.png)
+
+### 3.2. Modalidad 2 — Solo autenticación
+
+#### Evidencia 5. Cursos con solo autenticación — Thunder Client
+
+**Objetivo:** comprobar que un usuario con un JWT válido pueda consultar los cursos cuando se ejecuta únicamente el middleware de autenticación, sin aplicar autorización RBAC en la ruta evaluada.
+
+**Herramienta:** Thunder Client.\
+**Método:** `GET`.\
+**Endpoint:** `/api/cursos`.\
+**Autenticación:** Bearer Token válido obtenido mediante inicio de sesión.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió un objeto JSON con la colección `courses` y los datos de los cursos registrados.
+
+**Conclusión:** la prueba fue exitosa. El backend aceptó el token de acceso y permitió consultar los cursos. En esta prueba se mantuvo activo `authenticate` y se desactivó temporalmente `authorize` para el endpoint evaluado.
+
+**Evidencia:** captura de Thunder Client con el código `200 OK` y la respuesta JSON.
+
+![](images/clipboard-4232777148.png)
+
+#### Evidencia 6. Cursos con JWT inválido — Thunder Client
+
+**Objetivo:** comprobar que el backend rechace las solicitudes al endpoint de Cursos cuando se presenta un JWT inválido.
+
+**Herramienta:** Thunder Client.\
+**Método:** `GET`.\
+**Endpoint:** `/api/cursos`.\
+**Autenticación:** se envió un token Bearer ficticio e inválido.
+
+**Resultado obtenido:** `401 Unauthorized`.
+
+**Respuesta observada:** `{"error":"Invalid or expired access token"}`.
+
+**Conclusión:** la prueba negativa fue exitosa. El middleware `authenticate` rechazó la solicitud porque el token no era válido, impidiendo el acceso a los cursos.
+
+**Evidencia:** captura de Thunder Client con el código `401 Unauthorized` y el mensaje de error.
+
+![](images/clipboard-850635876.png)
+
+#### Evidencia 7. Cursos con solo autenticación — Swagger
+
+**Objetivo:** verificar que un usuario autenticado mediante JWT pueda consultar los cursos sin aplicar autorización RBAC en la ruta evaluada.
+
+**Herramienta:** Swagger UI.\
+**Método:** `GET`.\
+**Endpoint:** `/api/cursos`.\
+**Autenticación:** Bearer Token válido obtenido mediante el inicio de sesión.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió los registros de cursos en formato JSON.
+
+**Conclusión:** la prueba fue exitosa. El backend validó el token de acceso y permitió consultar los cursos. Para esta prueba, el middleware `authenticate` permaneció activo y `authorize` se desactivó temporalmente en el endpoint evaluado.
+
+**Evidencia:** captura de Swagger con la autorización Bearer configurada y la respuesta `200 OK`.
+
+![](images/clipboard-1676034923.png)
+
+![](images/clipboard-3618104418.png)
+
+#### Evidencia 8. Cursos con JWT inválido — Swagger
+
+**Objetivo:** comprobar que el backend rechace las solicitudes al endpoint de Cursos cuando se presenta un token JWT inválido.
+
+**Herramienta:** Swagger UI.\
+**Método:** `GET`.\
+**Endpoint:** `/api/cursos`.\
+**Autenticación:** se envió un token Bearer ficticio e inválido.
+
+**Resultado obtenido:** `401 Unauthorized`.
+
+**Respuesta observada:** `{"error":"Invalid or expired access token"}`.
+
+**Conclusión:** la prueba negativa fue exitosa. El middleware `authenticate` rechazó la solicitud debido a que el token no era válido y no permitió acceder a los cursos.
+
+**Evidencia:** captura de Swagger con el código `401` y el mensaje de error.
+
+![](images/clipboard-312625639.png)
+
+#### Evidencia 9. Aprendices con solo autenticación — Thunder Client
+
+**Objetivo:** comprobar que un usuario autenticado mediante JWT válido pueda consultar los aprendices sin aplicar autorización RBAC en la ruta evaluada.
+
+**Herramienta:** Thunder Client.\
+**Método:** `GET`.\
+**Endpoint:** `/api/aprendices`.\
+**Autenticación:** Bearer Token válido obtenido mediante el inicio de sesión.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió un objeto JSON con la colección `learners` y los datos de los aprendices registrados.
+
+**Conclusión:** la prueba fue exitosa. El middleware `authenticate` aceptó el token y permitió consultar los aprendices. Para esta prueba, `authorize` se encontraba desactivado temporalmente en el endpoint evaluado.
+
+**Evidencia:** captura de Thunder Client con el código `200 OK` y la respuesta JSON.
+
+![](images/clipboard-1697631270.png)
+
+#### Evidencia 10. Aprendices con JWT inválido — Thunder Client
+
+**Objetivo:** comprobar que el backend rechace las solicitudes al endpoint de Aprendices cuando se presenta un token JWT inválido.
+
+**Herramienta:** Thunder Client.\
+**Método:** `GET`.\
+**Endpoint:** `/api/aprendices`.\
+**Autenticación:** se envió un token Bearer ficticio e inválido.
+
+**Resultado obtenido:** `401 Unauthorized`.
+
+**Respuesta observada:** `{"error":"Invalid or expired access token"}`.
+
+**Conclusión:** la prueba negativa fue exitosa. El middleware `authenticate` rechazó la solicitud debido a que el token no era válido e impidió el acceso a los aprendices.
+
+**Evidencia:** captura de Thunder Client con el código `401 Unauthorized` y el mensaje de error.
+
+![](images/clipboard-305683387.png)
+
+#### Evidencia 11. Aprendices con solo autenticación — Swagger
+
+**Objetivo:** comprobar que un usuario autenticado mediante un JWT válido pueda consultar los aprendices sin aplicar autorización RBAC en la ruta evaluada.
+
+**Herramienta:** Swagger UI.\
+**Método:** `GET`.\
+**Endpoint:** `/api/aprendices`.\
+**Autenticación:** Bearer Token válido obtenido mediante el inicio de sesión.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió un objeto JSON con la colección `learners` y los datos de los aprendices registrados.
+
+**Conclusión:** la prueba fue exitosa. El backend aceptó el token de acceso y permitió consultar los aprendices. Durante esta prueba, `authenticate` permaneció activo y `authorize` estaba desactivado temporalmente en el endpoint evaluado.
+
+**Evidencia:** captura de Swagger con la solicitud autorizada y el código `200 OK`.
+
+![](images/clipboard-439933922.png)
+
+#### Evidencia 12. Aprendices con JWT inválido — Swagger
+
+**Objetivo:** comprobar que el backend rechace las solicitudes al endpoint de Aprendices cuando se presenta un token JWT inválido.
+
+**Herramienta:** Swagger UI.\
+**Método:** `GET`.\
+**Endpoint:** `/api/aprendices`.\
+**Autenticación:** se envió un token Bearer ficticio e inválido.
+
+**Resultado obtenido:** `401 Unauthorized`.
+
+**Respuesta observada:** `{"error":"Invalid or expired access token"}`.
+
+**Conclusión:** la prueba negativa fue exitosa. El middleware `authenticate` rechazó la solicitud debido a que el token no era válido e impidió el acceso a los aprendices.
+
+**Evidencia:** captura de Swagger con el código `401 Unauthorized` y el mensaje de error.
+
+![](images/clipboard-1155497425.png)
+
+## Modalidad 3: autenticación + JWT + Refresh Token
+
+#### Evidencia 13. Renovación de sesión con Refresh Token válido — Thunder Client
+
+**Objetivo:** comprobar que un usuario pueda renovar su sesión en CampusNube mediante un Refresh Token válido.
+
+**Herramienta:** Thunder Client.\
+**Método:** `POST`.\
+**Endpoint:** `/api/sesion/refresh`.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor aceptó la solicitud de renovación y generó una respuesta satisfactoria con los nuevos tokens de sesión.
+
+**Conclusión:** la prueba fue exitosa. El backend aceptó el Refresh Token válido y permitió renovar la sesión, demostrando el funcionamiento del mecanismo de renovación de credenciales.
+
+**Evidencia:** captura de Thunder Client con el endpoint `/api/sesion/refresh` y el código `200 OK`. Los valores de los tokens se mantienen privados.
+
+![](images/clipboard-3785936590.png)
+
+#### Evidencia 14. Renovación de sesión con Refresh Token inválido — Thunder Client
+
+**Objetivo:** comprobar que el backend rechace las solicitudes de renovación cuando se presenta un Refresh Token inválido.
+
+**Herramienta:** Thunder Client.\
+**Método:** `POST`.\
+**Endpoint:** `/api/sesion/refresh`.
+
+**Resultado obtenido:** `401 Unauthorized`.
+
+**Respuesta observada:** `{"error":"Invalid refresh token"}`.
+
+**Conclusión:** la prueba negativa fue exitosa. El backend rechazó el token de renovación inválido y no permitió generar nuevos tokens de sesión.
+
+**Evidencia:** captura de Thunder Client con el código `401 Unauthorized` y el mensaje de error.
+
+![](images/clipboard-954735818.png)
+
+#### Evidencia 13. Renovación de sesión con Refresh Token válido — Thunder Client
+
+**Objetivo:** comprobar que un usuario pueda renovar su sesión en CampusNube mediante un Refresh Token válido.
+
+**Herramienta:** Thunder Client.\
+**Método:** `POST`.\
+**Endpoint:** `/api/sesion/refresh`.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió los campos `access_token`, `refresh_token`, `token_type`, `expires_in` y `refresh_expires_in`. El Access Token tiene una vigencia de 3600 segundos (una hora) y el Refresh Token una vigencia aproximada de 86400 segundos (un día).
+
+**Conclusión:** la prueba fue exitosa. El backend aceptó el Refresh Token válido y generó nuevos tokens para continuar la sesión. Se verificó el funcionamiento del mecanismo de renovación de credenciales.
+
+**Evidencia:** captura de Thunder Client con la respuesta `200 OK`. Los valores de los tokens se mantienen privados.
+
+![](images/clipboard-170415097.png)
+
+#### Evidencia 14. Consulta de Cursos después de renovar el JWT — Thunder Client
+
+**Objetivo:** verificar que el nuevo Access Token generado mediante el mecanismo Refresh permita consultar los cursos registrados.
+
+**Método:** `GET`.\
+**Endpoint:** `/api/cursos`.\
+**Herramienta:** Thunder Client.\
+**Autenticación:** Bearer Token.
+
+**Resultado obtenido:** `200 OK`.
+
+**Conclusión:** la consulta fue exitosa. El servidor devolvió la colección de cursos después de la renovación de la sesión. Esta prueba permite comprobar el acceso al recurso con el token utilizado en la solicitud.
+
+![](images/clipboard-1927096651.png)
+
+#### Evidencia 15. Consulta de Aprendices después de renovar el JWT — Thunder Client
+
+**Objetivo:** verificar que el nuevo Access Token generado mediante el mecanismo Refresh permita consultar los aprendices registrados en CampusNube.
+
+**Método:** `GET`.\
+**Endpoint:** `/api/aprendices`.\
+**Herramienta:** Thunder Client.\
+**Autenticación:** Bearer Token.
+
+**Resultado obtenido:** [registrar el código HTTP obtenido].
+
+**Conclusión:** [indicar si la consulta fue exitosa o si el servidor rechazó la solicitud, de acuerdo con el resultado observado].
+
+**Evidencia:** captura de la solicitud y su respuesta.
+
+![](images/clipboard-3480694082.png)
+
+#### Evidencia 16. Creación de Curso con acceso autorizado — Thunder Client
+
+**Objetivo:** comprobar que una solicitud autenticada y autorizada pueda crear un curso en CampusNube.
+
+**Método:** `POST`.\
+**Endpoint:** `/api/cursos`.\
+**Herramienta:** Thunder Client.
+
+**Resultado obtenido:** `201 Created`.
+
+**Respuesta observada:** el servidor creó el curso «Curso de prueba RBAC», con ID `11`, y devolvió sus datos en formato JSON.
+
+**Conclusión:** la operación de creación fue exitosa. Para atribuir el resultado específicamente a RBAC, debe verificarse que el token corresponda a un usuario con el permiso requerido para crear cursos.
+
+**Evidencia:** captura de Thunder Client con la respuesta `201 Created`.
+
+![](images/clipboard-2597812051.png)
+
+![](images/clipboard-2528978814.png)
+
+#### Evidencia. Acceso denegado a Cursos por RBAC — Thunder Client
+
+**Objetivo:** comprobar que un usuario autenticado sin el permiso requerido no pueda consultar los cursos registrados en CampusNube.
+
+**Método:** `GET`.\
+**Endpoint:** `/api/cursos`.\
+**Herramienta:** Thunder Client.\
+**Autenticación:** JWT Bearer Token del usuario DOCENTE.
+
+**Resultado obtenido:** `403 Forbidden`.
+
+**Respuesta observada:** `{"error":"Forbidden: no grant for GET /api/cursos"}`.
+
+**Conclusión:** la prueba fue exitosa. El servidor rechazó la operación porque el usuario autenticado no tenía concedido el permiso requerido para consultar Cursos. Esto evidencia el funcionamiento del control de acceso basado en roles y permisos (RBAC).
+
+![](images/clipboard-2812722995.png)
+
+#### Evidencia. Consulta de Aprendices con acceso autorizado — Thunder Client
+
+**Objetivo:** verificar que un usuario autenticado y autorizado pueda consultar los aprendices registrados en CampusNube.
+
+**Método:** `GET`.\
+**Endpoint:** `/api/aprendices`.\
+**Herramienta:** Thunder Client.\
+**Autenticación:** JWT Bearer Token.
+
+**Resultado obtenido:** `200 OK`.
+
+**Respuesta observada:** el servidor devolvió la colección `learners` con los datos de los aprendices registrados.
+
+**Conclusión:** la consulta fue exitosa. El servidor permitió acceder a la información solicitada. Para atribuir el resultado al control RBAC, se debe confirmar que el token corresponde a un usuario con el permiso de consulta de Aprendices.
+
+![](images/clipboard-2155528653.png)
+
+#### Evidencia. Acceso denegado a Aprendices por RBAC — Thunder Client
+
+**Objetivo:** comprobar que un usuario autenticado sin el permiso requerido no pueda consultar los aprendices registrados en CampusNube.
+
+**Método:** `GET`.\
+**Endpoint:** `/api/aprendices`.\
+**Herramienta:** Thunder Client.\
+**Autenticación:** JWT Bearer Token del usuario DOCENTE.
+
+**Resultado obtenido:** `403 Forbidden`.
+
+**Respuesta observada:** `{"error":"Forbidden: no grant for GET /api/aprendices"}`.
+
+**Conclusión:** la prueba fue exitosa. El servidor rechazó la consulta porque el usuario autenticado no tenía concedido el permiso para acceder a Aprendices. Esto demuestra que el mecanismo RBAC controla el acceso a los recursos según los permisos asignados.
+
+![](images/clipboard-1792084282.png)
+
+#### commit final 
+
+```         
+git add . 
+git commit -m "exam: documentar examen segundo corte semana 9 con pruebas HTTP, Swagger, JWT, Refresh y RBAC"
 git push origin main
 ```

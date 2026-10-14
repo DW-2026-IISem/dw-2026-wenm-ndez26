@@ -1,8 +1,9 @@
+
 import { Transaction } from "sequelize";
 import { Learner, LearnerI } from "./learner.model";
 
 export class LearnerRepository {
-  async findAllActive(): Promise<LearnerI[]> {
+  async findAllActive(): Promise<Learner[]> {
     return Learner.findAll({
       where: {
         status: "active",
@@ -11,33 +12,33 @@ export class LearnerRepository {
   }
 
   async findById(
-  id: number,
-  transaction?: Transaction,
-  onlyActive = true
-): Promise<LearnerI | null> {
-  return Learner.findOne({
-    where: {
-      id,
-      ...(onlyActive ? { status: "active" } : {}),
-    },
-    transaction,
-  });
-}
+    id: number,
+    transaction?: Transaction,
+    onlyActive = true
+  ): Promise<Learner | null> {
+    return Learner.findOne({
+      where: {
+        id,
+        ...(onlyActive ? { status: "active" } : {}),
+      },
+      transaction,
+    });
+  }
 
   async create(
     data: Partial<LearnerI>,
     transaction?: Transaction
-  ): Promise<LearnerI> {
+  ): Promise<Learner> {
     return Learner.create(data as any, {
-  transaction,
-});
+      transaction,
+    });
   }
 
   async update(
     id: number,
     data: Partial<LearnerI>,
     transaction?: Transaction
-  ): Promise<LearnerI | null> {
+  ): Promise<Learner | null> {
     const learner = await Learner.findByPk(id, {
       transaction,
     });
