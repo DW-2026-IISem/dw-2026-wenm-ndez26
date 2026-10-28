@@ -346,6 +346,147 @@ git commit -m "Fase I: Frontend — ISS-01 — Bootstrap Angular 22 con CLI"
 git push origin main
 ```
 
+![](images/clipboard-3978678860.png)
+
+# Fase I: Frontend — ISS-01A — Esqueleto Header / Aside / contenido / Footer
+
+## Contenido de este ISS
+
+- 1.1 Qué es un componente y por qué el padre debe importarlo
+
+- 1.2 Generar las tres piezas de `layout/`
+
+- 1.3 Contenido de cada componente
+
+- 1.4 Componer las cuatro regiones en `App`
+
+- 1.5 Comprobar antes de avanzar
+
+- Verificación del ISS
+
+- Cierre del ISS
+
+**Revisar la estructura actual de `src/app`**
+
+![](images/clipboard-3253253944.png)
+
+- **1.2 Generar las tres piezas de `layout/`**
+
+1\. Crear el Header
+
+# ![](images/clipboard-3756947004.png) 
+
+2\. Crear el Aside
+
+# ![](images/clipboard-741973999.png) 
+
+3\. Crear el Footer
+
+![](images/clipboard-3569392935.png)
+
+**Verificar la estructura**
+
+![](images/clipboard-889062473.png)
+
+**1.3: contenido de cada componente**
+
+1.3.1. Archivo `header.ts`
+
+![](images/clipboard-749533391.png)
+
+1.3.2. Archivo `header.html`
+
+![](images/clipboard-2367381467.png)
+
+1.3.3. Archivo `header.css`
+
+![](images/clipboard-2765306541.png)
+
+1.3.4. Archivo `aside.ts`
+
+![](images/clipboard-1415097019.png)
+
+1.3.5. Archivo `aside.html`
+
+![](images/clipboard-3300500083.png)
+
+1.3.6. Archivo `aside.css`
+
+![](images/clipboard-2401221882.png)
+
+1.3.7 Archivo `footer.ts`
+
+![](images/clipboard-4114458011.png)
+
+1.3.8. Archivo `footer.html`
+
+![](images/clipboard-2093504899.png)
+
+1.3.9 Archivo `footer.css`
+
+![](images/clipboard-3649875583.png)
+
+**1.4. Componer las cuatro regiones en `App`**
+
+1\. Modificar `src/app/app.ts`
+
+![](images/clipboard-4021009915.png)
+
+- Importamos los tres componentes.
+
+- Los declaramos en `imports` para que Angular permita utilizarlos en la plantilla.
+
+- Conservamos `app.html` como plantilla principal.
+
+- Dejamos de importar `Ejemplo`, porque la tarjeta de demostración ya no formará parte de la pantalla de ISS-01A.}
+
+**2. Modificar `src/app/app.html`**
+
+![](images/clipboard-686462475.png)
+
+**1.5 Comprobar antes de avanzar**
+
+![](images/clipboard-3719550177.png)
+
+![](images/clipboard-1021689412.png)
+
+## Verificación del ISS
+
+**\# 1. Compila**
+ng build
+
+![](images/clipboard-549731154.png)
+
+**\# 2. Existen las tres piezas con sus tres archivos**
+
+![](images/clipboard-3827621407.png)
+
+**\# 3. App declara los tres imports y compone las regiones**
+
+![](images/clipboard-380624001.png)
+
+**\# 4. demo/ejemplo ya no se compone**
+
+![](images/clipboard-264063350.png)
+
+**\# 5. Los CSS de layout no tienen reglas**
+
+![](images/clipboard-1864877729.png)
+
+**\# 6. Pruebas**
+
+![](images/clipboard-4138086029.png)
+
+## Cierre del ISS
+
+**Commit**
+
+```         
+git add . 
+git commit -m "Fase I: Frontend — ISS-01A — Esqueleto Header / Aside / contenido / Footer" 
+git push origin maicon
+```
+
 # Fase I: Frontend — ISS-02 — Núcleo: environment, modelos, servicios y layout
 
 ## Contenido de este ISS
