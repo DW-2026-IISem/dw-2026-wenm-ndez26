@@ -1,12 +1,11 @@
 
 import { Component } from '@angular/core';
-import { Header } from './layout/header/header';
-import { Aside } from './layout/aside/aside';
-import { Footer } from './layout/footer/footer';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
+  host: { class: 'block' },
   selector: 'app-root',
-  imports: [Header, Aside, Footer],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

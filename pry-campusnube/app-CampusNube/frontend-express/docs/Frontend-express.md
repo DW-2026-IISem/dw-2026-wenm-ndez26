@@ -484,7 +484,165 @@ ng build
 ```         
 git add . 
 git commit -m "Fase I: Frontend — ISS-01A — Esqueleto Header / Aside / contenido / Footer" 
-git push origin maicon
+git push origin main
+```
+
+![](images/clipboard-843420582.png)
+
+# Fase I: Frontend — ISS-01B — Menú PrimeNG y primera interacción
+
+## Contenido de este ISS
+
+- 1.1 Los conceptos que se agregan, uno por vez
+
+- 1.2 El Aside recibe el menú con `input()`
+
+- 1.3 El Header avisa al padre con `output()`
+
+- 1.4 `features/construir`: estado local y Drawer móvil
+
+- 1.5 `App` pasa a ser punto de entrada con `router-outlet`
+
+- 1.6 Comprobar antes de avanzar
+
+- Verificación del ISS
+
+- Cierre del ISS
+
+**1.2 — El Aside recibe el menú con `input()`**
+
+**1. Archivo `src/app/layout/aside/aside.ts`**
+
+![](images/clipboard-3429931542.png)
+
+**2. Archivo `src/app/layout/aside/aside.html`**
+
+![](images/clipboard-3942448769.png)
+
+**1.3 — El Header avisa al padre con `output()`**
+
+1\. Archivo `src/app/layout/header/header.ts`
+
+![](images/clipboard-3965925261.png)
+
+2\. Archivo `src/app/layout/header/header.html`
+
+![](images/clipboard-3333557869.png)
+
+3\. Archivo `src/app/layout/header/header.css`
+
+![](images/clipboard-1413843434.png)
+
+**1.4 — `features/construir`: estado local y Drawer móvil**
+
+1\. Crear el componente `Construir`
+
+![](images/clipboard-2486301024.png)
+
+2. Crear el helper para detectar el ancho
+
+![](images/clipboard-2323739422.png)
+
+3\. Configurar `construir.ts`
+
+![](images/clipboard-2454020603.png)
+
+4\. Configurar `construir.html`
+
+![](images/clipboard-2908866726.png)
+
+5. Configurar `construir.css`
+
+![](images/clipboard-3464547288.png)
+
+1.4 — `Construir`, en el archivo `src/app/features/construir/construir.spec.ts`.
+
+![](images/clipboard-3969719231.png)
+
+2. Ejecutar las pruebas
+
+![](images/clipboard-299264750.png)
+
+**1.5 — `App` pasa a ser punto de entrada con `router-outlet`.**
+
+1\. Actualizar `src/app/app.ts`
+
+![](images/clipboard-3413156810.png)
+
+2\. Actualizar `src/app/app.html`
+
+![](images/clipboard-2860660870.png)
+
+3\. Configurar `src/app/app.routes.ts`
+
+![](images/clipboard-3587235927.png)
+
+4\. Revisar `src/app/app.config.ts`
+
+![](images/clipboard-3609425715.png)
+
+**1.5 — `App` como punto de entrada con `router-outlet`.**
+
+![](images/clipboard-4097371892.png)
+
+## 1.6 Comprobar antes de avanzar
+
+**Criterios de este sub-ítem**
+
+- [ ] A 1280 px se ve el Aside con las cinco opciones y no hay scroll horizontal
+
+- [ ] A 1280 px **el botón de menú se ve** y al pulsarlo oculta el Aside (sin abrir el Drawer)
+
+- [ ] A 390 px el Aside no se ve y el botón del Header abre el Drawer
+
+- [ ] Elegir una opción cambia el título y cierra el Drawer
+
+- [ ] La URL no cambia y Network no registra `/api`
+
+- [ ] Con teclado se recorre el menú y se activa con Enter
+
+- [ ] `ng build` termina con código 0
+
+![](images/clipboard-21878387.png)
+
+\# 1. Compila y separa el chunk diferido
+
+![](images/clipboard-4157326334.png)
+
+\# 2. El Aside recibe el menú y el Header emite el aviso
+
+![](images/clipboard-118615528.png)
+
+\# 2b. El botón no se esconde en escritorio
+
+![](images/clipboard-311903785.png)
+
+\# 3. La pantalla tiene el estado y compone el layout
+
+![](images/clipboard-2567042979.png)
+
+\# 4. App es solo el outlet y las rutas cargan diferido
+
+![](images/clipboard-3223411821.png)
+
+\# 5. Los CSS siguen sin reglas (ninguno contiene llaves)
+
+![](images/clipboard-3270078249.png)
+
+```         
+# 6. Pruebas automatizadas
+```
+
+![](images/clipboard-1515740167.png)
+
+## Cierre del ISS
+
+Commit
+
+```         
+git add .
+git commit -m "Fase I: Frontend — ISS-01B — Menú PrimeNG y primera interacción"
+git push origin main 
 ```
 
 # Fase I: Frontend — ISS-02 — Núcleo: environment, modelos, servicios y layout

@@ -1,11 +1,14 @@
 
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      // Sin rutas: esta prueba comprueba el punto de entrada, no las pantallas.
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
@@ -14,27 +17,11 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render the four layout regions', async () => {
+  it('should render the router outlet', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
 
-    const compiled = fixture.nativeElement as HTMLElement;
-
-    expect(compiled.querySelector('app-header')).toBeTruthy();
-    expect(compiled.querySelector('app-aside')).toBeTruthy();
-    expect(compiled.querySelector('main')).toBeTruthy();
-    expect(compiled.querySelector('app-footer')).toBeTruthy();
-  });
-
-  it('should show the CampusNube welcome content', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-
-    const compiled = fixture.nativeElement as HTMLElement;
-
-    expect(compiled.textContent).toContain('Bienvenido a CampusNube');
-    expect(compiled.textContent).toContain(
-      'Plataforma de aprendizaje virtual',
-    );
+    const compilado = fixture.nativeElement as HTMLElement;
+    expect(compilado.querySelector('router-outlet')).toBeTruthy();
   });
 });
