@@ -645,6 +645,8 @@ git commit -m "Fase I: Frontend — ISS-01B — Menú PrimeNG y primera interacc
 git push origin main 
 ```
 
+![](images/clipboard-1133957092.png)
+
 # Fase I: Frontend — ISS-02 — Núcleo: environment, modelos, servicios y layout
 
 ## Contenido de este ISS
@@ -687,4 +689,394 @@ git push origin main
 
   Crea los dos archivos y registra el reemplazo. Si ya existen, edítalos sin repetir el generador.
 
-  `src/environments/environment.ts` — lo usa `ng build`, es el **base**:
+  `src/environments/environment.ts` — lo usa `ng build`, es el **base**,ya existe.
+
+1\. Crear `environment.development.ts`
+
+![](images/clipboard-2901709027.png)
+
+2\. Configurar el entorno de desarrollo
+
+![](images/clipboard-1083840537.png)
+
+**3. editar `environment.environment.development.ts`**
+
+![](images/clipboard-1077542238.png)
+
+## 1. Abrir el archivo de desarrollo
+
+`src/environments/environment.development.ts`
+
+![](images/clipboard-1663408184.png)
+
+`angular.json` → `projects.<proyecto>.architect.build.configurations.development`:
+
+![](images/clipboard-2923865113.png)
+
+## 2.2 Modelos: reflejar el backend, no inventarlo
+
+**Criterios de este sub-ítem**
+
+- [ ] Cada entidad tiene su interfaz y su `Payload` de escritura
+
+- [ ] Los modelos de lectura **no** exponen `password`
+
+- [ ] `Money` cubre `number | string`; `toNumber()` normaliza
+
+- [ ] Los campos son los del backend, en `snake_case`
+
+### `api.model.ts` — los tipos que comparten todos
+
+![](images/clipboard-3030453636.png)
+
+**2. Crear el modelo de Cursos**
+
+![Reemplazar el contenido](images/clipboard-3315229750.png)
+
+![](images/clipboard-2693503773.png)
+
+**3. Crear el modelo de Aprendices (`Learner`)**
+
+![![](images/clipboard-2493094611.png)](images/clipboard-135115602.png)
+
+Crear los archivos restantes
+
+**teacher.model.ts**
+
+![](images/clipboard-1398728388.png)
+
+### `module.model.ts`
+
+![](images/clipboard-1192276120.png)
+
+**lesson.model.ts**
+
+![](images/clipboard-3109368904.png)
+
+**enrollment.model.ts**
+
+![](images/clipboard-616668652.png)
+
+**evaluation.model.ts**
+
+![](images/clipboard-1591949040.png)
+
+**attempt.model.ts**
+
+![](images/clipboard-635381628.png)
+
+**submission.model.ts**
+
+![](images/clipboard-1031825294.png)
+
+**progress.model.ts**
+
+![](images/clipboard-1070843626.png)
+
+**certificate.model.ts**
+
+![](images/clipboard-784824053.png)
+
+**3. Modelos de roles, recursos y permisos**
+
+### `role.model.ts`
+
+![](images/clipboard-1023923284.png)
+
+### **resource.model.ts**
+
+![](images/clipboard-3758092727.png)
+
+### **role-user.model.ts**
+
+![](images/clipboard-3766571628.png)
+
+### resource-role.model.ts
+
+![](images/clipboard-1062577613.png)
+
+### 4. Modelo de usuario
+
+**user.model.ts**
+
+![](images/clipboard-3667969105.png)
+
+### `refresh-token.model.ts`
+
+![](images/clipboard-3955002357.png)
+
+**Verificar todos los modelos**
+
+![](images/clipboard-831968503.png)
+
+## 2.3 Servicios HTTP por feature: desenvolver la respuesta
+
+## 1. Generar los servicios
+
+![](images/clipboard-2299022837.png)
+
+### El contrato real del backend
+
+| Entidad                 | Endpoint base           |
+|-------------------------|-------------------------|
+| Cursos                  | `/api/cursos`           |
+| Aprendices              | `/api/aprendices`       |
+| Docentes                | `/api/docentes`         |
+| Módulos                 | `/api/modulos`          |
+| Lecciones               | `/api/lecciones`        |
+| Inscripciones           | `/api/inscripciones`    |
+| Evaluaciones            | `/api/evaluaciones`     |
+| Intentos                | `/api/intentos`         |
+| Entregas                | `/api/entregas`         |
+| Progreso                | `/api/progress`         |
+| Certificados            | `/api/certificates`     |
+| Usuarios                | `/api/usuarios`         |
+| Roles                   | `/api/roles`            |
+| Recursos                | `/api/recursos`         |
+| Asignaciones de roles   | `/api/asignaciones-rol` |
+| Concesiones de permisos | `/api/concesiones-rol`  |
+
+2\. `course-api.ts` — Cursos
+
+![](images/clipboard-4169824594.png)
+
+### 3. `learner-api.ts` — Aprendices
+
+![](images/clipboard-1317944447.png)
+
+**4. `teacher-api.ts` — Docentes**
+
+![](images/clipboard-3962633097.png)
+
+**5. `module-api.ts` — Módulos**
+
+![](images/clipboard-2092590470.png)
+
+**6. `lesson-api.ts` — Lecciones**
+
+![](images/clipboard-2591887673.png)
+
+**7. `enrollment-api.ts` — Inscripciones**
+
+![](images/clipboard-553018913.png)
+
+**8. `evaluation-api.ts` — Evaluaciones**
+
+![](images/clipboard-217187568.png)
+
+**9. `attempt-api.ts` — Intentos**
+
+![](images/clipboard-3342644405.png)
+
+**10. `submission-api.ts` — Entregas**
+
+![](images/clipboard-858656917.png)
+
+**11. `progress-api.ts` — Progreso**
+
+![](images/clipboard-3053938623.png)
+
+**12. `certificate-api.ts` — Certificados**
+
+![](images/clipboard-2556928385.png)
+
+**13. `user-api.ts` — Usuarios**
+
+![](images/clipboard-3861203492.png)
+
+**14. `role-api.ts` — Roles**
+
+![](images/clipboard-453998512.png)
+
+**15. `resource-api.ts` — Recursos**
+
+![](images/clipboard-2043451639.png)
+
+**16. `role-user-api.ts` — Asignaciones de roles**
+
+![](images/clipboard-153681711.png)
+
+**17. `resource-role-api.ts` — Permisos por rol**
+
+![](images/clipboard-120624786.png)
+
+**18. `session-api.ts` — Autenticación**
+
+![](images/clipboard-897168648.png)
+
+**19. `notification.service.ts` — Notificaciones**
+
+![](images/clipboard-2674929152.png)
+
+**20. Regla de las URL y comprobación**
+
+private readonly base = `${environment.apiUrl}/cursos`;
+
+### Pruebas de servicios HTTP con HttpTestingController
+
+**1. Servicio de course**
+
+![](images/clipboard-2801312233.png)
+
+**2. Servicio de leaners**
+
+![](images/clipboard-652510134.png)
+
+**3. Servicio de teacher**
+
+![](images/clipboard-273579205.png)
+
+**4. Servicio de module**
+
+![](images/clipboard-2770613147.png)
+
+**5. Servicio de lesson**
+
+![](images/clipboard-3629168501.png)
+
+6\. Servicio de enrrollments
+
+![](images/clipboard-3830941128.png)
+
+**7. Servicio de evaluation**
+
+![](images/clipboard-2409371281.png)
+
+## Ocho servicios HTTP pasaron sus pruebas:
+
+1.  **Cursos**
+
+2.  **Aprendices**
+
+3.  **Docentes**
+
+4.  **Módulos**
+
+5.  **Lecciones**
+
+6.  **Inscripciones**
+
+7.  **Evaluaciones**
+
+8.  **Intentos**
+
+![](images/clipboard-1457782051.png)
+
+## 2.4 Utilidades transversales: `toApiMessage` y `NotificationService`
+
+**Crear `api-error.ts`**
+
+![](images/clipboard-885791299.png)
+
+**Modificar `NotificationService`**
+
+![](images/clipboard-3985376207.png)
+
+## 2.5 Componentes compartidos: `PageHeader`, `EmptyState`, `StatusTag`
+
+![](images/clipboard-2937733513.png)
+
+**1. `PageHeader`**
+
+![](images/clipboard-296290388.png)
+
+`src/app/shared/ui/page-header/page-header.html`
+
+![](images/clipboard-805469652.png)
+
+**2. `EmptyState`**
+
+![](images/clipboard-3014545658.png)
+
+**src/app/shared/ui/empty-state/empty-state.html**
+
+![](images/clipboard-886943250.png)
+
+**3. `StatusTag`**
+
+**src/app/shared/ui/status-tag/status-tag.ts**
+
+![](images/clipboard-2352769116.png)
+
+**src/app/shared/ui/status-tag/status-tag.html**
+
+![](images/clipboard-1852500121.png)
+
+## 2.6 `Shell`: conservar el esqueleto al navegar
+
+![](images/clipboard-4281922687.png)
+
+Código de `shell.ts`
+
+![](images/clipboard-3489850915.png)
+
+Código de `shell.html`
+
+![](images/clipboard-3634073944.png)
+
+**Comprobar la compilación**
+
+![](images/clipboard-2520965668.png)
+
+## 1. Configurar las rutas
+
+![](images/clipboard-4008327277.png)
+
+`src/app/layout/shell/shell.spec.ts`
+
+![](images/clipboard-2082635088.png)
+
+## 2.7 Registrar `HttpClient` sin interceptores de sesión
+
+![](images/clipboard-3131500485.png)
+
+## 2.8 Comprobar antes de avanzar
+
+**Criterios de este sub-ítem**
+
+- [ ] `ng build` termina con código 0 y sin `✘ [ERROR]`
+
+- [ ] `shell` aparece como chunk diferido
+
+- [ ] `npm test` pasa completo
+
+- [ ] `/` redirige a `/construir` y la pantalla del prototipo sigue funcionando
+
+- [ ] Network no registra llamadas `/api` en ninguna pantalla
+
+```         
+ng build
+npm test -- --watch=false 
+npm start
+```
+
+![](images/clipboard-940435536.png)
+
+## Verificación del ISS
+
+\# 1. Compila y separa los chunks diferidos
+ng build
+
+![](images/clipboard-1781208332.png)
+
+\# 2. La URL del backend existe una sola vez
+
+![\# 3. Los modelos existen y coinciden con el backend](images/clipboard-3673682762.png)
+
+![](images/clipboard-2092348756.png)
+
+\# 4. Los servicios desenvuelven con map
+
+![](images/clipboard-2085548197.png)
+
+![](images/clipboard-239111258.png)
+
+## Cierre del ISS
+
+Commit
+
+```         
+git add .
+git commit -m "Fase I: Frontend — ISS-02 — Núcleo: environment, modelos, servicios y layout"
+git push origin main
+```

@@ -3,10 +3,10 @@ import { Component, signal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { watchMediaQuery } from '../../core/utils/media-query';
-import { Aside } from '../../layout/aside/aside';
-import { Footer } from '../../layout/footer/footer';
-import { Header } from '../../layout/header/header';
+import { watchMediaQuery } from '../core/utils/media-query';
+import { Aside } from '../layout/aside/aside';
+import { Footer } from '../layout/footer/footer';
+import { Header } from '../layout/header/header';
 
 @Component({
   host: { class: 'block' },

@@ -1,7 +1,9 @@
+
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import {
   provideRouter,
   withComponentInputBinding,
@@ -24,7 +26,11 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
     ),
 
-    // PrimeNG 22: tema Aura. El modo oscuro se activa con la clase .app-dark.
+    // Habilita HttpClient para los servicios *Api*.
+    // Sin interceptores de sesión en esta fase.
+    provideHttpClient(),
+
+    // PrimeNG: tema Aura.
     providePrimeNG({
       license: environment.primeUiLicense || undefined,
       ripple: true,
@@ -33,7 +39,10 @@ export const appConfig: ApplicationConfig = {
         preset: Aura,
         options: {
           darkModeSelector: '.app-dark',
-          cssLayer: { name: 'primeng', order: 'theme, base, primeng, utilities' },
+          cssLayer: {
+            name: 'primeng',
+            order: 'theme, base, primeng, utilities',
+          },
         },
       },
     }),
