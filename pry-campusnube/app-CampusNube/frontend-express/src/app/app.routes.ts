@@ -52,6 +52,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'evaluaciones',
+        title: 'Evaluaciones · CampusNube',
+        loadComponent: () =>
+          import('./features/evaluations/evaluation-list/evaluation-list').then(
+            (m) => m.EvaluationList
+          ),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'docentes',

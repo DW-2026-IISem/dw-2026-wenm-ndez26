@@ -1682,10 +1682,124 @@ npm test -- --watch=false
 
 ### commit de ISS-07
 
-Ejecuta estos comandos:
-
 ```         
 git add . 
 git commit -m "Fase I: Frontend — ISS-07 — Lecciones: CRUD y vinculación con módulos"
+git push origin main
+```
+
+# ISS-08 – Evaluaciones
+
+CRUD y relación Evaluación–Curso
+
+## 8.1. Modelo y reglas del backend
+
+El modelo que ya existe en `evaluation.model.ts` y contiene:
+
+```         
+export interface Evaluation {   
+id: number;   
+course_id: number;   
+name: string;   
+description: string | null;   
+isActive: boolean; 
+}  
+export interface EvaluationPayload {   
+course_id: number;   
+name: string;   
+description?: string | null;   
+isActive?: boolean; 
+}
+```
+
+**Reglas confirmadas en el backend:**
+
+1.  `course_id` es obligatorio.
+
+2.  `name` es obligatorio.
+
+3.  El curso relacionado debe existir y estar activo.
+
+4.  La evaluación se crea activa por defecto.
+
+5.  La desactivación es lógica mediante `isActive = false`.
+
+6.  La eliminación física utiliza `DELETE /api/evaluaciones/:id`.
+
+El listado del backend devuelve únicamente evaluaciones activas.
+
+## 8.2. Generar los componentes con Angular CLI
+
+![](images/clipboard-303854514.png)
+
+## 8.3. Servicio API de Evaluaciones
+
+![](images/clipboard-3405617399.png)
+
+## 8.4. Cargar Evaluaciones y Cursos en paralelo
+
+Utilizaremos `forkJoin` para consultar las evaluaciones y los cursos simultáneamente.
+
+![](images/clipboard-2526230959.png)
+
+`forkJoin` evita cargar primero las evaluaciones y después los cursos. El `Map` permite mostrar el nombre del curso sin recorrer repetidamente el arreglo completo para cada fila.
+
+## 8.5. Indicador de Evaluaciones activas
+
+- Cantidad de evaluaciones activas.
+
+- Total de evaluaciones cargadas.
+
+- Búsqueda por nombre, descripción o curso.
+
+![](images/clipboard-402067950.png)
+
+## 8.6. Formulario reactivo de Evaluaciones
+
+El formulario permitirá registrar y editar evaluaciones.
+
+![](images/clipboard-2431057659.png)
+
+## 8.7. Listado y operaciones CRUD de Evaluaciones
+
+![](images/clipboard-3789849484.png)
+
+## 8.8. Configurar ruta y menú de Evaluaciones
+
+![](images/clipboard-1738824092.png)
+
+## Criterios de aceptación de ISS-08
+
+1.  Se muestra el listado de evaluaciones.
+
+2.  Se identifica el curso asociado por su nombre.
+
+3.  Se registran evaluaciones con un curso seleccionado.
+
+4.  Se bloquea el envío cuando falta el nombre o el curso.
+
+5.  Se edita una evaluación existente.
+
+6.  Se desactiva una evaluación.
+
+7.  Se elimina físicamente una evaluación.
+
+8.  Se puede buscar por nombre, descripción o curso.
+
+9.  Se muestra el indicador de evaluaciones activas.
+
+10. El selector envía `course_id` como identificador numérico.
+
+## Comprobación de ISS-08
+
+![](images/clipboard-3781248007.png)
+
+![](images/clipboard-3118122219.png)
+
+## Commit de ISS-08
+
+```         
+git add .  
+git commit -m "Fase I: Frontend — ISS-08 — Evaluaciones: CRUD y vinculación con cursos" 
 git push origin main
 ```

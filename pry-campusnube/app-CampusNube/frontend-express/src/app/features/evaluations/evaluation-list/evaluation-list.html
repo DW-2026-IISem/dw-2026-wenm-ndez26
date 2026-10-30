@@ -1,0 +1,169 @@
+<p-toast />
+<p-confirmdialog />
+
+<section class="flex flex-col gap-4">
+
+  <div class="flex flex-wrap justify-between items-center gap-3">
+    <div>
+      <h2 class="text-2xl font-semibold">Gestión de evaluaciones</h2>
+      <p class="text-gray-500">
+        Administración de evaluaciones y su relación con los cursos.
+      </p>
+    </div>
+
+    <p-button
+      label="Nueva evaluación"
+      icon="pi pi-plus"
+      (onClick)="openCreate()"
+    />
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="rounded-lg border p-4">
+      <p class="text-sm text-gray-500">Evaluaciones activas</p>
+      <p class="text-3xl font-semibold text-green-600">
+        {{ activeEvaluationCount() }}
+      </p>
+    </div>
+
+    <div class="rounded-lg border p-4">
+      <p class="text-sm text-gray-500">Total de evaluaciones cargadas</p>
+      <p class="text-3xl font-semibold">
+        {{ totalEvaluationCount() }}
+      </p>
+    </div>
+  </div>
+
+  <div class="w-full md:w-96">
+    <input
+      pInputText
+      type="text"
+      class="w-full"
+      placeholder="Buscar por nombre, descripción o curso..."
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+  </div>
+
+  @if (loading()) {
+    <p class="text-center p-4">Cargando evaluaciones y cursos...</p>
+  }
+
+  @if (error()) {
+    <div class="p-3 border border-red-300 rounded text-red-700">
+      {{ error() }}
+      <p-button
+        label="Reintentar"
+        icon="pi pi-refresh"
+        severity="secondary"
+        [text]="true"
+        (onClick)="load()"
+      />
+    </div>
+  }
+
+  @if (!loading() && !error()) {
+    <p-table
+      [value]="filteredRows()"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [showGridlines]="true"
+      [stripedRows]="true"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '65rem' }"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} evaluaciones"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Curso relacionado</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th style="width: 13rem">Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-row>
+        <tr>
+          <td>{{ row.id }}</td>
+          <td class="font-medium">{{ row.name }}</td>
+          <td>{{ courseName()(row.course_id) }}</td>
+          <td>{{ row.description || 'Sin descripción' }}</td>
+          <td>
+            <p-tag
+              [value]="row.isActive ? 'Activa' : 'Inactiva'"
+              [severity]="row.isActive ? 'success' : 'danger'"
+              [rounded]="true"
+            />
+          </td>
+          <td>
+            <div class="flex flex-wrap gap-2">
+              <p-button
+                icon="pi pi-pencil"
+                severity="info"
+                [rounded]="true"
+                [text]="true"
+                [raised]="true"
+                pTooltip="Editar evaluación"
+                (onClick)="openEdit(row)"
+              />
+
+              @if (row.isActive) {
+                <p-button
+                  icon="pi pi-ban"
+                  severity="warn"
+                  [rounded]="true"
+                  [text]="true"
+                  [raised]="true"
+                  pTooltip="Desactivar evaluación"
+                  (onClick)="deactivate(row)"
+                />
+              }
+
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [rounded]="true"
+                [text]="true"
+                [raised]="true"
+                pTooltip="Eliminar evaluación"
+                (onClick)="remove(row)"
+              />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="text-center p-4">
+            No se encontraron evaluaciones registradas.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</section>
+
+<p-dialog
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [header]="selectedEvaluation() ? 'Editar evaluación' : 'Registrar evaluación'"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: 'min(95vw, 38rem)' }"
+  [breakpoints]="{ '640px': '95vw' }"
+  (onHide)="closeDialog()"
+>
+  <app-evaluation-form
+    [evaluation]="selectedEvaluation()"
+    [courses]="courses()"
+    [saving]="saving()"
+    (saved)="save($event)"
+    (cancelled)="closeDialog()"
+  />
+</p-dialog>

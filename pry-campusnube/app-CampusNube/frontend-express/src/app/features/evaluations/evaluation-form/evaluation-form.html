@@ -1,0 +1,86 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+  <div class="flex flex-col gap-2">
+    <label for="evaluation-name" class="font-semibold">
+      Nombre de la evaluación *
+    </label>
+
+    <input
+      id="evaluation-name"
+      pInputText
+      formControlName="name"
+      placeholder="Ingrese el nombre de la evaluación"
+      class="w-full"
+    />
+
+    @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+      <p-message severity="error">
+        El nombre de la evaluación es obligatorio.
+      </p-message>
+    }
+
+    @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
+      <p-message severity="error">
+        El nombre no puede superar los 150 caracteres.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="evaluation-course" class="font-semibold">
+      Curso asociado *
+    </label>
+
+    <p-select
+      inputId="evaluation-course"
+      formControlName="course_id"
+      [options]="courses()"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Seleccione un curso"
+      [filter]="true"
+      [showClear]="true"
+      styleClass="w-full"
+      appendTo="body"
+    />
+
+    @if (form.controls.course_id.touched && form.controls.course_id.invalid) {
+      <p-message severity="error">
+        Debe seleccionar un curso válido.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="evaluation-description" class="font-semibold">
+      Descripción
+    </label>
+
+    <textarea
+      pTextarea
+      id="evaluation-description"
+      formControlName="description"
+      rows="4"
+      placeholder="Ingrese una descripción"
+      class="w-full"
+    ></textarea>
+  </div>
+
+  <div class="flex justify-end gap-2 pt-3">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+      (onClick)="cancel()"
+    />
+
+    <p-button
+      [label]="evaluation() ? 'Actualizar evaluación' : 'Registrar evaluación'"
+      icon="pi pi-save"
+      type="submit"
+      [loading]="saving()"
+      [disabled]="saving()"
+    />
+  </div>
+</form>
