@@ -1,0 +1,174 @@
+<p-toast />
+<p-confirmdialog />
+
+<section class="flex flex-col gap-4">
+
+  <div class="flex flex-wrap justify-between items-center gap-3">
+    <div>
+      <h2 class="text-2xl font-semibold">Gestión de inscripciones</h2>
+      <p class="text-gray-500">
+        Administración de las relaciones entre aprendices y cursos.
+      </p>
+    </div>
+
+    <p-button
+      label="Nueva inscripción"
+      icon="pi pi-plus"
+      (onClick)="openCreate()"
+    />
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="rounded-lg border p-4">
+      <p class="text-sm text-gray-500">Inscripciones activas</p>
+      <p class="text-3xl font-semibold text-green-600">
+        {{ activeEnrollmentCount() }}
+      </p>
+    </div>
+
+    <div class="rounded-lg border p-4">
+      <p class="text-sm text-gray-500">Total de inscripciones cargadas</p>
+      <p class="text-3xl font-semibold">
+        {{ totalEnrollmentCount() }}
+      </p>
+    </div>
+  </div>
+
+  <div class="w-full md:w-96">
+    <input
+      pInputText
+      type="text"
+      class="w-full"
+      placeholder="Buscar por ID, aprendiz o curso..."
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+    />
+  </div>
+
+  @if (loading()) {
+    <p class="text-center p-4">
+      Cargando inscripciones, aprendices y cursos...
+    </p>
+  }
+
+  @if (error()) {
+    <div class="p-3 border border-red-300 rounded text-red-700">
+      {{ error() }}
+
+      <p-button
+        label="Reintentar"
+        icon="pi pi-refresh"
+        severity="secondary"
+        [text]="true"
+        (onClick)="load()"
+      />
+    </div>
+  }
+
+  @if (!loading() && !error()) {
+    <p-table
+      [value]="filteredRows()"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [showGridlines]="true"
+      [stripedRows]="true"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '65rem' }"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} inscripciones"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Aprendiz</th>
+          <th>Curso</th>
+          <th>Fecha de inscripción</th>
+          <th>Estado</th>
+          <th style="width: 13rem">Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-row>
+        <tr>
+          <td>{{ row.id }}</td>
+          <td class="font-medium">{{ learnerName()(row.learner_id) }}</td>
+          <td>{{ courseName()(row.course_id) }}</td>
+          <td>{{ row.enrollment_date | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <p-tag
+              [value]="row.status === 'active' ? 'Activa' : 'Inactiva'"
+              [severity]="row.status === 'active' ? 'success' : 'danger'"
+              [rounded]="true"
+            />
+          </td>
+          <td>
+            <div class="flex flex-wrap gap-2">
+              <p-button
+                icon="pi pi-pencil"
+                severity="info"
+                [rounded]="true"
+                [text]="true"
+                [raised]="true"
+                pTooltip="Editar inscripción"
+                (onClick)="openEdit(row)"
+              />
+
+              @if (row.status === 'active') {
+                <p-button
+                  icon="pi pi-ban"
+                  severity="warn"
+                  [rounded]="true"
+                  [text]="true"
+                  [raised]="true"
+                  pTooltip="Desactivar inscripción"
+                  (onClick)="deactivate(row)"
+                />
+              }
+
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [rounded]="true"
+                [text]="true"
+                [raised]="true"
+                pTooltip="Eliminar inscripción"
+                (onClick)="remove(row)"
+              />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="text-center p-4">
+            No se encontraron inscripciones registradas.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+
+</section>
+
+<p-dialog
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [header]="selectedEnrollment() ? 'Editar inscripción' : 'Registrar inscripción'"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: 'min(95vw, 38rem)' }"
+  [breakpoints]="{ '640px': '95vw' }"
+  (onHide)="closeDialog()"
+>
+  <app-enrollment-form
+    [enrollment]="selectedEnrollment()"
+    [learners]="learners()"
+    [courses]="courses()"
+    [saving]="saving()"
+    (saved)="save($event)"
+    (cancelled)="closeDialog()"
+  />
+</p-dialog>

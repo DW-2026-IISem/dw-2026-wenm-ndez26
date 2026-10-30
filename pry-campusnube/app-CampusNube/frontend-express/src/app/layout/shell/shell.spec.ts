@@ -68,6 +68,11 @@ describe('Shell', () => {
         routerLink: '/evaluaciones',
       },
       {
+        label: 'Inscripciones',
+        icon: 'pi pi-user-plus',
+        routerLink: '/inscripciones',
+      },
+      {
         label: 'Prototipo',
         icon: 'pi pi-desktop',
         routerLink: '/construir',
@@ -78,14 +83,15 @@ describe('Shell', () => {
   it('debe compartir la lista de navegación con los menús', () => {
     const shell = fixture.componentInstance;
 
-    expect(shell.items.length).toBe(7);
+    expect(shell.items.length).toBe(8);
     expect(shell.items[0].label).toBe('Docentes');
     expect(shell.items[1].label).toBe('Aprendices');
     expect(shell.items[2].label).toBe('Cursos');
     expect(shell.items[3].label).toBe('Módulos');
     expect(shell.items[4].label).toBe('Lecciones');
     expect(shell.items[5].label).toBe('Evaluaciones');
-    expect(shell.items[6].label).toBe('Prototipo');
+    expect(shell.items[6].label).toBe('Inscripciones');
+    expect(shell.items[7].label).toBe('Prototipo');
 
     expect(compilado.querySelector('app-aside')).toBeTruthy();
     expect(compilado.querySelector('p-drawer')).toBeTruthy();

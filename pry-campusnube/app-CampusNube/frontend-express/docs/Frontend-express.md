@@ -1803,3 +1803,165 @@ git add .
 git commit -m "Fase I: Frontend — ISS-08 — Evaluaciones: CRUD y vinculación con cursos" 
 git push origin main
 ```
+
+# ISS-09 – Inscripciones
+
+CRUD y relación Aprendiz–Curso
+
+## 9.1. Modelo y reglas del backend
+
+```         
+import { Timestamps, Status } from './api.model';  
+export interface Enrollment extends Timestamps {   
+id: number;   
+learner_id: number;   
+course_id: number;   
+enrollment_date: string;   
+status: Status;
+}  
+export interface EnrollmentPayload {   
+learner_id: number;   
+course_id: number;   
+enrollment_date?: string;   
+status?: Status;
+}  
+export interface EnrollmentUpdatePayload {   
+learner_id?: number;   
+course_id?: number;   
+enrollment_date?: string;
+}
+```
+
+Reglas y comportamiento confirmados:
+
+1.  `learner_id` es obligatorio al crear.
+
+2.  `course_id` es obligatorio al crear.
+
+3.  `enrollment_date` es opcional; el backend asigna la fecha actual si no se envía.
+
+4.  El estado inicial es `active` por defecto.
+
+5.  La desactivación lógica cambia `status` a `inactive`.
+
+6.  La eliminación física utiliza `DELETE /api/inscripciones/:id`.
+
+7.  El listado devuelve las inscripciones activas.
+
+8.  La relación del backend es `Enrollment.belongsTo(Learner)` y `Enrollment.belongsTo(Course)`.
+
+## 9.2. Generar los componentes con Angular CLI
+
+![](images/clipboard-872104171.png)
+
+## 9.3. Servicio API de Inscripciones
+
+![](images/clipboard-1255398264.png)
+
+## 9.4. Cargar Inscripciones, Aprendices y Cursos en paralelo
+
+Tres consultas:
+
+- Inscripciones.
+
+- Aprendices.
+
+- Cursos.
+
+Utilizaremos `forkJoin` y `computed` para relacionar los identificadores con los nombres correspondientes.
+
+![](images/clipboard-2087164882.png)
+
+## 9.5. Indicadores de Inscripciones
+
+Incorporaremos:
+
+- Cantidad de inscripciones activas.
+
+- Total de inscripciones cargadas.
+
+- Búsqueda por aprendiz.
+
+- Búsqueda por curso.
+
+- Búsqueda por identificador.
+
+![](images/clipboard-60422422.png)
+
+## 9.6. Formulario reactivo de Inscripciones
+
+El formulario permitirá seleccionar:
+
+- Un aprendiz.
+
+- Un curso.
+
+- Una fecha de inscripción.
+
+![](images/clipboard-2118130067.png)
+
+## 9.7. Listado y operaciones CRUD de Inscripciones
+
+Este Integra los tres servicios y permite:
+
+- Consultar las inscripciones.
+
+- Registrar una inscripción.
+
+- Editar aprendiz, curso y fecha.
+
+- Desactivar una inscripción.
+
+- Eliminar físicamente una inscripción.
+
+- Buscar por aprendiz, curso o identificador.
+
+![](images/clipboard-2778300563.png)
+
+## 9.8. Configurar ruta y menú de Inscripciones
+
+Agregaremos `/inscripciones` y su entrada en el menú.
+
+![](images/clipboard-3908434214.png)
+
+## Actualizar la prueba de navegación
+
+## ![](images/clipboard-2556073627.png)
+
+## Criterios de aceptación de ISS-09
+
+1.  Se muestra el listado de inscripciones.
+
+2.  Se identifica el aprendiz por su nombre.
+
+3.  Se identifica el curso por su nombre.
+
+4.  Se registra una inscripción seleccionando un aprendiz y un curso.
+
+5.  Se valida que ambos campos sean obligatorios.
+
+6.  Se registra la fecha de inscripción.
+
+7.  Se edita una inscripción.
+
+8.  Se desactiva una inscripción mediante el endpoint correspondiente.
+
+9.  Se elimina físicamente una inscripción.
+
+10. Se muestran indicadores de inscripciones activas y totales.
+
+11. Se puede buscar por identificador, aprendiz o curso.
+
+12. Se envían `learner_id` y `course_id` como números.
+
+## Comprobación de ISS-09
+
+![![](images/clipboard-3428770734.png)](images/clipboard-3722207338.png)
+
+## Commit de ISS-09
+
+```         
+git add .
+git commit -m "Fase I: Frontend — ISS-09 — Inscripciones: CRUD y vinculación Aprendiz-Curso"
+git push origin main
+```

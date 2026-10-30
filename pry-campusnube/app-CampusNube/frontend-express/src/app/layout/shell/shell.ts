@@ -39,6 +39,7 @@ export class Shell {
     { label: 'Módulos', icon: 'pi pi-list', routerLink: '/modulos' },
     { label: 'Lecciones', icon: 'pi pi-file', routerLink: '/lecciones' },
     { label: 'Evaluaciones', icon: 'pi pi-clipboard', routerLink: '/evaluaciones' },
+    { label: 'Inscripciones', icon: 'pi pi-user-plus', routerLink: '/inscripciones' },
     { label: 'Prototipo', icon: 'pi pi-desktop', routerLink: '/construir' },
   ];
 

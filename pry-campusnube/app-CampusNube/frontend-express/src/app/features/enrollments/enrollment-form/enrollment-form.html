@@ -1,0 +1,84 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+  <div class="flex flex-col gap-2">
+    <label for="enrollment-learner" class="font-semibold">
+      Aprendiz *
+    </label>
+
+    <p-select
+      inputId="enrollment-learner"
+      formControlName="learner_id"
+      [options]="learners()"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Seleccione un aprendiz"
+      [filter]="true"
+      [showClear]="true"
+      styleClass="w-full"
+      appendTo="body"
+    />
+
+    @if (form.controls.learner_id.touched && form.controls.learner_id.invalid) {
+      <p-message severity="error">
+        Debe seleccionar un aprendiz.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="enrollment-course" class="font-semibold">
+      Curso *
+    </label>
+
+    <p-select
+      inputId="enrollment-course"
+      formControlName="course_id"
+      [options]="courses()"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Seleccione un curso"
+      [filter]="true"
+      [showClear]="true"
+      styleClass="w-full"
+      appendTo="body"
+    />
+
+    @if (form.controls.course_id.touched && form.controls.course_id.invalid) {
+      <p-message severity="error">
+        Debe seleccionar un curso.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="enrollment-date" class="font-semibold">
+      Fecha de inscripción
+    </label>
+
+    <input
+      id="enrollment-date"
+      pInputText
+      type="date"
+      formControlName="enrollment_date"
+      class="w-full"
+    />
+  </div>
+
+  <div class="flex justify-end gap-2 pt-3">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+      (onClick)="cancel()"
+    />
+
+    <p-button
+      [label]="enrollment() ? 'Actualizar inscripción' : 'Registrar inscripción'"
+      icon="pi pi-save"
+      type="submit"
+      [loading]="saving()"
+      [disabled]="saving()"
+    />
+  </div>
+</form>

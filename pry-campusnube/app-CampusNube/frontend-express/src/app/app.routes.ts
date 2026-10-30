@@ -60,6 +60,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'inscripciones',
+        title: 'Inscripciones · CampusNube',
+        loadComponent: () =>
+          import('./features/enrollments/enrollment-list/enrollment-list').then(
+            (m) => m.EnrollmentList
+          ),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'docentes',
