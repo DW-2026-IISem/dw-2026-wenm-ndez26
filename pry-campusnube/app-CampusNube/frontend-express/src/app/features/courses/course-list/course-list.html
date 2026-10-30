@@ -1,0 +1,173 @@
+<app-page-header
+  title="Cursos"
+  subtitle="Gestión y administración de cursos de CampusNube."
+>
+  <p-tag
+    [value]="activeCourseCount() + ' cursos activos'"
+    severity="info"
+    [rounded]="true"
+  />
+
+  <button pButton type="button" (click)="openCreate()">
+    <i pButtonIcon class="pi pi-plus"></i>
+    <span pButtonLabel>Nuevo curso</span>
+  </button>
+</app-page-header>
+
+@if (error()) {
+  <p-message severity="error" styleClass="mb-4 w-full">
+    {{ error() }}
+  </p-message>
+}
+
+<div class="rounded-xl border border-slate-200 bg-white">
+  <p-table
+    [value]="visibleRows()"
+    [loading]="loading()"
+    [paginator]="visibleRows().length > 10"
+    [rows]="10"
+    dataKey="id"
+  >
+    <ng-template #caption>
+      <div class="flex items-center gap-2">
+        <i class="pi pi-search text-slate-400"></i>
+        <input
+          pInputText
+          type="search"
+          aria-label="Buscar cursos"
+          placeholder="Buscar por nombre o descripción..."
+          [value]="filter()"
+          (input)="filter.set($any($event.target).value)"
+          class="w-full"
+        />
+      </div>
+
+      @if (filter()) {
+        <p class="mt-2 text-xs text-slate-500">
+          {{ visibleRows().length }} de {{ rows().length }} coinciden con la búsqueda.
+        </p>
+      }
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        <th pSortableColumn="name">
+          Nombre
+          <p-sort-icon field="name" />
+        </th>
+        <th>Descripción</th>
+        <th>Docentes</th>
+        <th>Estado</th>
+        <th class="w-40 text-right">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-course>
+      <tr>
+        <td>
+          <p class="font-medium text-slate-800">{{ course.name }}</p>
+          <p class="text-xs text-slate-400">#{{ course.id }}</p>
+        </td>
+
+        <td>{{ course.description || '—' }}</td>
+
+        <td>
+          @if (course.teachers?.length) {
+            @for (teacher of course.teachers; track teacher.id) {
+              <span class="block">{{ teacher.name }}</span>
+            }
+          } @else {
+            <span class="text-slate-400">Sin docentes asociados</span>
+          }
+        </td>
+
+        <td>
+          <app-status-tag
+            [status]="course.isActive ? 'active' : 'inactive'"
+          />
+        </td>
+
+        <td>
+          <div class="flex justify-end gap-1">
+            <button
+              pButton
+              type="button"
+              text
+              rounded
+              severity="secondary"
+              icon="pi pi-pencil"
+              aria-label="Editar curso"
+              pTooltip="Editar"
+              (click)="openEdit(course)"
+            ></button>
+
+            <button
+              pButton
+              type="button"
+              text
+              rounded
+              severity="warn"
+              icon="pi pi-ban"
+              aria-label="Desactivar curso"
+              pTooltip="Desactivar"
+              [disabled]="!course.isActive"
+              (click)="deactivate(course)"
+            ></button>
+
+            <button
+              pButton
+              type="button"
+              text
+              rounded
+              severity="danger"
+              icon="pi pi-trash"
+              aria-label="Eliminar curso"
+              pTooltip="Eliminar"
+              (click)="remove(course)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="5">
+          @if (filter()) {
+            <app-empty-state
+              icon="pi pi-search"
+              title="Sin coincidencias"
+              message="Ningún curso coincide con la búsqueda."
+            />
+          } @else {
+            <app-empty-state
+              icon="pi pi-book"
+              title="Sin cursos registrados"
+              message="Registra el primer curso."
+            />
+          }
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [header]="title()"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+  styleClass="w-full max-w-2xl mx-4"
+>
+  <app-course-form
+    [course]="editing()"
+    [teachers]="teachers()"
+    [saving]="saving()"
+    [resetKey]="resetKey()"
+    (saved)="save($event)"
+    (cancelled)="dialogVisible.set(false)"
+  />
+</p-dialog>

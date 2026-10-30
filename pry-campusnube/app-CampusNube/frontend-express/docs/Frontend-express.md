@@ -1278,3 +1278,129 @@ git add .
 git commit -m "Fase I: Frontend — ISS-04 — Aprendices: CRUD, formulario reactivo, listado y filtros"
 git push origin main
 ```
+
+![](images/clipboard-545150996.png)
+
+# ISS-05. CRUD de cursos y relación con docentes
+
+## 5.1 Modelo y reglas del backend
+
+El curso permitirá recibir una lista de identificadores de docentes mediante `teacherIds`.
+
+Archivo: `backend-express/src/features/business/course/dto/create-course.dto.ts`
+
+### 5.1 Modelo y reglas del backend
+
+El modelo `Course` tiene estos campos:
+
+| Campo         | Tipo           | Regla                  |
+|---------------|----------------|------------------------|
+| `id`          | number         | Identificador          |
+| `name`        | string         | Obligatorio            |
+| `description` | string \| null | Opcional               |
+| `isActive`    | boolean        | Activo por defecto     |
+| `createdAt`   | Date           | Fecha de creación      |
+| `updatedAt`   | Date           | Fecha de actualización |
+
+Operaciones disponibles:
+
+- `GET /api/cursos`
+
+- `GET /api/cursos/:id`
+
+- `POST /api/cursos`
+
+- `PATCH /api/cursos/:id`
+
+- `PUT /api/cursos/:id`
+
+- `PATCH /api/cursos/:id/deactivate`
+
+- `DELETE /api/cursos/:id`
+
+## 5.2 Generar con CLI
+
+![](images/clipboard-1795844649.png)
+
+## 5.3 Servicio
+
+![](images/clipboard-556632189.png)
+
+## 5.4 Cargar datos relacionados
+
+Cargar los cursos y docentes en paralelo utilizando `forkJoin`.
+
+Archivo: `src/app/features/courses/course-list/course-list.ts`
+
+![](images/clipboard-1807313745.png)
+
+## Mapa `id → nombre` con `computed`
+
+Construimos un `Map` para relacionar el ID del docente con su nombre, siguiendo el ejemplo del profesor.
+
+Archivo: `src/app/features/courses/course-list/course-list.ts`
+
+![](images/clipboard-81088363.png)
+
+Uso en la plantilla:
+
+![](images/clipboard-2900849746.png)
+
+La propiedad se utiliza así en la columna de docentes:
+
+## 5.5 Total de cursos activos con `computed`
+
+```         
+readonly activeCourseCount = computed(   () => this.rows().filter((course) => course.isActive).length, );
+```
+
+En el header:
+
+```         
+<p-tag   [value]="activeCourseCount() + ' cursos activos'"   severity="success"   [rounded]="true" />
+```
+
+### 5.6 Formulario de cursos
+
+El formulario permitirá registrar y editar cursos, con selección de los docentes asociados.
+
+Archivo: `src/app/core/models/course.model.ts`
+
+![](images/clipboard-944387352.png)
+
+Archivo: `src/app/features/courses/course-form/course-form.ts`
+
+![](images/clipboard-3335809617.png)
+
+Archivo: `src/app/features/courses/course-form/course-form.html`
+
+![](images/clipboard-1206663876.png)
+
+Archivo: `src/app/features/courses/course-form/course-form.css`
+
+![](images/clipboard-2500259317.png)
+
+## 5.7 Listado de cursos
+
+| Condición            | Severidad | Significado |
+|----------------------|-----------|-------------|
+| `isActive === true`  | `success` | Activo      |
+| `isActive === false` | `danger`  | Inactivo    |
+
+![](images/clipboard-2659958498.png)
+
+## 5.8 Ruta
+
+![](images/clipboard-3833706428.png)
+
+## Comprobación
+
+![](images/clipboard-4045069406.png)
+
+### **Commit ISS-05 – Cursos**
+
+```         
+ git add . 
+ git commit -m "Fase I: Frontend — ISS-05 — Cursos: CRUD, formulario reactivo, listado y relación con docentes" 
+git push origin main
+```

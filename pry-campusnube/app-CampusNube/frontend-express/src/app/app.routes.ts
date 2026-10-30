@@ -12,6 +12,13 @@ export const routes: Routes = [
       import('./layout/shell/shell').then((m) => m.Shell),
     children: [
       {
+        path: 'cursos',
+        title: 'Cursos · CampusNube',
+        loadComponent: () =>
+          import('./features/courses/course-list/course-list').then((m) => m.CourseList),
+      },
+
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'docentes',

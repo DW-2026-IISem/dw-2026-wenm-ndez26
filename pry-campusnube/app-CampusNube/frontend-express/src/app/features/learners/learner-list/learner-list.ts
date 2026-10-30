@@ -22,6 +22,7 @@ import { LearnerForm } from '../learner-form/learner-form';
   imports: [
     ButtonModule,
     DialogModule,
+    EmptyState,
     InputTextModule,
     MessageModule,
     PageHeader,
