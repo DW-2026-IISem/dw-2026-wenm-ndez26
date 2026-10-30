@@ -96,6 +96,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'certificados',
+        title: 'Certificados · CampusNube',
+        loadComponent: () =>
+          import('./features/certificates/certificate-list/certificate-list').then(
+            (m) => m.CertificateList
+          ),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'docentes',

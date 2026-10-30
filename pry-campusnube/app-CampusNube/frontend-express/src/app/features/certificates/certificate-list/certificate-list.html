@@ -1,0 +1,140 @@
+<p-toast />
+<p-confirmdialog />
+
+<div class="card">
+  <div class="flex flex-column md:flex-row md:align-items-center md:justify-content-between gap-3 mb-4">
+    <div>
+      <h2 class="text-xl font-semibold m-0">Gestión de certificados</h2>
+      <p class="text-color-secondary mt-2 mb-0">
+        Administración de certificados relacionados con las inscripciones.
+      </p>
+    </div>
+
+    <p-button
+      label="Nuevo certificado"
+      icon="pi pi-plus"
+      (onClick)="openCreate()"
+    />
+  </div>
+
+  @if (errorMessage()) {
+    <p-message severity="error" class="mb-3">
+      {{ errorMessage() }}
+    </p-message>
+  }
+
+  <div class="grid mb-3">
+    <div class="col-12 md:col-4">
+      <div class="surface-card border-round p-3 shadow-1">
+        <span class="text-color-secondary">Certificados activos</span>
+        <div class="text-3xl font-bold mt-2">
+          {{ activeCount() }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <input
+      pInputText
+      type="text"
+      placeholder="Buscar por nombre, descripción o inscripción"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+      class="w-full md:w-20rem"
+    />
+  </div>
+
+  <p-table
+    [value]="filteredCertificates()"
+    [loading]="loading()"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    responsiveLayout="scroll"
+    dataKey="id"
+    [tableStyle]="{ 'min-width': '60rem' }"
+  >
+    <ng-template #header>
+      <tr>
+        <th>ID</th>
+        <th>Inscripción</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-certificate>
+      <tr>
+        <td>{{ certificate.id }}</td>
+        <td>{{ enrollmentLabel(certificate.enrollment_id) }}</td>
+        <td>{{ certificate.name }}</td>
+        <td>{{ certificate.description || 'Sin descripción' }}</td>
+        <td>
+          <p-tag
+            [value]="certificate.isActive ? 'Activo' : 'Inactivo'"
+            [severity]="certificate.isActive ? 'success' : 'secondary'"
+          />
+        </td>
+        <td>
+          <div class="flex gap-2">
+            <p-button
+              icon="pi pi-pencil"
+              severity="info"
+              [rounded]="true"
+              [text]="true"
+              pTooltip="Editar"
+              (onClick)="openEdit(certificate)"
+            />
+
+            <p-button
+              icon="pi pi-ban"
+              severity="warn"
+              [rounded]="true"
+              [text]="true"
+              pTooltip="Desactivar"
+              (onClick)="confirmDeactivate(certificate)"
+            />
+
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              [text]="true"
+              pTooltip="Eliminar"
+              (onClick)="confirmRemove(certificate)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="6" class="text-center p-4">
+          No se encontraron certificados registrados.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  [header]="selectedCertificate() ? 'Actualizar certificado' : 'Registrar certificado'"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: '35rem', maxWidth: '95vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <app-certificate-form
+    [certificate]="selectedCertificate()"
+    [enrollments]="enrollments()"
+    [certificates]="certificates()"
+    (saved)="onSaved()"
+    (cancelled)="closeDialog()"
+  />
+</p-dialog>

@@ -52,6 +52,11 @@ export class Shell {
     },
 
     { label: 'Progreso', icon: 'pi pi-chart-line', routerLink: '/progreso' },
+    {
+      label: 'Certificados',
+      icon: 'pi pi-id-card',
+      routerLink: '/certificados',
+    },
     { label: 'Prototipo', icon: 'pi pi-desktop', routerLink: '/construir' },
   ];
 

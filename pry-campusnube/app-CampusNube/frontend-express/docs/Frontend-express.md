@@ -2297,4 +2297,170 @@ git commit -m "ISS-12: implementar CRUD de progreso relacionado con inscripcione
 git push origin main 
 ```
 
+# ISS-13. Certificados – CRUD y vinculación con Inscripciones
+
+## 13.1. Modelo y reglas del backend
+
+La entidad Certificado permite registrar y administrar los certificados asociados a las inscripciones de los aprendices dentro de CampusNube.
+
+El modelo contempla los siguientes campos:
+
+| Campo           | Tipo        | Regla                           |
+|-----------------|-------------|---------------------------------|
+| `id`            | number      | Identificador del certificado   |
+| `enrollment_id` | number      | Inscripción obligatoria y única |
+| `name`          | string      | Nombre obligatorio              |
+| `description`   | string/null | Descripción opcional            |
+| `isActive`      | boolean     | Activo por defecto              |
+| `createdAt`     | Date        | Fecha de creación               |
+| `updatedAt`     | Date        | Fecha de actualización          |
+
+Relación: una inscripción puede tener como máximo un certificado asociado, debido a la restricción de unicidad del campo `enrollment_id`.
+
+Reglas de negocio:
+
+- El certificado debe estar asociado a una inscripción existente y activa.
+
+- No se permite registrar más de un certificado para la misma inscripción.
+
+- El nombre del certificado es obligatorio.
+
+- La descripción es opcional.
+
+- Los certificados pueden actualizarse, desactivarse o eliminarse.
+
+- La desactivación modifica el campo `isActive` a `false`.
+
+- La eliminación es física y elimina el registro de la base de datos.
+
+Operaciones disponibles:
+
+- GET `/api/certificates`
+
+- GET `/api/certificates/:id`
+
+- POST `/api/certificates`
+
+- PUT `/api/certificates/:id`
+
+- PATCH `/api/certificates/:id`
+
+- PATCH `/api/certificates/:id/deactivate` (debemos registrar esta ruta).
+
+- DELETE `/api/certificates/:id`
+
+## 13.2. Generar los componentes
+
+![](images/clipboard-402934852.png)
+
+## 13.3. Servicio API
+
+src/app/features/certificates/certificate-api.ts
+
+![](images/clipboard-1294858048.png)
+
+![](images/clipboard-1294858048.png)
+
+## 13.4. Cargar Certificados e Inscripciones en paralelo
+
+La funcionalidad requiere consultar simultáneamente los certificados registrados y las inscripciones disponibles.
+
+Para ello se utilizará `forkJoin` de RxJS, que permite ejecutar las dos solicitudes HTTP en paralelo.
+
+certificate-list.ts
+
+![](images/clipboard-2197087571.png)
+
+## 13.6. Formulario reactivo de certificados
+
+![](images/clipboard-1601690981.png)
+
+`certificate-form.html`
+
+![](images/clipboard-1213174644.png)
+
+## 13.7. Listado y operaciones CRUD
+
+El componente `CertificateList` permitirá visualizar y administrar los certificados registrados.
+
+El listado incluirá:
+
+- Identificador del certificado.
+
+- Nombre.
+
+- Inscripción relacionada.
+
+- Descripción.
+
+- Estado.
+
+- Acciones para editar, desactivar y eliminar.
+
+certificate-list.ts
+
+![](images/clipboard-1338939597.png)
+
+`certificate-list.html`
+
+![](images/clipboard-2493142355.png)
+
+## 13.8. Integración de rutas y menú
+
+**Agregar la ruta en `app.routes.ts`**
+
+![](images/clipboard-334902190.png)
+
+### Agregar Certificados al menú
+
+La opción se incorporará después de Progreso y antes de Prototipo.
+
+![](images/clipboard-3983023551.png)
+
+Actualizar las pruebas del menú
+
+![](images/clipboard-4277363065.png)
+
+## Pruebas de los componentes
+
+Reemplaza `certificate-form.spec.ts`:
+
+![](images/clipboard-963235269.png)
+
+### Prueba del listado
+
+Reemplaza `certificate-list.spec.ts`:
+
+![](images/clipboard-487308176.png)
+
+## Criterios de aceptación
+
+| N.º | Criterio | Resultado esperado |
+|----|----|----|
+| 1 | Consulta de certificados | Visualiza los certificados activos |
+| 2 | Registro | Permite crear certificados |
+| 3 | Vinculación | Asocia el certificado a una inscripción |
+| 4 | Validación | Rechaza inscripciones inexistentes o inactivas |
+| 5 | Unicidad | Impide certificados duplicados para una inscripción |
+| 6 | Actualización | Permite modificar nombre, descripción e inscripción |
+| 7 | Desactivación | Cambia `isActive` a `false` |
+| 8 | Eliminación | Elimina físicamente el certificado |
+| 9 | Búsqueda | Filtra por nombre, descripción e inscripción |
+| 10 | Indicadores | Calcula los certificados activos |
+| 11 | Navegación | Permite acceder desde `/certificados` |
+
+## Comprobación
+
+![](images/clipboard-1950443453.png)
+
+![](images/clipboard-4208969844.png)
+
+##  Commit del ISS-13
+
+```         
+git add .  
+git commit -m "ISS-13: implementar CRUD de certificados relacionado con inscripciones" 
+git push origin main 
+```
+
 # 
