@@ -1,4 +1,3 @@
-
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -15,12 +14,19 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'construir',
+        redirectTo: 'docentes',
+      },
+      {
+        path: 'docentes',
+        title: 'Docentes',
+        loadComponent: () =>
+          import('./features/teachers/teacher-list/teacher-list')
+            .then((m) => m.TeacherList),
       },
     ],
   },
   {
     path: '**',
-    redirectTo: 'construir',
+    redirectTo: 'docentes',
   },
 ];

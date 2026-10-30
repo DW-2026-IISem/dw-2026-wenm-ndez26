@@ -1,4 +1,3 @@
-
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -34,7 +33,7 @@ export class Shell {
   readonly mobileOpen = signal(false);
 
   readonly items: MenuItem[] = [
-    { label: 'Clientes', icon: 'pi pi-users', routerLink: '/clientes' },
+    { label: 'Docentes', icon: 'pi pi-users', routerLink: '/docentes' },
     { label: 'Prototipo', icon: 'pi pi-desktop', routerLink: '/construir' },
   ];
 

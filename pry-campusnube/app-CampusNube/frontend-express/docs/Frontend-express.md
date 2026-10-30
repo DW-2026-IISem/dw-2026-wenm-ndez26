@@ -296,7 +296,7 @@ CampusNube - Aprendizaje virtual
 ### 1.9.4 Las cuatro formas de conectar la clase con el HTML
 
 | Forma            | Sintaxis                  | Ejemplo en CampusNube          |
-|------------------|---------------------------|--------------------------------|
+|------------------|-------------------------|-----------------------------|
 | Interpolación    | `{{ expresión }}`         | `{{ curso().nombre }}`         |
 | Property binding | `[propiedad]="expresión"` | `[value]="curso().nombre"`     |
 | Event binding    | `(evento)="método()"`     | `(click)="variarPrecio(1000)"` |
@@ -312,12 +312,9 @@ CampusNube - Aprendizaje virtual
 
 ## ![](images/clipboard-1327390416.png)
 
-\# 1. El servidor debe compilar
-ng build
-![](images/clipboard-2549395611.png)
+\# 1. El servidor debe compilar ng build ![](images/clipboard-2549395611.png)
 
-**\# 2. Debe imprimir la configuración de Tailwind/PrimeNG**
-grep -R "providePrimeNG\\\|\@import 'tailwindcss'" src \| head
+**\# 2. Debe imprimir la configuración de Tailwind/PrimeNG** grep -R "providePrimeNG\\\|\@import 'tailwindcss'" src \| head
 
 ![](images/clipboard-2939967457.png)
 
@@ -327,14 +324,9 @@ npm ls primeng \@primeuix/themes primeicons \@angular/cdk --depth=0
 
 ![](images/clipboard-1140289055.png)
 
-**\# 4. Presupuesto y estilos**
-node -e "const a=require('./angular.json');const p=a.projects[Object.keys(a.projects)[0]];console.log(p.architect.build.configurations.production.budgets[0])"
-cat src/styles.css
+**\# 4. Presupuesto y estilos** node -e "const a=require('./angular.json');const p=a.projects[Object.keys(a.projects)[0]];console.log(p.architect.build.configurations.production.budgets[0])" cat src/styles.css
 
-**\# 5. La composición y el componente de ejemplo declaran signals**
-grep -n "imports: \\[Ejemplo\\]" src/app/app.ts
-grep -n "app-ejemplo" src/app/app.html
-grep -n "signal(\\\|computed(\\\|effect(" src/app/demo/ejemplo/ejemplo.ts
+**\# 5. La composición y el componente de ejemplo declaran signals** grep -n "imports: \\[Ejemplo\\]" src/app/app.ts grep -n "app-ejemplo" src/app/app.html grep -n "signal(\\\|computed(\\\|effect(" src/app/demo/ejemplo/ejemplo.ts
 
 ![](images/clipboard-1171563858.png)
 
@@ -374,11 +366,11 @@ git push origin main
 
 1\. Crear el Header
 
-# ![](images/clipboard-3756947004.png) 
+# ![](images/clipboard-3756947004.png)
 
 2\. Crear el Aside
 
-# ![](images/clipboard-741973999.png) 
+# ![](images/clipboard-741973999.png)
 
 3\. Crear el Footer
 
@@ -452,8 +444,7 @@ git push origin main
 
 ## Verificación del ISS
 
-**\# 1. Compila**
-ng build
+**\# 1. Compila** ng build
 
 ![](images/clipboard-549731154.png)
 
@@ -539,7 +530,7 @@ git push origin main
 
 ![](images/clipboard-2486301024.png)
 
-2. Crear el helper para detectar el ancho
+2.  Crear el helper para detectar el ancho
 
 ![](images/clipboard-2323739422.png)
 
@@ -551,7 +542,7 @@ git push origin main
 
 ![](images/clipboard-2908866726.png)
 
-5. Configurar `construir.css`
+5.  Configurar `construir.css`
 
 ![](images/clipboard-3464547288.png)
 
@@ -559,7 +550,7 @@ git push origin main
 
 ![](images/clipboard-3969719231.png)
 
-2. Ejecutar las pruebas
+2.  Ejecutar las pruebas
 
 ![](images/clipboard-299264750.png)
 
@@ -1054,8 +1045,7 @@ npm start
 
 ## Verificación del ISS
 
-\# 1. Compila y separa los chunks diferidos
-ng build
+\# 1. Compila y separa los chunks diferidos ng build
 
 ![](images/clipboard-1781208332.png)
 
@@ -1078,5 +1068,123 @@ Commit
 ```         
 git add .
 git commit -m "Fase I: Frontend — ISS-02 — Núcleo: environment, modelos, servicios y layout"
+git push origin main
+```
+
+# ISS-03 · CRUD de docentes con Signals
+
+bjetivo: implementar las operaciones para administrar docentes:
+
+1.  Listar docentes.
+
+2.  Buscar docentes.
+
+3.  Registrar un docente.
+
+4.  Editar sus datos.
+
+5.  Desactivar docentes.
+
+6.  Eliminar docentes, si el backend contempla esa operación.
+
+**3.1 Generar componentes con CLI**
+
+![](images/clipboard-3370591780.png)
+
+## 3.2 Utilidad de filtro local
+
+`src/app/core/utils/filter-rows.ts`:
+
+![](images/clipboard-2637473277.png)
+
+| Decisión              | Por qué                                |
+|-----------------------|----------------------------------------|
+| `pick` recibe la fila | El llamador decide qué campos buscar.  |
+| `[...rows]`           | Devuelve una copia si no hay búsqueda. |
+| `(value ?? '')`       | Evita errores con valores nulos.       |
+
+## 3.3 Formulario reactivo reutilizable
+
+El mismo formulario sirve para crear y editar docentes.
+
+Archivo: `src/app/features/teachers/teacher-form/teacher-form.ts`
+
+![](images/clipboard-2851824729.png)
+
+**src/app/features/teachers/teacher-form/teacher-form.html**
+
+![](images/clipboard-2674801327.png)
+
+src/app/features/teachers/teacher-form/teacher-form.css
+
+![](images/clipboard-3406502943.png)
+
+## 3.4 Lista con estado en Signals
+
+El componente mantiene los registros, la carga, el filtro, los errores y el diálogo.
+
+Archivo: `src/app/features/teachers/teacher-list/teacher-list.ts`
+
+![](images/clipboard-2191007467.png)
+
+## 3.5 Plantilla de la lista
+
+Archivo: `src/app/features/teachers/teacher-list/teacher-list.html`
+
+![](images/clipboard-1822543171.png)
+
+## 3.6 Baja lógica vs. baja física
+
+Los dos métodos ya están incluidos en `teacher-list.ts`:
+
+- `deactivate(teacher)`: realiza `PATCH /api/docentes/:id/deactivate`.
+
+- `remove(teacher)`: realiza `DELETE /api/docentes/:id`.
+
+### 3.7 Ruta y menú
+
+Archivo: `src/app/app.routes.ts`
+
+La ruta de docentes quedará dentro de `Shell` y será la pantalla inicial.
+
+![](images/clipboard-2467506140.png)
+
+Archivo: `src/app/layout/shell/shell.ts`
+
+![](images/clipboard-1533319566.png)
+
+## Verificación del ISS
+
+```         
+# 1. Verificar la utilidad de filtro
+```
+
+![](images/clipboard-3337712057.png)
+
+```         
+# 2. Verificar que el formulario solo emite datos y no llama a la API
+```
+
+![](images/clipboard-1992521566.png)
+
+```         
+# 3. Verificar que la lista usa computed y no tiene filtros imperativos 
+```
+
+![](images/clipboard-1427590192.png)
+
+```         
+# 4. Verificar las plantillas de PrimeNG 22
+```
+
+![](images/clipboard-941840379.png)
+
+### Cierre del ISS-03 – Docentes
+
+Commit
+
+```         
+git add . 
+git commit -m "Fase I: Frontend — ISS-03 — Docentes: CRUD, formulario reactivo, listado y filtros" 
 git push origin main
 ```

@@ -1,0 +1,52 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+  <div>
+    <label for="teacher-name" class="mb-1 block text-sm font-medium">
+      Nombre del docente *
+    </label>
+
+    <input
+      id="teacher-name"
+      pInputText
+      formControlName="name"
+      placeholder="Nombre completo"
+      class="w-full"
+    />
+
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <p-message severity="error" size="small" variant="simple">
+        El nombre es obligatorio y debe tener máximo 120 caracteres.
+      </p-message>
+    }
+  </div>
+
+  <div>
+    <label for="teacher-description" class="mb-1 block text-sm font-medium">
+      Descripción
+    </label>
+
+    <textarea
+      id="teacher-description"
+      pTextarea
+      formControlName="description"
+      rows="3"
+      placeholder="Descripción del docente"
+      class="w-full"
+    ></textarea>
+  </div>
+
+  <div class="flex justify-end gap-2 border-t pt-4">
+    <button
+      pButton
+      type="button"
+      severity="secondary"
+      outlined
+      (click)="cancelled.emit()"
+    >
+      <span pButtonLabel>Cancelar</span>
+    </button>
+
+    <button pButton type="submit" [loading]="saving()">
+      <span pButtonLabel>Guardar</span>
+    </button>
+  </div>
+</form>
