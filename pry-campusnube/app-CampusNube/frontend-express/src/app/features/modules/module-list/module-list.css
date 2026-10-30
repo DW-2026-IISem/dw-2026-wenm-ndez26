@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+section {
+  min-width: 0;
+}
+
+p-table {
+  width: 100%;
+}

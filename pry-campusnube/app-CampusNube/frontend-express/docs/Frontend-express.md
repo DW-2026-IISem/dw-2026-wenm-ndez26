@@ -1404,3 +1404,184 @@ Archivo: `src/app/features/courses/course-form/course-form.css`
  git commit -m "Fase I: Frontend — ISS-05 — Cursos: CRUD, formulario reactivo, listado y relación con docentes" 
 git push origin main
 ```
+
+## ISS-06 – Módulos
+
+Objetivo: construir el CRUD de módulos y vincular cada módulo con un curso.
+
+Vamos a seguir la misma estructura que utilizamos en Docentes, Aprendices y Cursos:
+
+1.  Generar los componentes de listado y formulario.
+
+2.  Revisar el modelo y el servicio API de módulos.
+
+3.  Cargar los cursos disponibles.
+
+4.  Crear el formulario para registrar y editar módulos.
+
+5.  Construir el listado con búsqueda y acciones CRUD.
+
+6.  Configurar la ruta y el menú lateral.
+
+7.  Realizar pruebas, tomar evidencias y hacer el commit.
+
+**6.1 Generar componentes**
+
+![](images/clipboard-1359400049.png)
+
+### 6.2 Revisar el modelo y el servicio API de módulos
+
+Objetivo: verificar los atributos del módulo y los métodos disponibles para consumir el backend.
+
+Archivos que se revisarán:
+
+- `src/app/core/models/module.model.ts`
+
+- `src/app/features/modules/module-api.ts`
+
+- `src/app/core/models/course.model.ts`
+
+- `src/app/features/courses/course-api.ts`
+
+![](images/clipboard-1784629877.png)
+
+## 6.3 Servicio
+
+El servicio `ModuleApi` permite la comunicación entre el frontend Angular y el backend Express para realizar las operaciones CRUD de módulos.
+
+El endpoint principal es `/api/modulos`.
+
+Las operaciones disponibles son:
+
+| Método HTTP | Endpoint                      | Operación               |
+|-------------|-------------------------------|-------------------------|
+| GET         | `/api/modulos`                | Consultar módulos       |
+| GET         | `/api/modulos/:id`            | Consultar un módulo     |
+| POST        | `/api/modulos`                | Registrar módulo        |
+| PATCH       | `/api/modulos/:id`            | Actualizar parcialmente |
+| PUT         | `/api/modulos/:id`            | Reemplazar información  |
+| PATCH       | `/api/modulos/:id/deactivate` | Desactivar módulo       |
+| DELETE      | `/api/modulos/:id`            | Eliminar módulo         |
+
+Archivo: `src/app/features/modules/module-api.ts`
+
+![](images/clipboard-124342591.png)
+
+## 6.4 Cargar datos relacionados
+
+Archivo: `module-list.ts`
+
+Este código incluye los imports, inyección de servicios, señales, carga paralela con `forkJoin`, manejo de errores y relación entre el identificador y el nombre del curso.
+
+![](images/clipboard-1498997846.png)
+
+Archivo: `module-list.html`
+
+Esta plantilla permite visualizar los módulos, su identificador, el nombre del curso relacionado y el estado de cada registro.
+
+![](images/clipboard-3773871345.png)
+
+Uso en la plantilla:
+
+```         
+{{ courseName()(row.course_id) }}
+```
+
+## 6.5 Indicador de módulos activos con `computed`
+
+![En el encabezado de la tabla se utilizará:](images/clipboard-2318167390.png)
+
+```         
+<p-tag   
+[value]="activeModuleCount() + ' módulos activos'"  
+severity="success"   
+[rounded]="true" />
+```
+
+## 6.6 Formulario de módulos
+
+El formulario permitirá registrar y editar módulos, con selección del curso al que pertenece cada uno.
+
+Archivo: `src/app/core/models/module.model.ts`
+
+![](images/clipboard-1337419533.png)
+
+### Componente TypeScript del formulario
+
+Archivo: `src/app/features/modules/module-form/module-form.ts4`
+
+![](images/clipboard-3081784071.png)
+
+**Plantilla HTML del formulario**
+
+![](images/clipboard-1979307239.png)
+
+### Estilos CSS
+
+Archivo: `src/app/features/modules/module-form/module-form.css`
+
+![](images/clipboard-2755789485.png)
+
+## 6.7 Listado de módulos
+
+El listado permitirá consultar, buscar, registrar, editar, desactivar y eliminar módulos.
+
+Se utilizará una ventana modal para abrir el formulario, una tabla PrimeNG para presentar los registros y etiquetas para identificar el estado de cada módulo.
+
+###  Componente TypeScript del listado
+
+Archivo: `src/app/features/modules/module-list/module-list.ts`
+
+![](images/clipboard-200373016.png)
+
+### Plantilla HTML del listado
+
+Archivo: `src/app/features/modules/module-list/module-list.html`
+
+La tabla incluye búsqueda, indicador de módulos activos, nombre del curso relacionado, estado y botones para las operaciones.
+
+![](images/clipboard-471864692.png)
+
+### Estilos CSS del listado
+
+Archivo: `src/app/features/modules/module-list/module-list.css`
+
+![](images/clipboard-2153440355.png)
+
+###  Agregar el módulo Tooltip
+
+El listado utiliza `pTooltip` en los botones de acciones. Para que Angular reconozca esa directiva, hay que importar `TooltipModule`.
+
+![](images/clipboard-2169162386.png)
+
+**Ajustar el envío de datos al backend**
+
+![](images/clipboard-1552619558.png)
+
+## 6.8 Ruta
+
+Debemos registrar la ruta de módulos en `app.routes.ts` para que el componente `ModuleList` pueda visualizarse desde el navegador.
+
+Archivo: `src/app/app.routes.ts`
+
+![](images/clipboard-1084423594.png)
+
+## Agregar Módulos al menú lateral
+
+`src/app/layout/shell/shell.ts`.
+
+![](images/clipboard-832619099.png)
+
+Comprobación del ISS-06
+
+![](images/clipboard-817576459.png)
+
+![](images/clipboard-2918442529.png)
+
+## Commit ISS-06 – Módulos
+
+```         
+git add . 
+git commit -m "Fase I: Frontend — ISS-06 — Módulos: CRUD y relación con cursos" 
+git push origin main
+```

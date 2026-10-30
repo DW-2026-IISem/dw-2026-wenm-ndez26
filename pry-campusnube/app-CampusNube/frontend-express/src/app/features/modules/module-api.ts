@@ -1,12 +1,13 @@
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
 import { Module, ModulePayload } from '../../core/models/module.model';
 
 @Injectable({ providedIn: 'root' })
 export class ModuleApi {
+
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/modulos`;
 

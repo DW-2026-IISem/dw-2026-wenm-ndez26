@@ -15,20 +15,16 @@ export const routes: Routes = [
         path: 'cursos',
         title: 'Cursos · CampusNube',
         loadComponent: () =>
-          import('./features/courses/course-list/course-list').then((m) => m.CourseList),
-      },
-
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'docentes',
+          import('./features/courses/course-list/course-list').then(
+            (m) => m.CourseList
+          ),
       },
       {
         path: 'docentes',
         title: 'Docentes · CampusNube',
         loadComponent: () =>
           import('./features/teachers/teacher-list/teacher-list').then(
-            (m) => m.TeacherList,
+            (m) => m.TeacherList
           ),
       },
       {
@@ -36,8 +32,21 @@ export const routes: Routes = [
         title: 'Aprendices · CampusNube',
         loadComponent: () =>
           import('./features/learners/learner-list/learner-list').then(
-            (m) => m.LearnerList,
+            (m) => m.LearnerList
           ),
+      },
+      {
+        path: 'modulos',
+        title: 'Módulos · CampusNube',
+        loadComponent: () =>
+          import('./features/modules/module-list/module-list').then(
+            (m) => m.ModuleList
+          ),
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'docentes',
       },
     ],
   },

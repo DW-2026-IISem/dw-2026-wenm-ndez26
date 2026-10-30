@@ -1,0 +1,86 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+  <div class="flex flex-col gap-2">
+    <label for="name" class="font-semibold">
+      Nombre del módulo *
+    </label>
+
+    <input
+      id="name"
+      pInputText
+      formControlName="name"
+      placeholder="Ingrese el nombre del módulo"
+      class="w-full"
+    />
+
+    @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+      <p-message severity="error">
+        El nombre del módulo es obligatorio.
+      </p-message>
+    }
+
+    @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
+      <p-message severity="error">
+        El nombre no puede superar los 150 caracteres.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="course_id" class="font-semibold">
+      Curso asociado *
+    </label>
+
+    <p-select
+      inputId="course_id"
+      formControlName="course_id"
+      [options]="courses()"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Seleccione un curso"
+      [showClear]="true"
+      styleClass="w-full"
+      appendTo="body"
+    />
+
+    @if (form.controls.course_id.touched && form.controls.course_id.invalid) {
+      <p-message severity="error">
+        Debe seleccionar un curso válido.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="description" class="font-semibold">
+      Descripción
+    </label>
+
+    <textarea
+      pTextarea
+      id="description"
+      formControlName="description"
+      rows="4"
+      placeholder="Ingrese una descripción del módulo"
+      class="w-full"
+    ></textarea>
+  </div>
+
+  <div class="flex justify-end gap-2 pt-3">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+      (onClick)="cancel()"
+    />
+
+    <p-button
+      [label]="module() ? 'Actualizar módulo' : 'Registrar módulo'"
+      icon="pi pi-save"
+      type="submit"
+      [loading]="saving()"
+      [disabled]="saving()"
+    />
+  </div>
+
+</form>
