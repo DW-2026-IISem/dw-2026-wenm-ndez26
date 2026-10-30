@@ -44,6 +44,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'lecciones',
+        title: 'Lecciones · CampusNube',
+        loadComponent: () =>
+          import('./features/lessons/lesson-list/lesson-list').then(
+            (m) => m.LessonList,
+          ),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'docentes',

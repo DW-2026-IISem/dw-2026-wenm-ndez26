@@ -1,0 +1,85 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+  <div class="flex flex-col gap-2">
+    <label for="lesson-name" class="font-semibold">
+      Nombre de la lección *
+    </label>
+
+    <input
+      id="lesson-name"
+      pInputText
+      formControlName="name"
+      placeholder="Ingrese el nombre de la lección"
+      class="w-full"
+    />
+
+    @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+      <p-message severity="error">
+        El nombre de la lección es obligatorio.
+      </p-message>
+    }
+
+    @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
+      <p-message severity="error">
+        El nombre no puede superar los 150 caracteres.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="lesson-module" class="font-semibold">
+      Módulo asociado *
+    </label>
+
+    <p-select
+      inputId="lesson-module"
+      formControlName="module_id"
+      [options]="modules()"
+      optionLabel="name"
+      optionValue="id"
+      placeholder="Seleccione un módulo"
+      [showClear]="true"
+      styleClass="w-full"
+      appendTo="body"
+    />
+
+    @if (form.controls.module_id.touched && form.controls.module_id.invalid) {
+      <p-message severity="error">
+        Debe seleccionar un módulo válido.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="lesson-description" class="font-semibold">
+      Descripción
+    </label>
+
+    <textarea
+      pTextarea
+      id="lesson-description"
+      formControlName="description"
+      rows="4"
+      placeholder="Ingrese una descripción de la lección"
+      class="w-full"
+    ></textarea>
+  </div>
+
+  <div class="flex justify-end gap-2 pt-3">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+      (onClick)="cancel()"
+    />
+
+    <p-button
+      [label]="lesson() ? 'Actualizar lección' : 'Registrar lección'"
+      icon="pi pi-save"
+      type="submit"
+      [loading]="saving()"
+      [disabled]="saving()"
+    />
+  </div>
+</form>

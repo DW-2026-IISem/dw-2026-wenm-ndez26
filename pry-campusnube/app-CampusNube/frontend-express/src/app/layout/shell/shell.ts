@@ -37,6 +37,7 @@ export class Shell {
     { label: 'Aprendices', icon: 'pi pi-user', routerLink: '/aprendices' },
     { label: 'Cursos', icon: 'pi pi-book', routerLink: '/cursos' },
     { label: 'Módulos', icon: 'pi pi-list', routerLink: '/modulos' },
+    { label: 'Lecciones', icon: 'pi pi-file', routerLink: '/lecciones' },
     { label: 'Prototipo', icon: 'pi pi-desktop', routerLink: '/construir' },
   ];
 

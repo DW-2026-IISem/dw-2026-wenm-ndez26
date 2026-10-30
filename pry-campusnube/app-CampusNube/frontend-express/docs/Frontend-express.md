@@ -1585,3 +1585,107 @@ git add .
 git commit -m "Fase I: Frontend — ISS-06 — Módulos: CRUD y relación con cursos" 
 git push origin main
 ```
+
+# ISS-07 – Lecciones: CRUD y vinculación con Módulos
+
+## 7.1. Modelo y reglas del backend
+
+El modelo ya existe en `src/app/core/models/lesson.model.ts`. Sus campos son `id`, `module_id`, `name`, `description` e `isActive`, además de las marcas de tiempo.
+
+La relación es de uno a muchos: un módulo puede tener varias lecciones y cada lección pertenece a un módulo mediante `module_id`.
+
+Reglas confirmadas:
+
+- `module_id` y `name` son obligatorios al crear.
+
+- El módulo debe existir y estar activo.
+
+- El backend permite consultar, crear, actualizar, desactivar y eliminar.
+
+- La desactivación es lógica; la eliminación es física.
+
+- Las rutas están protegidas por autenticación y autorización.
+
+## 7.2. Generar componentes con Angular CLI
+
+![](images/clipboard-2964468223.png)
+
+## 7.3. Servicio de Lecciones
+
+El servicio ya existe, pero debemos corregirlo para que interprete las respuestas reales del backend.
+
+![](images/clipboard-3652514414.png)
+
+## 7.4. Cargar Lecciones y Módulos en paralelo
+
+Objetivo: consultar simultáneamente las lecciones y los módulos para mostrar en el listado el nombre del módulo al que pertenece cada lección.
+
+Para ello utilizaremos:
+
+- `forkJoin`: ejecuta las dos consultas en paralelo.
+
+- `LessonApi`: obtiene las lecciones.
+
+- `ModuleApi`: obtiene los módulos.
+
+- `computed`: construye una relación entre el identificador del módulo y su nombre.
+
+Archivo: `src/app/features/lessons/lesson-list/lesson-list.ts`
+
+![](images/clipboard-1786809297.png)
+
+## 7.5. Indicador de Lecciones activas
+
+![](images/clipboard-1549838439.png)
+
+## 7.6. Formulario reactivo de Lecciones
+
+![](images/clipboard-3968209957.png)
+
+**7.7. Listado y operaciones CRUD**
+
+![](images/clipboard-72917916.png)
+
+## 7.8. Configurar la ruta y el menú
+
+Se agrega la ruta `/lecciones` y la opción del menú sin reemplazar el resto de la configuración:
+
+![](images/clipboard-3782533857.png)
+
+## Criterios de aceptación de ISS-07
+
+- Se muestra el listado de lecciones.
+
+- Se identifica el módulo asociado por su nombre.
+
+- Se registra una lección seleccionando un módulo.
+
+- Se valida que el nombre y el módulo sean obligatorios.
+
+- Se edita una lección existente.
+
+- Se desactiva una lección.
+
+- Se elimina físicamente una lección.
+
+- Se puede buscar por nombre, descripción o módulo.
+
+- Se muestra el indicador de lecciones activas.
+
+## Comprobación de ISS-07
+
+```         
+npm test -- --watch=false
+```
+
+![](images/clipboard-3620364108.png)
+
+### commit de ISS-07
+
+Ejecuta estos comandos:
+
+```         
+git add . 
+git commit -m "Fase I: Frontend — ISS-07 — Lecciones: CRUD y vinculación con módulos"
+git push origin main
+```
