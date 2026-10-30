@@ -38,6 +38,11 @@ describe('Shell', () => {
   it('debe tener los elementos de navegación de CampusNube', () => {
     expect(fixture.componentInstance.items).toEqual([
       {
+        label: 'Dashboard',
+        icon: 'pi pi-home',
+        routerLink: '/dashboard',
+      },
+      {
         label: 'Docentes',
         icon: 'pi pi-users',
         routerLink: '/docentes',
@@ -103,19 +108,20 @@ describe('Shell', () => {
   it('debe compartir la lista de navegación con los menús', () => {
     const shell = fixture.componentInstance;
 
-    expect(shell.items.length).toBe(12);
-    expect(shell.items[0].label).toBe('Docentes');
-    expect(shell.items[1].label).toBe('Aprendices');
-    expect(shell.items[2].label).toBe('Cursos');
-    expect(shell.items[3].label).toBe('Módulos');
-    expect(shell.items[4].label).toBe('Lecciones');
-    expect(shell.items[5].label).toBe('Evaluaciones');
-    expect(shell.items[6].label).toBe('Inscripciones');
-    expect(shell.items[7].label).toBe('Intentos');
-    expect(shell.items[8].label).toBe('Entregas');
-    expect(shell.items[9].label).toBe('Progreso');
-    expect(shell.items[10].label).toBe('Certificados');
-    expect(shell.items[11].label).toBe('Prototipo');
+    expect(shell.items.length).toBe(13);
+    expect(shell.items[0].label).toBe('Dashboard');
+    expect(shell.items[1].label).toBe('Docentes');
+    expect(shell.items[2].label).toBe('Aprendices');
+    expect(shell.items[3].label).toBe('Cursos');
+    expect(shell.items[4].label).toBe('Módulos');
+    expect(shell.items[5].label).toBe('Lecciones');
+    expect(shell.items[6].label).toBe('Evaluaciones');
+    expect(shell.items[7].label).toBe('Inscripciones');
+    expect(shell.items[8].label).toBe('Intentos');
+    expect(shell.items[9].label).toBe('Entregas');
+    expect(shell.items[10].label).toBe('Progreso');
+    expect(shell.items[11].label).toBe('Certificados');
+    expect(shell.items[12].label).toBe('Prototipo');
 
     expect(compilado.querySelector('app-aside')).toBeTruthy();
     expect(compilado.querySelector('p-drawer')).toBeTruthy();

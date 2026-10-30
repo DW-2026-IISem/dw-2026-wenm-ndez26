@@ -33,6 +33,11 @@ export class Shell {
   readonly mobileOpen = signal(false);
 
   readonly items: MenuItem[] = [
+    {
+      label: 'Dashboard',
+      icon: 'pi pi-home',
+      routerLink: '/dashboard',
+    },
     { label: 'Docentes', icon: 'pi pi-users', routerLink: '/docentes' },
     { label: 'Aprendices', icon: 'pi pi-user', routerLink: '/aprendices' },
     { label: 'Cursos', icon: 'pi pi-book', routerLink: '/cursos' },

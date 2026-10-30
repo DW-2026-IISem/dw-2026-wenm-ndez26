@@ -12,6 +12,14 @@ export const routes: Routes = [
       import('./layout/shell/shell').then((m) => m.Shell),
     children: [
       {
+        path: 'dashboard',
+        title: 'Dashboard académico · CampusNube',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard').then(
+            (m) => m.Dashboard
+          ),
+      },
+      {
         path: 'cursos',
         title: 'Cursos · CampusNube',
         loadComponent: () =>
@@ -106,7 +114,7 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'docentes',
+        redirectTo: 'dashboard',
       },
     ],
   },

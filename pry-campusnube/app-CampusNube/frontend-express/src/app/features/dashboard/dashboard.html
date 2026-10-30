@@ -1,0 +1,241 @@
+<section class="dashboard">
+
+  <header class="dashboard-header">
+    <div>
+      <span class="eyebrow">CAMPUSNUBE · APRENDIZAJE VIRTUAL</span>
+      <h1>Dashboard académico</h1>
+      <p>Resumen general de la información académica de la plataforma.</p>
+    </div>
+
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="loadDashboard()"
+      [disabled]="loading()"
+    >
+      <i class="pi pi-refresh"></i>
+      Actualizar información
+    </button>
+  </header>
+
+  @if (loading()) {
+    <div class="message loading-message">
+      <i class="pi pi-spin pi-spinner"></i>
+      Cargando información académica...
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="message error-message" role="alert">
+      <i class="pi pi-exclamation-circle"></i>
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (!loading() && !errorMessage()) {
+
+    <section class="section-block">
+      <div class="section-heading">
+        <div>
+          <h2>Resumen general</h2>
+          <p>Indicadores principales de CampusNube</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+
+        <article class="stat-card">
+          <div class="stat-icon purple"><i class="pi pi-users"></i></div>
+          <div class="stat-content">
+            <span>Docentes</span>
+            <strong>{{ totalTeachers() }}</strong>
+            <small>{{ activeTeachers() }} activos</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon blue"><i class="pi pi-user"></i></div>
+          <div class="stat-content">
+            <span>Aprendices</span>
+            <strong>{{ totalLearners() }}</strong>
+            <small>{{ activeLearners() }} activos</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon green"><i class="pi pi-book"></i></div>
+          <div class="stat-content">
+            <span>Cursos</span>
+            <strong>{{ totalCourses() }}</strong>
+            <small>{{ activeCourses() }} activos</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon orange"><i class="pi pi-folder"></i></div>
+          <div class="stat-content">
+            <span>Módulos</span>
+            <strong>{{ totalModules() }}</strong>
+            <small>{{ activeModules() }} activos</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon cyan"><i class="pi pi-file"></i></div>
+          <div class="stat-content">
+            <span>Lecciones</span>
+            <strong>{{ totalLessons() }}</strong>
+            <small>{{ activeLessons() }} activas</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon pink"><i class="pi pi-check-square"></i></div>
+          <div class="stat-content">
+            <span>Evaluaciones</span>
+            <strong>{{ totalEvaluations() }}</strong>
+            <small>{{ activeEvaluations() }} activas</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon green"><i class="pi pi-bookmark"></i></div>
+          <div class="stat-content">
+            <span>Inscripciones</span>
+            <strong>{{ totalEnrollments() }}</strong>
+            <small>{{ activeEnrollments() }} activas</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon orange"><i class="pi pi-pencil"></i></div>
+          <div class="stat-content">
+            <span>Intentos</span>
+            <strong>{{ totalAttempts() }}</strong>
+            <small>{{ activeAttempts() }} activos</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon blue"><i class="pi pi-inbox"></i></div>
+          <div class="stat-content">
+            <span>Entregas</span>
+            <strong>{{ totalSubmissions() }}</strong>
+            <small>Registros totales</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon purple"><i class="pi pi-chart-line"></i></div>
+          <div class="stat-content">
+            <span>Progreso</span>
+            <strong>{{ totalProgress() }}</strong>
+            <small>{{ activeProgress() }} activos</small>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon cyan"><i class="pi pi-verified"></i></div>
+          <div class="stat-content">
+            <span>Certificados</span>
+            <strong>{{ totalCertificates() }}</strong>
+            <small>{{ activeCertificates() }} activos</small>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <div>
+          <h2>Actividad reciente</h2>
+          <p>Últimos movimientos registrados en la plataforma</p>
+        </div>
+      </div>
+
+      <div class="activity-grid">
+
+        <article class="activity-card">
+          <div class="activity-title">
+            <i class="pi pi-bookmark"></i>
+            <h3>Últimas inscripciones</h3>
+          </div>
+
+          @if (latestEnrollments().length > 0) {
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Aprendiz</th>
+                    <th>Curso</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of latestEnrollments(); track item.id) {
+                    <tr>
+                      <td>#{{ item.id }}</td>
+                      <td>{{ item.learner_id }}</td>
+                      <td>{{ item.course_id }}</td>
+                      <td>{{ item.enrollment_date | date:'dd/MM/yyyy' }}</td>
+                      <td>
+                        <span class="status" [class.active]="item.status === 'active'">
+                          {{ item.status }}
+                        </span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          } @else {
+            <p class="empty-state">No hay inscripciones registradas.</p>
+          }
+        </article>
+
+        <article class="activity-card">
+          <div class="activity-title">
+            <i class="pi pi-inbox"></i>
+            <h3>Últimas entregas</h3>
+          </div>
+
+          @if (latestSubmissions().length > 0) {
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Inscripción</th>
+                    <th>Lección</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of latestSubmissions(); track item.id) {
+                    <tr>
+                      <td>#{{ item.id }}</td>
+                      <td>{{ item.enrollment_id }}</td>
+                      <td>{{ item.lesson_id }}</td>
+                      <td>{{ item.fecha_inicio | date:'dd/MM/yyyy' }}</td>
+                      <td>
+                        <span class="status">{{ item.estado }}</span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          } @else {
+            <p class="empty-state">No hay entregas registradas.</p>
+          }
+        </article>
+
+      </div>
+    </section>
+  }
+
+</section>

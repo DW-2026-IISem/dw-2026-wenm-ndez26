@@ -1528,7 +1528,7 @@ El listado permitirá consultar, buscar, registrar, editar, desactivar y elimina
 
 Se utilizará una ventana modal para abrir el formulario, una tabla PrimeNG para presentar los registros y etiquetas para identificar el estado de cada módulo.
 
-###  Componente TypeScript del listado
+### Componente TypeScript del listado
 
 Archivo: `src/app/features/modules/module-list/module-list.ts`
 
@@ -1548,7 +1548,7 @@ Archivo: `src/app/features/modules/module-list/module-list.css`
 
 ![](images/clipboard-2153440355.png)
 
-###  Agregar el módulo Tooltip
+### Agregar el módulo Tooltip
 
 El listado utiliza `pTooltip` en los botones de acciones. Para que Angular reconozca esa directiva, hay que importar `TooltipModule`.
 
@@ -2081,7 +2081,7 @@ El módulo permitirá crear, consultar, editar, desactivar y eliminar entregas, 
 La interfaz debe respetar estas reglas:
 
 | Campo           | Regla                                                   |
-|-----------------|---------------------------------------------------------|
+|------------------|------------------------------------------------------|
 | `referencia_id` | Obligatorio, numérico                                   |
 | `lesson_id`     | Obligatorio, debe corresponder a una lección activa     |
 | `enrollment_id` | Obligatorio, debe corresponder a una inscripción activa |
@@ -2183,7 +2183,7 @@ La entrada de Entregas debe quedar así:
 
 ![](images/clipboard-1382927379.png)
 
-##  Commit del ISS-11
+## Commit del ISS-11
 
 ```         
 git add . 
@@ -2436,7 +2436,7 @@ Reemplaza `certificate-list.spec.ts`:
 ## Criterios de aceptación
 
 | N.º | Criterio | Resultado esperado |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | 1 | Consulta de certificados | Visualiza los certificados activos |
 | 2 | Registro | Permite crear certificados |
 | 3 | Vinculación | Asocia el certificado a una inscripción |
@@ -2455,11 +2455,78 @@ Reemplaza `certificate-list.spec.ts`:
 
 ![](images/clipboard-4208969844.png)
 
-##  Commit del ISS-13
+## Commit del ISS-13
 
 ```         
 git add .  
 git commit -m "ISS-13: implementar CRUD de certificados relacionado con inscripciones" 
+git push origin main 
+```
+
+# ISS-14. Dashboard académico y cierre de la Fase I
+
+Objetivo: Implementar un Dashboard académico que consolide la información de las once entidades desarrolladas en CampusNube, mediante solicitudes paralelas a las API existentes, indicadores calculados, tarjetas informativas y visualización de actividad reciente. Además, integrar y verificar su funcionamiento dentro del frontend.
+
+## Estructura de actividades
+
+| Actividad | Descripción |
+|----|----|
+| 14.1 | Crear el componente Dashboard académico. |
+| 14.2 | Integrar las once API existentes mediante `forkJoin`. |
+| 14.3 | Implementar señales (`signals`) para almacenar la información. |
+| 14.4 | Construir indicadores calculados con `computed`. |
+| 14.5 | Diseñar las tarjetas de indicadores académicos. |
+| 14.6 | Implementar la sección de actividad reciente. |
+| 14.7 | Integrar el Dashboard en las rutas y el menú de navegación. |
+| 14.8 | Implementar las pruebas unitarias del Dashboard y verificar la integración. |
+| 14.9 | Realizar las pruebas funcionales y verificar la compilación del frontend. |
+| 14.10 | Documentar el desarrollo, organizar las evidencias y registrar el commit. |
+
+## 14.1. Crear el componente Dashboard académico
+
+![](images/clipboard-2772634861.png)
+
+## 14.2., 14.3, 14.4 Integrar las once API mediante forkJoin
+
+Conectaremos los once servicios al Dashboard y almacenaremos sus resultados mediante señales.
+
+![](images/clipboard-4174444395.png)
+
+## **14.5. Diseñar las tarjetas del Dashboard**
+
+Crearemos la presentación visual de los indicadores.
+
+![](images/clipboard-560196963.png)
+
+## 14.6. Implementar la actividad reciente y los estilos
+
+Agregaremos los estilos.
+
+![](images/clipboard-3670332338.png)
+
+## 14.7. Integrar el Dashboard en las rutas y el menú
+
+![](images/clipboard-789461876.png)
+
+## Agregar Dashboard al menú lateral
+
+![](images/clipboard-1929099003.png)
+
+## 14.8. Implementar las pruebas unitarias del Dashboard
+
+![](images/clipboard-3968593965.png)
+
+## 14.9. Realizar las pruebas funcionales y verificar la compilación
+
+![](images/clipboard-3893411390.png)
+
+![](images/clipboard-4006715785.png)
+
+## Commit del ISS-14
+
+```         
+git add .   
+git commit -m "ISS-14: implementar dashboard académico y cierre de fase I"  
 git push origin main 
 ```
 
