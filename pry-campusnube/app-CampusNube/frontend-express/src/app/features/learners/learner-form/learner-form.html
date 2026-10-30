@@ -1,0 +1,89 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+  <div>
+    <label for="learner-name" class="mb-1 block text-sm font-medium">
+      Nombre completo *
+    </label>
+    <input
+      id="learner-name"
+      pInputText
+      formControlName="name"
+      placeholder="Nombre del aprendiz"
+      class="w-full"
+    />
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <p-message severity="error" size="small" variant="simple">
+        El nombre es obligatorio y no puede superar 120 caracteres.
+      </p-message>
+    }
+  </div>
+
+  <div>
+    <label for="learner-description" class="mb-1 block text-sm font-medium">
+      Descripción
+    </label>
+    <textarea
+      id="learner-description"
+      pTextarea
+      formControlName="description"
+      rows="3"
+      placeholder="Descripción del aprendiz"
+      class="w-full"
+    ></textarea>
+  </div>
+
+  <div>
+    <label for="learner-password" class="mb-1 block text-sm font-medium">
+      Contraseña {{ learner() ? '(opcional)' : '*' }}
+    </label>
+    <input
+      id="learner-password"
+      pInputText
+      type="password"
+      formControlName="password"
+      placeholder="Ingrese la contraseña"
+      class="w-full"
+      autocomplete="new-password"
+    />
+    @if (form.controls.password.touched && form.controls.password.invalid) {
+      <p-message severity="error" size="small" variant="simple">
+        La contraseña es obligatoria para crear un aprendiz.
+      </p-message>
+    }
+  </div>
+
+  <div>
+    <label for="learner-status" class="mb-1 block text-sm font-medium">
+      Estado
+    </label>
+    <p-select
+      [fluid]="true"
+      inputId="learner-status"
+      formControlName="status"
+      [options]="statusOptions"
+      optionLabel="label"
+      optionValue="value"
+    />
+    @if (learner()) {
+      <small class="text-slate-500">
+        El estado se modifica mediante la opción de desactivar.
+      </small>
+    }
+  </div>
+
+  <div class="flex justify-end gap-2 border-t border-slate-100 pt-4">
+    <button
+      pButton
+      type="button"
+      severity="secondary"
+      outlined
+      (click)="cancelled.emit()"
+    >
+      <span pButtonLabel>Cancelar</span>
+    </button>
+
+    <button pButton type="submit" [loading]="saving()">
+      <i pButtonIcon class="pi pi-check"></i>
+      <span pButtonLabel>Guardar</span>
+    </button>
+  </div>
+</form>

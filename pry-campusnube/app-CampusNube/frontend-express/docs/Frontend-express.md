@@ -1188,3 +1188,93 @@ git add .
 git commit -m "Fase I: Frontend — ISS-03 — Docentes: CRUD, formulario reactivo, listado y filtros" 
 git push origin main
 ```
+
+![](images/clipboard-1627466701.png)
+
+# Fase I: Business — ISS-04 — CRUD de aprendices
+
+## 4.2 Generar con CLI
+
+![](images/clipboard-1013626423.png)
+
+## 4.3 Servicio
+
+El archivo `learner-api.ts` ya existe y contiene los métodos necesarios.
+
+![](images/clipboard-2112565128.png)
+
+## 4.4 Formulario reactivo
+
+El formulario servirá para crear y editar aprendices. La contraseña será obligatoria al crear y opcional al editar. El estado solo se cambiará mediante la operación de desactivación.
+
+Archivo: `src/app/features/learners/learner-form/learner-form.ts`
+
+![](images/clipboard-3844828993.png)
+
+Archivo: `src/app/features/learners/learner-form/learner-form.html`
+
+![](images/clipboard-3355927278.png)
+
+Archivo: `src/app/features/learners/learner-form/learner-form.css`
+
+![](images/clipboard-1193097063.png)
+
+## 4.5 Lista de aprendices
+
+La lista manejará los estados con Signals, el filtro con `computed`, el formulario en un diálogo y las operaciones de creación, edición, desactivación y eliminación.
+
+Archivo: `src/app/features/learners/learner-list/learner-list.ts`
+
+![](images/clipboard-3026630553.png)
+
+Archivo: `src/app/features/learners/learner-list/learner-list.html`
+
+![](images/clipboard-2114118911.png)
+
+Archivo: `src/app/features/learners/learner-list/learner-list.css`
+
+![](images/clipboard-3658984521.png)
+
+## 4.6 Ruta
+
+Agregaremos la ruta `/aprendices` dentro del Shell, conservando Header, Aside y Footer.
+
+Archivo: `src/app/app.routes.ts`
+
+![](images/clipboard-429776920.png)
+
+Archivo: `src/app/layout/shell/shell.ts`
+
+![](images/clipboard-2574638221.png)
+
+## Criterios de aceptación – ISS-04
+
+1.  La tabla muestra los aprendices activos del backend.
+
+2.  Crear y editar validan el nombre obligatorio y máximo 120 caracteres.
+
+3.  La contraseña es obligatoria al crear y opcional al editar.
+
+4.  La baja lógica cambia el estado a inactivo.
+
+5.  El buscador filtra por nombre, descripción y estado mediante `filterRows`.
+
+6.  La ruta `/aprendices` funciona directamente.
+
+7.  Se conserva el diseño general del Shell.
+
+    | **Comprobación**            | **Resultado** |
+    |:----------------------------|:--------------|
+    | `npm test -- --watch=false` |               |
+
+![](images/clipboard-2619524332.png)
+
+### Cierre del ISS-04 – Aprendices
+
+Commit
+
+```         
+git add . 
+git commit -m "Fase I: Frontend — ISS-04 — Aprendices: CRUD, formulario reactivo, listado y filtros"
+git push origin main
+```

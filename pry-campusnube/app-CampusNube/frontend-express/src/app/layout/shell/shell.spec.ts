@@ -1,4 +1,3 @@
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -39,9 +38,14 @@ describe('Shell', () => {
   it('debe tener los elementos de navegación de CampusNube', () => {
     expect(fixture.componentInstance.items).toEqual([
       {
-        label: 'Clientes',
+        label: 'Docentes',
         icon: 'pi pi-users',
-        routerLink: '/clientes',
+        routerLink: '/docentes',
+      },
+      {
+        label: 'Aprendices',
+        icon: 'pi pi-user',
+        routerLink: '/aprendices',
       },
       {
         label: 'Prototipo',
@@ -54,9 +58,10 @@ describe('Shell', () => {
   it('debe compartir la lista de navegación con los menús', () => {
     const shell = fixture.componentInstance;
 
-    expect(shell.items.length).toBe(2);
-    expect(shell.items[0].label).toBe('Clientes');
-    expect(shell.items[1].label).toBe('Prototipo');
+    expect(shell.items.length).toBe(3);
+    expect(shell.items[0].label).toBe('Docentes');
+    expect(shell.items[1].label).toBe('Aprendices');
+    expect(shell.items[2].label).toBe('Prototipo');
 
     expect(compilado.querySelector('app-aside')).toBeTruthy();
     expect(compilado.querySelector('p-drawer')).toBeTruthy();

@@ -18,15 +18,24 @@ export const routes: Routes = [
       },
       {
         path: 'docentes',
-        title: 'Docentes',
+        title: 'Docentes · CampusNube',
         loadComponent: () =>
-          import('./features/teachers/teacher-list/teacher-list')
-            .then((m) => m.TeacherList),
+          import('./features/teachers/teacher-list/teacher-list').then(
+            (m) => m.TeacherList,
+          ),
+      },
+      {
+        path: 'aprendices',
+        title: 'Aprendices · CampusNube',
+        loadComponent: () =>
+          import('./features/learners/learner-list/learner-list').then(
+            (m) => m.LearnerList,
+          ),
       },
     ],
   },
   {
     path: '**',
-    redirectTo: 'docentes',
+    redirectTo: 'aprendices',
   },
 ];

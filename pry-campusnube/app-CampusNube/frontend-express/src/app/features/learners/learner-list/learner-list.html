@@ -1,0 +1,139 @@
+<div class="space-y-6">
+  <app-page-header
+    title="Aprendices"
+    subtitle="Gestión y administración de aprendices de CampusNube."
+  >
+    <div class="flex flex-wrap items-center gap-2">
+      <p-tag
+        [value]="rows().length + ' activos'"
+        severity="info"
+        [rounded]="true"
+      />
+      <button
+        pButton
+        type="button"
+        icon="pi pi-plus"
+        label="Nuevo aprendiz"
+        (click)="openCreate()"
+      ></button>
+    </div>
+  </app-page-header>
+
+  @if (error()) {
+    <p-message severity="error" class="w-full">
+      {{ error() }}
+    </p-message>
+  }
+
+  <p-table
+    [value]="visibleRows()"
+    [loading]="loading()"
+    dataKey="id"
+    [tableStyle]="{ 'min-width': '48rem' }"
+    styleClass="p-datatable-sm"
+  >
+    <ng-template #caption>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <span class="font-semibold">Listado de aprendices</span>
+        <input
+          pInputText
+          type="text"
+          placeholder="Buscar por nombre o descripción"
+          [value]="filter()"
+          (input)="filter.set($any($event.target).value)"
+          class="w-full sm:w-72"
+        />
+      </div>
+    </ng-template>
+
+    <ng-template #header>
+      <tr>
+        <th pSortableColumn="id">
+          Código
+          <p-sort-icon field="id" />
+        </th>
+        <th pSortableColumn="name">
+          Nombre
+          <p-sort-icon field="name" />
+        </th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th class="text-right">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-row>
+      <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.description || '—' }}</td>
+        <td>
+          <app-status-tag [status]="row.status" />
+        </td>
+        <td>
+          <div class="flex justify-end gap-1">
+            <button
+              pButton
+              type="button"
+              text
+              rounded
+              icon="pi pi-pencil"
+              pTooltip="Editar"
+              (click)="openEdit(row)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              text
+              rounded
+              severity="warn"
+              icon="pi pi-ban"
+              pTooltip="Desactivar"
+              (click)="deactivate(row)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              text
+              rounded
+              severity="danger"
+              icon="pi pi-trash"
+              pTooltip="Eliminar definitivamente"
+              (click)="remove(row)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="5" class="py-8 text-center text-slate-500">
+          @if (filter()) {
+            Ningún aprendiz coincide con la búsqueda.
+          } @else {
+            No hay aprendices registrados.
+          }
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    [header]="title()"
+    [visible]="dialogVisible()"
+    (visibleChange)="dialogVisible.set($event)"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [style]="{ width: 'min(95vw, 36rem)' }"
+  >
+    <app-learner-form
+      [learner]="editing()"
+      [resetKey]="resetKey()"
+      [saving]="saving()"
+      (saved)="save($event)"
+      (cancelled)="dialogVisible.set(false)"
+    />
+  </p-dialog>
+</div>
