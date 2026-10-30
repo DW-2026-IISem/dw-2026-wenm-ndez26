@@ -68,6 +68,18 @@ export const routes: Routes = [
           ),
       },
       {
+
+        path: 'entregas',
+
+        loadComponent: () =>
+
+          import('./features/submissions/submission-list/submission-list')
+
+            .then(m => m.SubmissionList)
+
+      },
+
+      {
         path: 'inscripciones',
         title: 'Inscripciones · CampusNube',
         loadComponent: () =>

@@ -2071,3 +2071,124 @@ git add .
 git commit -m "ISS-10: implementar CRUD de intentos vinculado a inscripciones"
 git push origin main 
 ```
+
+## ISS-11 – CRUD de Entregas y relación con Inscripciones y Lecciones
+
+El módulo permitirá crear, consultar, editar, desactivar y eliminar entregas, relacionándolas con una lección y una inscripción. En el listado mostrarara los nombres de las lecciones y las inscripciones, no solamente sus identificadores.
+
+## 11.1. Modelo de datos y reglas del backend
+
+La interfaz debe respetar estas reglas:
+
+| Campo           | Regla                                                   |
+|-----------------|---------------------------------------------------------|
+| `referencia_id` | Obligatorio, numérico                                   |
+| `lesson_id`     | Obligatorio, debe corresponder a una lección activa     |
+| `enrollment_id` | Obligatorio, debe corresponder a una inscripción activa |
+| `fecha_inicio`  | Obligatoria                                             |
+| `fecha_fin`     | Opcional                                                |
+| `total`         | Opcional, admite valor decimal                          |
+| `estado`        | Obligatorio al crear                                    |
+| `observaciones` | Opcional                                                |
+
+La desactivación lógica se realiza mediante el endpoint `/:id/deactivate`, que cambia el estado a `inactivo`. La eliminación física se realiza mediante `DELETE`.
+
+## 11.2. Generar los componentes
+
+![](images/clipboard-1238496656.png)
+
+## 11.3. Configurar el servicio de Entregas
+
+![](images/clipboard-4060785778.png)
+
+## 11.4. Cargar Entregas, Lecciones e Inscripciones
+
+El listado necesita consultar tres recursos:
+
+- Entregas, para mostrar los registros.
+
+- Lecciones, para traducir `lesson_id` al nombre de la lección.
+
+- Inscripciones, para identificar la inscripción relacionada.
+
+`forkJoin` para realizar las consultas en paralelo y `computed` para construir los mapas de nombres relacionados.
+
+![](images/clipboard-1174130193.png)
+
+## 11.5. Indicadores y búsqueda del listado
+
+En el componente ya quedaron implementados los indicadores y el filtro:
+
+- Total de entregas: cantidad de registros recibidos del backend.
+
+- Entregas activas: registros cuyo estado no sea `inactivo`.
+
+- Búsqueda: permite buscar por identificador, referencia, estado, observaciones, lección o inscripción.
+
+## 11.6. Crear el formulario reactivo de Entregas
+
+El formulario permitirá registrar y editar una entrega.
+
+![](images/clipboard-2743670552.png)
+
+## Diseño de la plantilla:
+
+![](images/clipboard-1871213315.png)
+
+Agregamos los estilos:
+
+![](images/clipboard-3103591018.png)
+
+## 11.7. Construir el listado de Entregas
+
+Ahora crearemos la vista principal con:
+
+- Tabla de entregas.
+
+- Nombre de la lección relacionada.
+
+- Identificación de la inscripción.
+
+- Fechas, total y estado.
+
+- Búsqueda.
+
+- Acciones para crear, editar, desactivar y eliminar.
+
+- Ventana emergente para el formulario.
+
+![](images/clipboard-3220867381.png)
+
+**se creó los estilos del listado:**
+
+![](images/clipboard-203118434.png)
+
+## 11.8. Integración de rutas
+
+![](images/clipboard-1716606592.png)
+
+## 11.9. Integración del menú y pruebas
+
+El menú debe conservar este orden:
+
+Docentes → Aprendices → Cursos → Módulos → Lecciones → Evaluaciones → Inscripciones → Intentos → Entregas → Prototipo.
+
+La entrada de Entregas debe quedar así:
+
+```         
+{ label: 'Entregas', icon: 'pi pi-upload', routerLink: '/entregas' },
+```
+
+## 11.10. Verificación y commit
+
+![](images/clipboard-1382927379.png)
+
+##  Commit del ISS-10
+
+```         
+git add . 
+git commit -m "ISS-11: implementar CRUD de entregas relacionado con lecciones e inscripciones"
+git push origin main 
+```
+
+## 

@@ -41,6 +41,16 @@ export class Shell {
     { label: 'Evaluaciones', icon: 'pi pi-clipboard', routerLink: '/evaluaciones' },
     { label: 'Inscripciones', icon: 'pi pi-user-plus', routerLink: '/inscripciones' },
     { label: 'Intentos', icon: 'pi pi-check-square', routerLink: '/intentos' },
+    {
+
+      label: 'Entregas',
+
+      icon: 'pi pi-upload',
+
+      routerLink: ['/entregas']
+
+    },
+
     { label: 'Prototipo', icon: 'pi pi-desktop', routerLink: '/construir' },
   ];
 

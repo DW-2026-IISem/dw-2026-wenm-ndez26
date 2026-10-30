@@ -1,0 +1,161 @@
+<p-toast />
+<p-confirmdialog />
+
+<div class="flex flex-col gap-5">
+
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-bold">Gestión de Entregas</h1>
+      <p class="text-gray-500">
+        Administración de entregas relacionadas con lecciones e inscripciones.
+      </p>
+    </div>
+
+    <p-button
+      label="Nueva entrega"
+      icon="pi pi-plus"
+      (onClick)="create()"
+    />
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="rounded-xl border border-gray-200 p-4">
+      <p class="text-sm text-gray-500">Total de entregas</p>
+      <p class="text-2xl font-bold">{{ totalCount() }}</p>
+    </div>
+
+    <div class="rounded-xl border border-gray-200 p-4">
+      <p class="text-sm text-gray-500">Entregas activas</p>
+      <p class="text-2xl font-bold">{{ activeCount() }}</p>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+    <input
+      pInputText
+      type="text"
+      placeholder="Buscar por referencia, lección, inscripción o estado..."
+      [value]="searchTerm()"
+      (input)="searchTerm.set($any($event.target).value)"
+      class="w-full sm:max-w-md"
+    />
+
+    <p-button
+      label="Actualizar"
+      icon="pi pi-refresh"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="loadData()"
+    />
+  </div>
+
+  <div class="rounded-xl border border-gray-200 overflow-hidden">
+    <p-table
+      [value]="filteredSubmissions()"
+      [loading]="loading()"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 20, 50]"
+      [tableStyle]="{ 'min-width': '75rem' }"
+      responsiveLayout="scroll"
+      dataKey="id"
+      [stripedRows]="true"
+    >
+      <ng-template #header>
+        <tr>
+          <th>ID</th>
+          <th>Referencia</th>
+          <th>Lección</th>
+          <th>Inscripción</th>
+          <th>Fecha de inicio</th>
+          <th>Fecha de finalización</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-submission>
+        <tr>
+          <td>{{ submission.id }}</td>
+          <td>{{ submission.referencia_id }}</td>
+          <td>{{ lessonName(submission.lesson_id) }}</td>
+          <td>{{ enrollmentName(submission.enrollment_id) }}</td>
+          <td>{{ submission.fecha_inicio | date:'short' }}</td>
+          <td>
+            {{ submission.fecha_fin ? (submission.fecha_fin | date:'short') : 'Pendiente' }}
+          </td>
+          <td>{{ formatTotal(submission.total) }}</td>
+          <td>
+            <p-tag
+              [value]="submission.estado"
+              [severity]="submission.estado?.toLowerCase() === 'inactivo' ? 'danger' : 'success'"
+            />
+          </td>
+          <td>
+            <div class="flex justify-center gap-1">
+              <p-button
+                icon="pi pi-pencil"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Editar"
+                tooltipPosition="top"
+                (onClick)="edit(submission)"
+              />
+
+              <p-button
+                icon="pi pi-ban"
+                severity="warn"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Desactivar"
+                tooltipPosition="top"
+                (onClick)="deactivate(submission)"
+                [disabled]="submission.estado?.toLowerCase() === 'inactivo'"
+              />
+
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Eliminar definitivamente"
+                tooltipPosition="top"
+                (onClick)="remove(submission)"
+              />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="9" class="text-center py-6 text-gray-500">
+            No se encontraron entregas.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>
+
+<p-dialog
+  [header]="selectedSubmission() ? 'Editar entrega' : 'Registrar entrega'"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: 'min(850px, 95vw)' }"
+  (onHide)="closeDialog()"
+>
+  <app-submission-form
+    [submission]="selectedSubmission()"
+    [lessons]="lessons()"
+    [enrollments]="enrollments()"
+    (saved)="onSaved()"
+    (cancelled)="closeDialog()"
+  />
+</p-dialog>

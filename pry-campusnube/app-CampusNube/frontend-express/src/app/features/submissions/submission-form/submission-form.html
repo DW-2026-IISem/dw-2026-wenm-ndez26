@@ -1,0 +1,152 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+  @if (errorMessage) {
+    <p-message severity="error">{{ errorMessage }}</p-message>
+  }
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div class="flex flex-col gap-2">
+      <label for="referencia_id">Referencia</label>
+      <input
+        pInputText
+        id="referencia_id"
+        type="number"
+        min="0"
+        formControlName="referencia_id"
+        placeholder="Ingrese el identificador de referencia"
+      />
+      @if (form.controls.referencia_id.touched && form.controls.referencia_id.invalid) {
+        <small class="text-red-600">La referencia es obligatoria y debe ser igual o mayor que cero.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="lesson_id">Lección</label>
+      <p-select
+        inputId="lesson_id"
+        formControlName="lesson_id"
+        [options]="lessonOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Seleccione una lección"
+        [filter]="true"
+        filterPlaceholder="Buscar lección"
+        class="w-full"
+      />
+      @if (form.controls.lesson_id.touched && form.controls.lesson_id.invalid) {
+        <small class="text-red-600">Debe seleccionar una lección.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2 md:col-span-2">
+      <label for="enrollment_id">Inscripción</label>
+      <p-select
+        inputId="enrollment_id"
+        formControlName="enrollment_id"
+        [options]="enrollmentOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Seleccione una inscripción"
+        [filter]="true"
+        filterPlaceholder="Buscar inscripción"
+        class="w-full"
+      />
+      @if (form.controls.enrollment_id.touched && form.controls.enrollment_id.invalid) {
+        <small class="text-red-600">Debe seleccionar una inscripción.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="fecha_inicio">Fecha de inicio</label>
+      <input
+        pInputText
+        id="fecha_inicio"
+        type="datetime-local"
+        formControlName="fecha_inicio"
+      />
+      @if (form.controls.fecha_inicio.touched && form.controls.fecha_inicio.invalid) {
+        <small class="text-red-600">La fecha de inicio es obligatoria.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="fecha_fin">Fecha de finalización</label>
+      <input
+        pInputText
+        id="fecha_fin"
+        type="datetime-local"
+        formControlName="fecha_fin"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="total">Total</label>
+      <input
+        pInputText
+        id="total"
+        type="number"
+        min="0"
+        step="0.01"
+        formControlName="total"
+        placeholder="0.00"
+      />
+      @if (form.controls.total.touched && form.controls.total.invalid) {
+        <small class="text-red-600">El total no puede ser negativo.</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="estado">Estado</label>
+
+      @if (isEditing) {
+        <div class="flex items-center min-h-10">
+          <p-tag [value]="submission?.estado ?? ''" />
+          <small class="ml-2 text-gray-500">El estado no se modifica desde la edición.</small>
+        </div>
+      } @else {
+        <p-select
+          inputId="estado"
+          formControlName="estado"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccione un estado"
+          class="w-full"
+        />
+        @if (form.controls.estado.touched && form.controls.estado.invalid) {
+          <small class="text-red-600">Debe seleccionar un estado.</small>
+        }
+      }
+    </div>
+
+    <div class="flex flex-col gap-2 md:col-span-2">
+      <label for="observaciones">Observaciones</label>
+      <textarea
+        pTextarea
+        id="observaciones"
+        formControlName="observaciones"
+        rows="3"
+        class="w-full"
+        placeholder="Ingrese observaciones de la entrega"
+      ></textarea>
+    </div>
+
+  </div>
+
+  <div class="flex justify-end gap-2">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+      (onClick)="cancel()"
+    />
+    <p-button
+      [label]="isEditing ? 'Actualizar entrega' : 'Guardar entrega'"
+      icon="pi pi-save"
+      type="submit"
+      [loading]="saving"
+    />
+  </div>
+</form>
