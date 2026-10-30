@@ -60,6 +60,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'intentos',
+        title: 'Intentos · CampusNube',
+        loadComponent: () =>
+          import('./features/attempts/attempt-list/attempt-list').then(
+            (m) => m.AttemptList
+          ),
+      },
+      {
         path: 'inscripciones',
         title: 'Inscripciones · CampusNube',
         loadComponent: () =>

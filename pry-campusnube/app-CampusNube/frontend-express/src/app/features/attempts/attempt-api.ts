@@ -1,9 +1,12 @@
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
-import { Attempt, AttemptPayload } from '../../core/models/attempt.model';
+import {
+  Attempt,
+  AttemptPayload,
+} from '../../core/models/attempt.model';
 
 @Injectable({ providedIn: 'root' })
 export class AttemptApi {
@@ -11,28 +14,26 @@ export class AttemptApi {
   private readonly base = `${environment.apiUrl}/intentos`;
 
   list(): Observable<Attempt[]> {
-    return this.http.get<{ attempts: Attempt[] }>(this.base)
-      .pipe(map(response => response.attempts));
+    return this.http.get<Attempt[]>(this.base);
   }
 
   get(id: number): Observable<Attempt> {
-    return this.http.get<{ attempt: Attempt }>(`${this.base}/${id}`)
-      .pipe(map(response => response.attempt));
+    return this.http.get<Attempt>(`${this.base}/${id}`);
   }
 
   create(payload: AttemptPayload): Observable<Attempt> {
-    return this.http.post<{ attempt: Attempt }>(this.base, payload)
-      .pipe(map(response => response.attempt));
+    return this.http.post<Attempt>(this.base, payload);
   }
 
-  update(id: number, payload: Partial<AttemptPayload>): Observable<Attempt> {
-    return this.http.patch<{ attempt: Attempt }>(`${this.base}/${id}`, payload)
-      .pipe(map(response => response.attempt));
+  update(
+    id: number,
+    payload: Partial<AttemptPayload>,
+  ): Observable<Attempt> {
+    return this.http.patch<Attempt>(`${this.base}/${id}`, payload);
   }
 
   replace(id: number, payload: AttemptPayload): Observable<Attempt> {
-    return this.http.put<{ attempt: Attempt }>(`${this.base}/${id}`, payload)
-      .pipe(map(response => response.attempt));
+    return this.http.put<Attempt>(`${this.base}/${id}`, payload);
   }
 
   deactivate(id: number): Observable<unknown> {

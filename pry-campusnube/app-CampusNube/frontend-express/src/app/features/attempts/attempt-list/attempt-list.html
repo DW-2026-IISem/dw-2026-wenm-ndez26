@@ -1,0 +1,136 @@
+<p-toast />
+<p-confirmdialog />
+
+<div class="flex flex-col gap-5">
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-semibold">Intentos</h1>
+      <p class="text-sm text-gray-500">
+        Administración de intentos vinculados a inscripciones.
+      </p>
+    </div>
+
+    <p-button
+      label="Nuevo intento"
+      icon="pi pi-plus"
+      (onClick)="newAttempt()"
+    />
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+    <div class="rounded-xl border p-4">
+      <p class="text-sm text-gray-500">Intentos registrados</p>
+      <p class="text-2xl font-semibold">{{ attempts().length }}</p>
+    </div>
+
+    <div class="rounded-xl border p-4">
+      <p class="text-sm text-gray-500">Intentos activos</p>
+      <p class="text-2xl font-semibold">{{ activeCount() }}</p>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-3">
+    <input
+      pInputText
+      type="text"
+      placeholder="Buscar por nombre, descripción o inscripción..."
+      [value]="search()"
+      (input)="search.set($any($event.target).value)"
+      class="w-full md:max-w-md"
+    />
+  </div>
+
+  <p-table
+    [value]="filteredAttempts()"
+    [loading]="loading()"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    responsiveLayout="scroll"
+    dataKey="id"
+    stripedRows
+  >
+    <ng-template #header>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Inscripción relacionada</th>
+        <th>Estado</th>
+        <th style="width: 190px">Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-attempt>
+      <tr>
+        <td>{{ attempt.id }}</td>
+        <td>{{ attempt.name }}</td>
+        <td>{{ attempt.description || 'Sin descripción' }}</td>
+        <td>{{ enrollmentLabel(attempt.enrollment_id) }}</td>
+        <td>
+          <p-tag
+            [value]="attempt.isActive ? 'Activo' : 'Inactivo'"
+            [severity]="attempt.isActive ? 'success' : 'secondary'"
+          />
+        </td>
+        <td>
+          <div class="flex items-center gap-1">
+            <p-button
+              icon="pi pi-pencil"
+              severity="info"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Editar"
+              (onClick)="editAttempt(attempt)"
+            />
+
+            <p-button
+              icon="pi pi-ban"
+              severity="warn"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Desactivar"
+              (onClick)="deactivate(attempt)"
+            />
+
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [text]="true"
+              [rounded]="true"
+              pTooltip="Eliminar físicamente"
+              (onClick)="remove(attempt)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="6" class="text-center">
+          No hay intentos registrados.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>
+
+<p-dialog
+  [header]="selectedAttempt() ? 'Editar intento' : 'Nuevo intento'"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: 'min(95vw, 600px)' }"
+  (onHide)="closeDialog()"
+>
+  <app-attempt-form
+    [attempt]="selectedAttempt()"
+    [enrollments]="enrollments()"
+    (saved)="onSaved()"
+    (cancelled)="closeDialog()"
+  />
+</p-dialog>

@@ -1965,3 +1965,109 @@ git add .
 git commit -m "Fase I: Frontend — ISS-09 — Inscripciones: CRUD y vinculación Aprendiz-Curso"
 git push origin main
 ```
+
+# ISS-10 – CRUD de Intentos y vinculación con Inscripciones
+
+## 10.1. Modelo y reglas del backend
+
+El modelo existente se conserva:
+
+- `id`: identificador del intento.
+
+- `enrollment_id`: inscripción relacionada.
+
+- `name`: nombre del intento.
+
+- `description`: descripción opcional.
+
+- `isActive`: estado lógico.
+
+- `createdAt` y `updatedAt`: fechas de registro.
+
+Reglas confirmadas:
+
+1.  La inscripción debe existir y estar activa.
+
+2.  El nombre es obligatorio.
+
+3.  La descripción puede ser nula.
+
+4.  El listado solo devuelve intentos activos.
+
+5.  La desactivación utiliza `PATCH /api/intentos/:id/deactivate`.
+
+6.  La eliminación física utiliza `DELETE /api/intentos/:id`.
+
+## 10.2. Generar los componentes
+
+![](images/clipboard-3174357669.png)
+
+## 10.3. Corregir el servicio AttemptApi
+
+![](images/clipboard-2896911370.png)
+
+## 10.4. Actualizar la prueba del servicio
+
+![](images/clipboard-850394218.png)
+
+## 10.5. Componente del formulario
+
+El formulario permitirá crear y editar intentos. Para seleccionar la inscripción se mostrará su identificador y la relación con el curso y el aprendiz.
+
+![](images/clipboard-399547585.png)
+
+## Plantilla del formulario
+
+## ![](images/clipboard-721633233.png)
+
+## Estilos del formulario
+
+![](images/clipboard-673483705.png)
+
+## 10.6. Componente de listado
+
+El listado carga los intentos y las inscripciones en paralelo. Utiliza `forkJoin`, `computed` y `Map` para relacionar cada intento con su inscripción.
+
+![](images/clipboard-1952221770.png)
+
+## Plantilla del listado
+
+![](images/clipboard-1009535629.png)
+
+## Estilos del listado
+
+![](images/clipboard-1462904418.png)
+
+## 10.7. Ajuste de importación para los botones de acciones
+
+![](images/clipboard-297312037.png)
+
+## 10.8. Integrar la ruta y el menú
+
+![](images/clipboard-2965343821.png)
+
+## 10.9. Agregar Intentos al menú
+
+![](images/clipboard-4194537414.png)
+
+## 10.10. Actualizar las pruebas del menú
+
+Ahora el menú tendrá nueve elementos.
+
+![](images/clipboard-2556073627.png)
+
+## 10.11. Ejecutar las pruebas y compilar
+
+![](images/clipboard-4158897530.png)
+
+![](images/clipboard-2945010788.png)
+
+## 10.12. Commit del ISS-10
+
+Solo cuando las pruebas y la compilación estén correctas:
+
+```         
+git add .
+git commit -m "ISS-10: implementar CRUD de intentos vinculado a inscripciones"
+git push origin main 
+```

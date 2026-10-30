@@ -40,6 +40,7 @@ export class Shell {
     { label: 'Lecciones', icon: 'pi pi-file', routerLink: '/lecciones' },
     { label: 'Evaluaciones', icon: 'pi pi-clipboard', routerLink: '/evaluaciones' },
     { label: 'Inscripciones', icon: 'pi pi-user-plus', routerLink: '/inscripciones' },
+    { label: 'Intentos', icon: 'pi pi-check-square', routerLink: '/intentos' },
     { label: 'Prototipo', icon: 'pi pi-desktop', routerLink: '/construir' },
   ];
 

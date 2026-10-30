@@ -1,0 +1,76 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+  <div class="flex flex-col gap-2">
+    <label for="enrollment_id">Inscripción *</label>
+
+    <p-select
+      inputId="enrollment_id"
+      formControlName="enrollment_id"
+      [options]="enrollmentOptions"
+      optionLabel="label"
+      optionValue="id"
+      placeholder="Seleccione una inscripción"
+      [filter]="true"
+      filterBy="label"
+      class="w-full"
+    />
+
+    @if (form.controls.enrollment_id.invalid &&
+         form.controls.enrollment_id.touched) {
+      <p-message severity="error">
+        Debe seleccionar una inscripción activa.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="name">Nombre del intento *</label>
+
+    <input
+      pInputText
+      id="name"
+      formControlName="name"
+      maxlength="150"
+      placeholder="Ingrese el nombre del intento"
+      class="w-full"
+    />
+
+    @if (form.controls.name.invalid &&
+         form.controls.name.touched) {
+      <p-message severity="error">
+        El nombre es obligatorio y no debe superar 150 caracteres.
+      </p-message>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="description">Descripción</label>
+
+    <textarea
+      pTextarea
+      id="description"
+      formControlName="description"
+      rows="4"
+      placeholder="Descripción del intento"
+      class="w-full"
+    ></textarea>
+  </div>
+
+  <div class="flex justify-end gap-2">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+      (onClick)="cancel()"
+    />
+
+    <p-button
+      label="Guardar"
+      icon="pi pi-save"
+      type="submit"
+      [loading]="loading"
+    />
+  </div>
+
+</form>
