@@ -2183,7 +2183,7 @@ La entrada de Entregas debe quedar así:
 
 ![](images/clipboard-1382927379.png)
 
-##  Commit del ISS-10
+##  Commit del ISS-11
 
 ```         
 git add . 
@@ -2191,4 +2191,110 @@ git commit -m "ISS-11: implementar CRUD de entregas relacionado con lecciones e 
 git push origin main 
 ```
 
-## 
+# ISS-12. CRUD de Progreso relacionado con Inscripciones
+
+## 12.1. Modelo y reglas del backend
+
+La entidad Progreso tiene los siguientes campos:
+
+| Campo         | Tipo        | Regla                   |
+|---------------|-------------|-------------------------|
+| id            | number      | Identificador           |
+| enrollment_id | number      | Inscripción obligatoria |
+| name          | string      | Nombre obligatorio      |
+| description   | string/null | Descripción opcional    |
+| isActive      | boolean     | Activo por defecto      |
+| createdAt     | Date        | Fecha de creación       |
+| updatedAt     | Date        | Fecha de actualización  |
+
+Relación: una inscripción puede tener varios registros de progreso.
+
+Operaciones disponibles:
+
+- GET `/api/progress`
+
+- GET `/api/progress/:id`
+
+- POST `/api/progress`
+
+- PUT `/api/progress/:id`
+
+- PATCH `/api/progress/:id`
+
+- PATCH `/api/progress/:id/deactivate` (debemos registrar esta ruta).
+
+- DELETE `/api/progress/:id`
+
+El backend exige una inscripción existente y activa para crear o actualizar un progreso. La desactivación cambia `isActive` a `false`; la eliminación es física.12.2. Generar los componentes
+
+![](images/clipboard-50538039.png)
+
+## 12.3. Servicio API
+
+![](images/clipboard-737836661.png)
+
+## 12.4. Cargar Progreso e Inscripciones
+
+La lista necesita consultar simultáneamente:
+
+- Los registros de progreso.
+
+- Las inscripciones disponibles.
+
+Se utiliza `forkJoin` y un `Map` para relacionar cada progreso con su inscripción, aprendiz y curso.
+
+![](images/clipboard-4075935465.png)
+
+## 12.5. Indicadores y propiedades calculadas
+
+Se implementarán estos indicadores:
+
+- Total de registros de progreso.
+
+- Total de progresos activos.
+
+- Búsqueda por nombre, descripción, identificación, inscripción, aprendiz o curso.
+
+- Consulta del nombre de la inscripción relacionada.
+
+## 12.6. Formulario reactivo
+
+El formulario permitirá crear y editar registros de progreso asociados a una inscripción.
+
+![](images/clipboard-452760751.png)
+
+`progress-form.html`:
+
+![](images/clipboard-4106685419.png)
+
+## 12.7. Listado y operaciones CRUD
+
+![](images/clipboard-308577892.png)
+
+`Progress-list.html`
+
+![](images/clipboard-1405250413.png)
+
+## 12.8. Integración de rutas y menú
+
+![](images/clipboard-2698995095.png)
+
+agregamos `/progreso` a `app.routes.ts` y al menú.
+
+![](images/clipboard-495831006.png)
+
+## 12.9. Pruebas
+
+![](images/clipboard-501954510.png)
+
+![](images/clipboard-718042480.png)
+
+## Commit del ISS-12
+
+```         
+git add .  
+git commit -m "ISS-12: implementar CRUD de progreso relacionado con inscripciones" 
+git push origin main 
+```
+
+# 

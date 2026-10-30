@@ -1,0 +1,74 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+  @if (errorMessage) {
+    <p-message severity="error">{{ errorMessage }}</p-message>
+  }
+
+  <div class="flex flex-col gap-2">
+    <label for="enrollment_id">Inscripción</label>
+
+    <p-select
+      inputId="enrollment_id"
+      formControlName="enrollment_id"
+      [options]="enrollmentOptions"
+      optionLabel="label"
+      optionValue="id"
+      placeholder="Seleccione una inscripción"
+      [filter]="true"
+      filterBy="label"
+      [showClear]="true"
+      class="w-full"
+    />
+
+    @if (form.controls.enrollment_id.touched && form.controls.enrollment_id.invalid) {
+      <small class="text-red-600">Debe seleccionar una inscripción.</small>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="name">Nombre del progreso</label>
+
+    <input
+      pInputText
+      id="name"
+      formControlName="name"
+      maxlength="150"
+      placeholder="Ingrese el nombre del progreso"
+      class="w-full"
+    />
+
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <small class="text-red-600">El nombre es obligatorio y admite máximo 150 caracteres.</small>
+    }
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="description">Descripción</label>
+
+    <textarea
+      pTextarea
+      id="description"
+      formControlName="description"
+      rows="4"
+      placeholder="Describa el progreso"
+      class="w-full"
+    ></textarea>
+  </div>
+
+  <div class="flex justify-end gap-2">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      type="button"
+      (onClick)="cancel()"
+    />
+
+    <p-button
+      [label]="progress ? 'Actualizar' : 'Guardar'"
+      icon="pi pi-save"
+      type="submit"
+      [loading]="loading"
+    />
+  </div>
+</form>

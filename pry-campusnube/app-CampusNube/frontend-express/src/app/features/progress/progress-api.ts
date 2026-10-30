@@ -1,9 +1,12 @@
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
-import { Progress, ProgressPayload } from '../../core/models/progress.model';
+import {
+  Progress,
+  ProgressPayload,
+} from '../../core/models/progress.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProgressApi {
@@ -11,28 +14,37 @@ export class ProgressApi {
   private readonly base = `${environment.apiUrl}/progress`;
 
   list(): Observable<Progress[]> {
-    return this.http.get<{ progress: Progress[] }>(this.base)
+    return this.http
+      .get<{ progress: Progress[] }>(this.base)
       .pipe(map(response => response.progress));
   }
 
   get(id: number): Observable<Progress> {
-    return this.http.get<{ progress: Progress }>(`${this.base}/${id}`)
+    return this.http
+      .get<{ progress: Progress }>(`${this.base}/${id}`)
       .pipe(map(response => response.progress));
   }
 
   create(payload: ProgressPayload): Observable<Progress> {
-    return this.http.post<{ progress: Progress }>(this.base, payload)
+    return this.http
+      .post<{ progress: Progress }>(this.base, payload)
       .pipe(map(response => response.progress));
   }
 
   update(id: number, payload: Partial<ProgressPayload>): Observable<Progress> {
-    return this.http.patch<{ progress: Progress }>(`${this.base}/${id}`, payload)
+    return this.http
+      .patch<{ progress: Progress }>(`${this.base}/${id}`, payload)
       .pipe(map(response => response.progress));
   }
 
   replace(id: number, payload: ProgressPayload): Observable<Progress> {
-    return this.http.put<{ progress: Progress }>(`${this.base}/${id}`, payload)
+    return this.http
+      .put<{ progress: Progress }>(`${this.base}/${id}`, payload)
       .pipe(map(response => response.progress));
+  }
+
+  deactivate(id: number): Observable<unknown> {
+    return this.http.patch(`${this.base}/${id}/deactivate`, {});
   }
 
   remove(id: number): Observable<unknown> {

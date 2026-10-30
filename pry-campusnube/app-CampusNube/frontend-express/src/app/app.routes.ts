@@ -88,6 +88,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'progreso',
+        title: 'Progreso · CampusNube',
+        loadComponent: () =>
+          import('./features/progress/progress-list/progress-list').then(
+            (m) => m.ProgressList
+          ),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'docentes',

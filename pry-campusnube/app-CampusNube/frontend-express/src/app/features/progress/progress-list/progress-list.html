@@ -1,0 +1,135 @@
+<p-toast />
+<p-confirmdialog />
+
+<div class="flex flex-col gap-5">
+
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-bold">Gestión de Progreso</h1>
+      <p class="text-gray-500">
+        Administración del progreso académico relacionado con las inscripciones.
+      </p>
+    </div>
+
+    <p-button
+      label="Nuevo progreso"
+      icon="pi pi-plus"
+      (onClick)="newProgress()"
+    />
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="rounded-xl border border-gray-200 p-4">
+      <p class="text-sm text-gray-500">Total de progresos</p>
+      <p class="text-2xl font-bold">{{ totalCount() }}</p>
+    </div>
+
+    <div class="rounded-xl border border-gray-200 p-4">
+      <p class="text-sm text-gray-500">Progresos activos</p>
+      <p class="text-2xl font-bold">{{ activeCount() }}</p>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+    <input
+      pInputText
+      type="text"
+      placeholder="Buscar progreso..."
+      [value]="search()"
+      (input)="search.set($any($event.target).value)"
+      class="w-full sm:max-w-md"
+    />
+  </div>
+
+  <p-table
+    [value]="filteredProgress()"
+    [loading]="loading()"
+    dataKey="id"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    responsiveLayout="scroll"
+    stripedRows
+    showGridlines
+    [tableStyle]="{ 'min-width': '65rem' }"
+  >
+    <ng-template #header>
+      <tr>
+        <th>ID</th>
+        <th>Inscripción</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-item>
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ enrollmentLabel(item.enrollment_id) }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description || 'Sin descripción' }}</td>
+        <td>
+          <p-tag
+            [value]="item.isActive ? 'Activo' : 'Inactivo'"
+            [severity]="item.isActive ? 'success' : 'secondary'"
+          />
+        </td>
+        <td>
+          <div class="flex gap-2">
+            <p-button
+              icon="pi pi-pencil"
+              severity="info"
+              [text]="true"
+              pTooltip="Editar"
+              (onClick)="editProgress(item)"
+            />
+
+            @if (item.isActive) {
+              <p-button
+                icon="pi pi-ban"
+                severity="warn"
+                [text]="true"
+                pTooltip="Desactivar"
+                (onClick)="deactivate(item)"
+              />
+            }
+
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [text]="true"
+              pTooltip="Eliminar"
+              (onClick)="remove(item)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="6" class="text-center p-4">
+          No se encontraron registros de progreso.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  [header]="selectedProgress() ? 'Editar progreso' : 'Nuevo progreso'"
+  [visible]="dialogVisible()"
+  (visibleChange)="!$event && closeDialog()"
+  [modal]="true"
+  [style]="{ width: 'min(95vw, 650px)' }"
+  [draggable]="false"
+>
+  <app-progress-form
+    [progress]="selectedProgress()"
+    [enrollments]="enrollments()"
+    (saved)="onSaved()"
+    (cancelled)="closeDialog()"
+  />
+</p-dialog>
