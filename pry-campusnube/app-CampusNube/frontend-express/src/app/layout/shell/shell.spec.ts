@@ -40,7 +40,6 @@ describe('Shell', () => {
 
     expect(shell.items().map((item) => item.label)).toEqual([
       'Dashboard',
-      'Mi perfil',
       'Docentes',
       'Aprendices',
       'Cursos',
@@ -67,7 +66,7 @@ describe('Shell', () => {
     vi.spyOn(shell.session, 'canPermission').mockReturnValue(true);
     shell.session.clear();
 
-    expect(shell.items().length).toBe(19);
+    expect(shell.items().length).toBe(18);
     expect(compilado.querySelector('app-aside')).toBeTruthy();
     expect(compilado.querySelector('p-drawer')).toBeTruthy();
   });

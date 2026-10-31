@@ -3426,8 +3426,52 @@ Se verificaron las pruebas unitarias, el formato del código mediante Prettier, 
 
 ```         
 git add .     
-git commit -m "Fase II: Auth con RBAC — ISS-11 — Build, calidad y cierre del proyecto"     
+git commit -m "Fase II: Auth con RBAC — ISS-18 — Build, calidad y cierre del proyecto"     
 git push origin main 
 ```
 
-# 
+# Ajustes y modificaciones del frontend — ISS-19
+
+### 19.1 Ajuste de interfaz: menú de usuario y perfil
+
+Objetivo: Mejorar la organización del menú lateral y facilitar el acceso a las opciones de usuario.
+
+Evidencias:
+
+1.  Captura de la solicitud de modificación realizada al asistente.
+
+    ![](images/clipboard-55420685.png)
+
+2.  Captura del resultado reflejado en el frontend de CampusNube.
+
+![](images/clipboard-3868236819.png){width="341"}
+
+### 19.2 Navegación desde el panel académico
+
+Objetivo: Facilitar el acceso a los módulos de CampusNube desde el panel principal.
+
+Modificaciones realizadas:
+
+- Se cambió el nombre «Dashboard» por «Panel» en el menú lateral.
+
+- Se actualizó el encabezado a «Panel académico».
+
+- Se actualizaron los títulos de la página.
+
+- Se habilitó la navegación desde las 11 tarjetas de indicadores hacia sus respectivos módulos.
+
+  ![](images/clipboard-3246436352.png)
+
+  ### 19.3 Ajuste del panel de usuario para todos los perfiles
+
+  **Objetivo:** Garantizar que todos los usuarios autenticados puedan acceder a sus opciones personales y cerrar sesión.
+
+  ![](images/clipboard-718875456.png)
+
+## Commit del ISS-19
+
+```         
+git add .      
+git commit -m "Fase II: ISS-19 - Mejoras de interfaz y navegación por roles"    
+git push origin main 
+```

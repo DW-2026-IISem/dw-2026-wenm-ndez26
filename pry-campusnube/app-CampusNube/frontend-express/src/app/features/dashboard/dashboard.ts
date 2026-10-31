@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { Component, computed, inject, signal } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -33,7 +34,7 @@ import { CertificateApi } from '../certificates/certificate-api';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -137,6 +138,10 @@ export class Dashboard {
   /**
    * Consulta las once API en paralelo.
    */
+  canView(permission: string): boolean {
+    return this.session.canPermission(permission);
+  }
+
   loadDashboard(): void {
     this.loading.set(true);
     this.errorMessage.set(null);

@@ -2,7 +2,7 @@
   <header class="dashboard-header">
     <div>
       <span class="eyebrow">CAMPUSNUBE · APRENDIZAJE VIRTUAL</span>
-      <h1>Dashboard académico</h1>
+      <h1>Panel académico</h1>
       <p>Resumen general de la información académica de la plataforma.</p>
     </div>
 
@@ -36,104 +36,126 @@
       </div>
 
       <div class="stats-grid">
-        <article class="stat-card">
+        @if (canView('GET /api/docentes')) {
+<a class="stat-card stat-card-link" routerLink="/docentes">
           <div class="stat-icon purple"><i class="pi pi-users"></i></div>
           <div class="stat-content">
             <span>Docentes</span>
             <strong>{{ totalTeachers() }}</strong>
             <small>{{ activeTeachers() }} activos</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/aprendices')) {
+<a class="stat-card stat-card-link" routerLink="/aprendices">
           <div class="stat-icon blue"><i class="pi pi-user"></i></div>
           <div class="stat-content">
             <span>Aprendices</span>
             <strong>{{ totalLearners() }}</strong>
             <small>{{ activeLearners() }} activos</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/cursos')) {
+<a class="stat-card stat-card-link" routerLink="/cursos">
           <div class="stat-icon green"><i class="pi pi-book"></i></div>
           <div class="stat-content">
             <span>Cursos</span>
             <strong>{{ totalCourses() }}</strong>
             <small>{{ activeCourses() }} activos</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/modulos')) {
+<a class="stat-card stat-card-link" routerLink="/modulos">
           <div class="stat-icon orange"><i class="pi pi-folder"></i></div>
           <div class="stat-content">
             <span>Módulos</span>
             <strong>{{ totalModules() }}</strong>
             <small>{{ activeModules() }} activos</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/lecciones')) {
+<a class="stat-card stat-card-link" routerLink="/lecciones">
           <div class="stat-icon cyan"><i class="pi pi-file"></i></div>
           <div class="stat-content">
             <span>Lecciones</span>
             <strong>{{ totalLessons() }}</strong>
             <small>{{ activeLessons() }} activas</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/evaluaciones')) {
+<a class="stat-card stat-card-link" routerLink="/evaluaciones">
           <div class="stat-icon pink"><i class="pi pi-check-square"></i></div>
           <div class="stat-content">
             <span>Evaluaciones</span>
             <strong>{{ totalEvaluations() }}</strong>
             <small>{{ activeEvaluations() }} activas</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/inscripciones')) {
+<a class="stat-card stat-card-link" routerLink="/inscripciones">
           <div class="stat-icon green"><i class="pi pi-bookmark"></i></div>
           <div class="stat-content">
             <span>Inscripciones</span>
             <strong>{{ totalEnrollments() }}</strong>
             <small>{{ activeEnrollments() }} activas</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/intentos')) {
+<a class="stat-card stat-card-link" routerLink="/intentos">
           <div class="stat-icon orange"><i class="pi pi-pencil"></i></div>
           <div class="stat-content">
             <span>Intentos</span>
             <strong>{{ totalAttempts() }}</strong>
             <small>{{ activeAttempts() }} activos</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/entregas')) {
+<a class="stat-card stat-card-link" routerLink="/entregas">
           <div class="stat-icon blue"><i class="pi pi-inbox"></i></div>
           <div class="stat-content">
             <span>Entregas</span>
             <strong>{{ totalSubmissions() }}</strong>
             <small>Registros totales</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/progress')) {
+<a class="stat-card stat-card-link" routerLink="/progreso">
           <div class="stat-icon purple"><i class="pi pi-chart-line"></i></div>
           <div class="stat-content">
             <span>Progreso</span>
             <strong>{{ totalProgress() }}</strong>
             <small>{{ activeProgress() }} activos</small>
           </div>
-        </article>
+        </a>
+}
 
-        <article class="stat-card">
+        @if (canView('GET /api/certificates')) {
+<a class="stat-card stat-card-link" routerLink="/certificados">
           <div class="stat-icon cyan"><i class="pi pi-verified"></i></div>
           <div class="stat-content">
             <span>Certificados</span>
             <strong>{{ totalCertificates() }}</strong>
             <small>{{ activeCertificates() }} activos</small>
           </div>
-        </article>
+        </a>
+}
       </div>
     </section>
 

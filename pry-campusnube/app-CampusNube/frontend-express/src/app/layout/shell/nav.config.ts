@@ -7,15 +7,9 @@ export interface NavItem extends MenuItem {
 
 export const NAV: NavItem[] = [
   {
-    label: 'Dashboard',
+    label: 'Panel',
     icon: 'pi pi-home',
     routerLink: '/dashboard',
-  },
-  {
-    label: 'Mi perfil',
-    icon: 'pi pi-user',
-    routerLink: '/perfil',
-    authOnly: true,
   },
   {
     label: 'Docentes',

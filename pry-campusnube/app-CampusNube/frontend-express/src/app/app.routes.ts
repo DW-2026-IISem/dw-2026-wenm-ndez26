@@ -17,7 +17,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        title: 'Dashboard académico · CampusNube',
+        title: 'Panel académico · CampusNube',
         loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),
       },
       {
