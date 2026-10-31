@@ -1,10 +1,11 @@
+
 /**
  * Documentación OpenAPI del feature Learner.
  *
  * Se agrega desde `src/swagger` (registry externo),
  * no se monta aquí.
  *
- * Leyenda: endpoints protegidos con JWT + RBAC.
+ * Endpoints protegidos con JWT + RBAC.
  */
 
 import { bearerSecurity } from "../../../shared/http/swagger-security";
@@ -12,22 +13,22 @@ import { bearerSecurity } from "../../../shared/http/swagger-security";
 export const learnerSwagger = {
   tags: [
     {
-      name: "Aprendices",
-      description: "CRUD de aprendices — JWT + RBAC",
+      name: "Learners",
+      description: "CRUD de Learners — JWT + RBAC",
     },
   ],
 
   paths: {
-    "/api/aprendices": {
+    "/api/Learners": {
       get: {
-        tags: ["Aprendices"],
-        summary: "Listar aprendices activos",
+        tags: ["Learners"],
+        summary: "Listar Learners activos",
         description:
-          "JWT + RBAC — retorna aprendices con status=active (sin password)",
+          "JWT + RBAC — retorna Learners con status=active (sin password)",
         security: bearerSecurity,
         responses: {
           "200": {
-            description: "Lista de aprendices",
+            description: "Lista de Learners",
             content: {
               "application/json": {
                 schema: {
@@ -54,7 +55,7 @@ export const learnerSwagger = {
       },
 
       post: {
-        tags: ["Aprendices"],
+        tags: ["Learners"],
         summary: "Crear aprendiz",
         description: "JWT + RBAC",
         security: bearerSecurity,
@@ -97,10 +98,10 @@ export const learnerSwagger = {
       },
     },
 
-    "/api/aprendices/{id}": {
+    "/api/Learners/{id}": {
       get: {
-        tags: ["Aprendices"],
-        summary: "Obtener aprendiz por id",
+        tags: ["Learners"],
+        summary: "Obtener aprendiz por ID",
         description: "JWT + RBAC",
         security: bearerSecurity,
         parameters: [
@@ -131,7 +132,7 @@ export const learnerSwagger = {
             },
           },
           "400": {
-            description: "id inválido",
+            description: "ID inválido",
           },
           "401": {
             $ref: "#/components/responses/Unauthorized",
@@ -146,7 +147,7 @@ export const learnerSwagger = {
       },
 
       put: {
-        tags: ["Aprendices"],
+        tags: ["Learners"],
         summary: "Actualizar aprendiz (PUT — reemplazo)",
         description: "JWT + RBAC",
         security: bearerSecurity,
@@ -191,7 +192,7 @@ export const learnerSwagger = {
       },
 
       patch: {
-        tags: ["Aprendices"],
+        tags: ["Learners"],
         summary: "Actualizar aprendiz (PATCH — parcial)",
         description: "JWT + RBAC",
         security: bearerSecurity,
@@ -236,9 +237,9 @@ export const learnerSwagger = {
       },
 
       delete: {
-        tags: ["Aprendices"],
+        tags: ["Learners"],
         summary: "Eliminar aprendiz (físico)",
-        description: "JWT + RBAC — elimina la fila",
+        description: "JWT + RBAC — elimina permanentemente el registro",
         security: bearerSecurity,
         parameters: [
           {
@@ -252,11 +253,11 @@ export const learnerSwagger = {
           },
         ],
         responses: {
-          "204": {
+          "200": {
             description: "Aprendiz eliminado",
           },
           "400": {
-            description: "id inválido",
+            description: "ID inválido",
           },
           "401": {
             $ref: "#/components/responses/Unauthorized",
@@ -271,11 +272,11 @@ export const learnerSwagger = {
       },
     },
 
-    "/api/aprendices/{id}/deactivate": {
+    "/api/Learners/{id}/deactivate": {
       patch: {
-        tags: ["Aprendices"],
-        summary: "Eliminar aprendiz (lógico)",
-        description: "JWT + RBAC — status = inactive",
+        tags: ["Learners"],
+        summary: "Desactivar aprendiz (eliminación lógica)",
+        description: "JWT + RBAC — cambia status a inactive",
         security: bearerSecurity,
         parameters: [
           {
@@ -293,7 +294,7 @@ export const learnerSwagger = {
             description: "Aprendiz desactivado",
           },
           "400": {
-            description: "id inválido",
+            description: "ID inválido",
           },
           "401": {
             $ref: "#/components/responses/Unauthorized",
@@ -313,11 +314,25 @@ export const learnerSwagger = {
     schemas: {
       LearnerCreate: {
         type: "object",
-        required: ["userId"],
+        required: ["name", "password"],
         properties: {
-          userId: {
-            type: "integer",
-            example: 1,
+          name: {
+            type: "string",
+            example: "Aprendiz de prueba",
+          },
+          description: {
+            type: "string",
+            example: "Registro de prueba",
+          },
+          password: {
+            type: "string",
+            format: "password",
+            example: "Aprendiz123!",
+          },
+          status: {
+            type: "string",
+            enum: ["active", "inactive"],
+            example: "active",
           },
         },
       },
@@ -325,9 +340,23 @@ export const learnerSwagger = {
       LearnerUpdate: {
         type: "object",
         properties: {
-          userId: {
-            type: "integer",
-            example: 1,
+          name: {
+            type: "string",
+            example: "Aprendiz actualizado",
+          },
+          description: {
+            type: "string",
+            example: "Descripción actualizada",
+          },
+          password: {
+            type: "string",
+            format: "password",
+            example: "Aprendiz123!",
+          },
+          status: {
+            type: "string",
+            enum: ["active", "inactive"],
+            example: "active",
           },
         },
       },
@@ -337,15 +366,20 @@ export const learnerSwagger = {
         properties: {
           id: {
             type: "integer",
-            example: 1,
+            example: 11,
           },
-          userId: {
-            type: "integer",
-            example: 1,
+          name: {
+            type: "string",
+            example: "Aprendiz de prueba",
           },
-          isActive: {
-            type: "boolean",
-            example: true,
+          description: {
+            type: "string",
+            example: "Registro de prueba",
+          },
+          status: {
+            type: "string",
+            enum: ["active", "inactive"],
+            example: "active",
           },
           createdAt: {
             type: "string",

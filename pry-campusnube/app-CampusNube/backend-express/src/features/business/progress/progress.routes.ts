@@ -42,5 +42,13 @@ export class ProgressRoutes {
         authorize,
         this.progressController.delete.bind(this.progressController)
       );
+
+    app
+      .route("/api/progress/:id/deactivate")
+      .patch(
+        authenticate,
+        authorize,
+        this.progressController.deactivate.bind(this.progressController)
+      );
   }
 }

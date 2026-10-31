@@ -11,6 +11,7 @@ Content-Type: application/json
   "password": "Admin123!"
 }
 
+###
 @token = {{loginAdmin.response.body.$.access_token}}
 
 ### getAll — asignaciones activas
@@ -29,10 +30,11 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "user_id": 2,
-  "role_id": 2
+  "user_id": 7,
+  "role_id": 6
 }
 
+###
 @assignmentId = {{assignCreate.response.body.$.assignment.id}}
 
 ### 409 — ese rol ya está asignado a ese usuario

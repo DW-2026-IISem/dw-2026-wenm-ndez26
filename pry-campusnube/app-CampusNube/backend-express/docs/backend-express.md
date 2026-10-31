@@ -173,7 +173,7 @@ node -e "const p=require('./package.json'); console.log(p.scripts)"
 - [x] Carpetas de infra y features creadas según el árbol
 
 | Carpeta | Uso |
-|----------------------------------------------|--------------------------|
+|----|----|
 | `features/business/<entidad>/` | model + controller + routes (+ seeder, swagger, http, associations) |
 | `database/seeders/` | counts + SeedersRunner (`npm run db:seed`) |
 | `routes/index.ts` | Agregador de features |
@@ -182,7 +182,7 @@ node -e "const p=require('./package.json'); console.log(p.scripts)"
 **Seeders (patrón del lab)**
 
 | Pieza | Dónde |
-|------------------------------------|------------------------------------|
+|----|----|
 | Por entidad | `src/features/business/<entidad>/<entidad>.seeder.ts` |
 | Runner + counts | `src/database/seeders/{index,counts}.ts` → `npm run db:seed` |
 | Datos falsos | `@faker-js/faker` |
@@ -804,7 +804,7 @@ git push origin main
 **Diseño**
 
 | Pieza | Ubicación | Rol |
-|---------------------|--------------------------------|-------------------|
+|----|----|----|
 | Seeder del feature | `src/features/business/leanrs/client.seeder.ts` | Genera filas falsas de learns |
 | Conteos | `src/database/seeders/counts.ts` | `learns: N` (y futuras entidades) |
 | Runner | `src/database/seeders/index.ts` | Importa seeders de features y los ejecuta en orden |
@@ -899,7 +899,7 @@ git push origin main
 **Diseño**
 
 | Pieza | Ubicación | Rol |
-|---------------------|--------------------------------|-------------------|
+|----|----|----|
 | Docs del feature | `src/features/business/learn/leaner.swagger.ts` | Paths + schemas Leaner |
 | Registry | `src/swagger/index.ts` | Fusiona features + `setupSwagger(app)` |
 | UI | `/api/docs` | Swagger UI |
@@ -6250,7 +6250,7 @@ Tres responsabilidades, todas de la capa *shared* (no son propias de un feature)
 
 con bcrypt y hash SHA-256 para tokens.
 
-:   \> src/shared/auth/password.ts cat \>\> src/shared/auth/password.ts
+: \> src/shared/auth/password.ts cat \>\> src/shared/auth/password.ts
 
 ![](images/clipboard-2314195832.png)
 
@@ -6403,7 +6403,7 @@ git push origin main
 ## 16.7 `swagger-security.ts` — seguridad reutilizable para OpenAPI
 
 | **Export** | **Para qué** |
-|:-----------------------------------|:-----------------------------------|
+|:---|:---|
 | `bearerSecurityScheme` | Esquema `bearerAuth` (`Authorization: Bearer <token>`, RFC 6750) |
 | `unauthorizedResponse` | Respuesta `401` reutilizable (`$ref`) |
 | `forbiddenResponse` | Respuesta `403` reutilizable (`$ref`) |
@@ -6433,7 +6433,7 @@ git push origin main
 ## 16.8 Los seis modelos Sequelize
 
 | **Entidad** | **Tabla** | **Responsabilidad** |
-|:-----------------------|:-----------------------|:-----------------------|
+|:---|:---|:---|
 | `User` | `users` | identidad del usuario (contraseña **hasheada**) |
 | `Role` | `roles` | agrupación de responsabilidades |
 | `RoleUser` | `role_users` | asignación `User ↔ Role` (N:M) |
@@ -6646,7 +6646,7 @@ git push origin main
 # Fase II: Auth con RBAC — ISS-17 — Feature Users (identidad y contraseña)
 
 | **Este ISS** |   |
-|:-----------------------------------|:-----------------------------------|
+|:---|:---|
 | **Título** | Feature Users (identidad y contraseña) |
 | **Feature / tabla** | `features/auth/users/` · `users` |
 | **API** | `/api/usuarios…` (JWT + RBAC) |
@@ -6891,7 +6891,7 @@ git push origin main
 # Fase II: Auth con RBAC — ISS-18 — Features Roles y Resources (catálogo de autorización)
 
 | **Este ISS** |   |
-|:-----------------------------------|:-----------------------------------|
+|:---|:---|
 | **Título** | Features Roles y Resources (catálogo de autorización) |
 | **Feature / tablas** | `features/auth/roles/` · `roles` — `features/auth/resources/` · `resources` |
 | **API** | `/api/roles…` y `/api/recursos…` (JWT + RBAC) |
@@ -7203,7 +7203,7 @@ git push origin main
 # Fase II: Auth con RBAC — ISS-19 — Features RoleUsers y ResourceRoles (asignar roles y conceder permisos)
 
 | **Este ISS** |   |
-|:-----------------------------------|:-----------------------------------|
+|:---|:---|
 | **Título** | Features RoleUsers y ResourceRoles |
 | **Feature / tablas** | `features/auth/role-users/` · `role_users` — `features/auth/resource-roles/` · `resource_roles` |
 | **API** | `/api/asignaciones-rol…` y `/api/concesiones-rol…` (JWT + RBAC) |
@@ -7574,7 +7574,7 @@ git push origin main
 ## ISS-20.5 Las tres modalidades en CampusNube
 
 | **Modalidad** | **Middleware en la ruta** | **Qué exige** | **Sin cumplir** |
-|:-----------------|:-----------------|:-------------------|:-----------------|
+|:---|:---|:---|:---|
 | **OPEN** | — | nada | — |
 | **JWT** | `authenticate` | access token válido y usuario activo | **401** |
 | **JWT + RBAC** | `authenticate, authorize` | token válido y concesión activa de `(method, path)` | **401** (sin token) / **403** (sin permiso) |
@@ -7816,7 +7816,7 @@ git push origin main
 ## Las tres modalidades — mapa definitivo de rutas
 
 | **Modalidad** | **Middlewares** | **Rutas** |
-|:-------------------|:---------------------------------|:-----------------|
+|:---|:---|:---|
 | **OPEN** | — | `POST /api/sesion/login` · `/refresh` · `/logout` · `GET /api/docs` · `/api/docs.json` |
 | **JWT** | `authenticate` | `GET /api/sesion/perfil` · `/api/permisos` · `GET /api/sesiones` · `/:id` · `PATCH /api/sesiones/:id/deactivate` · `/deactivate-all` · `DELETE /api/sesiones` |
 | **JWT + RBAC** | `authenticate, authorize` | `/api/aprendices…` · `/api/docentes…` · `/api/cursos…` · `/api/modulos…` · `/api/lecciones…` · `/api/inscripciones…` · `/api/evaluaciones…` · `/api/intentos…` · `/api/entregas…` · `/api/progress…` · `/api/certificates…` · `/api/usuarios…` · `/api/roles…` · `/api/recursos…` · `/api/asignaciones-rol…` · `/api/concesiones-rol…` |
@@ -8369,10 +8369,12 @@ Evidencia 2. Cursos sin autenticación — Swagger
 
 ![](images/clipboard-1792084282.png)
 
-#### commit final 
+#### commit final
 
 ```         
 git add . 
 git commit -m "exam: documentar examen segundo corte semana 9 con pruebas HTTP, Swagger, JWT, Refresh y RBAC"
 git push origin main
 ```
+
+![](images/clipboard-3169219250.png)

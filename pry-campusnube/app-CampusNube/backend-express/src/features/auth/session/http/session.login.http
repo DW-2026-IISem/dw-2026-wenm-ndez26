@@ -34,6 +34,7 @@ Content-Type: application/json
   "password": "password-incorrecta"
 }
 
+
 ###
 
 @adminAccessToken = {{loginAdmin.response.body.$.access_token}}

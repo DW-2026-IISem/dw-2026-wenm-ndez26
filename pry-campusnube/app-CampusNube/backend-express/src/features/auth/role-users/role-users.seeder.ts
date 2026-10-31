@@ -6,7 +6,7 @@ import { User } from "../users/user.model";
  * Seeder de las asignaciones usuario ↔ rol (`role_users`).
  *
  * Crea las dos asignaciones de referencia. Con esto el usuario `admin` hereda
- * los 58 recursos de `ADMIN` y el usuario `seller` los 7 de `SELLER`, sin
+ * los recursos de `ADMIN` y el usuario `docente` los de `DOCENTE`, sin
  * escribir ni una fila de autorización a mano.
  *
  * Idempotente: si la pareja ya existe (activa o no), se asegura de que quede
@@ -14,7 +14,7 @@ import { User } from "../users/user.model";
  */
 export const SEED_ROLE_USERS = [
   { username: "admin", roleName: "ADMIN" },
-  { username: "seller", roleName: "SELLER" },
+  { username: "docente", roleName: "DOCENTE" },
 ] as const;
 
 export async function seedRoleUsers(): Promise<number> {

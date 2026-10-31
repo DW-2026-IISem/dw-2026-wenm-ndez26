@@ -1,23 +1,29 @@
 import { Role } from "./role.model";
 
 /**
- * Seeder del catálogo de roles (`roles`).
- *
- * Crea los roles de referencia de CampusNube. Es determinista (no usa datos
- * aleatorios) e idempotente: `findOrCreate` por nombre y reactivación si ya
- * existía inactivo.
- *
- * Los roles nacen **sin permisos**: las concesiones se crean posteriormente
- * mediante el feature de resource-roles.
+ * Catálogo oficial de roles de CampusNube.
+ * Idempotente: crea los roles faltantes y reactiva los existentes.
  */
 export const SEED_ROLES = [
   {
     name: "ADMIN",
-    description: "Administración del sistema y gestión de la plataforma",
+    description: "Administración total del sistema y de la plataforma",
   },
   {
     name: "DOCENTE",
     description: "Gestión académica de cursos, módulos, lecciones y evaluaciones",
+  },
+  {
+    name: "APRENDIZ",
+    description: "Acceso a contenidos académicos y actividades de formación",
+  },
+  {
+    name: "COORDINADOR",
+    description: "Coordinación y supervisión de la gestión académica",
+  },
+  {
+    name: "AUDITOR",
+    description: "Consulta y seguimiento de información para auditoría",
   },
 ] as const;
 
@@ -40,7 +46,12 @@ export async function seedRoles(): Promise<number> {
     }
 
     if (role.status !== "active") {
-      await role.update({ status: "active" });
+      await role.update({
+        status: "active",
+        description: item.description,
+      });
+    } else if (role.description !== item.description) {
+      await role.update({ description: item.description });
     }
   }
 
