@@ -6,13 +6,13 @@ import {
   SessionHttpMethod,
   SessionTokens,
   SessionUser,
-  StoredSession
+  StoredSession,
 } from '../models/auth.model';
 
 const STORAGE_KEY = 'campusnube.session.v1';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SessionStore {
   private readonly _accessToken = signal<string | null>(null);
@@ -27,23 +27,15 @@ export class SessionStore {
 
   readonly authEnabled = environment.requireAuth;
 
-  readonly isAuthenticated = computed(
-    () => !!this._accessToken() && !!this._user()
-  );
+  readonly isAuthenticated = computed(() => !!this._accessToken() && !!this._user());
 
-  readonly permissionCount = computed(
-    () => this._permissions().length
-  );
+  readonly permissionCount = computed(() => this._permissions().length);
 
-  readonly roleNames = computed(() =>
-    [...new Set(
-      this._permissions().map(permission => permission.role_name)
-    )]
-  );
+  readonly roleNames = computed(() => [
+    ...new Set(this._permissions().map((permission) => permission.role_name)),
+  ]);
 
-  readonly roleLabel = computed(
-    () => this.roleNames().join(', ') || 'Sin rol asignado'
-  );
+  readonly roleLabel = computed(() => this.roleNames().join(', ') || 'Sin rol asignado');
 
   constructor() {
     this.restore();
@@ -55,10 +47,7 @@ export class SessionStore {
     this.persist();
   }
 
-  setAccess(
-    user: SessionUser,
-    permissions: EffectivePermission[]
-  ): void {
+  setAccess(user: SessionUser, permissions: EffectivePermission[]): void {
     this._user.set(user);
     this._permissions.set(permissions);
     this.persist();
@@ -107,9 +96,8 @@ export class SessionStore {
       return true;
     }
 
-    return this._permissions().some(permission =>
-      permission.method === method &&
-      this.pathMatches(permission.path, path)
+    return this._permissions().some(
+      (permission) => permission.method === method && this.pathMatches(permission.path, path),
     );
   }
 
@@ -156,7 +144,7 @@ export class SessionStore {
       accessToken: this._accessToken() || '',
       refreshToken: this._refreshToken() || '',
       user: this._user(),
-      permissions: this._permissions()
+      permissions: this._permissions(),
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(session));

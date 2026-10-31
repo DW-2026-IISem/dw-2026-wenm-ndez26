@@ -13,21 +13,13 @@ export interface SessionTokens {
   refresh_expires_in: number;
 }
 
-export type SessionUser = Pick<
-  User,
-  'id' | 'username' | 'email' | 'avatar' | 'status'
->;
+export type SessionUser = Pick<User, 'id' | 'username' | 'email' | 'avatar' | 'status'>;
 
 export interface ProfilePayload {
   user: SessionUser;
 }
 
-export type SessionHttpMethod =
-  | 'GET'
-  | 'POST'
-  | 'PUT'
-  | 'PATCH'
-  | 'DELETE';
+export type SessionHttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export interface EffectivePermission {
   resource_id: number;

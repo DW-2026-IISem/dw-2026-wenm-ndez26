@@ -1,4 +1,3 @@
-
 import { Status, Timestamps } from './api.model';
 
 export interface RoleUser extends Timestamps {

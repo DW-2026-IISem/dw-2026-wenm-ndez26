@@ -1,4 +1,3 @@
-
 import { Status, Timestamps } from './api.model';
 import { HttpMethod } from './resource.model';
 

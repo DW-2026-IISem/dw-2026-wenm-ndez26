@@ -86,7 +86,9 @@
   align-items: center;
   gap: 1rem;
   min-height: 110px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .stat-card:hover {

@@ -1,26 +1,13 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  output,
-} from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
 
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { MessageModule } from 'primeng/message';
 
-import {
-  Enrollment,
-  EnrollmentPayload,
-} from '../../../core/models/enrollment.model';
+import { Enrollment, EnrollmentPayload } from '../../../core/models/enrollment.model';
 
 import { Learner } from '../../../core/models/learner.model';
 import { Course } from '../../../core/models/course.model';
@@ -28,13 +15,7 @@ import { Course } from '../../../core/models/course.model';
 @Component({
   selector: 'app-enrollment-form',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-    SelectModule,
-    MessageModule,
-  ],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, SelectModule, MessageModule],
   templateUrl: './enrollment-form.html',
   styleUrl: './enrollment-form.css',
 })

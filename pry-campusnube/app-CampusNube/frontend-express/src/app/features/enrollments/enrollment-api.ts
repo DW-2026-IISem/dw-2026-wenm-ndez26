@@ -4,10 +4,7 @@ import { Observable, map } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 
-import {
-  Enrollment,
-  EnrollmentPayload,
-} from '../../core/models/enrollment.model';
+import { Enrollment, EnrollmentPayload } from '../../core/models/enrollment.model';
 
 @Injectable({ providedIn: 'root' })
 export class EnrollmentApi {
@@ -32,10 +29,7 @@ export class EnrollmentApi {
       .pipe(map((response) => response.enrollment));
   }
 
-  update(
-    id: number,
-    payload: Partial<EnrollmentPayload>,
-  ): Observable<Enrollment> {
+  update(id: number, payload: Partial<EnrollmentPayload>): Observable<Enrollment> {
     return this.http
       .patch<{ enrollment: Enrollment }>(`${this.base}/${id}`, payload)
       .pipe(map((response) => response.enrollment));

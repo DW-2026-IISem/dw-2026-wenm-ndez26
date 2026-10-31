@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -19,15 +13,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
-import {
-  ConfirmationService,
-  MessageService,
-} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
-import {
-  Enrollment,
-  EnrollmentPayload,
-} from '../../../core/models/enrollment.model';
+import { Enrollment, EnrollmentPayload } from '../../../core/models/enrollment.model';
 
 import { Learner } from '../../../core/models/learner.model';
 import { Course } from '../../../core/models/course.model';
@@ -78,17 +66,13 @@ export class EnrollmentList implements OnInit {
   readonly selectedEnrollment = signal<Enrollment | null>(null);
 
   readonly learnerName = computed(() => {
-    const map = new Map(
-      this.learners().map((learner) => [learner.id, learner.name]),
-    );
+    const map = new Map(this.learners().map((learner) => [learner.id, learner.name]));
 
     return (id: number) => map.get(id) ?? `Aprendiz #${id}`;
   });
 
   readonly courseName = computed(() => {
-    const map = new Map(
-      this.courses().map((course) => [course.id, course.name]),
-    );
+    const map = new Map(this.courses().map((course) => [course.id, course.name]));
 
     return (id: number) => map.get(id) ?? `Curso #${id}`;
   });
@@ -97,9 +81,7 @@ export class EnrollmentList implements OnInit {
     () => this.rows().filter((enrollment) => enrollment.status === 'active').length,
   );
 
-  readonly totalEnrollmentCount = computed(
-    () => this.rows().length,
-  );
+  readonly totalEnrollmentCount = computed(() => this.rows().length);
 
   readonly filteredRows = computed(() => {
     const term = this.search().trim().toLowerCase();
@@ -167,9 +149,7 @@ export class EnrollmentList implements OnInit {
 
     const current = this.selectedEnrollment();
 
-    const request = current
-      ? this.api.update(current.id, payload)
-      : this.api.create(payload);
+    const request = current ? this.api.update(current.id, payload) : this.api.create(payload);
 
     request.subscribe({
       next: () => {

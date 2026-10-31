@@ -1,4 +1,3 @@
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
@@ -11,28 +10,33 @@ export class ResourceApi {
   private readonly base = `${environment.apiUrl}/recursos`;
 
   list(): Observable<Resource[]> {
-    return this.http.get<{ resources: Resource[] }>(this.base)
-      .pipe(map(response => response.resources));
+    return this.http
+      .get<{ resources: Resource[] }>(this.base)
+      .pipe(map((response) => response.resources));
   }
 
   get(id: number): Observable<Resource> {
-    return this.http.get<{ resource: Resource }>(`${this.base}/${id}`)
-      .pipe(map(response => response.resource));
+    return this.http
+      .get<{ resource: Resource }>(`${this.base}/${id}`)
+      .pipe(map((response) => response.resource));
   }
 
   create(payload: ResourcePayload): Observable<Resource> {
-    return this.http.post<{ resource: Resource }>(this.base, payload)
-      .pipe(map(response => response.resource));
+    return this.http
+      .post<{ resource: Resource }>(this.base, payload)
+      .pipe(map((response) => response.resource));
   }
 
   update(id: number, payload: Partial<ResourcePayload>): Observable<Resource> {
-    return this.http.patch<{ resource: Resource }>(`${this.base}/${id}`, payload)
-      .pipe(map(response => response.resource));
+    return this.http
+      .patch<{ resource: Resource }>(`${this.base}/${id}`, payload)
+      .pipe(map((response) => response.resource));
   }
 
   replace(id: number, payload: ResourcePayload): Observable<Resource> {
-    return this.http.put<{ resource: Resource }>(`${this.base}/${id}`, payload)
-      .pipe(map(response => response.resource));
+    return this.http
+      .put<{ resource: Resource }>(`${this.base}/${id}`, payload)
+      .pipe(map((response) => response.resource));
   }
 
   deactivate(id: number): Observable<unknown> {

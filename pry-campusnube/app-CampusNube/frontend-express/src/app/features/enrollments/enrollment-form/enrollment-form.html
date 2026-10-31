@@ -1,9 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
-
   <div class="flex flex-col gap-2">
-    <label for="enrollment-learner" class="font-semibold">
-      Aprendiz *
-    </label>
+    <label for="enrollment-learner" class="font-semibold"> Aprendiz * </label>
 
     <p-select
       inputId="enrollment-learner"
@@ -19,16 +16,12 @@
     />
 
     @if (form.controls.learner_id.touched && form.controls.learner_id.invalid) {
-      <p-message severity="error">
-        Debe seleccionar un aprendiz.
-      </p-message>
+      <p-message severity="error"> Debe seleccionar un aprendiz. </p-message>
     }
   </div>
 
   <div class="flex flex-col gap-2">
-    <label for="enrollment-course" class="font-semibold">
-      Curso *
-    </label>
+    <label for="enrollment-course" class="font-semibold"> Curso * </label>
 
     <p-select
       inputId="enrollment-course"
@@ -44,16 +37,12 @@
     />
 
     @if (form.controls.course_id.touched && form.controls.course_id.invalid) {
-      <p-message severity="error">
-        Debe seleccionar un curso.
-      </p-message>
+      <p-message severity="error"> Debe seleccionar un curso. </p-message>
     }
   </div>
 
   <div class="flex flex-col gap-2">
-    <label for="enrollment-date" class="font-semibold">
-      Fecha de inscripción
-    </label>
+    <label for="enrollment-date" class="font-semibold"> Fecha de inscripción </label>
 
     <input
       id="enrollment-date"

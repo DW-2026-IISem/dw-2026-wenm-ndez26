@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
@@ -18,15 +12,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
-import {
-  ConfirmationService,
-  MessageService,
-} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
-import {
-  Evaluation,
-  EvaluationPayload,
-} from '../../../core/models/evaluation.model';
+import { Evaluation, EvaluationPayload } from '../../../core/models/evaluation.model';
 
 import { Course } from '../../../core/models/course.model';
 
@@ -71,9 +59,7 @@ export class EvaluationList implements OnInit {
   readonly selectedEvaluation = signal<Evaluation | null>(null);
 
   readonly courseName = computed(() => {
-    const map = new Map(
-      this.courses().map((course) => [course.id, course.name]),
-    );
+    const map = new Map(this.courses().map((course) => [course.id, course.name]));
 
     return (id: number) => map.get(id) ?? `Curso #${id}`;
   });
@@ -82,9 +68,7 @@ export class EvaluationList implements OnInit {
     () => this.rows().filter((evaluation) => evaluation.isActive).length,
   );
 
-  readonly totalEvaluationCount = computed(
-    () => this.rows().length,
-  );
+  readonly totalEvaluationCount = computed(() => this.rows().length);
 
   readonly filteredRows = computed(() => {
     const term = this.search().trim().toLowerCase();
@@ -149,9 +133,7 @@ export class EvaluationList implements OnInit {
 
     const current = this.selectedEvaluation();
 
-    const request = current
-      ? this.api.update(current.id, payload)
-      : this.api.create(payload);
+    const request = current ? this.api.update(current.id, payload) : this.api.create(payload);
 
     request.subscribe({
       next: () => {

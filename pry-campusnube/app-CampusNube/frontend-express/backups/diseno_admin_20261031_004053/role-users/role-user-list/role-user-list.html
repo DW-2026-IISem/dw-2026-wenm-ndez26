@@ -1,0 +1,116 @@
+<section>
+  <h2>Asignaciones usuario ↔ rol</h2>
+
+  <p *ngIf="message()" role="status">{{ message() }}</p>
+  <p *ngIf="error()" role="alert">{{ error() }}</p>
+
+  <div>
+    <label>Filtrar por usuario</label>
+    <p-select
+      [options]="users()"
+      optionLabel="username"
+      [filter]="true"
+      filterBy="username,email"
+      [showClear]="true"
+      placeholder="Todos los usuarios"
+      [ngModel]="userFilter()"
+      (ngModelChange)="userFilter.set($event)"
+    />
+
+    <label>Filtrar por rol</label>
+    <p-select
+      [options]="roles()"
+      optionLabel="name"
+      [showClear]="true"
+      placeholder="Todos los roles"
+      [ngModel]="roleFilter()"
+      (ngModelChange)="roleFilter.set($event)"
+    />
+
+    <button type="button" (click)="openDialog()">
+      Asignar rol
+    </button>
+  </div>
+
+  <p *ngIf="loading()">Cargando asignaciones...</p>
+
+  <table *ngIf="!loading()">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Usuario</th>
+        <th>Correo</th>
+        <th>Rol</th>
+        <th>Fecha</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of visibleRows()">
+        <td>
+          <img
+            *ngIf="userFor(row)?.avatar"
+            [src]="userFor(row)?.avatar"
+            alt="Avatar"
+            width="36"
+            height="36"
+          />
+          <span *ngIf="!userFor(row)?.avatar">—</span>
+        </td>
+        <td>{{ userFor(row)?.username }}</td>
+        <td>{{ userFor(row)?.email }}</td>
+        <td>{{ roleFor(row)?.name }}</td>
+        <td>{{ row.createdAt | date:'short' }}</td>
+        <td>
+          <button type="button" (click)="deactivate(row)">
+            Retirar rol
+          </button>
+        </td>
+      </tr>
+
+      <tr *ngIf="visibleRows().length === 0">
+        <td colspan="6">No hay asignaciones para mostrar.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<p-dialog
+  header="Asignar rol"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+>
+  <div>
+    <label>Usuario</label>
+    <p-select
+      [fluid]="true"
+      [options]="users()"
+      optionLabel="username"
+      [filter]="true"
+      filterBy="username,email"
+      placeholder="Seleccionar usuario"
+      [ngModel]="selectedUser()"
+      (ngModelChange)="selectedUser.set($event)"
+    />
+
+    <label>Rol</label>
+    <p-select
+      [fluid]="true"
+      [options]="roles()"
+      optionLabel="name"
+      placeholder="Seleccionar rol"
+      [ngModel]="selectedRole()"
+      (ngModelChange)="selectedRole.set($event)"
+    />
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button type="button" (click)="closeDialog()">Cancelar</button>
+    <button type="button" [disabled]="!canSave()" (click)="save()">
+      Guardar asignación
+    </button>
+  </ng-template>
+</p-dialog>

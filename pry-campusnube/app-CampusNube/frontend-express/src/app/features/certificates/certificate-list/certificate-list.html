@@ -2,7 +2,9 @@
 <p-confirmdialog />
 
 <div class="card">
-  <div class="flex flex-column md:flex-row md:align-items-center md:justify-content-between gap-3 mb-4">
+  <div
+    class="flex flex-column md:flex-row md:align-items-center md:justify-content-between gap-3 mb-4"
+  >
     <div>
       <h2 class="text-xl font-semibold m-0">Gestión de certificados</h2>
       <p class="text-color-secondary mt-2 mb-0">
@@ -10,11 +12,7 @@
       </p>
     </div>
 
-    <p-button
-      label="Nuevo certificado"
-      icon="pi pi-plus"
-      (onClick)="openCreate()"
-    />
+    <p-button label="Nuevo certificado" icon="pi pi-plus" (onClick)="openCreate()" />
   </div>
 
   @if (errorMessage()) {
@@ -113,9 +111,7 @@
 
     <ng-template #emptymessage>
       <tr>
-        <td colspan="6" class="text-center p-4">
-          No se encontraron certificados registrados.
-        </td>
+        <td colspan="6" class="text-center p-4">No se encontraron certificados registrados.</td>
       </tr>
     </ng-template>
   </p-table>

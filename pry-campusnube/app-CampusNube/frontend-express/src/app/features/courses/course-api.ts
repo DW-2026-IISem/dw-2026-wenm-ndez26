@@ -1,4 +1,3 @@
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
@@ -11,28 +10,33 @@ export class CourseApi {
   private readonly base = `${environment.apiUrl}/cursos`;
 
   list(): Observable<Course[]> {
-    return this.http.get<{ courses: Course[] }>(this.base)
-      .pipe(map(response => response.courses));
+    return this.http
+      .get<{ courses: Course[] }>(this.base)
+      .pipe(map((response) => response.courses));
   }
 
   get(id: number): Observable<Course> {
-    return this.http.get<{ course: Course }>(`${this.base}/${id}`)
-      .pipe(map(response => response.course));
+    return this.http
+      .get<{ course: Course }>(`${this.base}/${id}`)
+      .pipe(map((response) => response.course));
   }
 
   create(payload: CoursePayload): Observable<Course> {
-    return this.http.post<{ course: Course }>(this.base, payload)
-      .pipe(map(response => response.course));
+    return this.http
+      .post<{ course: Course }>(this.base, payload)
+      .pipe(map((response) => response.course));
   }
 
   update(id: number, payload: Partial<CoursePayload>): Observable<Course> {
-    return this.http.patch<{ course: Course }>(`${this.base}/${id}`, payload)
-      .pipe(map(response => response.course));
+    return this.http
+      .patch<{ course: Course }>(`${this.base}/${id}`, payload)
+      .pipe(map((response) => response.course));
   }
 
   replace(id: number, payload: CoursePayload): Observable<Course> {
-    return this.http.put<{ course: Course }>(`${this.base}/${id}`, payload)
-      .pipe(map(response => response.course));
+    return this.http
+      .put<{ course: Course }>(`${this.base}/${id}`, payload)
+      .pipe(map((response) => response.course));
   }
 
   deactivate(id: number): Observable<unknown> {

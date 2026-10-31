@@ -1,11 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
@@ -15,7 +11,7 @@ import { AuthService } from '../../../core/auth/auth.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
 })
 export class Login {
   private readonly fb = inject(FormBuilder);
@@ -28,7 +24,7 @@ export class Login {
 
   readonly form = this.fb.nonNullable.group({
     identifier: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
   });
 
   submit(): void {
@@ -45,26 +41,24 @@ export class Login {
       next: () => {
         this.loading.set(false);
 
-        const requestedUrl =
-          this.route.snapshot.queryParamMap.get('returnUrl');
+        const requestedUrl = this.route.snapshot.queryParamMap.get('returnUrl');
 
         const returnUrl =
-          requestedUrl?.startsWith('/') &&
-          !requestedUrl.startsWith('/login')
+          requestedUrl?.startsWith('/') && !requestedUrl.startsWith('/login')
             ? requestedUrl
             : '/dashboard';
 
         void this.router.navigateByUrl(returnUrl);
       },
-      error: error => {
+      error: (error) => {
         this.loading.set(false);
 
         this.errorMessage.set(
           error.status === 401
             ? 'Usuario o contraseña incorrectos.'
-            : 'No fue posible iniciar sesión. Verifica la conexión.'
+            : 'No fue posible iniciar sesión. Verifica la conexión.',
         );
-      }
+      },
     });
   }
 }

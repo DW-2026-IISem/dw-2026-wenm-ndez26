@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { forkJoin } from 'rxjs';
 
 import { ButtonModule } from 'primeng/button';
@@ -86,9 +81,7 @@ export class AttemptList {
     });
   });
 
-  activeCount = computed(
-    () => this.attempts().filter((attempt) => attempt.isActive).length,
-  );
+  activeCount = computed(() => this.attempts().filter((attempt) => attempt.isActive).length);
 
   constructor() {
     this.loadData();

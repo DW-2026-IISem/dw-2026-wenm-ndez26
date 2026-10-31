@@ -1,8 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
   <div>
-    <label for="learner-name" class="mb-1 block text-sm font-medium">
-      Nombre completo *
-    </label>
+    <label for="learner-name" class="mb-1 block text-sm font-medium"> Nombre completo * </label>
     <input
       id="learner-name"
       pInputText
@@ -18,9 +16,7 @@
   </div>
 
   <div>
-    <label for="learner-description" class="mb-1 block text-sm font-medium">
-      Descripción
-    </label>
+    <label for="learner-description" class="mb-1 block text-sm font-medium"> Descripción </label>
     <textarea
       id="learner-description"
       pTextarea
@@ -52,9 +48,7 @@
   </div>
 
   <div>
-    <label for="learner-status" class="mb-1 block text-sm font-medium">
-      Estado
-    </label>
+    <label for="learner-status" class="mb-1 block text-sm font-medium"> Estado </label>
     <p-select
       [fluid]="true"
       inputId="learner-status"
@@ -71,13 +65,7 @@
   </div>
 
   <div class="flex justify-end gap-2 border-t border-slate-100 pt-4">
-    <button
-      pButton
-      type="button"
-      severity="secondary"
-      outlined
-      (click)="cancelled.emit()"
-    >
+    <button pButton type="button" severity="secondary" outlined (click)="cancelled.emit()">
       <span pButtonLabel>Cancelar</span>
     </button>
 

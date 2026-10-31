@@ -1,0 +1,187 @@
+:host {
+  display: block;
+  color: #172554;
+}
+.roles-container {
+  padding: 1.5rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.roles-container header,
+.roles-container .page-header,
+.roles-container .resources-header,
+.roles-container .roles-header,
+.roles-container .users-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.roles-container h2 {
+  margin: 0 0 0.4rem;
+  color: #142b52;
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+.roles-container header p,
+.roles-container .page-header p,
+.roles-container .resources-header p,
+.roles-container .roles-header p,
+.roles-container .users-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+.roles-container .header-actions,
+.roles-container .row-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.roles-container button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2457d6;
+  color: white;
+  transition:
+    background 0.18s,
+    transform 0.18s;
+}
+.roles-container button:hover {
+  background: #1946b5;
+}
+.roles-container button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.roles-container .secondary-button {
+  background: #64748b;
+}
+.roles-container .edit-button {
+  background: #2563eb;
+}
+.roles-container .deactivate-button {
+  background: #d97706;
+}
+.roles-container .delete-button {
+  background: #dc2626;
+}
+.roles-container .permissions-button {
+  background: #0f766e;
+}
+.roles-container .table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgb(15 23 42 / 4%);
+}
+.roles-container table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+}
+.roles-container th {
+  padding: 1rem 1.1rem;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: left;
+  white-space: nowrap;
+}
+.roles-container td {
+  padding: 0.95rem 1.1rem;
+  border-top: 1px solid #edf1f7;
+  color: #334155;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+.roles-container tbody tr:hover {
+  background: #f8fbff;
+}
+.roles-container td .row-actions button {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}
+.roles-container .status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.roles-container .status.active {
+  background: #dcfce7;
+  color: #166534;
+}
+.roles-container .status.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.roles-container .success-message,
+.roles-container [role='status'] {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #ecfdf5;
+  color: #047857;
+}
+.roles-container .error-message,
+.roles-container [role='alert'] {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+.roles-container .dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgb(15 23 42 / 55%);
+  backdrop-filter: blur(3px);
+}
+.roles-container .role-dialog,
+.roles-container .resource-dialog {
+  width: min(620px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 1.6rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgb(15 23 42 / 22%);
+}
+@media (max-width: 700px) {
+  .roles-container {
+    padding: 0.75rem;
+  }
+  .roles-container header,
+  .roles-container .page-header,
+  .roles-container .resources-header,
+  .roles-container .roles-header,
+  .roles-container .users-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .roles-container .header-actions {
+    width: 100%;
+  }
+}

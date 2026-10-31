@@ -11,49 +11,33 @@ export class LessonApi {
   private readonly base = `${environment.apiUrl}/lecciones`;
 
   list(): Observable<Lesson[]> {
-    return this.http.get<Lesson[] | { lessons: Lesson[] }>(this.base).pipe(
-      map((response) =>
-        Array.isArray(response) ? response : response.lessons,
-      ),
-    );
+    return this.http
+      .get<Lesson[] | { lessons: Lesson[] }>(this.base)
+      .pipe(map((response) => (Array.isArray(response) ? response : response.lessons)));
   }
 
   get(id: number): Observable<Lesson> {
-    return this.http.get<Lesson | { lesson: Lesson }>(`${this.base}/${id}`).pipe(
-      map((response) =>
-        'lesson' in response ? response.lesson : response,
-      ),
-    );
+    return this.http
+      .get<Lesson | { lesson: Lesson }>(`${this.base}/${id}`)
+      .pipe(map((response) => ('lesson' in response ? response.lesson : response)));
   }
 
   create(payload: LessonPayload): Observable<Lesson> {
-    return this.http.post<Lesson | { lesson: Lesson }>(this.base, payload).pipe(
-      map((response) =>
-        'lesson' in response ? response.lesson : response,
-      ),
-    );
+    return this.http
+      .post<Lesson | { lesson: Lesson }>(this.base, payload)
+      .pipe(map((response) => ('lesson' in response ? response.lesson : response)));
   }
 
   update(id: number, payload: Partial<LessonPayload>): Observable<Lesson> {
-    return this.http.patch<Lesson | { lesson: Lesson }>(
-      `${this.base}/${id}`,
-      payload,
-    ).pipe(
-      map((response) =>
-        'lesson' in response ? response.lesson : response,
-      ),
-    );
+    return this.http
+      .patch<Lesson | { lesson: Lesson }>(`${this.base}/${id}`, payload)
+      .pipe(map((response) => ('lesson' in response ? response.lesson : response)));
   }
 
   replace(id: number, payload: LessonPayload): Observable<Lesson> {
-    return this.http.put<Lesson | { lesson: Lesson }>(
-      `${this.base}/${id}`,
-      payload,
-    ).pipe(
-      map((response) =>
-        'lesson' in response ? response.lesson : response,
-      ),
-    );
+    return this.http
+      .put<Lesson | { lesson: Lesson }>(`${this.base}/${id}`, payload)
+      .pipe(map((response) => ('lesson' in response ? response.lesson : response)));
   }
 
   deactivate(id: number): Observable<unknown> {

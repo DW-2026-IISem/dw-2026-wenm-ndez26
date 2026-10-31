@@ -1,4 +1,3 @@
-
 import { Component, input, output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';

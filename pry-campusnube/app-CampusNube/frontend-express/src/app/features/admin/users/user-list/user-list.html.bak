@@ -1,0 +1,147 @@
+<section class="users-container">
+  <header class="users-header">
+    <div>
+      <h2>Administración de usuarios</h2>
+      <p>Consulta los usuarios registrados y sus permisos efectivos.</p>
+    </div>
+
+    <button type="button" (click)="loadUsers()">
+      Actualizar
+    </button>
+  </header>
+
+  @if (loading()) {
+    <p>Cargando usuarios...</p>
+  }
+
+  @if (error()) {
+    <p class="error-message">{{ error() }}</p>
+  }
+
+  @if (!loading() && !error()) {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Correo electrónico</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (user of users(); track user.id) {
+            <tr>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.status }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="permissions-button"
+                  (click)="viewPermissions(user)">
+                  Ver permisos
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4">No hay usuarios registrados.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
+
+@if (accessUser()) {
+  <div class="dialog-backdrop" (click)="closePermissions()">
+    <section
+      class="permissions-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="permissions-title"
+      (click)="$event.stopPropagation()">
+
+      <header class="dialog-header">
+        <div>
+          <h2 id="permissions-title">Permisos efectivos</h2>
+          <p>Usuario: {{ accessUser()?.username }}</p>
+        </div>
+
+        <button
+          type="button"
+          class="close-button"
+          aria-label="Cerrar"
+          (click)="closePermissions()">
+          ×
+        </button>
+      </header>
+
+      @if (accessLoading()) {
+        <p>Consultando permisos...</p>
+      }
+
+      @if (accessError()) {
+        <p class="error-message">{{ accessError() }}</p>
+      }
+
+      @if (!accessLoading() && !accessError()) {
+        <section class="roles-section">
+          <h3>Roles efectivos</h3>
+
+          @if (accessRoles().length > 0) {
+            <div class="roles-list">
+              @for (role of accessRoles(); track role.id) {
+                <span class="role-tag">{{ role.name }}</span>
+              }
+            </div>
+          } @else {
+            <p>El usuario no tiene roles efectivos asociados.</p>
+          }
+        </section>
+
+        <section class="permissions-section">
+          <h3>Permisos autorizados</h3>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Método</th>
+                  <th>Ruta</th>
+                  <th>Descripción</th>
+                  <th>Rol</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (permission of access(); track
+                  permission.resource_id + '-' + permission.role_id) {
+                  <tr>
+                    <td>{{ permission.method }}</td>
+                    <td>{{ permission.path }}</td>
+                    <td>{{ permission.description || 'Sin descripción' }}</td>
+                    <td>{{ permission.role_name }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="4">No hay permisos efectivos para mostrar.</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </section>
+      }
+
+      <footer class="dialog-footer">
+        <button type="button" (click)="closePermissions()">
+          Cerrar
+        </button>
+      </footer>
+    </section>
+  </div>
+}

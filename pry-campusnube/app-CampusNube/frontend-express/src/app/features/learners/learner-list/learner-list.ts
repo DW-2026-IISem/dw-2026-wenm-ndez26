@@ -59,9 +59,7 @@ export class LearnerList {
   readonly editing = signal<Learner | null>(null);
   readonly resetKey = signal(0);
 
-  readonly title = computed(() =>
-    this.editing() ? 'Editar aprendiz' : 'Nuevo aprendiz',
-  );
+  readonly title = computed(() => (this.editing() ? 'Editar aprendiz' : 'Nuevo aprendiz'));
 
   constructor() {
     this.load();
@@ -100,17 +98,13 @@ export class LearnerList {
     const current = this.editing();
     this.saving.set(true);
 
-    const request = current
-      ? this.api.update(current.id, payload)
-      : this.api.create(payload);
+    const request = current ? this.api.update(current.id, payload) : this.api.create(payload);
 
     request.subscribe({
       next: () => {
         this.saving.set(false);
         this.dialogVisible.set(false);
-        this.notify.success(
-          current ? 'Aprendiz actualizado' : 'Aprendiz creado',
-        );
+        this.notify.success(current ? 'Aprendiz actualizado' : 'Aprendiz creado');
         this.load();
       },
       error: (error: unknown) => {
@@ -134,10 +128,7 @@ export class LearnerList {
             this.load();
           },
           error: (error: unknown) =>
-            this.notify.error(
-              'No se pudo desactivar',
-              toApiMessage(error),
-            ),
+            this.notify.error('No se pudo desactivar', toApiMessage(error)),
         });
       },
     });
@@ -156,11 +147,7 @@ export class LearnerList {
             this.notify.success('Aprendiz eliminado');
             this.load();
           },
-          error: (error: unknown) =>
-            this.notify.error(
-              'No se pudo eliminar',
-              toApiMessage(error),
-            ),
+          error: (error: unknown) => this.notify.error('No se pudo eliminar', toApiMessage(error)),
         });
       },
     });

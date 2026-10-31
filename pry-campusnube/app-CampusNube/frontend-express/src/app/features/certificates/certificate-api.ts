@@ -3,10 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import {
-  Certificate,
-  CertificatePayload,
-} from '../../core/models/certificate.model';
+import { Certificate, CertificatePayload } from '../../core/models/certificate.model';
 
 @Injectable({
   providedIn: 'root',
@@ -28,31 +25,16 @@ export class CertificateApi {
     return this.http.post<Certificate>(this.base, payload);
   }
 
-  update(
-    id: number,
-    payload: Partial<CertificatePayload>,
-  ): Observable<Certificate> {
-    return this.http.patch<Certificate>(
-      `${this.base}/${id}`,
-      payload,
-    );
+  update(id: number, payload: Partial<CertificatePayload>): Observable<Certificate> {
+    return this.http.patch<Certificate>(`${this.base}/${id}`, payload);
   }
 
-  replace(
-    id: number,
-    payload: CertificatePayload,
-  ): Observable<Certificate> {
-    return this.http.put<Certificate>(
-      `${this.base}/${id}`,
-      payload,
-    );
+  replace(id: number, payload: CertificatePayload): Observable<Certificate> {
+    return this.http.put<Certificate>(`${this.base}/${id}`, payload);
   }
 
   deactivate(id: number): Observable<Certificate> {
-    return this.http.patch<Certificate>(
-      `${this.base}/${id}/deactivate`,
-      {},
-    );
+    return this.http.patch<Certificate>(`${this.base}/${id}/deactivate`, {});
   }
 
   remove(id: number): Observable<unknown> {

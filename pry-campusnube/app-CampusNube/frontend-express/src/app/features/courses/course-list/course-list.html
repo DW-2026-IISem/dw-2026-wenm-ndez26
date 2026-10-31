@@ -1,19 +1,12 @@
-<app-page-header
-  title="Cursos"
-  subtitle="Gestión y administración de cursos de CampusNube."
->
-  <p-tag
-    [value]="activeCourseCount() + ' cursos activos'"
-    severity="info"
-    [rounded]="true"
-  />
+<app-page-header title="Cursos" subtitle="Gestión y administración de cursos de CampusNube.">
+  <p-tag [value]="activeCourseCount() + ' cursos activos'" severity="info" [rounded]="true" />
 
   <ng-container *appHasPermission="'POST /api/cursos'">
-<button pButton type="button" (click)="openCreate()">
-    <i pButtonIcon class="pi pi-plus"></i>
-    <span pButtonLabel>Nuevo curso</span>
-  </button>
-</ng-container>
+    <button pButton type="button" (click)="openCreate()">
+      <i pButtonIcon class="pi pi-plus"></i>
+      <span pButtonLabel>Nuevo curso</span>
+    </button>
+  </ng-container>
 </app-page-header>
 
 @if (error()) {
@@ -84,55 +77,59 @@
         </td>
 
         <td>
-          <app-status-tag
-            [status]="course.isActive ? 'active' : 'inactive'"
-          />
+          <app-status-tag [status]="course.isActive ? 'active' : 'inactive'" />
         </td>
 
         <td>
           <div class="flex justify-end gap-1">
             <ng-container *appHasPermission="'PATCH /api/cursos/:id'">
-<button
-              pButton
-              type="button"
-              text
-              rounded
-              severity="secondary"
-              icon="pi pi-pencil"
-              aria-label="Editar curso"
-              pTooltip="Editar"
-              (click)="openEdit(course)"
-            ></button>
-</ng-container>
+              <button
+                pButton
+                type="button"
+                text
+                rounded
+                severity="secondary"
+                aria-label="Editar curso"
+                pTooltip="Editar"
+                (click)="openEdit(course)"
+              >
+                <i pButtonIcon class="pi pi-pencil"></i>
+                <span pButtonLabel>Editar</span>
+              </button>
+            </ng-container>
 
             <ng-container *appHasPermission="'PATCH /api/cursos/:id/deactivate'">
-<button
-              pButton
-              type="button"
-              text
-              rounded
-              severity="warn"
-              icon="pi pi-ban"
-              aria-label="Desactivar curso"
-              pTooltip="Desactivar"
-              [disabled]="!course.isActive"
-              (click)="deactivate(course)"
-            ></button>
-</ng-container>
+              <button
+                pButton
+                type="button"
+                text
+                rounded
+                severity="warn"
+                aria-label="Desactivar curso"
+                pTooltip="Desactivar"
+                [disabled]="!course.isActive"
+                (click)="deactivate(course)"
+              >
+                <i pButtonIcon class="pi pi-ban"></i>
+                <span pButtonLabel>Desactivar</span>
+              </button>
+            </ng-container>
 
             <ng-container *appHasPermission="'DELETE /api/cursos/:id'">
-<button
-              pButton
-              type="button"
-              text
-              rounded
-              severity="danger"
-              icon="pi pi-trash"
-              aria-label="Eliminar curso"
-              pTooltip="Eliminar"
-              (click)="remove(course)"
-            ></button>
-</ng-container>
+              <button
+                pButton
+                type="button"
+                text
+                rounded
+                severity="danger"
+                aria-label="Eliminar curso"
+                pTooltip="Eliminar"
+                (click)="remove(course)"
+              >
+                <i pButtonIcon class="pi pi-trash"></i>
+                <span pButtonLabel>Eliminar</span>
+              </button>
+            </ng-container>
           </div>
         </td>
       </tr>

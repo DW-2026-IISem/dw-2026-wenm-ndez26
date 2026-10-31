@@ -1,4 +1,3 @@
-
 import { Component, input, output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -30,10 +29,7 @@ export class Aside {
   onNavigationClick(event: Event): void {
     const target = event.target;
 
-    if (
-      target instanceof Element &&
-      target.closest('a, button, [role="button"]')
-    ) {
+    if (target instanceof Element && target.closest('a, button, [role="button"]')) {
       this.navigated.emit();
     }
   }

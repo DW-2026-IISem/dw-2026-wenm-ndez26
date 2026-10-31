@@ -2,11 +2,7 @@
   title="Aprendices"
   subtitle="Gestión y administración de aprendices de CampusNube."
 >
-  <p-tag
-    [value]="rows().length + ' aprendices'"
-    severity="info"
-    [rounded]="true"
-  />
+  <p-tag [value]="rows().length + ' aprendices'" severity="info" [rounded]="true" />
 
   <button pButton type="button" (click)="openCreate()">
     <i pButtonIcon class="pi pi-plus"></i>
@@ -79,11 +75,13 @@
               text
               rounded
               severity="secondary"
-              icon="pi pi-pencil"
               aria-label="Editar aprendiz"
               pTooltip="Editar"
               (click)="openEdit(learner)"
-            ></button>
+            >
+              <i pButtonIcon class="pi pi-pencil"></i>
+              <span pButtonLabel>Editar</span>
+            </button>
 
             <button
               pButton
@@ -91,11 +89,13 @@
               text
               rounded
               severity="warn"
-              icon="pi pi-ban"
               aria-label="Desactivar aprendiz"
               pTooltip="Desactivar"
               (click)="deactivate(learner)"
-            ></button>
+            >
+              <i pButtonIcon class="pi pi-ban"></i>
+              <span pButtonLabel>Desactivar</span>
+            </button>
 
             <button
               pButton
@@ -103,11 +103,13 @@
               text
               rounded
               severity="danger"
-              icon="pi pi-trash"
               aria-label="Eliminar aprendiz"
               pTooltip="Eliminar"
               (click)="remove(learner)"
-            ></button>
+            >
+              <i pButtonIcon class="pi pi-trash"></i>
+              <span pButtonLabel>Eliminar</span>
+            </button>
           </div>
         </td>
       </tr>

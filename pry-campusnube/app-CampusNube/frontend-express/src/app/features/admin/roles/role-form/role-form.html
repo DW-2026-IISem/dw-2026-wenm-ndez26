@@ -1,0 +1,52 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h2>{{ role ? 'Editar rol' : 'Crear rol' }}</h2>
+
+  <div class="form-field">
+    <label for="role-name">Nombre del rol</label>
+
+    <input
+      id="role-name"
+      type="text"
+      formControlName="name"
+      maxlength="60"
+      placeholder="Ejemplo: COORDINADOR"
+    />
+
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <small> El nombre es obligatorio y admite máximo 60 caracteres. </small>
+    }
+
+    <small>El nombre se guardará en mayúsculas.</small>
+  </div>
+
+  <div class="form-field">
+    <label for="role-description">Descripción</label>
+
+    <textarea
+      id="role-description"
+      formControlName="description"
+      rows="3"
+      placeholder="Describe las responsabilidades del rol"
+    >
+    </textarea>
+  </div>
+
+  @if (!role) {
+    <div class="form-field">
+      <label for="role-status">Estado</label>
+
+      <select id="role-status" formControlName="status">
+        <option value="active">Activo</option>
+        <option value="inactive">Inactivo</option>
+      </select>
+    </div>
+  }
+
+  <div class="form-actions">
+    <button type="submit">
+      {{ role ? 'Guardar cambios' : 'Crear rol' }}
+    </button>
+
+    <button type="button" class="cancel-button" (click)="cancel()">Cancelar</button>
+  </div>
+</form>

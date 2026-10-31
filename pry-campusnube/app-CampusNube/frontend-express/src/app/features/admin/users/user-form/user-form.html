@@ -1,0 +1,53 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h2>{{ user ? 'Editar usuario' : 'Crear usuario' }}</h2>
+
+  <div class="form-field">
+    <label for="username">Nombre de usuario</label>
+    <input id="username" type="text" formControlName="username" />
+
+    @if (form.controls.username.touched && form.controls.username.invalid) {
+      <small>El usuario es obligatorio y debe tener mínimo 3 caracteres.</small>
+    }
+  </div>
+
+  <div class="form-field">
+    <label for="email">Correo electrónico</label>
+    <input id="email" type="email" formControlName="email" />
+
+    @if (form.controls.email.touched && form.controls.email.invalid) {
+      <small>Ingresa un correo electrónico válido.</small>
+    }
+  </div>
+
+  @if (!user) {
+    <div class="form-field">
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" formControlName="password" />
+
+      @if (form.controls.password.touched && form.controls.password.invalid) {
+        <small>La contraseña es obligatoria y debe tener mínimo 8 caracteres.</small>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="status">Estado</label>
+      <select id="status" formControlName="status">
+        <option value="active">Activo</option>
+        <option value="inactive">Inactivo</option>
+      </select>
+    </div>
+  }
+
+  <div class="form-field">
+    <label for="avatar">Avatar (URL)</label>
+    <input id="avatar" type="text" formControlName="avatar" />
+  </div>
+
+  <div class="form-actions">
+    <button type="submit">
+      {{ user ? 'Guardar cambios' : 'Crear usuario' }}
+    </button>
+
+    <button type="button" class="cancel-button" (click)="cancel()">Cancelar</button>
+  </div>
+</form>

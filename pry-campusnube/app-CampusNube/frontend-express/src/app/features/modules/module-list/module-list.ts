@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  inject,
-  signal
-} from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
@@ -18,10 +12,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
-import {
-  ConfirmationService,
-  MessageService
-} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { Module, ModulePayload } from '../../../core/models/module.model';
 import { Course } from '../../../core/models/course.model';
@@ -43,17 +34,13 @@ import { ModuleForm } from '../module-form/module-form';
     TooltipModule,
     ConfirmDialogModule,
     ToastModule,
-    ModuleForm
+    ModuleForm,
   ],
-  providers: [
-    ConfirmationService,
-    MessageService
-  ],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './module-list.html',
   styleUrl: './module-list.css',
 })
 export class ModuleList implements OnInit {
-
   private readonly api = inject(ModuleApi);
   private readonly coursesApi = inject(CourseApi);
   private readonly confirmationService = inject(ConfirmationService);
@@ -78,9 +65,7 @@ export class ModuleList implements OnInit {
 
   // Relación entre el identificador y el nombre del curso.
   readonly courseName = computed(() => {
-    const map = new Map(
-      this.courses().map((course) => [course.id, course.name])
-    );
+    const map = new Map(this.courses().map((course) => [course.id, course.name]));
 
     return (id: number) => map.get(id) ?? `Curso #${id}`;
   });
@@ -115,7 +100,7 @@ export class ModuleList implements OnInit {
 
     forkJoin({
       modules: this.api.list(),
-      courses: this.coursesApi.list()
+      courses: this.coursesApi.list(),
     }).subscribe({
       next: ({ modules, courses }) => {
         this.rows.set(modules);
@@ -124,11 +109,9 @@ export class ModuleList implements OnInit {
       },
       error: (error: unknown) => {
         console.error('Error al cargar módulos:', error);
-        this.error.set(
-          'No fue posible cargar los módulos y cursos.'
-        );
+        this.error.set('No fue posible cargar los módulos y cursos.');
         this.loading.set(false);
-      }
+      },
     });
   }
 
@@ -156,9 +139,7 @@ export class ModuleList implements OnInit {
 
     const current = this.selectedModule();
 
-    const request = current
-      ? this.api.update(current.id, payload)
-      : this.api.create(payload);
+    const request = current ? this.api.update(current.id, payload) : this.api.create(payload);
 
     request.subscribe({
       next: () => {
@@ -171,7 +152,7 @@ export class ModuleList implements OnInit {
           detail: current
             ? 'Módulo actualizado correctamente.'
             : 'Módulo registrado correctamente.',
-          life: 3000
+          life: 3000,
         });
 
         this.load();
@@ -184,9 +165,9 @@ export class ModuleList implements OnInit {
           severity: 'error',
           summary: 'Error',
           detail: 'No fue posible guardar el módulo.',
-          life: 4000
+          life: 4000,
         });
-      }
+      },
     });
   }
 
@@ -205,7 +186,7 @@ export class ModuleList implements OnInit {
               severity: 'success',
               summary: 'Módulo desactivado',
               detail: 'El módulo fue desactivado correctamente.',
-              life: 3000
+              life: 3000,
             });
 
             this.load();
@@ -217,11 +198,11 @@ export class ModuleList implements OnInit {
               severity: 'error',
               summary: 'Error',
               detail: 'No fue posible desactivar el módulo.',
-              life: 4000
+              life: 4000,
             });
-          }
+          },
         });
-      }
+      },
     });
   }
 
@@ -241,7 +222,7 @@ export class ModuleList implements OnInit {
               severity: 'success',
               summary: 'Módulo eliminado',
               detail: 'El módulo fue eliminado correctamente.',
-              life: 3000
+              life: 3000,
             });
 
             this.load();
@@ -253,11 +234,11 @@ export class ModuleList implements OnInit {
               severity: 'error',
               summary: 'Error',
               detail: 'No fue posible eliminar el módulo.',
-              life: 4000
+              life: 4000,
             });
-          }
+          },
         });
-      }
+      },
     });
   }
 }

@@ -1,9 +1,5 @@
 import { Component, effect, inject, input, output } from '@angular/core';
-import {
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -80,9 +76,7 @@ export class LearnerForm {
     const payload: LearnerPayload = {
       name: value.name.trim(),
       description: value.description.trim() || null,
-      ...(value.password.trim()
-        ? { password: value.password.trim() }
-        : {}),
+      ...(value.password.trim() ? { password: value.password.trim() } : {}),
       ...(this.learner() ? {} : { status: value.status }),
     };
 

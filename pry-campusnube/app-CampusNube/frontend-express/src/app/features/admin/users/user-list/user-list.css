@@ -1,0 +1,217 @@
+:host {
+  display: block;
+  color: #172554;
+}
+.users-container {
+  padding: 1.5rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.users-container .users-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.users-container h2 {
+  margin: 0 0 0.4rem;
+  color: #142b52;
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+.users-container .users-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+.users-container .header-actions,
+.users-container .row-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.users-container button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2457d6;
+  color: white;
+  transition:
+    background 0.18s,
+    transform 0.18s;
+}
+.users-container button:hover {
+  background: #1946b5;
+}
+.users-container button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.users-container .secondary-button {
+  background: #64748b;
+}
+.users-container .edit-button {
+  background: #2563eb;
+}
+.users-container .deactivate-button {
+  background: #d97706;
+}
+.users-container .delete-button {
+  background: #dc2626;
+}
+.users-container .permissions-button {
+  background: #0f766e;
+}
+.users-container .table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgb(15 23 42 / 4%);
+}
+.users-container table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+}
+.users-container th {
+  padding: 1rem 1.1rem;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: left;
+  white-space: nowrap;
+}
+.users-container td {
+  padding: 0.95rem 1.1rem;
+  border-top: 1px solid #edf1f7;
+  color: #334155;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+.users-container tbody tr:hover {
+  background: #f8fbff;
+}
+.users-container td .row-actions button {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}
+.users-container .status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.users-container .status.active {
+  background: #dcfce7;
+  color: #166534;
+}
+.users-container .status.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.users-container .success-message,
+.users-container [role='status'] {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #ecfdf5;
+  color: #047857;
+}
+.users-container .error-message,
+.users-container [role='alert'] {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+.users-container .dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgb(15 23 42 / 55%);
+  backdrop-filter: blur(3px);
+}
+.users-container .role-dialog,
+.users-container .resource-dialog {
+  width: min(620px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 1.6rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgb(15 23 42 / 22%);
+}
+@media (max-width: 700px) {
+  .users-container {
+    padding: 0.75rem;
+  }
+  .users-container .users-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .users-container .header-actions {
+    width: 100%;
+  }
+}
+
+.users-container .permissions-dialog {
+  width: min(950px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 24px 70px rgb(15 23 42 / 22%);
+}
+.users-container .dialog-header,
+.users-container .dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.users-container .roles-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.users-container .role-tag {
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.users-container .close-button {
+  background: #e2e8f0;
+  color: #334155;
+}
+.users-container app-user-form {
+  display: block;
+  margin: 0 0 1.25rem;
+  padding: 1.4rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}

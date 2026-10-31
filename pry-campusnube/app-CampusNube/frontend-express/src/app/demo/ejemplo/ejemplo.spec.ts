@@ -1,4 +1,3 @@
-
 import { TestBed } from '@angular/core/testing';
 import { Ejemplo } from './ejemplo';
 
@@ -20,8 +19,6 @@ describe('Ejemplo', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
 
-    expect(compiled.textContent).toContain(
-      'Introducción a la Seguridad y Salud en el Trabajo',
-    );
+    expect(compiled.textContent).toContain('Introducción a la Seguridad y Salud en el Trabajo');
   });
 });

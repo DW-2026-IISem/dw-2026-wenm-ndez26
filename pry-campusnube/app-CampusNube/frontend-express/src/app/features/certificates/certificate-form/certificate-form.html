@@ -1,8 +1,4 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="submit()"
-  class="flex flex-column gap-3"
->
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-column gap-3">
   @if (errorMessage) {
     <p-message severity="error">
       {{ errorMessage }}
@@ -24,13 +20,8 @@
       class="w-full"
     />
 
-    @if (
-      form.controls.enrollment_id.touched &&
-      form.controls.enrollment_id.invalid
-    ) {
-      <small class="text-red-500">
-        Debes seleccionar una inscripción.
-      </small>
+    @if (form.controls.enrollment_id.touched && form.controls.enrollment_id.invalid) {
+      <small class="text-red-500"> Debes seleccionar una inscripción. </small>
     }
   </div>
 

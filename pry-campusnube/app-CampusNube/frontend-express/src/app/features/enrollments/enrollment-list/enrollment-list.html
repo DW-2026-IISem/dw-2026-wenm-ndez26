@@ -2,20 +2,13 @@
 <p-confirmdialog />
 
 <section class="flex flex-col gap-4">
-
   <div class="flex flex-wrap justify-between items-center gap-3">
     <div>
       <h2 class="text-2xl font-semibold">Gestión de inscripciones</h2>
-      <p class="text-gray-500">
-        Administración de las relaciones entre aprendices y cursos.
-      </p>
+      <p class="text-gray-500">Administración de las relaciones entre aprendices y cursos.</p>
     </div>
 
-    <p-button
-      label="Nueva inscripción"
-      icon="pi pi-plus"
-      (onClick)="openCreate()"
-    />
+    <p-button label="Nueva inscripción" icon="pi pi-plus" (onClick)="openCreate()" />
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -46,9 +39,7 @@
   </div>
 
   @if (loading()) {
-    <p class="text-center p-4">
-      Cargando inscripciones, aprendices y cursos...
-    </p>
+    <p class="text-center p-4">Cargando inscripciones, aprendices y cursos...</p>
   }
 
   @if (error()) {
@@ -78,7 +69,7 @@
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} inscripciones"
       [showCurrentPageReport]="true"
     >
-      <ng-template pTemplate="header">
+      <ng-template #header>
         <tr>
           <th>ID</th>
           <th>Aprendiz</th>
@@ -89,12 +80,12 @@
         </tr>
       </ng-template>
 
-      <ng-template pTemplate="body" let-row>
+      <ng-template #body let-row>
         <tr>
           <td>{{ row.id }}</td>
           <td class="font-medium">{{ learnerName()(row.learner_id) }}</td>
           <td>{{ courseName()(row.course_id) }}</td>
-          <td>{{ row.enrollment_date | date:'dd/MM/yyyy' }}</td>
+          <td>{{ row.enrollment_date | date: 'dd/MM/yyyy' }}</td>
           <td>
             <p-tag
               [value]="row.status === 'active' ? 'Activa' : 'Inactiva'"
@@ -140,16 +131,13 @@
         </tr>
       </ng-template>
 
-      <ng-template pTemplate="emptymessage">
+      <ng-template #emptymessage>
         <tr>
-          <td colspan="6" class="text-center p-4">
-            No se encontraron inscripciones registradas.
-          </td>
+          <td colspan="6" class="text-center p-4">No se encontraron inscripciones registradas.</td>
         </tr>
       </ng-template>
     </p-table>
   }
-
 </section>
 
 <p-dialog

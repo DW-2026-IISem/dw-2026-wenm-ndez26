@@ -1,4 +1,3 @@
-
 import { Money, Timestamps } from './api.model';
 
 export interface Submission extends Timestamps {

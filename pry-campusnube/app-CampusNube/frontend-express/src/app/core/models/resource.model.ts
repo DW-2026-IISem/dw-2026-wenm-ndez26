@@ -1,15 +1,8 @@
-
 import { Status, Timestamps } from './api.model';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-export const HTTP_METHODS: HttpMethod[] = [
-  'GET',
-  'POST',
-  'PUT',
-  'PATCH',
-  'DELETE',
-];
+export const HTTP_METHODS: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
 export interface Resource extends Timestamps {
   id: number;

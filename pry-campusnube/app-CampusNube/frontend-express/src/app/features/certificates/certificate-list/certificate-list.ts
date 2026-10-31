@@ -76,8 +76,7 @@ export class CertificateList {
       error: (error) => {
         this.loading.set(false);
         this.errorMessage.set(
-          error?.error?.message ||
-          'No fue posible cargar los certificados y las inscripciones.',
+          error?.error?.message || 'No fue posible cargar los certificados y las inscripciones.',
         );
       },
     });
@@ -97,17 +96,11 @@ export class CertificateList {
   });
 
   enrollmentLabel(enrollmentId: number): string {
-    return (
-      this.enrollmentMap().get(enrollmentId) ??
-      `Inscripción #${enrollmentId}`
-    );
+    return this.enrollmentMap().get(enrollmentId) ?? `Inscripción #${enrollmentId}`;
   }
 
   readonly activeCount = computed(
-    () =>
-      this.certificates().filter(
-        (certificate) => certificate.isActive,
-      ).length,
+    () => this.certificates().filter((certificate) => certificate.isActive).length,
   );
 
   readonly filteredCertificates = computed(() => {
@@ -118,8 +111,7 @@ export class CertificateList {
     }
 
     return this.certificates().filter((certificate) => {
-      const enrollment =
-        this.enrollmentMap().get(certificate.enrollment_id) ?? '';
+      const enrollment = this.enrollmentMap().get(certificate.enrollment_id) ?? '';
 
       return (
         String(certificate.id).includes(term) ||
@@ -181,9 +173,7 @@ export class CertificateList {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail:
-            error?.error?.message ||
-            'No fue posible desactivar el certificado.',
+          detail: error?.error?.message || 'No fue posible desactivar el certificado.',
         });
       },
     });
@@ -214,9 +204,7 @@ export class CertificateList {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail:
-            error?.error?.message ||
-            'No fue posible eliminar el certificado.',
+          detail: error?.error?.message || 'No fue posible eliminar el certificado.',
         });
       },
     });

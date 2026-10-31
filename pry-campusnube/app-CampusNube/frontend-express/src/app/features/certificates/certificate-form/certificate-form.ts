@@ -9,11 +9,7 @@ import {
   inject,
 } from '@angular/core';
 
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,10 +17,7 @@ import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 
-import {
-  Certificate,
-  CertificatePayload,
-} from '../../../core/models/certificate.model';
+import { Certificate, CertificatePayload } from '../../../core/models/certificate.model';
 
 import { Enrollment } from '../../../core/models/enrollment.model';
 import { CertificateApi } from '../certificate-api';
@@ -73,8 +66,7 @@ export class CertificateForm implements OnChanges {
 
         return !this.certificates.some(
           (certificate) =>
-            certificate.enrollment_id === enrollment.id &&
-            certificate.id !== this.certificate?.id,
+            certificate.enrollment_id === enrollment.id && certificate.id !== this.certificate?.id,
         );
       })
       .map((enrollment) => ({

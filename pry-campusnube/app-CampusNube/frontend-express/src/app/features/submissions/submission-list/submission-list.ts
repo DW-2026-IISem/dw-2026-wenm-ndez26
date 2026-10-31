@@ -35,11 +35,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ConfirmDialogModule,
     ToastModule,
     TooltipModule,
-    SubmissionForm
+    SubmissionForm,
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './submission-list.html',
-  styleUrl: './submission-list.css'
+  styleUrl: './submission-list.css',
 })
 export class SubmissionList {
   private readonly submissionApi = inject(SubmissionApi);
@@ -56,23 +56,24 @@ export class SubmissionList {
   readonly dialogVisible = signal(false);
   readonly selectedSubmission = signal<Submission | null>(null);
 
-  readonly lessonMap = computed(() =>
-    new Map(this.lessons().map(lesson => [lesson.id, lesson.name]))
+  readonly lessonMap = computed(
+    () => new Map(this.lessons().map((lesson) => [lesson.id, lesson.name])),
   );
 
-  readonly enrollmentMap = computed(() =>
-    new Map(
-      this.enrollments().map(enrollment => [
-        enrollment.id,
-        `Inscripción #${enrollment.id} — Aprendiz #${enrollment.learner_id} — Curso #${enrollment.course_id}`
-      ])
-    )
+  readonly enrollmentMap = computed(
+    () =>
+      new Map(
+        this.enrollments().map((enrollment) => [
+          enrollment.id,
+          `Inscripción #${enrollment.id} — Aprendiz #${enrollment.learner_id} — Curso #${enrollment.course_id}`,
+        ]),
+      ),
   );
 
-  readonly activeCount = computed(() =>
-    this.submissions().filter(
-      submission => submission.estado?.toLowerCase() !== 'inactivo'
-    ).length
+  readonly activeCount = computed(
+    () =>
+      this.submissions().filter((submission) => submission.estado?.toLowerCase() !== 'inactivo')
+        .length,
   );
 
   readonly totalCount = computed(() => this.submissions().length);
@@ -84,11 +85,9 @@ export class SubmissionList {
       return this.submissions();
     }
 
-    return this.submissions().filter(submission => {
-      const lessonName =
-        this.lessonMap().get(submission.lesson_id) ?? '';
-      const enrollmentName =
-        this.enrollmentMap().get(submission.enrollment_id) ?? '';
+    return this.submissions().filter((submission) => {
+      const lessonName = this.lessonMap().get(submission.lesson_id) ?? '';
+      const enrollmentName = this.enrollmentMap().get(submission.enrollment_id) ?? '';
 
       return [
         submission.id,
@@ -98,7 +97,7 @@ export class SubmissionList {
         submission.estado,
         submission.observaciones,
         lessonName,
-        enrollmentName
+        enrollmentName,
       ]
         .join(' ')
         .toLowerCase()
@@ -116,9 +115,9 @@ export class SubmissionList {
     forkJoin({
       submissions: this.submissionApi.list(),
       lessons: this.lessonApi.list(),
-      enrollments: this.enrollmentApi.list()
+      enrollments: this.enrollmentApi.list(),
     }).subscribe({
-      next: response => {
+      next: (response) => {
         this.submissions.set(response.submissions ?? []);
 
         const lessonResponse = response.lessons as unknown;
@@ -127,25 +126,25 @@ export class SubmissionList {
         this.lessons.set(
           Array.isArray(lessonResponse)
             ? lessonResponse
-            : ((lessonResponse as { lessons?: Lesson[] })?.lessons ?? [])
+            : ((lessonResponse as { lessons?: Lesson[] })?.lessons ?? []),
         );
 
         this.enrollments.set(
           Array.isArray(enrollmentResponse)
             ? enrollmentResponse
-            : ((enrollmentResponse as { enrollments?: Enrollment[] })?.enrollments ?? [])
+            : ((enrollmentResponse as { enrollments?: Enrollment[] })?.enrollments ?? []),
         );
 
         this.loading.set(false);
       },
-      error: error => {
+      error: (error) => {
         this.loading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: error?.error?.message ?? 'No fue posible cargar las entregas.'
+          detail: error?.error?.message ?? 'No fue posible cargar las entregas.',
         });
-      }
+      },
     });
   }
 
@@ -154,10 +153,7 @@ export class SubmissionList {
   }
 
   enrollmentName(id: number): string {
-    return (
-      this.enrollmentMap().get(id) ??
-      `Inscripción #${id}`
-    );
+    return this.enrollmentMap().get(id) ?? `Inscripción #${id}`;
   }
 
   formatTotal(value: number | string | null): string {
@@ -171,7 +167,7 @@ export class SubmissionList {
       ? String(value)
       : numericValue.toLocaleString('es-CO', {
           minimumFractionDigits: 0,
-          maximumFractionDigits: 2
+          maximumFractionDigits: 2,
         });
   }
 
@@ -197,7 +193,7 @@ export class SubmissionList {
     this.messageService.add({
       severity: 'success',
       summary: 'Correcto',
-      detail: 'La entrega se guardó correctamente.'
+      detail: 'La entrega se guardó correctamente.',
     });
   }
 
@@ -214,19 +210,19 @@ export class SubmissionList {
             this.messageService.add({
               severity: 'success',
               summary: 'Correcto',
-              detail: 'La entrega fue desactivada.'
+              detail: 'La entrega fue desactivada.',
             });
             this.loadData();
           },
-          error: error => {
+          error: (error) => {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: error?.error?.message ?? 'No fue posible desactivar la entrega.'
+              detail: error?.error?.message ?? 'No fue posible desactivar la entrega.',
             });
-          }
+          },
         });
-      }
+      },
     });
   }
 
@@ -243,19 +239,19 @@ export class SubmissionList {
             this.messageService.add({
               severity: 'success',
               summary: 'Correcto',
-              detail: 'La entrega fue eliminada.'
+              detail: 'La entrega fue eliminada.',
             });
             this.loadData();
           },
-          error: error => {
+          error: (error) => {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: error?.error?.message ?? 'No fue posible eliminar la entrega.'
+              detail: error?.error?.message ?? 'No fue posible eliminar la entrega.',
             });
-          }
+          },
         });
-      }
+      },
     });
   }
 }

@@ -1,4 +1,3 @@
-
 import { Timestamps } from './api.model';
 
 export interface Evaluation extends Timestamps {

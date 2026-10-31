@@ -10,6 +10,5 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 export class Forbidden {
   private readonly route = inject(ActivatedRoute);
 
-  readonly permission =
-    this.route.snapshot.queryParamMap.get('permission');
+  readonly permission = this.route.snapshot.queryParamMap.get('permission');
 }

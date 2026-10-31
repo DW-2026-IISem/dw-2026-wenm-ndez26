@@ -1,0 +1,115 @@
+:host {
+  display: block;
+}
+.resource-roles-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  color: #172554;
+}
+.resource-roles-container .page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.resource-roles-container h2 {
+  margin: 0 0 0.4rem;
+  color: #142b52;
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+.resource-roles-container .page-header p {
+  margin: 0;
+  color: #64748b;
+}
+.resource-roles-container button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  background: #2457d6;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.resource-roles-container button:hover {
+  background: #1946b5;
+}
+.resource-roles-container .filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+.resource-roles-container .filters label,
+.resource-roles-container .grant-form label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.resource-roles-container .filters input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+.resource-roles-container .table-container {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+.resource-roles-container table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.resource-roles-container th {
+  padding: 1rem;
+  background: #f8fafc;
+  color: #475569;
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+.resource-roles-container td {
+  padding: 1rem;
+  border-top: 1px solid #edf1f7;
+  color: #334155;
+}
+.resource-roles-container tbody tr:hover {
+  background: #f8fbff;
+}
+.resource-roles-container .grant-form {
+  display: grid;
+  gap: 1rem;
+}
+.resource-roles-container .error-message {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+@media (max-width: 700px) {
+  .resource-roles-container {
+    padding: 0.75rem;
+  }
+  .resource-roles-container .filters {
+    grid-template-columns: 1fr;
+  }
+  .resource-roles-container .page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

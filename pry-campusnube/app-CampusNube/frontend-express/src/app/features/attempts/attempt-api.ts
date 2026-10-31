@@ -3,10 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import {
-  Attempt,
-  AttemptPayload,
-} from '../../core/models/attempt.model';
+import { Attempt, AttemptPayload } from '../../core/models/attempt.model';
 
 @Injectable({ providedIn: 'root' })
 export class AttemptApi {
@@ -25,10 +22,7 @@ export class AttemptApi {
     return this.http.post<Attempt>(this.base, payload);
   }
 
-  update(
-    id: number,
-    payload: Partial<AttemptPayload>,
-  ): Observable<Attempt> {
+  update(id: number, payload: Partial<AttemptPayload>): Observable<Attempt> {
     return this.http.patch<Attempt>(`${this.base}/${id}`, payload);
   }
 

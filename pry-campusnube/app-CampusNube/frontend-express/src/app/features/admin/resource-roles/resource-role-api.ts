@@ -1,32 +1,34 @@
-
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { ResourceRole, ResourceRolePayload } from '../../../core/models/resource-role.model';
 
 @Injectable({ providedIn: 'root' })
 export class ResourceRoleApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/concesiones-rol`;
 
-  list(filters?: Record<string, string>): Observable<unknown> {
+  list(filters?: { role_id?: number; resource_id?: number }): Observable<ResourceRole[]> {
     let params = new HttpParams();
 
-    if (filters) {
-      for (const [key, value] of Object.entries(filters)) {
-        params = params.set(key, value);
-      }
+    if (filters?.role_id !== undefined) {
+      params = params.set('role_id', filters.role_id);
     }
 
-    return this.http.get(this.base, { params });
+    if (filters?.resource_id !== undefined) {
+      params = params.set('resource_id', filters.resource_id);
+    }
+
+    return this.http
+      .get<{ grants: ResourceRole[] }>(this.base, { params })
+      .pipe(map((response) => response.grants));
   }
 
-  get(id: number): Observable<unknown> {
-    return this.http.get(`${this.base}/${id}`);
-  }
-
-  grant(payload: { role_id: number; resource_id: number }): Observable<unknown> {
-    return this.http.post(this.base, payload);
+  create(payload: ResourceRolePayload): Observable<ResourceRole> {
+    return this.http
+      .post<{ message: string; grant: ResourceRole }>(this.base, payload)
+      .pipe(map((response) => response.grant));
   }
 
   deactivate(id: number): Observable<unknown> {

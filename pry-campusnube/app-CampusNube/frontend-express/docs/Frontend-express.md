@@ -2081,7 +2081,7 @@ El módulo permitirá crear, consultar, editar, desactivar y eliminar entregas, 
 La interfaz debe respetar estas reglas:
 
 | Campo           | Regla                                                   |
-|------------------|------------------------------------------------------|
+|-------------------|-----------------------------------------------------|
 | `referencia_id` | Obligatorio, numérico                                   |
 | `lesson_id`     | Obligatorio, debe corresponder a una lección activa     |
 | `enrollment_id` | Obligatorio, debe corresponder a una inscripción activa |
@@ -2470,7 +2470,7 @@ Objetivo: Implementar un Dashboard académico que consolide la información de l
 ## Estructura de actividades
 
 | Actividad | Descripción |
-|----|----|
+|------------------------------------|------------------------------------|
 | 14.1 | Crear el componente Dashboard académico. |
 | 14.2 | Integrar las once API existentes mediante `forkJoin`. |
 | 14.3 | Implementar señales (`signals`) para almacenar la información. |
@@ -2717,7 +2717,7 @@ Archivo: `src/app/core/guards/permission-guard.ts`
 
 ![](images/clipboard-2944633349.png)
 
-#  Implementar `authOnlyGuard`
+# Implementar `authOnlyGuard`
 
 Archivo: `src/app/core/guards/auth-only-guard.ts`
 
@@ -2732,7 +2732,7 @@ En este apartado vamos a adaptar las rutas existentes de CampusNube para que cad
 Esta es la adaptación de la matriz del profesor a tus pantallas:
 
 | Ruta del frontend | Permiso requerido |
-|----|----|
+|------------------------------------|------------------------------------|
 | `/dashboard` | Acceso autenticado y consultas según permisos disponibles |
 | `/cursos` | `GET /api/cursos` |
 | `/docentes` | `GET /api/docentes` |
@@ -2772,7 +2772,7 @@ Esto significa que el botón Nuevo curso solamente se mostrará cuando el usuari
 ### Diferencia entre `@if` y `*appHasPermission`
 
 | `@if` | `*appHasPermission` |
-|----|----|
+|------------------------------------|------------------------------------|
 | Evalúa una condición cualquiera. | Evalúa un permiso RBAC. |
 | Reacciona a las señales utilizadas en su condición. | Reacciona a los cambios de permisos mediante `effect()`. |
 | Controla la visualización según una expresión. | Crea o destruye la vista según la autorización. |
@@ -2858,7 +2858,7 @@ Como ahora `items` es un `computed()`, debemos invocarlo con `items()` en los do
 ## 16.9 Comprobación al cerrar la ISS-16
 
 | Prueba | Resultado esperado |
-|----|----|
+|------------------------------------|------------------------------------|
 | Ingresar sin sesión a una ruta protegida | Redirección a `/login` con `returnUrl` |
 | Ingresar a `/login` con sesión activa | Redirección a `/dashboard` |
 | Iniciar sesión como ADMIN | Menú según sus permisos de negocio |
@@ -2884,7 +2884,549 @@ Como ahora `items` es un `computed()`, debemos invocarlo con `items()` en los do
 
 ```         
 git add .    
-git commit -m "Fase II: Auth con RBAC — ISS-16 — Guards y RBAC en las pantallas Business"    
+git commit -m "Fase II: Auth con RBAC — ISS-17 — Guards y RBAC en las pantallas Business"    
+git push origin main 
+```
+
+# Fase II: Auth con RBAC — ISS-17— Build, calidad y cierre del proyecto
+
+## 18.1 Los dos entornos
+
+Angular reemplaza `environment.ts` por `environment.development.ts` cuando sirve en modo desarrollo, mediante la configuración `fileReplacements` de `angular.json`.
+
+| **Archivo**                  | **Se usa en** | **`requireAuth`** |
+|------------------------------|---------------|-------------------|
+| `environment.development.ts` | `ng serve`    | `true` (Fase II)  |
+| `environment.ts`             | `ng build`    | `true` (Fase II)  |
+
+### Emular la Fase I sobre el código final (solo práctica)
+
+La Fase I corresponde a la construcción inicial de las funcionalidades de CampusNube. Esta bandera permite demostrar, en una copia de práctica y si la implementación lo permite, cómo se comportaba el frontend antes de incorporar los mecanismos de autenticación de la Fase II.
+
+Hay **dos interruptores** que deben verificarse conjuntamente:
+
+| **Interruptor** | **Dónde** | **Qué controla** |
+|----|----|----|
+| `requireAuth` | `environment.ts` y `environment.development.ts` | Guards, `*appHasPermission`, menú y reintento de refresh. |
+| `AUTH_ENABLED` | `.env` del backend, si está implementado | Middlewares `authenticate` y `authorize` de las rutas protegidas. |
+
+**En ambos archivos del frontend**, la guía plantea cambiar:
+
+```         
+requireAuth: false,
+```
+
+**En el `.env` del backend**, la guía plantea cambiar:
+
+```         
+AUTH_ENABLED=false
+```
+
+Con el backend consolidado, cambiar únicamente `requireAuth: false` **no basta**: si el backend continúa exigiendo JWT, las peticiones sin token recibirán `401 Missing Bearer token`.
+
+En CampusNube, antes de realizar esta demostración, se debe verificar que el backend disponga de la variable `AUTH_ENABLED` y que exista un mecanismo que permita habilitar el modo de práctica. No se debe asumir que tiene la implementación `lab-mode.ts` de la guía original.
+
+Con los mecanismos de práctica habilitados, el comportamiento esperado es:
+
+- `authGuard` y `permissionGuard` dejan pasar.
+
+- `*appHasPermission` renderiza siempre.
+
+- El `authInterceptor` no añade `Authorization` cuando no existe una sesión activa.
+
+- El menú muestra las opciones habilitadas para el modo de práctica.
+
+- Las rutas protegidas exclusivamente por autenticación pueden cambiar su comportamiento según la configuración de los guards.
+
+- El backend responde sin autenticación únicamente en las rutas expresamente habilitadas para ese modo.
+
+Reinicia `ng serve` y el backend después de cambiar las configuraciones. Si quedó una sesión anterior, limpia la sesión desde DevTools → Application → Local Storage, utilizando la clave que realmente tenga configurada CampusNube, y recarga la aplicación.
+
+Vuelve a habilitar la autenticación para la entrega de la Fase II.
+
+**No mezcles las configuraciones:** CampusNube debe conservar JWT y RBAC en las rutas protegidas. Si el frontend utiliza `requireAuth: false` mientras el backend continúa exigiendo autenticación, las peticiones sin token recibirán `401`.
+
+### Apuntar a otro backend
+
+Para conectar el frontend con otro servidor, modifica `apiUrl` en el archivo de entorno correspondiente:
+
+```         
+apiUrl: 'https://mi-api.ejemplo.com/api',
+```
+
+Sin barra final. Los servicios concatenan `environment.apiUrl` con la ruta correspondiente de cada recurso de la API.
+
+En el entorno local de CampusNube:
+
+```         
+apiUrl: 'http://localhost:4000/api',
+```
+
+## 18.2 Scripts
+
+El proyecto CampusNube utiliza los scripts definidos en `package.json` para ejecutar Angular CLI, iniciar el servidor de desarrollo, compilar la aplicación y ejecutar las pruebas.
+
+`npm run ng -- <comando>` invoca el Angular CLI local sin depender del PATH global. Por ejemplo:
+
+```         
+npm run ng -- build npm run ng -- generate component nombre-componente
+```
+
+### Scripts disponibles en package.json
+
+```         
+{   
+"scripts": {     
+"ng": "ng",     
+"start": "ng serve",     
+"build": "ng build",     
+"watch": "ng build --watch --configuration development",     
+"test": "ng test"   
+ } 
+}
+```
+
+El proyecto no tiene definido actualmente el script `docs:check` ni el archivo `tools/check-docs.mjs` de la guía original. Por tanto, la validación documental se realiza mediante la revisión de las rutas, los archivos y las referencias de la documentación.
+
+### Configuración de pruebas
+
+En `angular.json` se encuentra configurado el ejecutor de pruebas:
+
+```         
+"test": {   "builder": "@angular/build:unit-test" }
+```
+
+El proyecto incluye Vitest como dependencia de desarrollo. Sin embargo, en la configuración inspeccionada no se encontró `runnerConfig: true`, un archivo `vitest-base.config.mts` ni una configuración explícita de `maxWorkers` y `testTimeout`.
+
+Por esta razón, no se atribuyen al proyecto límites de workers ni resultados de ejecución que no hayan sido comprobados.
+
+### Comandos del laboratorio
+
+Desde la carpeta `frontend-express`, los comandos disponibles son:
+
+```         
+npm ci  
+npm start # http://localhost:4200  
+
+npm run build # Compilación de producción → dist/  
+npm run ng -- serve --port 4200 --host 0.0.0.0  
+npm test -- --watch=false 
+```
+
+Comprobación práctica
+
+![](images/clipboard-3395106101.png)
+
+## 18.3 Presupuestos de bundle
+
+El archivo `angular.json` establece los siguientes presupuestos para la compilación de producción:
+
+```         
+"budgets": [   
+{     "type": "initial",     
+"maximumWarning": "750kB",     
+"maximumError": "1MB"   
+},   
+{     
+"type": "anyComponentStyle",     
+"maximumWarning": "4kB",     
+"maximumError": "8kB"   
+ } 
+]
+```
+
+La compilación se verificó mediante:
+
+```         
+npx ng build --stats-json
+```
+
+**Resultado obtenido:**
+
+| Elemento               | Resultado        | Estado            |
+|------------------------|------------------|-------------------|
+| Bundle inicial         | 582.77 kB        | Cumple            |
+| Advertencia inicial    | 750 kB           | Dentro del límite |
+| Error inicial          | 1 MB             | Dentro del límite |
+| Estilos por componente | Sin advertencias | Cumple            |
+| Chunks diferidos       | Generados        | Cumple            |
+| Compilación            | Completada       | Aprobada          |
+
+La compilación generó los archivos de salida en:
+
+```         
+dist/fronted-express
+```
+
+Se evidencia que el proyecto cumple los presupuestos configurados y utiliza carga diferida para distribuir parte del código en chunks independientes.
+
+**Conclusión:** La compilación de producción de CampusNube finalizó satisfactoriamente, sin superar los límites de bundle establecidos en `angular.json`.
+
+![](images/clipboard-3746862576.png)
+
+## 18.4 Checklist funcional de humo
+
+Todas estas pruebas funcionan correctamente
+
+Ejecutar `ng serve` con el backend activo y recorrer:
+
+| **\#** | **Acción** | **Resultado esperado** |
+|----|----|----|
+| 1 | `/dashboard` sin sesión | Redirige al login. |
+| 2 | Login ADMIN | Entra al dashboard; menú administrativo completo. |
+| 3 | CRUD docentes | Crear, editar, desactivar y buscar docentes. |
+| 4 | CRUD aprendices | Crear, editar, desactivar y buscar aprendices. |
+| 5 | CRUD cursos | Crear, editar, desactivar y consultar cursos. |
+| 6 | Gestión de módulos | Crear, editar y consultar módulos. |
+| 7 | Gestión de lecciones | Crear, editar y consultar lecciones. |
+| 8 | Dashboard | Los indicadores corresponden a la información académica disponible en las API. |
+| 9 | RBAC ADMIN | Crear rol, recurso, asignación y permiso. |
+| 10 | Ver permisos | Muestra los permisos efectivos con `role_name`, `method` y `path`. |
+| 11 | Logout | Ejecuta `POST /api/sesion/logout`, vuelve al login y elimina los datos de sesión. |
+| 12 | Login DOCENTE | Menú limitado a sus permisos; acceso a rutas administrativas no autorizadas denegado. |
+| 13 | Refresh del navegador | La sesión persiste mediante `localStorage`. |
+| 14 | Token expirado | El interceptor intenta renovar el token y reintenta la petición. |
+| 15 | Revocar refresh token | La sesión se cierra y se informa al usuario. |
+
+### Probar expiración y refresh
+
+En DevTools → Application → Local Storage → `campusnube.session.v1`, consultar el campo `refreshToken` y revocarlo desde el backend:
+
+```         
+curl -X POST http://localhost:4000/api/sesion/logout \   -H "Content-Type: application/json" \   -d '{"refresh_token":"PEGA_AQUI_EL_TOKEN"}'
+```
+
+Luego realizar una acción en la interfaz cuando el access token haya expirado. Comprobar que el refresh falla, se limpia la sesión y se redirige al login.
+
+Prueba 1
+
+![](images/clipboard-2375197363.png)
+
+Prueba 2
+
+![](images/clipboard-1490473007.png)
+
+![](images/clipboard-4286477821.png)
+
+Prueba 3
+
+![![](images/clipboard-128575500.png)](images/clipboard-2567654603.png)
+
+![](images/clipboard-2141815443.png)
+
+APRENDIZ
+
+![](images/clipboard-500292110.png)
+
+CURSOS
+
+![MODULOS ](images/clipboard-1930562636.png)
+
+![](images/clipboard-3752031111.png)
+
+LECCIONES
+
+![](images/clipboard-3205610963.png)
+
+EVALUACIONES
+
+![](images/clipboard-3751458236.png)
+
+INSCRIPCIONES
+
+![](images/clipboard-3285417253.png)
+
+INTENTOS
+
+![](images/clipboard-1905328999.png)
+
+ENTREGAS
+
+![](images/clipboard-3291643233.png)
+
+PROGRESO
+
+![](images/clipboard-1476383346.png)
+
+CERTIFICADOS
+
+![](images/clipboard-1484055185.png)
+
+### 11.5 Errores reales y su causa
+
+Durante el desarrollo de CampusNube se presentaron inconvenientes en las pruebas, la visualización de componentes y la interfaz de algunos módulos. A continuación, se documentan los problemas identificados, sus causas, las correcciones realizadas y las evidencias de verificación.
+
+#### 1. Fallos en las pruebas unitarias del frontend
+
+**Problema:** Algunas pruebas unitarias fallaban porque las expectativas de los archivos de prueba no correspondían con el comportamiento actual de los componentes.
+
+**Causa:** La prueba del menú esperaba una cantidad anterior de opciones de navegación. Además, la prueba del dashboard no habilitaba los permisos requeridos para ejecutar la carga de información.
+
+**Corrección:** Se ajustaron las pruebas para contemplar las opciones actuales del menú y se incorporó un proveedor simulado de `SessionStore` que permite las verificaciones de permisos durante la prueba del dashboard.
+
+**Verificación:** Se ejecutó:
+
+```         
+npm test -- --watch=false
+```
+
+**Resultado:** 19 archivos de prueba aprobados, 45 pruebas aprobadas y 0 fallidas.
+
+![](images/clipboard-3435093245.png)
+
+#### 2. Botones de acciones no visibles en los listados
+
+**Problema:** En los listados de docentes, aprendices y cursos, las acciones de edición, desactivación o eliminación no se visualizaban correctamente.
+
+**Causa:** La presentación de los botones de PrimeNG no mostraba adecuadamente sus acciones en la tabla.
+
+**Corrección:** Se ajustó la estructura de los botones, incorporando explícitamente los elementos de icono y texto para identificar las acciones disponibles.
+
+**Verificación:** Se ingresó a los listados desde la interfaz de CampusNube y se comprobó la visualización de las acciones.
+
+**Evidencia:** las evidencias están en el apartado anterior
+
+#### 3. Tablas sin visualización correcta de registros
+
+**Problema:** En los módulos de módulos académicos, lecciones, evaluaciones y matrículas se presentaron inconvenientes con la visualización de las tablas.
+
+**Causa:** Las plantillas de encabezado, cuerpo y mensaje de tabla utilizaban una sintaxis que no correspondía con la estructura requerida por la versión utilizada de PrimeNG.
+
+**Corrección:** Se ajustaron las referencias de las plantillas a la sintaxis `#header`, `#body` y `#emptymessage`.
+
+**Verificación:** Se debe comprobar en cada listado que aparezcan los encabezados, los registros y el campo de búsqueda, y que el filtro permita encontrar información.
+
+#### 4. Advertencia de tamaño de estilos durante la compilación
+
+**Problema:** Durante la revisión de los estilos de los componentes se identificó una advertencia relacionada con el presupuesto de estilos.
+
+**Causa:** El tamaño de los estilos de un componente superaba el límite de advertencia configurado en Angular.
+
+**Corrección:** Se revisó el archivo de estilos del componente y se ajustó su contenido.
+
+**Verificación:** Se ejecutó:
+
+```         
+npx ng build --stats-json
+```
+
+**Resultado:** La compilación finalizó correctamente. El bundle inicial registró 582.77 kB sin comprimir y no se reportaron advertencias de presupuesto de estilos en esta ejecución.
+
+![](images/clipboard-3386657843.png)
+
+### 11.6 Calidad de código
+
+La calidad del código de CampusNube se desarrolla siguiendo las convenciones establecidas para mantener una estructura organizada, facilitar el mantenimiento, mejorar la legibilidad y garantizar la consistencia del frontend.
+
+#### Convenciones del proyecto
+
+Se establecen las siguientes convenciones para el desarrollo:
+
+| Criterio | Convención |
+|----|----|
+| Estado local y derivado | Utilizar Signals para administrar el estado local y derivado de los componentes. Emplear `computed()` en lugar de getters. |
+| Inyección de dependencias | Utilizar `inject()` en lugar de constructor injection. |
+| Servicios HTTP | Declarar los servicios con `@Injectable({ providedIn: 'root' })` y utilizar el sufijo `Api` para los servicios de comunicación HTTP. |
+| Modelos | Ubicar los modelos en `core/models`, sin incorporar lógica de negocio. |
+| Componentes | Utilizar componentes standalone, con plantillas y estilos separados. |
+| Suscripciones | Utilizar `takeUntilDestroyed` para suscripciones persistentes. Las peticiones simples de HttpClient completan después de recibir su respuesta. |
+| Nombres de archivos | Utilizar kebab-case. |
+| Nombres de clases | Utilizar PascalCase. |
+| Manejo de errores | Evitar el uso de `any`; utilizar `unknown` cuando el tipo no esté determinado y `toApiMessage(error)` para obtener mensajes de error de la API. |
+
+#### Formato del código con Prettier
+
+Para mantener un formato uniforme en los archivos TypeScript, HTML y CSS del frontend, se utilizó Prettier.
+
+Se ejecutó el siguiente comando para aplicar el formato:
+
+```         
+npm exec -- prettier --write "src/**/*.{ts,html,css}"
+```
+
+Posteriormente, se realizó la comprobación:
+
+```         
+npm exec -- prettier --check "src/**/*.{ts,html,css}"
+```
+
+**Resultado:** La verificación finalizó correctamente con el mensaje:
+
+```         
+Checking formatting... All matched files use Prettier code style!
+```
+
+Esto confirma que los archivos revisados cumplen con el formato establecido.
+
+**Evidencia:** `ISS-18.6-01-prettier-aprobado.png`
+
+#### Configuración de tipado estricto
+
+Se revisaron los archivos de configuración `tsconfig.json`, `tsconfig.app.json` y `tsconfig.spec.json`. Inicialmente, el proyecto no tenía habilitada la propiedad `strict: true`.
+
+Para cumplir con la convención establecida, se incorporó la siguiente configuración en `tsconfig.json`:
+
+```         
+{   "compilerOptions": {     "strict": true   } }
+```
+
+Esta configuración es heredada por `tsconfig.app.json` y `tsconfig.spec.json`.
+
+Posteriormente, se ejecutó la compilación del frontend:
+
+```         
+npm run build
+```
+
+**Resultado:** La compilación finalizó normalmente después de habilitar el tipado estricto.
+
+**Evidencia:**
+
+![](images/clipboard-3998720735.png)
+
+#### Accesibilidad mínima
+
+Se establecen los siguientes criterios de accesibilidad para los componentes de la interfaz:
+
+1.  **Campos de entrada:** Todo elemento `input` debe disponer de una etiqueta `label` asociada o de un atributo `aria-label` que permita identificar su función.
+
+2.  **Botones de iconos:** Los botones que contienen únicamente iconos deben incorporar `pTooltip` y `aria-label` para identificar la acción que realizan.
+
+3.  **Indicadores de estado:** Los colores utilizados para representar estados de inventario o disponibilidad no deben ser el único indicador. También debe mostrarse el número correspondiente.
+
+La verificación de estos criterios se realiza mediante la revisión de los formularios, botones y componentes visuales del sistema.
+
+**Evidencia:**
+
+![](images/clipboard-3612173987.png)
+
+![](images/clipboard-707098367.png)
+
+Resultado de la revisión de calidad
+
+| Aspecto evaluado | Resultado |
+|----|----|
+| Formato del código con Prettier | Verificado. Todos los archivos revisados cumplen el formato. |
+| Tipado estricto de TypeScript | Habilitado mediante `strict: true`. |
+| Compilación del frontend | Ejecutada correctamente después del cambio de configuración. |
+| Accesibilidad de campos y botones | Pendiente de comprobación visual. |
+| Indicadores numéricos de estado | Pendiente de comprobación visual. |
+
+**Conclusión:** Se realizaron ajustes para mejorar la calidad y uniformidad del código fuente de CampusNube. Se verificó el formato mediante Prettier, se habilitó el tipado estricto de TypeScript y se comprobó que la aplicación compila normalmente. Los criterios de accesibilidad establecidos quedan sujetos a su comprobación visual final.
+
+## 11.7 Publicación
+
+![](images/clipboard-2109033593.png)
+
+![](images/clipboard-2785604975.png)
+
+![](images/clipboard-693256082.png)
+
+## 18.8 Criterios de aceptación y cierre del proyecto 
+
+### Criterios de aceptación
+
+1.  La compilación de producción mediante `npm run build` termina con cero errores.
+
+2.  No se presentan advertencias de presupuesto que impidan la generación del paquete de producción.
+
+3.  Los 15 puntos del checklist de pruebas de humo se verifican satisfactoriamente.
+
+4.  La emulación de la Fase I con `requireAuth: false` en el frontend y `AUTH_ENABLED=false` en el backend, sobre una copia de práctica, produce el comportamiento esperado: sin guards, directivas de permisos siempre visibles, peticiones sin encabezado `Bearer` y respuestas HTTP 200 en los recursos de negocio.
+
+5.  La revocación del refresh token cierra la sesión de forma controlada.
+
+6.  La comprobación de Prettier mediante `npm exec -- prettier --check "src/**/*.{ts,html,css}"` no reporta archivos sin formatear.
+
+7.  La carpeta de producción `dist/fronted-express/browser/` se sirve mediante un servidor web con fallback SPA y permite recargar correctamente las rutas profundas.
+
+### Estado de verificación de los criterios
+
+| N.º | Criterio | Estado |
+|----|----|----|
+| 1 | Compilación de producción sin errores | Verificado mediante `npm run build`. |
+| 2 | Presupuestos de compilación | Verificado en la compilación realizada, sin advertencias de presupuesto. |
+| 3 | Los 15 puntos del checklist de humo | Pendiente de completar todas las pruebas. |
+| 4 | Emulación de Fase I sin autenticación | Pendiente de comprobar en una copia de práctica con backend configurado para ello. |
+| 5 | Revocación del refresh token | Pendiente de evidencia de ejecución y cierre de sesión. |
+| 6 | Formato del código con Prettier | Verificado: todos los archivos revisados cumplen el formato. |
+| 7 | Publicación con fallback SPA y rutas profundas | Pendiente de despliegue y comprobación en servidor web. |
+
+### Cierre del recorrido
+
+El desarrollo de CampusNube se organiza en dos fases principales, además de los fundamentos iniciales del proyecto.
+
+#### Fase 0 · Fundamentos
+
+- ISS-00: Entorno validado.
+
+- ISS-01: Angular 22, Tailwind 4 y PrimeNG 22.
+
+- ISS-02: Core, modelos y layout.
+
+#### Fase I · Funcionalidades académicas y gestión de negocio
+
+- ISS-03: Gestión de docentes.
+
+- ISS-04: Gestión de aprendices.
+
+- ISS-05: Gestión de cursos.
+
+- ISS-06: Gestión de módulos y lecciones.
+
+- ISS-07: Evaluaciones, entregas, matrículas, progreso y dashboard.
+
+#### Fase II · Autenticación y control de acceso RBAC
+
+- ISS-08: Formulario de sesión, JWT, perfil y permisos efectivos.
+
+- ISS-09: Guards y control de acceso a las funcionalidades.
+
+- ISS-10: Administración de usuarios, roles, recursos y asignaciones.
+
+- ISS-11: Build, calidad y cierre del proyecto.
+
+### Checklist de cierre por fase
+
+#### Fase I
+
+- Se encuentran implementadas las funcionalidades académicas y sus respectivos módulos de gestión.
+
+- Se verifica el funcionamiento de los módulos contra el backend en las condiciones de acceso establecidas.
+
+- La estructura de autenticación se encuentra separada y preparada para su utilización en la Fase II.
+
+- Las pruebas unitarias del frontend finalizaron con 19 archivos aprobados, 45 pruebas aprobadas y 0 fallidas.
+
+- La compilación del frontend finalizó correctamente.
+
+#### Fase II
+
+- El inicio de sesión es obligatorio y el mecanismo de renovación de tokens utiliza `refreshInFlight` con `shareReplay`.
+
+- Las rutas protegidas utilizan `permissionGuard` y la configuración de permisos correspondiente.
+
+- Los botones de escritura utilizan la directiva `appHasPermission`.
+
+- La matriz efectiva de permisos se utiliza para filtrar las opciones del menú y las acciones disponibles.
+
+- La comprobación integral de permisos con el backend real está pendiente de completar.
+
+- Se encuentran implementadas las interfaces administrativas para gestionar usuarios, roles, recursos, asignaciones y permisos.
+
+### Resultado del cierre
+
+CampusNube cuenta con una estructura frontend desarrollada en Angular 22, funcionalidades académicas, autenticación mediante JWT y control de acceso basado en roles y permisos.
+
+Se verificaron las pruebas unitarias, el formato del código mediante Prettier, la habilitación del tipado estricto y la compilación de producción. Los criterios relacionados con la emulación de la Fase I, la revocación de tokens y el despliegue SPA requieren sus respectivas pruebas y evidencias para completar la aceptación final del proyecto.
+
+![4](images/clipboard-4037745603.png)
+
+## Commit del ISS-18
+
+```         
+git add .     
+git commit -m "Fase II: Auth con RBAC — ISS-11 — Build, calidad y cierre del proyecto"     
 git push origin main 
 ```
 

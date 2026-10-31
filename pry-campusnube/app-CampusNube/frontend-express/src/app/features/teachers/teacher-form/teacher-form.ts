@@ -1,9 +1,5 @@
 import { Component, effect, inject, input, output } from '@angular/core';
-import {
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -12,13 +8,7 @@ import { Teacher, TeacherPayload } from '../../../core/models/teacher.model';
 
 @Component({
   selector: 'app-teacher-form',
-  imports: [
-    MessageModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-    TextareaModule,
-  ],
+  imports: [MessageModule, ReactiveFormsModule, ButtonModule, InputTextModule, TextareaModule],
   templateUrl: './teacher-form.html',
   styleUrl: './teacher-form.css',
 })

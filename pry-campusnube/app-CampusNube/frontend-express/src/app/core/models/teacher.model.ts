@@ -1,4 +1,3 @@
-
 import { Timestamps } from './api.model';
 
 export interface Teacher extends Timestamps {

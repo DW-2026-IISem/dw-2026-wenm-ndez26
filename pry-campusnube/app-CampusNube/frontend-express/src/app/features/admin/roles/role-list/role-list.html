@@ -1,0 +1,100 @@
+<section class="roles-container">
+  <header class="roles-header">
+    <div>
+      <h2>Administración de roles</h2>
+      <p>Gestiona los roles y sus estados dentro de CampusNube.</p>
+    </div>
+
+    <div class="header-actions">
+      @if (canCreate()) {
+        <button type="button" (click)="openCreate()">Crear rol</button>
+      }
+
+      <button type="button" class="secondary-button" (click)="loadRoles()">Actualizar</button>
+    </div>
+  </header>
+
+  @if (message()) {
+    <p class="success-message">{{ message() }}</p>
+  }
+
+  @if (error()) {
+    <p class="error-message">{{ error() }}</p>
+  }
+
+  @if (!canList()) {
+    <p>No tienes autorización para consultar los roles.</p>
+  } @else {
+    @if (loading()) {
+      <p>Cargando roles...</p>
+    } @else {
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (role of roles(); track role.id) {
+              <tr>
+                <td>
+                  <strong>{{ role.name }}</strong>
+                </td>
+                <td>{{ role.description || 'Sin descripción' }}</td>
+                <td>
+                  <span
+                    class="status"
+                    [class.active]="role.status === 'active'"
+                    [class.inactive]="role.status !== 'active'"
+                  >
+                    {{ role.status === 'active' ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="row-actions">
+                    @if (canEdit(role)) {
+                      <button type="button" class="edit-button" (click)="openEdit(role)">
+                        Editar
+                      </button>
+                    }
+
+                    @if (role.status === 'active' && canDeactivate(role)) {
+                      <button type="button" class="deactivate-button" (click)="deactivate(role)">
+                        Dar de baja
+                      </button>
+                    }
+
+                    @if (canDelete(role)) {
+                      <button type="button" class="delete-button" (click)="remove(role)">
+                        Eliminar
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4">No hay roles registrados.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</section>
+
+@if (showForm()) {
+  <div class="dialog-backdrop">
+    <section class="role-dialog" role="dialog" aria-modal="true">
+      <app-role-form [role]="editingRole()" (saved)="save($event)" (cancelled)="closeForm()">
+      </app-role-form>
+    </section>
+  </div>
+}

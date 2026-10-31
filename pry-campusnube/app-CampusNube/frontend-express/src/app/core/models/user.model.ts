@@ -1,4 +1,3 @@
-
 import { Status, Timestamps } from './api.model';
 
 export interface User extends Timestamps {
@@ -12,7 +11,7 @@ export interface User extends Timestamps {
 export interface UserPayload {
   username: string;
   email: string;
-  password: string;
+  password?: string;
   avatar?: string | null;
   status?: Status;
 }
@@ -20,6 +19,5 @@ export interface UserPayload {
 export interface UserUpdatePayload {
   username?: string;
   email?: string;
-  password?: string;
   avatar?: string | null;
 }

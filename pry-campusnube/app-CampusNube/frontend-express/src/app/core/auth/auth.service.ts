@@ -10,7 +10,7 @@ import {
   of,
   switchMap,
   tap,
-  throwError
+  throwError,
 } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
@@ -20,13 +20,13 @@ import {
   LoginRequest,
   PermissionsPayload,
   ProfilePayload,
-  SessionTokens
+  SessionTokens,
 } from '../models/auth.model';
 
 import { SessionStore } from './session.store';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
@@ -35,37 +35,28 @@ export class AuthService {
   private readonly base = `${environment.apiUrl}/sesion`;
 
   login(payload: LoginRequest): Observable<AccessPayload> {
-    return this.http
-      .post<SessionTokens>(`${this.base}/login`, payload)
-      .pipe(
-        tap(tokens => this.store.setTokens(tokens)),
-        switchMap(() => this.me()),
-        catchError(error => {
-          this.store.clear();
-          return throwError(() => error);
-        })
-      );
+    return this.http.post<SessionTokens>(`${this.base}/login`, payload).pipe(
+      tap((tokens) => this.store.setTokens(tokens)),
+      switchMap(() => this.me()),
+      catchError((error) => {
+        this.store.clear();
+        return throwError(() => error);
+      }),
+    );
   }
 
   me(): Observable<AccessPayload> {
     return forkJoin({
-      profile: this.http.get<ProfilePayload>(
-        `${this.base}/perfil`
-      ),
-      permissions: this.http.get<PermissionsPayload>(
-        `${environment.apiUrl}/permisos`
-      )
+      profile: this.http.get<ProfilePayload>(`${this.base}/perfil`),
+      permissions: this.http.get<PermissionsPayload>(`${environment.apiUrl}/permisos`),
     }).pipe(
-      map(response => ({
+      map((response) => ({
         user: response.profile.user,
-        permissions: response.permissions.permissions
+        permissions: response.permissions.permissions,
       })),
-      tap(access => {
-        this.store.setAccess(
-          access.user,
-          access.permissions
-        );
-      })
+      tap((access) => {
+        this.store.setAccess(access.user, access.permissions);
+      }),
     );
   }
 
@@ -75,18 +66,14 @@ export class AuthService {
     if (!refreshToken) {
       this.store.clear();
 
-      return throwError(
-        () => new Error('No existe un refresh token disponible.')
-      );
+      return throwError(() => new Error('No existe un refresh token disponible.'));
     }
 
     return this.http
       .post<SessionTokens>(`${this.base}/refresh`, {
-        refresh_token: refreshToken
+        refresh_token: refreshToken,
       })
-      .pipe(
-        tap(tokens => this.store.setTokens(tokens))
-      );
+      .pipe(tap((tokens) => this.store.setTokens(tokens)));
   }
 
   logout(): Observable<unknown> {
@@ -99,11 +86,11 @@ export class AuthService {
 
     return this.http
       .post(`${this.base}/logout`, {
-        refresh_token: refreshToken
+        refresh_token: refreshToken,
       })
       .pipe(
         catchError(() => of(null)),
-        finalize(() => this.store.clear())
+        finalize(() => this.store.clear()),
       );
   }
 }

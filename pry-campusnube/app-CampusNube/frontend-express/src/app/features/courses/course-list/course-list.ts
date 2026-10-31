@@ -76,9 +76,7 @@ export class CourseList {
   readonly editing = signal<Course | null>(null);
   readonly resetKey = signal(0);
 
-  readonly title = computed(() =>
-    this.editing() ? 'Editar curso' : 'Nuevo curso',
-  );
+  readonly title = computed(() => (this.editing() ? 'Editar curso' : 'Nuevo curso'));
 
   constructor() {
     this.load();
@@ -121,17 +119,13 @@ export class CourseList {
     const current = this.editing();
     this.saving.set(true);
 
-    const request = current
-      ? this.api.update(current.id, payload)
-      : this.api.create(payload);
+    const request = current ? this.api.update(current.id, payload) : this.api.create(payload);
 
     request.subscribe({
       next: () => {
         this.saving.set(false);
         this.dialogVisible.set(false);
-        this.notify.success(
-          current ? 'Curso actualizado' : 'Curso creado',
-        );
+        this.notify.success(current ? 'Curso actualizado' : 'Curso creado');
         this.load();
       },
       error: (error: unknown) => {
@@ -174,8 +168,7 @@ export class CourseList {
             this.notify.success('Curso eliminado');
             this.load();
           },
-          error: (error: unknown) =>
-            this.notify.error('No se pudo eliminar', toApiMessage(error)),
+          error: (error: unknown) => this.notify.error('No se pudo eliminar', toApiMessage(error)),
         });
       },
     });

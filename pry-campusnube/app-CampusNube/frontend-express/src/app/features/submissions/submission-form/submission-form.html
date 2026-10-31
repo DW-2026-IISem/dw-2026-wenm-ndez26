@@ -1,11 +1,9 @@
 <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
-
   @if (errorMessage) {
     <p-message severity="error">{{ errorMessage }}</p-message>
   }
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
     <div class="flex flex-col gap-2">
       <label for="referencia_id">Referencia</label>
       <input
@@ -17,7 +15,9 @@
         placeholder="Ingrese el identificador de referencia"
       />
       @if (form.controls.referencia_id.touched && form.controls.referencia_id.invalid) {
-        <small class="text-red-600">La referencia es obligatoria y debe ser igual o mayor que cero.</small>
+        <small class="text-red-600"
+          >La referencia es obligatoria y debe ser igual o mayor que cero.</small
+        >
       }
     </div>
 
@@ -59,12 +59,7 @@
 
     <div class="flex flex-col gap-2">
       <label for="fecha_inicio">Fecha de inicio</label>
-      <input
-        pInputText
-        id="fecha_inicio"
-        type="datetime-local"
-        formControlName="fecha_inicio"
-      />
+      <input pInputText id="fecha_inicio" type="datetime-local" formControlName="fecha_inicio" />
       @if (form.controls.fecha_inicio.touched && form.controls.fecha_inicio.invalid) {
         <small class="text-red-600">La fecha de inicio es obligatoria.</small>
       }
@@ -72,12 +67,7 @@
 
     <div class="flex flex-col gap-2">
       <label for="fecha_fin">Fecha de finalización</label>
-      <input
-        pInputText
-        id="fecha_fin"
-        type="datetime-local"
-        formControlName="fecha_fin"
-      />
+      <input pInputText id="fecha_fin" type="datetime-local" formControlName="fecha_fin" />
     </div>
 
     <div class="flex flex-col gap-2">
@@ -131,7 +121,6 @@
         placeholder="Ingrese observaciones de la entrega"
       ></textarea>
     </div>
-
   </div>
 
   <div class="flex justify-end gap-2">

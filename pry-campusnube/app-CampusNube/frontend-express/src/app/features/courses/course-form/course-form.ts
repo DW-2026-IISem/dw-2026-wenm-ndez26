@@ -9,13 +9,7 @@ import { Teacher } from '../../../core/models/teacher.model';
 
 @Component({
   selector: 'app-course-form',
-  imports: [
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-    TextareaModule,
-    MultiSelectModule,
-  ],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, TextareaModule, MultiSelectModule],
   templateUrl: './course-form.html',
   styleUrl: './course-form.css',
 })

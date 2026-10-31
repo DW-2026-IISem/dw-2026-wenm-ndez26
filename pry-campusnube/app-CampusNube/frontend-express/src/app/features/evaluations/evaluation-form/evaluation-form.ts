@@ -1,16 +1,6 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  output,
-} from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
 
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,10 +8,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { MessageModule } from 'primeng/message';
 
-import {
-  Evaluation,
-  EvaluationPayload,
-} from '../../../core/models/evaluation.model';
+import { Evaluation, EvaluationPayload } from '../../../core/models/evaluation.model';
 
 import { Course } from '../../../core/models/course.model';
 

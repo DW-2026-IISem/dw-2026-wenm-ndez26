@@ -31,9 +31,7 @@ describe('CertificateForm', () => {
 
   it('debe iniciar con los campos vacíos', () => {
     expect(fixture.componentInstance.form.controls.name.value).toBe('');
-    expect(
-      fixture.componentInstance.form.controls.enrollment_id.value,
-    ).toBeNull();
+    expect(fixture.componentInstance.form.controls.enrollment_id.value).toBeNull();
   });
 
   it('debe validar los campos obligatorios', () => {

@@ -1,4 +1,3 @@
-
 import { TestBed } from '@angular/core/testing';
 import { Construir } from './construir';
 
@@ -52,13 +51,8 @@ describe('Construir', () => {
     return boton as HTMLButtonElement;
   }
 
-  function opcionDelMenu(
-    compilado: HTMLElement,
-    etiqueta: string,
-  ): HTMLElement {
-    const opciones = [
-      ...compilado.querySelectorAll('a, button, [role="menuitem"]'),
-    ];
+  function opcionDelMenu(compilado: HTMLElement, etiqueta: string): HTMLElement {
+    const opciones = [...compilado.querySelectorAll('a, button, [role="menuitem"]')];
 
     const opcion = opciones.find((elemento) => {
       const texto = elemento.textContent?.replace(/\s+/g, ' ').trim();
@@ -82,13 +76,7 @@ describe('Construir', () => {
     const { compilado } = await crearPantalla();
     const texto = compilado.textContent ?? '';
 
-    for (const etiqueta of [
-      'Inicio',
-      'Mis cursos',
-      'Módulos',
-      'Evaluaciones',
-      'Mi progreso',
-    ]) {
+    for (const etiqueta of ['Inicio', 'Mis cursos', 'Módulos', 'Evaluaciones', 'Mi progreso']) {
       expect(texto).toContain(etiqueta);
     }
   });
@@ -97,9 +85,7 @@ describe('Construir', () => {
     const { compilado } = await crearPantalla();
     const boton = botonMenu(compilado);
 
-    expect(boton.getAttribute('aria-label')).toBe(
-      'Mostrar u ocultar el menú',
-    );
+    expect(boton.getAttribute('aria-label')).toBe('Mostrar u ocultar el menú');
     expect(boton.classList.contains('lg:hidden')).toBe(false);
   });
 
@@ -110,9 +96,7 @@ describe('Construir', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(compilado.querySelector('main h1')?.textContent).toContain(
-      'Mis cursos',
-    );
+    expect(compilado.querySelector('main h1')?.textContent).toContain('Mis cursos');
   });
 
   it('debe abrir el Drawer en móvil', async () => {
@@ -163,8 +147,6 @@ describe('Construir', () => {
     await fixture.whenStable();
 
     expect(componente.mobileOpen()).toBe(false);
-    expect(compilado.querySelector('main h1')?.textContent).toContain(
-      'Mi progreso',
-    );
+    expect(compilado.querySelector('main h1')?.textContent).toContain('Mi progreso');
   });
 });

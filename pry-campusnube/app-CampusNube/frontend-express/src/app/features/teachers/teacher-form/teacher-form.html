@@ -1,8 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
   <div>
-    <label for="teacher-name" class="mb-1 block text-sm font-medium">
-      Nombre del docente *
-    </label>
+    <label for="teacher-name" class="mb-1 block text-sm font-medium"> Nombre del docente * </label>
 
     <input
       id="teacher-name"
@@ -20,9 +18,7 @@
   </div>
 
   <div>
-    <label for="teacher-description" class="mb-1 block text-sm font-medium">
-      Descripción
-    </label>
+    <label for="teacher-description" class="mb-1 block text-sm font-medium"> Descripción </label>
 
     <textarea
       id="teacher-description"
@@ -35,13 +31,7 @@
   </div>
 
   <div class="flex justify-end gap-2 border-t pt-4">
-    <button
-      pButton
-      type="button"
-      severity="secondary"
-      outlined
-      (click)="cancelled.emit()"
-    >
+    <button pButton type="button" severity="secondary" outlined (click)="cancelled.emit()">
       <span pButtonLabel>Cancelar</span>
     </button>
 

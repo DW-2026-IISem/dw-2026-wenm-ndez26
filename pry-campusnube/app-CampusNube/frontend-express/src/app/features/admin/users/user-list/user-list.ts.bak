@@ -1,0 +1,105 @@
+import { Component, computed, inject, signal } from '@angular/core';
+import { UserApi } from '../user-api';
+import { User } from '../../../../core/models/user.model';
+import { EffectivePermission } from '../../../../core/models/auth.model';
+import { SessionStore } from '../../../../core/auth/session.store';
+
+@Component({
+  selector: 'app-user-list',
+  standalone: true,
+  imports: [],
+  templateUrl: './user-list.html',
+  styleUrl: './user-list.css'
+})
+export class UserList {
+  private readonly userApi = inject(UserApi);
+  private readonly session = inject(SessionStore);
+
+  readonly users = signal<User[]>([]);
+  readonly loading = signal(false);
+  readonly error = signal('');
+
+  readonly access = signal<EffectivePermission[]>([]);
+  readonly accessUser = signal<User | null>(null);
+  readonly accessLoading = signal(false);
+  readonly accessError = signal('');
+
+  readonly accessRoles = computed(() => {
+    const byId = new Map<number, string>();
+
+    for (const permission of this.access()) {
+      byId.set(permission.role_id, permission.role_name);
+    }
+
+    return [...byId.entries()].map(([id, name]) => ({ id, name }));
+  });
+
+  constructor() {
+    this.loadUsers();
+  }
+
+  isSelf(user: User): boolean {
+    return this.session.user()?.id === user.id;
+  }
+
+
+  canCreate(): boolean {
+    return this.session.can('POST', '/api/usuarios');
+  }
+
+  canEdit(user: User): boolean {
+    return this.session.can('PATCH', `/api/usuarios/${user.id}`);
+  }
+
+  canDeactivate(user: User): boolean {
+    return this.session.can('PATCH', `/api/usuarios/${user.id}/deactivate`);
+  }
+
+  canDelete(user: User): boolean {
+    return this.session.can('DELETE', `/api/usuarios/${user.id}`);
+  }
+
+  canViewPermissions(user: User): boolean {
+    return this.session.can('GET', `/api/usuarios/${user.id}/permisos`);
+  }
+
+  loadUsers(): void {
+    this.loading.set(true);
+    this.error.set('');
+
+    this.userApi.list().subscribe({
+      next: users => {
+        this.users.set(users);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.error.set('No fue posible cargar los usuarios.');
+        this.loading.set(false);
+      }
+    });
+  }
+
+  viewPermissions(user: User): void {
+    this.accessUser.set(user);
+    this.access.set([]);
+    this.accessError.set('');
+    this.accessLoading.set(true);
+
+    this.userApi.permissions(user.id).subscribe({
+      next: permissions => {
+        this.access.set(permissions);
+        this.accessLoading.set(false);
+      },
+      error: () => {
+        this.accessError.set('No fue posible consultar los permisos de este usuario.');
+        this.accessLoading.set(false);
+      }
+    });
+  }
+
+  closePermissions(): void {
+    this.accessUser.set(null);
+    this.access.set([]);
+    this.accessError.set('');
+  }
+}

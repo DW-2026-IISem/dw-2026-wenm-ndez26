@@ -60,9 +60,7 @@ export class TeacherList {
   readonly editing = signal<Teacher | null>(null);
   readonly resetKey = signal(0);
 
-  readonly title = computed(() =>
-    this.editing() ? 'Editar docente' : 'Nuevo docente',
-  );
+  readonly title = computed(() => (this.editing() ? 'Editar docente' : 'Nuevo docente'));
 
   constructor() {
     this.load();
@@ -101,17 +99,13 @@ export class TeacherList {
     const current = this.editing();
     this.saving.set(true);
 
-    const request = current
-      ? this.api.update(current.id, payload)
-      : this.api.create(payload);
+    const request = current ? this.api.update(current.id, payload) : this.api.create(payload);
 
     request.subscribe({
       next: () => {
         this.saving.set(false);
         this.dialogVisible.set(false);
-        this.notify.success(
-          current ? 'Docente actualizado' : 'Docente creado',
-        );
+        this.notify.success(current ? 'Docente actualizado' : 'Docente creado');
         this.load();
       },
       error: (error: unknown) => {

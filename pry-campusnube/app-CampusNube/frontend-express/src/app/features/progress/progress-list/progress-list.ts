@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
 
@@ -69,9 +64,7 @@ export class ProgressList {
 
   readonly totalCount = computed(() => this.progress().length);
 
-  readonly activeCount = computed(
-    () => this.progress().filter(item => item.isActive).length,
-  );
+  readonly activeCount = computed(() => this.progress().filter((item) => item.isActive).length);
 
   readonly filteredProgress = computed(() => {
     const term = this.search().toLowerCase().trim();
@@ -80,7 +73,7 @@ export class ProgressList {
       return this.progress();
     }
 
-    return this.progress().filter(item => {
+    return this.progress().filter((item) => {
       const enrollment = this.enrollmentMap().get(item.enrollment_id);
 
       return [
@@ -90,7 +83,7 @@ export class ProgressList {
         String(item.enrollment_id),
         String(enrollment?.learner_id ?? ''),
         String(enrollment?.course_id ?? ''),
-      ].some(value => value.toLowerCase().includes(term));
+      ].some((value) => value.toLowerCase().includes(term));
     });
   });
 
@@ -105,7 +98,7 @@ export class ProgressList {
       progress: this.api.list(),
       enrollments: this.enrollmentApi.list(),
     }).subscribe({
-      next: response => {
+      next: (response) => {
         this.progress.set(response.progress);
         this.enrollments.set(response.enrollments);
         this.loading.set(false);

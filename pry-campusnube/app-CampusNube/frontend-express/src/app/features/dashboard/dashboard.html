@@ -1,5 +1,4 @@
 <section class="dashboard">
-
   <header class="dashboard-header">
     <div>
       <span class="eyebrow">CAMPUSNUBE · APRENDIZAJE VIRTUAL</span>
@@ -7,12 +6,7 @@
       <p>Resumen general de la información académica de la plataforma.</p>
     </div>
 
-    <button
-      type="button"
-      class="refresh-button"
-      (click)="loadDashboard()"
-      [disabled]="loading()"
-    >
+    <button type="button" class="refresh-button" (click)="loadDashboard()" [disabled]="loading()">
       <i class="pi pi-refresh"></i>
       Actualizar información
     </button>
@@ -33,7 +27,6 @@
   }
 
   @if (!loading() && !errorMessage()) {
-
     <section class="section-block">
       <div class="section-heading">
         <div>
@@ -43,7 +36,6 @@
       </div>
 
       <div class="stats-grid">
-
         <article class="stat-card">
           <div class="stat-icon purple"><i class="pi pi-users"></i></div>
           <div class="stat-content">
@@ -142,7 +134,6 @@
             <small>{{ activeCertificates() }} activos</small>
           </div>
         </article>
-
       </div>
     </section>
 
@@ -155,7 +146,6 @@
       </div>
 
       <div class="activity-grid">
-
         <article class="activity-card">
           <div class="activity-title">
             <i class="pi pi-bookmark"></i>
@@ -180,7 +170,7 @@
                       <td>#{{ item.id }}</td>
                       <td>{{ item.learner_id }}</td>
                       <td>{{ item.course_id }}</td>
-                      <td>{{ item.enrollment_date | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ item.enrollment_date | date: 'dd/MM/yyyy' }}</td>
                       <td>
                         <span class="status" [class.active]="item.status === 'active'">
                           {{ item.status }}
@@ -220,7 +210,7 @@
                       <td>#{{ item.id }}</td>
                       <td>{{ item.enrollment_id }}</td>
                       <td>{{ item.lesson_id }}</td>
-                      <td>{{ item.fecha_inicio | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ item.fecha_inicio | date: 'dd/MM/yyyy' }}</td>
                       <td>
                         <span class="status">{{ item.estado }}</span>
                       </td>
@@ -233,9 +223,7 @@
             <p class="empty-state">No hay entregas registradas.</p>
           }
         </article>
-
       </div>
     </section>
   }
-
 </section>

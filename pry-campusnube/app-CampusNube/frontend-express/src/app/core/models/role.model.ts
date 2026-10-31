@@ -1,4 +1,3 @@
-
 import { Status, Timestamps } from './api.model';
 
 export interface Role extends Timestamps {
@@ -11,7 +10,7 @@ export interface Role extends Timestamps {
 export interface RolePayload {
   name: string;
   description?: string | null;
-  status?: Status;
+  status: Status;
 }
 
 export interface RoleUpdatePayload {

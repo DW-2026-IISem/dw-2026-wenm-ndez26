@@ -3,6 +3,7 @@ import { beforeEach, describe, it, expect, vi } from 'vitest';
 import { of } from 'rxjs';
 
 import { Dashboard } from './dashboard';
+import { SessionStore } from '../../core/auth/session.store';
 
 import { TeacherApi } from '../teachers/teacher-api';
 import { LearnerApi } from '../learners/learner-api';
@@ -35,6 +36,7 @@ describe('Dashboard', () => {
     await TestBed.configureTestingModule({
       imports: [Dashboard],
       providers: [
+        { provide: SessionStore, useValue: { canPermission: vi.fn(() => true) } },
         { provide: TeacherApi, useValue: teacherApi },
         { provide: LearnerApi, useValue: learnerApi },
         { provide: CourseApi, useValue: courseApi },

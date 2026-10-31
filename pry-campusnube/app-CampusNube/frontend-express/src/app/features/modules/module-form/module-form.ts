@@ -1,16 +1,6 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  output
-} from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
 
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -30,13 +20,12 @@ import { Course } from '../../../core/models/course.model';
     InputTextModule,
     TextareaModule,
     SelectModule,
-    MessageModule
+    MessageModule,
   ],
   templateUrl: './module-form.html',
   styleUrl: './module-form.css',
 })
 export class ModuleForm {
-
   private readonly fb = inject(FormBuilder);
 
   readonly module = input<Module | null>(null);
@@ -49,7 +38,7 @@ export class ModuleForm {
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(150)]],
     course_id: [0, [Validators.required, Validators.min(1)]],
-    description: ['']
+    description: [''],
   });
 
   constructor() {
@@ -60,13 +49,13 @@ export class ModuleForm {
         this.form.reset({
           name: currentModule.name,
           course_id: currentModule.course_id,
-          description: currentModule.description ?? ''
+          description: currentModule.description ?? '',
         });
       } else {
         this.form.reset({
           name: '',
           course_id: 0,
-          description: ''
+          description: '',
         });
       }
     });
@@ -84,7 +73,7 @@ export class ModuleForm {
       name: values.name.trim(),
       course_id: Number(values.course_id),
       description: values.description.trim() || null,
-      ...(this.module() ? {} : { isActive: true })
+      ...(this.module() ? {} : { isActive: true }),
     };
 
     this.saved.emit(payload);

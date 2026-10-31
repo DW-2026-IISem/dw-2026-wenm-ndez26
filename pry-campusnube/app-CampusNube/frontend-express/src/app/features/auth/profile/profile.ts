@@ -10,7 +10,7 @@ import { SessionStore } from '../../../core/auth/session.store';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './profile.html',
-  styleUrl: './profile.css'
+  styleUrl: './profile.css',
 })
 export class Profile {
   readonly store = inject(SessionStore);
@@ -30,7 +30,7 @@ export class Profile {
       error: () => {
         this.loading.set(false);
         this.errorMessage.set('No fue posible actualizar el perfil.');
-      }
+      },
     });
   }
 
@@ -38,7 +38,7 @@ export class Profile {
     this.auth.logout().subscribe({
       complete: () => {
         void this.router.navigate(['/login']);
-      }
+      },
     });
   }
 }

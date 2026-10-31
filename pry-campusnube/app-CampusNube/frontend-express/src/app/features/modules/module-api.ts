@@ -7,33 +7,37 @@ import { Module, ModulePayload } from '../../core/models/module.model';
 
 @Injectable({ providedIn: 'root' })
 export class ModuleApi {
-
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/modulos`;
 
   list(): Observable<Module[]> {
-    return this.http.get<{ modules: Module[] }>(this.base)
-      .pipe(map(response => response.modules));
+    return this.http
+      .get<{ modules: Module[] }>(this.base)
+      .pipe(map((response) => response.modules));
   }
 
   get(id: number): Observable<Module> {
-    return this.http.get<{ module: Module }>(`${this.base}/${id}`)
-      .pipe(map(response => response.module));
+    return this.http
+      .get<{ module: Module }>(`${this.base}/${id}`)
+      .pipe(map((response) => response.module));
   }
 
   create(payload: ModulePayload): Observable<Module> {
-    return this.http.post<{ module: Module }>(this.base, payload)
-      .pipe(map(response => response.module));
+    return this.http
+      .post<{ module: Module }>(this.base, payload)
+      .pipe(map((response) => response.module));
   }
 
   update(id: number, payload: Partial<ModulePayload>): Observable<Module> {
-    return this.http.patch<{ module: Module }>(`${this.base}/${id}`, payload)
-      .pipe(map(response => response.module));
+    return this.http
+      .patch<{ module: Module }>(`${this.base}/${id}`, payload)
+      .pipe(map((response) => response.module));
   }
 
   replace(id: number, payload: ModulePayload): Observable<Module> {
-    return this.http.put<{ module: Module }>(`${this.base}/${id}`, payload)
-      .pipe(map(response => response.module));
+    return this.http
+      .put<{ module: Module }>(`${this.base}/${id}`, payload)
+      .pipe(map((response) => response.module));
   }
 
   deactivate(id: number): Observable<unknown> {

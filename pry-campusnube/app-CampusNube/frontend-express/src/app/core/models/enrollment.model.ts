@@ -1,4 +1,3 @@
-
 import { Timestamps } from './api.model';
 import { Status } from './api.model';
 

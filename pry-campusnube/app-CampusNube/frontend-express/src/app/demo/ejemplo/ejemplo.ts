@@ -1,4 +1,3 @@
-
 import { Component, computed, effect, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -16,36 +15,21 @@ export interface Curso {
 @Component({
   host: { class: 'block' },
   selector: 'app-ejemplo',
-  imports: [
-    ButtonModule,
-    CardModule,
-    DecimalPipe,
-    InputTextModule,
-    MessageModule,
-    TagModule,
-  ],
+  imports: [ButtonModule, CardModule, DecimalPipe, InputTextModule, MessageModule, TagModule],
   templateUrl: './ejemplo.html',
   styleUrl: './ejemplo.css',
 })
 export class Ejemplo {
   protected readonly curso = signal<Curso>(cursoInicial());
 
-  protected readonly precioFinal = computed(() =>
-    Math.round(this.curso().precio * 1.19),
-  );
+  protected readonly precioFinal = computed(() => Math.round(this.curso().precio * 1.19));
 
-  protected readonly estadoTexto = computed(() =>
-    this.curso().activo ? 'Activo' : 'Inactivo',
-  );
+  protected readonly estadoTexto = computed(() => (this.curso().activo ? 'Activo' : 'Inactivo'));
 
   private readonly registro = effect(() => {
     const { nombre, precio, activo } = this.curso();
 
-    console.log(
-      `[CampusNube] ${nombre} · precio ${precio} · ${
-        activo ? 'activo' : 'inactivo'
-      }`,
-    );
+    console.log(`[CampusNube] ${nombre} · precio ${precio} · ${activo ? 'activo' : 'inactivo'}`);
   });
 
   protected cambiarNombre(event: Event): void {

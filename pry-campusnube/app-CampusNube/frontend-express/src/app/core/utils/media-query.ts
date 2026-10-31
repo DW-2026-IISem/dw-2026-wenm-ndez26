@@ -1,4 +1,3 @@
-
 import { DestroyRef, Signal, inject, signal } from '@angular/core';
 
 /**
@@ -8,8 +7,7 @@ export function watchMediaQuery(query: string): Signal<boolean> {
   const destroyRef = inject(DestroyRef);
 
   const media =
-    typeof window !== 'undefined' &&
-    typeof window.matchMedia === 'function'
+    typeof window !== 'undefined' && typeof window.matchMedia === 'function'
       ? window.matchMedia(query)
       : null;
 

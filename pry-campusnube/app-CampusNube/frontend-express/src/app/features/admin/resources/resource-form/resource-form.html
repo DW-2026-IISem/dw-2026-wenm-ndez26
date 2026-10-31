@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h2>{{ resource ? 'Editar recurso HTTP' : 'Crear recurso HTTP' }}</h2>
+
+  <div class="form-field">
+    <label for="resource-method">Método HTTP</label>
+
+    <select id="resource-method" formControlName="method">
+      @for (method of methods; track method) {
+        <option [value]="method">{{ method }}</option>
+      }
+    </select>
+
+    @if (form.controls.method.touched && form.controls.method.invalid) {
+      <small>Selecciona un método HTTP.</small>
+    }
+  </div>
+
+  <div class="form-field">
+    <label for="resource-path">Ruta del recurso</label>
+
+    <input id="resource-path" type="text" formControlName="path" placeholder="/api/cursos/:id" />
+
+    @if (form.controls.path.touched && form.controls.path.invalid) {
+      <small>La ruta es obligatoria y debe comenzar con /.</small>
+    }
+
+    <small>Ejemplo: /api/cursos o /api/cursos/:id</small>
+  </div>
+
+  <div class="form-field">
+    <label for="resource-description">Descripción</label>
+
+    <textarea
+      id="resource-description"
+      formControlName="description"
+      rows="3"
+      placeholder="Describe la capacidad que representa este recurso"
+    >
+    </textarea>
+  </div>
+
+  @if (!resource) {
+    <div class="form-field">
+      <label for="resource-status">Estado</label>
+
+      <select id="resource-status" formControlName="status">
+        <option value="active">Activo</option>
+        <option value="inactive">Inactivo</option>
+      </select>
+    </div>
+  }
+
+  @if (duplicateError) {
+    <p class="error-message">{{ duplicateError }}</p>
+  }
+
+  <div class="form-actions">
+    <button type="submit">
+      {{ resource ? 'Guardar cambios' : 'Crear recurso' }}
+    </button>
+
+    <button type="button" class="cancel-button" (click)="cancel()">Cancelar</button>
+  </div>
+</form>

@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
@@ -18,10 +12,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
-import {
-  ConfirmationService,
-  MessageService,
-} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { Lesson, LessonPayload } from '../../../core/models/lesson.model';
 import { Module } from '../../../core/models/module.model';
@@ -71,9 +62,7 @@ export class LessonList implements OnInit {
   );
 
   readonly moduleName = computed(() => {
-    const map = new Map(
-      this.modules().map((module) => [module.id, module.name]),
-    );
+    const map = new Map(this.modules().map((module) => [module.id, module.name]));
 
     return (id: number) => map.get(id) ?? `Módulo #${id}`;
   });
@@ -141,9 +130,7 @@ export class LessonList implements OnInit {
 
     const current = this.selectedLesson();
 
-    const request = current
-      ? this.api.update(current.id, payload)
-      : this.api.create(payload);
+    const request = current ? this.api.update(current.id, payload) : this.api.create(payload);
 
     request.subscribe({
       next: () => {

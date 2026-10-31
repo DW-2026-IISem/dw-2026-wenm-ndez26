@@ -1,0 +1,112 @@
+<section class="resources-container">
+  <header class="resources-header">
+    <div>
+      <h2>Catálogo de recursos HTTP</h2>
+      <p>Administra las capacidades disponibles para el control RBAC.</p>
+    </div>
+
+    <div class="header-actions">
+      @if (canCreate()) {
+        <button type="button" (click)="openCreate()">Crear recurso</button>
+      }
+
+      <button type="button" class="secondary-button" (click)="loadResources()">Actualizar</button>
+    </div>
+  </header>
+
+  @if (message()) {
+    <p class="success-message">{{ message() }}</p>
+  }
+
+  @if (error()) {
+    <p class="error-message">{{ error() }}</p>
+  }
+
+  @if (!canList()) {
+    <p>No tienes autorización para consultar los recursos.</p>
+  } @else {
+    @if (loading()) {
+      <p>Cargando recursos...</p>
+    } @else {
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Método</th>
+              <th>Ruta</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (resource of resources(); track resource.id) {
+              <tr>
+                <td>
+                  <span class="method-tag">{{ resource.method }}</span>
+                </td>
+                <td>
+                  <code>{{ resource.path }}</code>
+                </td>
+                <td>{{ resource.description || 'Sin descripción' }}</td>
+                <td>
+                  <span
+                    class="status"
+                    [class.active]="resource.status === 'active'"
+                    [class.inactive]="resource.status !== 'active'"
+                  >
+                    {{ resource.status === 'active' ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </td>
+                <td>
+                  <div class="row-actions">
+                    @if (canEdit(resource)) {
+                      <button type="button" class="edit-button" (click)="openEdit(resource)">
+                        Editar
+                      </button>
+                    }
+
+                    @if (resource.status === 'active' && canDeactivate(resource)) {
+                      <button
+                        type="button"
+                        class="deactivate-button"
+                        (click)="deactivate(resource)"
+                      >
+                        Desactivar
+                      </button>
+                    }
+
+                    @if (canDelete(resource)) {
+                      <button type="button" class="delete-button" (click)="remove(resource)">
+                        Eliminar
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5">No hay recursos registrados.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</section>
+
+@if (showForm()) {
+  <div class="dialog-backdrop">
+    <section class="resource-dialog" role="dialog" aria-modal="true">
+      <app-resource-form
+        [resource]="editingResource()"
+        [resources]="resources()"
+        (saved)="save($event)"
+        (cancelled)="closeForm()"
+      >
+      </app-resource-form>
+    </section>
+  </div>
+}

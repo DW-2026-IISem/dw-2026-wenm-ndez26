@@ -1,17 +1,10 @@
-import {
-  Directive,
-  TemplateRef,
-  ViewContainerRef,
-  effect,
-  inject,
-  input
-} from '@angular/core';
+import { Directive, TemplateRef, ViewContainerRef, effect, inject, input } from '@angular/core';
 
 import { SessionStore } from '../../core/auth/session.store';
 
 @Directive({
   selector: '[appHasPermission]',
-  standalone: true
+  standalone: true,
 })
 export class HasPermissionDirective {
   private readonly template = inject(TemplateRef<unknown>);

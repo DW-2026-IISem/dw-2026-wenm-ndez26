@@ -1,5 +1,4 @@
 <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
-
   <div class="flex flex-col gap-2">
     <label for="enrollment_id">Inscripción *</label>
 
@@ -15,11 +14,8 @@
       class="w-full"
     />
 
-    @if (form.controls.enrollment_id.invalid &&
-         form.controls.enrollment_id.touched) {
-      <p-message severity="error">
-        Debe seleccionar una inscripción activa.
-      </p-message>
+    @if (form.controls.enrollment_id.invalid && form.controls.enrollment_id.touched) {
+      <p-message severity="error"> Debe seleccionar una inscripción activa. </p-message>
     }
   </div>
 
@@ -35,8 +31,7 @@
       class="w-full"
     />
 
-    @if (form.controls.name.invalid &&
-         form.controls.name.touched) {
+    @if (form.controls.name.invalid && form.controls.name.touched) {
       <p-message severity="error">
         El nombre es obligatorio y no debe superar 150 caracteres.
       </p-message>
@@ -65,12 +60,6 @@
       (onClick)="cancel()"
     />
 
-    <p-button
-      label="Guardar"
-      icon="pi pi-save"
-      type="submit"
-      [loading]="loading"
-    />
+    <p-button label="Guardar" icon="pi pi-save" type="submit" [loading]="loading" />
   </div>
-
 </form>

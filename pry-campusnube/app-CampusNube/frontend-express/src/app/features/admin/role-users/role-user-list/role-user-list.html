@@ -1,0 +1,135 @@
+<section class="assignment-page">
+  <header class="assignment-header">
+    <div>
+      <h2>Asignaciones usuario ↔ rol</h2>
+      <p>Administra los roles asociados a cada usuario de CampusNube.</p>
+    </div>
+  </header>
+
+  <p *ngIf="message()" role="status">{{ message() }}</p>
+  <p *ngIf="error()" role="alert">{{ error() }}</p>
+
+  <div class="assignment-toolbar">
+    <div class="assignment-field">
+      <label>Filtrar por usuario</label>
+      <p-select
+        [fluid]="true"
+        [options]="users()"
+        optionLabel="username"
+        [filter]="true"
+        filterBy="username,email"
+        [showClear]="true"
+        placeholder="Todos los usuarios"
+        [ngModel]="userFilter()"
+        (ngModelChange)="userFilter.set($event)"
+      />
+    </div>
+
+    <div class="assignment-field">
+      <label>Filtrar por rol</label>
+      <p-select
+        [fluid]="true"
+        [options]="roles()"
+        optionLabel="name"
+        [showClear]="true"
+        placeholder="Todos los roles"
+        [ngModel]="roleFilter()"
+        (ngModelChange)="roleFilter.set($event)"
+      />
+    </div>
+
+    <button type="button" (click)="openDialog()">Asignar rol</button>
+  </div>
+
+  <p *ngIf="loading()">Cargando asignaciones...</p>
+
+  <div class="assignment-table-wrap" *ngIf="!loading()">
+    <table class="assignment-table">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Correo electrónico</th>
+          <th>Rol asignado</th>
+          <th>Fecha</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of visibleRows()">
+          <td>
+            <div style="display: flex; align-items: center; gap: 0.7rem">
+              <img
+                *ngIf="userFor(row)?.avatar"
+                class="assignment-avatar"
+                [src]="userFor(row)?.avatar"
+                alt="Avatar del usuario"
+                width="38"
+                height="38"
+              />
+              <span *ngIf="!userFor(row)?.avatar" class="assignment-avatar">
+                {{ (userFor(row)?.username || '?').charAt(0).toUpperCase() }}
+              </span>
+              <strong>{{ userFor(row)?.username }}</strong>
+            </div>
+          </td>
+          <td>{{ userFor(row)?.email }}</td>
+          <td>
+            <span class="assignment-role">{{ roleFor(row)?.name }}</span>
+          </td>
+          <td>{{ row.createdAt | date: 'short' }}</td>
+          <td>
+            <button class="assignment-remove" type="button" (click)="deactivate(row)">
+              Retirar rol
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="visibleRows().length === 0">
+          <td colspan="5" style="text-align: center; padding: 2rem; color: #64748b">
+            No hay asignaciones para mostrar.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<p-dialog
+  header="Asignar rol a usuario"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: 'min(32rem, 95vw)' }"
+>
+  <div class="assignment-dialog-form">
+    <div>
+      <label>Usuario</label>
+      <p-select
+        [fluid]="true"
+        [options]="users()"
+        optionLabel="username"
+        [filter]="true"
+        filterBy="username,email"
+        placeholder="Seleccionar usuario"
+        [ngModel]="selectedUser()"
+        (ngModelChange)="selectedUser.set($event)"
+      />
+    </div>
+
+    <div>
+      <label>Rol</label>
+      <p-select
+        [fluid]="true"
+        [options]="roles()"
+        optionLabel="name"
+        placeholder="Seleccionar rol"
+        [ngModel]="selectedRole()"
+        (ngModelChange)="selectedRole.set($event)"
+      />
+    </div>
+  </div>
+
+  <ng-template #footer>
+    <button type="button" class="p-button p-button-text" (click)="closeDialog()">Cancelar</button>
+    <button type="button" [disabled]="!canSave()" (click)="save()">Guardar asignación</button>
+  </ng-template>
+</p-dialog>

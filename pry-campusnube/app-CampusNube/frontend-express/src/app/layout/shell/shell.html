@@ -26,12 +26,7 @@
   <app-footer />
 </div>
 
-<p-drawer
-  [(visible)]="mobileOpen"
-  header="Menú"
-  position="left"
-  styleClass="w-72"
->
+<p-drawer [(visible)]="mobileOpen" header="Menú" position="left" styleClass="w-72">
   <app-aside
     [items]="items()"
     [showSession]="session.isAuthenticated()"

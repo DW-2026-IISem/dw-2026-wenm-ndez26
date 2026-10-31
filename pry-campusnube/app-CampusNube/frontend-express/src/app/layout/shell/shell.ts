@@ -18,15 +18,7 @@ import { Header } from '../header/header';
   selector: 'app-shell',
   standalone: true,
   host: { class: 'block' },
-  imports: [
-    RouterOutlet,
-    Header,
-    Aside,
-    Footer,
-    ConfirmDialogModule,
-    DrawerModule,
-    ToastModule,
-  ],
+  imports: [RouterOutlet, Header, Aside, Footer, ConfirmDialogModule, DrawerModule, ToastModule],
   templateUrl: './shell.html',
   styleUrl: './shell.css',
 })
@@ -41,25 +33,21 @@ export class Shell {
   readonly mobileOpen = signal(false);
 
   readonly items = computed<MenuItem[]>(() =>
-    NAV
-      .filter(item => !item.authOnly || this.session.authEnabled)
-      .filter(item =>
-        !item.permission ||
-        this.session.canPermission(item.permission)
-      )
-      .map(item => ({
+    NAV.filter((item) => !item.authOnly || this.session.authEnabled)
+      .filter((item) => !item.permission || this.session.canPermission(item.permission))
+      .map((item) => ({
         label: item.label,
         icon: item.icon,
         routerLink: item.routerLink,
         routerLinkActiveOptions: {
-          exact: item.routerLink === '/dashboard'
-        }
-      }))
+          exact: item.routerLink === '/dashboard',
+        },
+      })),
   );
 
   protected onMenuToggle(): void {
     if (this.isDesktop()) {
-      this.sidebarCollapsed.update(collapsed => !collapsed);
+      this.sidebarCollapsed.update((collapsed) => !collapsed);
       return;
     }
 
@@ -72,7 +60,7 @@ export class Shell {
         this.mobileOpen.set(false);
         this.router.navigate(['/login']);
       },
-      error: error => {
+      error: (error) => {
         console.error('Error al cerrar sesión:', error);
         this.session.clear();
         this.router.navigate(['/login']);

@@ -5,40 +5,25 @@ export const routes: Routes = [
   {
     path: 'login',
     title: 'Iniciar sesión · CampusNube',
-    loadComponent: () =>
-      import('./features/auth/login/login').then(
-        (m) => m.Login
-      ),
+    loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
   },
   {
     path: 'construir',
-    loadComponent: () =>
-      import('./construir/construir').then(
-        (m) => m.Construir
-      ),
+    loadComponent: () => import('./construir/construir').then((m) => m.Construir),
   },
   {
     path: '',
-    loadComponent: () =>
-      import('./layout/shell/shell').then(
-        (m) => m.Shell
-      ),
+    loadComponent: () => import('./layout/shell/shell').then((m) => m.Shell),
     children: [
       {
         path: 'dashboard',
         title: 'Dashboard académico · CampusNube',
-        loadComponent: () =>
-          import('./features/dashboard/dashboard').then(
-            (m) => m.Dashboard
-          ),
+        loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),
       },
       {
         path: 'perfil',
         title: 'Mi perfil · CampusNube',
-        loadComponent: () =>
-          import('./features/auth/profile/profile').then(
-            (m) => m.Profile
-          ),
+        loadComponent: () => import('./features/auth/profile/profile').then((m) => m.Profile),
       },
       {
         path: 'cursos',
@@ -46,9 +31,7 @@ export const routes: Routes = [
         data: { permission: 'GET /api/cursos' },
         title: 'Cursos · CampusNube',
         loadComponent: () =>
-          import('./features/courses/course-list/course-list').then(
-            (m) => m.CourseList
-          ),
+          import('./features/courses/course-list/course-list').then((m) => m.CourseList),
       },
       {
         path: 'docentes',
@@ -56,9 +39,7 @@ export const routes: Routes = [
         data: { permission: 'GET /api/docentes' },
         title: 'Docentes · CampusNube',
         loadComponent: () =>
-          import('./features/teachers/teacher-list/teacher-list').then(
-            (m) => m.TeacherList
-          ),
+          import('./features/teachers/teacher-list/teacher-list').then((m) => m.TeacherList),
       },
       {
         path: 'aprendices',
@@ -66,9 +47,7 @@ export const routes: Routes = [
         data: { permission: 'GET /api/aprendices' },
         title: 'Aprendices · CampusNube',
         loadComponent: () =>
-          import('./features/learners/learner-list/learner-list').then(
-            (m) => m.LearnerList
-          ),
+          import('./features/learners/learner-list/learner-list').then((m) => m.LearnerList),
       },
       {
         path: 'modulos',
@@ -76,9 +55,7 @@ export const routes: Routes = [
         data: { permission: 'GET /api/modulos' },
         title: 'Módulos · CampusNube',
         loadComponent: () =>
-          import('./features/modules/module-list/module-list').then(
-            (m) => m.ModuleList
-          ),
+          import('./features/modules/module-list/module-list').then((m) => m.ModuleList),
       },
       {
         path: 'lecciones',
@@ -86,9 +63,7 @@ export const routes: Routes = [
         data: { permission: 'GET /api/lecciones' },
         title: 'Lecciones · CampusNube',
         loadComponent: () =>
-          import('./features/lessons/lesson-list/lesson-list').then(
-            (m) => m.LessonList
-          ),
+          import('./features/lessons/lesson-list/lesson-list').then((m) => m.LessonList),
       },
       {
         path: 'evaluaciones',
@@ -97,7 +72,7 @@ export const routes: Routes = [
         title: 'Evaluaciones · CampusNube',
         loadComponent: () =>
           import('./features/evaluations/evaluation-list/evaluation-list').then(
-            (m) => m.EvaluationList
+            (m) => m.EvaluationList,
           ),
       },
       {
@@ -106,9 +81,7 @@ export const routes: Routes = [
         data: { permission: 'GET /api/intentos' },
         title: 'Intentos · CampusNube',
         loadComponent: () =>
-          import('./features/attempts/attempt-list/attempt-list').then(
-            (m) => m.AttemptList
-          ),
+          import('./features/attempts/attempt-list/attempt-list').then((m) => m.AttemptList),
       },
       {
         path: 'entregas',
@@ -117,7 +90,7 @@ export const routes: Routes = [
         title: 'Entregas · CampusNube',
         loadComponent: () =>
           import('./features/submissions/submission-list/submission-list').then(
-            (m) => m.SubmissionList
+            (m) => m.SubmissionList,
           ),
       },
       {
@@ -127,7 +100,7 @@ export const routes: Routes = [
         title: 'Inscripciones · CampusNube',
         loadComponent: () =>
           import('./features/enrollments/enrollment-list/enrollment-list').then(
-            (m) => m.EnrollmentList
+            (m) => m.EnrollmentList,
           ),
       },
       {
@@ -136,9 +109,7 @@ export const routes: Routes = [
         data: { permission: 'GET /api/progress' },
         title: 'Progreso · CampusNube',
         loadComponent: () =>
-          import('./features/progress/progress-list/progress-list').then(
-            (m) => m.ProgressList
-          ),
+          import('./features/progress/progress-list/progress-list').then((m) => m.ProgressList),
       },
       {
         path: 'certificados',
@@ -147,7 +118,53 @@ export const routes: Routes = [
         title: 'Certificados · CampusNube',
         loadComponent: () =>
           import('./features/certificates/certificate-list/certificate-list').then(
-            (m) => m.CertificateList
+            (m) => m.CertificateList,
+          ),
+      },
+      {
+        path: 'admin/usuarios',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/usuarios' },
+        title: 'Administración de usuarios · CampusNube',
+        loadComponent: () =>
+          import('./features/admin/users/user-list/user-list').then((m) => m.UserList),
+      },
+      {
+        path: 'admin/roles',
+        title: 'Roles · CampusNube',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/roles' },
+        loadComponent: () =>
+          import('./features/admin/roles/role-list/role-list').then((m) => m.RoleList),
+      },
+      {
+        path: 'admin/recursos',
+        title: 'Recursos · CampusNube',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/recursos' },
+        loadComponent: () =>
+          import('./features/admin/resources/resource-list/resource-list').then(
+            (m) => m.ResourceList,
+          ),
+      },
+      {
+        path: 'admin/permisos',
+        title: 'Concesiones · CampusNube',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/concesiones-rol' },
+        loadComponent: () =>
+          import('./features/admin/resource-roles/resource-role-list/resource-role-list').then(
+            (m) => m.ResourceRoleList,
+          ),
+      },
+      {
+        path: 'admin/asignaciones',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/asignaciones-rol' },
+        title: 'Asignaciones usuario-rol · CampusNube',
+        loadComponent: () =>
+          import('./features/admin/role-users/role-user-list/role-user-list').then(
+            (m) => m.RoleUserList,
           ),
       },
       {

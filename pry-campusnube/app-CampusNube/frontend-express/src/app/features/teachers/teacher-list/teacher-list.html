@@ -1,7 +1,4 @@
-<app-page-header
-  title="Docentes"
-  subtitle="Administración de docentes registrados."
->
+<app-page-header title="Docentes" subtitle="Administración de docentes registrados.">
   <p-tag [value]="rows().length + ' docentes'" severity="info" [rounded]="true" />
   <button pButton type="button" (click)="openCreate()">
     <i pButtonIcon class="pi pi-plus"></i>
@@ -73,33 +70,39 @@
               text
               rounded
               severity="secondary"
-              icon="pi pi-pencil"
               aria-label="Editar docente"
               pTooltip="Editar"
               (click)="openEdit(teacher)"
-            ></button>
+            >
+              <i pButtonIcon class="pi pi-pencil"></i>
+              <span pButtonLabel>Editar</span>
+            </button>
             <button
               pButton
               type="button"
               text
               rounded
               severity="warn"
-              icon="pi pi-ban"
               aria-label="Desactivar docente"
               pTooltip="Baja lógica"
               (click)="deactivate(teacher)"
-            ></button>
+            >
+              <i pButtonIcon class="pi pi-ban"></i>
+              <span pButtonLabel>Desactivar</span>
+            </button>
             <button
               pButton
               type="button"
               text
               rounded
               severity="danger"
-              icon="pi pi-trash"
               aria-label="Eliminar docente"
               pTooltip="Eliminar"
               (click)="remove(teacher)"
-            ></button>
+            >
+              <i pButtonIcon class="pi pi-trash"></i>
+              <span pButtonLabel>Eliminar</span>
+            </button>
           </div>
         </td>
       </tr>

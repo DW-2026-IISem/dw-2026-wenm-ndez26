@@ -1,0 +1,71 @@
+:host {
+  display: block;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+form h2 {
+  margin: 0 0 0.35rem;
+  color: #142b52;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.form-field label {
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #1e293b;
+  font: inherit;
+  outline: none;
+}
+.form-field textarea {
+  min-height: 95px;
+  resize: vertical;
+}
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 13%);
+}
+.form-field small {
+  color: #b91c1c;
+  font-size: 0.8rem;
+}
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding-top: 0.5rem;
+}
+.form-actions button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  background: #2457d6;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.form-actions .cancel-button {
+  background: #e2e8f0;
+  color: #334155;
+}

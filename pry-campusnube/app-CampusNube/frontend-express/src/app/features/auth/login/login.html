@@ -7,9 +7,7 @@
 
     <h2>Iniciar sesión</h2>
 
-    <p class="description">
-      Ingresa tus credenciales para acceder a la plataforma.
-    </p>
+    <p class="description">Ingresa tus credenciales para acceder a la plataforma.</p>
 
     <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="form-group">
@@ -23,10 +21,7 @@
           autocomplete="username"
         />
 
-        @if (
-          form.controls.identifier.touched &&
-          form.controls.identifier.invalid
-        ) {
+        @if (form.controls.identifier.touched && form.controls.identifier.invalid) {
           <small>El usuario es obligatorio.</small>
         }
       </div>
@@ -42,10 +37,7 @@
           autocomplete="current-password"
         />
 
-        @if (
-          form.controls.password.touched &&
-          form.controls.password.invalid
-        ) {
+        @if (form.controls.password.touched && form.controls.password.invalid) {
           <small>La contraseña es obligatoria.</small>
         }
       </div>

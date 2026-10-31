@@ -5,14 +5,10 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
-  inject
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { Submission, SubmissionPayload } from '../../../core/models/submission.model';
 import { Lesson } from '../../../core/models/lesson.model';
@@ -37,10 +33,10 @@ import { TagModule } from 'primeng/tag';
     SelectModule,
     TextareaModule,
     MessageModule,
-    TagModule
+    TagModule,
   ],
   templateUrl: './submission-form.html',
-  styleUrl: './submission-form.css'
+  styleUrl: './submission-form.css',
 })
 export class SubmissionForm implements OnChanges {
   private readonly fb = inject(FormBuilder);
@@ -59,29 +55,18 @@ export class SubmissionForm implements OnChanges {
   readonly statusOptions = [
     { label: 'Pendiente', value: 'pendiente' },
     { label: 'En proceso', value: 'en_proceso' },
-    { label: 'Completada', value: 'completada' }
+    { label: 'Completada', value: 'completada' },
   ];
 
   readonly form = this.fb.group({
-    referencia_id: this.fb.control<number | null>(null, [
-      Validators.required,
-      Validators.min(0)
-    ]),
-    lesson_id: this.fb.control<number | null>(null, [
-      Validators.required,
-      Validators.min(1)
-    ]),
-    enrollment_id: this.fb.control<number | null>(null, [
-      Validators.required,
-      Validators.min(1)
-    ]),
+    referencia_id: this.fb.control<number | null>(null, [Validators.required, Validators.min(0)]),
+    lesson_id: this.fb.control<number | null>(null, [Validators.required, Validators.min(1)]),
+    enrollment_id: this.fb.control<number | null>(null, [Validators.required, Validators.min(1)]),
     fecha_inicio: this.fb.control('', Validators.required),
     fecha_fin: this.fb.control(''),
-    total: this.fb.control<number | null>(null, [
-      Validators.min(0)
-    ]),
+    total: this.fb.control<number | null>(null, [Validators.min(0)]),
     estado: this.fb.control('', Validators.required),
-    observaciones: this.fb.control('')
+    observaciones: this.fb.control(''),
   });
 
   get isEditing(): boolean {
@@ -89,16 +74,16 @@ export class SubmissionForm implements OnChanges {
   }
 
   get lessonOptions(): { label: string; value: number }[] {
-    return this.lessons.map(lesson => ({
+    return this.lessons.map((lesson) => ({
       label: `Lección #${lesson.id} — ${lesson.name}`,
-      value: lesson.id
+      value: lesson.id,
     }));
   }
 
   get enrollmentOptions(): { label: string; value: number }[] {
-    return this.enrollments.map(enrollment => ({
+    return this.enrollments.map((enrollment) => ({
       label: `Inscripción #${enrollment.id} — Aprendiz #${enrollment.learner_id} — Curso #${enrollment.course_id}`,
-      value: enrollment.id
+      value: enrollment.id,
     }));
   }
 
@@ -136,12 +121,9 @@ export class SubmissionForm implements OnChanges {
         enrollment_id: this.submission.enrollment_id,
         fecha_inicio: this.toLocalDateTime(this.submission.fecha_inicio),
         fecha_fin: this.toLocalDateTime(this.submission.fecha_fin),
-        total:
-          this.submission.total === null
-            ? null
-            : Number(this.submission.total),
+        total: this.submission.total === null ? null : Number(this.submission.total),
         estado: this.submission.estado,
-        observaciones: this.submission.observaciones ?? ''
+        observaciones: this.submission.observaciones ?? '',
       });
 
       this.form.controls.estado.disable();
@@ -154,7 +136,7 @@ export class SubmissionForm implements OnChanges {
         fecha_fin: '',
         total: null,
         estado: '',
-        observaciones: ''
+        observaciones: '',
       });
 
       this.form.controls.estado.enable();
@@ -189,12 +171,10 @@ export class SubmissionForm implements OnChanges {
       lesson_id: value.lesson_id,
       enrollment_id: value.enrollment_id,
       fecha_inicio: this.toIsoDateTime(value.fecha_inicio),
-      fecha_fin: value.fecha_fin
-        ? this.toIsoDateTime(value.fecha_fin)
-        : null,
+      fecha_fin: value.fecha_fin ? this.toIsoDateTime(value.fecha_fin) : null,
       total: value.total === null ? null : value.total,
       estado: value.estado ?? '',
-      observaciones: value.observaciones?.trim() || null
+      observaciones: value.observaciones?.trim() || null,
     };
 
     if (this.submission) {
@@ -205,7 +185,7 @@ export class SubmissionForm implements OnChanges {
         fecha_inicio: payload.fecha_inicio,
         fecha_fin: payload.fecha_fin,
         total: payload.total,
-        observaciones: payload.observaciones
+        observaciones: payload.observaciones,
       };
 
       this.submissionApi.update(this.submission.id, updatePayload).subscribe({
@@ -213,11 +193,10 @@ export class SubmissionForm implements OnChanges {
           this.saving = false;
           this.saved.emit();
         },
-        error: error => {
+        error: (error) => {
           this.saving = false;
-          this.errorMessage =
-            error?.error?.message ?? 'No fue posible actualizar la entrega.';
-        }
+          this.errorMessage = error?.error?.message ?? 'No fue posible actualizar la entrega.';
+        },
       });
 
       return;
@@ -228,11 +207,10 @@ export class SubmissionForm implements OnChanges {
         this.saving = false;
         this.saved.emit();
       },
-      error: error => {
+      error: (error) => {
         this.saving = false;
-        this.errorMessage =
-          error?.error?.message ?? 'No fue posible registrar la entrega.';
-      }
+        this.errorMessage = error?.error?.message ?? 'No fue posible registrar la entrega.';
+      },
     });
   }
 

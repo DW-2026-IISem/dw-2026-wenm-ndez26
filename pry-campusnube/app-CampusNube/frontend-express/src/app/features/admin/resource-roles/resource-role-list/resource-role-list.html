@@ -1,0 +1,166 @@
+<section class="resource-roles-container">
+  <header class="page-header">
+    <div>
+      <h2>Concesiones rol ↔ recurso</h2>
+      <p>Consulta y administra los permisos asignados a los roles.</p>
+    </div>
+
+    <button type="button" (click)="openDialog()">Conceder permiso</button>
+  </header>
+
+  @if (message()) {
+    <p role="status">{{ message() }}</p>
+  }
+
+  @if (error()) {
+    <p class="error-message" role="alert">{{ error() }}</p>
+  }
+
+  <section class="filters">
+    <div>
+      <label for="role-filter">Filtrar por rol</label>
+
+      <p-select
+        inputId="role-filter"
+        [fluid]="true"
+        [options]="roles()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Todos los roles"
+        [showClear]="true"
+        [ngModel]="filterRole()"
+        (ngModelChange)="filterRole.set($event)"
+      />
+    </div>
+
+    <div>
+      <label for="resource-search">Buscar por path o método</label>
+
+      <input
+        id="resource-search"
+        type="text"
+        placeholder="Buscar ruta o método..."
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+    </div>
+  </section>
+
+  @if (loading()) {
+    <p>Cargando concesiones...</p>
+  }
+
+  @if (!loading()) {
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Rol</th>
+            <th>Método</th>
+            <th>Path</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (row of visibleRows(); track row.id) {
+            <tr>
+              <td>{{ roleName(row.role_id) }}</td>
+
+              <td>
+                @if (resourceFor(row.resource_id); as resource) {
+                  <p-tag
+                    [value]="resource.method"
+                    [severity]="methodSeverity(resource.method)"
+                    [rounded]="true"
+                  />
+                }
+              </td>
+
+              <td>
+                {{ resourceFor(row.resource_id)?.path }}
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="3">No hay concesiones para mostrar.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
+
+<p-dialog
+  header="Conceder permiso"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: '35rem', maxWidth: '95vw' }"
+>
+  <div class="grant-form">
+    <div>
+      <label for="grant-role">Rol</label>
+
+      <p-select
+        inputId="grant-role"
+        [fluid]="true"
+        [options]="roles()"
+        optionLabel="name"
+        [filter]="true"
+        placeholder="Seleccionar rol"
+        [ngModel]="selectedRole()"
+        (ngModelChange)="selectedRole.set($event)"
+      />
+    </div>
+
+    <div>
+      <label for="grant-resource">Recurso</label>
+
+      <p-select
+        inputId="grant-resource"
+        [fluid]="true"
+        [options]="resources()"
+        [filter]="true"
+        filterBy="path,method"
+        placeholder="Seleccionar recurso"
+        [ngModel]="selectedResource()"
+        (ngModelChange)="selectedResource.set($event)"
+      >
+        <ng-template #selectedItem let-resource>
+          <span class="flex items-center gap-2">
+            <p-tag
+              [value]="resource.method"
+              [severity]="methodSeverity(resource.method)"
+              [rounded]="true"
+            />
+            <code class="text-xs">{{ resource.path }}</code>
+          </span>
+        </ng-template>
+
+        <ng-template #item let-resource>
+          <span class="flex items-center gap-2">
+            <p-tag
+              [value]="resource.method"
+              [severity]="methodSeverity(resource.method)"
+              [rounded]="true"
+            />
+            <code class="text-xs">{{ resource.path }}</code>
+          </span>
+        </ng-template>
+      </p-select>
+    </div>
+  </div>
+
+  <ng-template #footer>
+    <button type="button" (click)="closeDialog()">Cancelar</button>
+
+    <button
+      type="button"
+      [disabled]="!selectedRole() || !selectedResource() || saving()"
+      (click)="createGrant()"
+    >
+      {{ saving() ? 'Guardando...' : 'Conceder permiso' }}
+    </button>
+  </ng-template>
+</p-dialog>

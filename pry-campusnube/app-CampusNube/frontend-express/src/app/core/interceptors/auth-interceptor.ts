@@ -1,18 +1,8 @@
 import { inject } from '@angular/core';
 
-import {
-  HttpErrorResponse,
-  HttpInterceptorFn
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 
-import {
-  catchError,
-  finalize,
-  Observable,
-  shareReplay,
-  switchMap,
-  throwError
-} from 'rxjs';
+import { catchError, finalize, Observable, shareReplay, switchMap, throwError } from 'rxjs';
 
 import { Router } from '@angular/router';
 import { SessionStore } from '../auth/session.store';
@@ -26,15 +16,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  const publicEndpoints = [
-    '/sesion/login',
-    '/sesion/refresh',
-    '/sesion/logout'
-  ];
+  const publicEndpoints = ['/sesion/login', '/sesion/refresh', '/sesion/logout'];
 
-  const isPublicEndpoint = publicEndpoints.some(endpoint =>
-    req.url.includes(endpoint)
-  );
+  const isPublicEndpoint = publicEndpoints.some((endpoint) => req.url.includes(endpoint));
 
   if (isPublicEndpoint) {
     return next(req);
@@ -45,8 +29,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authorizedRequest = token
     ? req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
     : req;
 
@@ -63,8 +47,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
         void router.navigate(['/login'], {
           queryParams: {
-            returnUrl: router.url
-          }
+            returnUrl: router.url,
+          },
         });
 
         return throwError(() => error);
@@ -72,13 +56,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
       if (!refreshInFlight) {
         refreshInFlight = auth.refresh().pipe(
-          catchError(refreshError => {
+          catchError((refreshError) => {
             store.clear();
 
             void router.navigate(['/login'], {
               queryParams: {
-                returnUrl: router.url
-              }
+                returnUrl: router.url,
+              },
             });
 
             return throwError(() => refreshError);
@@ -88,24 +72,24 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           }),
           shareReplay({
             bufferSize: 1,
-            refCount: false
-          })
+            refCount: false,
+          }),
         );
       }
 
       const refreshRequest = refreshInFlight;
 
       return refreshRequest.pipe(
-        switchMap(tokens => {
+        switchMap((tokens) => {
           const retryRequest = req.clone({
             setHeaders: {
-              Authorization: `Bearer ${tokens.access_token}`
-            }
+              Authorization: `Bearer ${tokens.access_token}`,
+            },
           });
 
           return next(retryRequest);
-        })
+        }),
       );
-    })
+    }),
   );
 };

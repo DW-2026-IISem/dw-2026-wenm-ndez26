@@ -9,83 +9,113 @@ export const NAV: NavItem[] = [
   {
     label: 'Dashboard',
     icon: 'pi pi-home',
-    routerLink: '/dashboard'
+    routerLink: '/dashboard',
   },
   {
     label: 'Mi perfil',
     icon: 'pi pi-user',
     routerLink: '/perfil',
-    authOnly: true
+    authOnly: true,
   },
   {
     label: 'Docentes',
     icon: 'pi pi-users',
     routerLink: '/docentes',
-    permission: 'GET /api/docentes'
+    permission: 'GET /api/docentes',
   },
   {
     label: 'Aprendices',
     icon: 'pi pi-user',
     routerLink: '/aprendices',
-    permission: 'GET /api/aprendices'
+    permission: 'GET /api/aprendices',
   },
   {
     label: 'Cursos',
     icon: 'pi pi-book',
     routerLink: '/cursos',
-    permission: 'GET /api/cursos'
+    permission: 'GET /api/cursos',
   },
   {
     label: 'Módulos',
     icon: 'pi pi-list',
     routerLink: '/modulos',
-    permission: 'GET /api/modulos'
+    permission: 'GET /api/modulos',
   },
   {
     label: 'Lecciones',
     icon: 'pi pi-file',
     routerLink: '/lecciones',
-    permission: 'GET /api/lecciones'
+    permission: 'GET /api/lecciones',
   },
   {
     label: 'Evaluaciones',
     icon: 'pi pi-clipboard',
     routerLink: '/evaluaciones',
-    permission: 'GET /api/evaluaciones'
+    permission: 'GET /api/evaluaciones',
   },
   {
     label: 'Inscripciones',
     icon: 'pi pi-user-plus',
     routerLink: '/inscripciones',
-    permission: 'GET /api/inscripciones'
+    permission: 'GET /api/inscripciones',
   },
   {
     label: 'Intentos',
     icon: 'pi pi-check-square',
     routerLink: '/intentos',
-    permission: 'GET /api/intentos'
+    permission: 'GET /api/intentos',
   },
   {
     label: 'Entregas',
     icon: 'pi pi-upload',
     routerLink: '/entregas',
-    permission: 'GET /api/entregas'
+    permission: 'GET /api/entregas',
   },
   {
     label: 'Progreso',
     icon: 'pi pi-chart-line',
     routerLink: '/progreso',
-    permission: 'GET /api/progress'
+    permission: 'GET /api/progress',
   },
   {
     label: 'Certificados',
     icon: 'pi pi-id-card',
     routerLink: '/certificados',
-    permission: 'GET /api/certificates'
+    permission: 'GET /api/certificates',
+  },
+  {
+    label: 'Usuarios',
+    icon: 'pi pi-users',
+    routerLink: '/admin/usuarios',
+    permission: 'GET /api/usuarios',
+  },
+  {
+    label: 'Roles',
+    icon: 'pi pi-shield',
+    routerLink: '/admin/roles',
+    permission: 'GET /api/roles',
+  },
+  {
+    label: 'Recursos',
+    icon: 'pi pi-database',
+    routerLink: '/admin/recursos',
+    permission: 'GET /api/recursos',
+  },
+  {
+    label: 'Asignaciones',
+    icon: 'pi pi-user-plus',
+    routerLink: '/admin/asignaciones',
+    permission: 'GET /api/asignaciones-rol',
+  },
+  {
+    label: 'Permisos',
+    icon: 'pi pi-lock',
+    routerLink: '/admin/permisos',
+    permission: 'GET /api/concesiones-rol',
   },
   {
     label: 'Prototipo',
     icon: 'pi pi-desktop',
-    routerLink: '/construir'
-  }
+    routerLink: '/construir',
+  },
 ];
