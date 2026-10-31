@@ -2530,4 +2530,157 @@ git commit -m "ISS-14: implementar dashboard académico y cierre de fase I"
 git push origin main 
 ```
 
+# ISS-15 – Autenticación JWT, perfil y permisos efectivos
+
+## 15.1. El contrato real: no lo inventes
+
+Trabajaremos con los endpoints que ya existen en tu backend:
+
+| Método | Endpoint              | Acceso  |
+|--------|-----------------------|---------|
+| POST   | `/api/sesion/login`   | Público |
+| POST   | `/api/sesion/refresh` | Público |
+| POST   | `/api/sesion/logout`  | Público |
+| GET    | `/api/sesion/perfil`  | JWT     |
+| GET    | `/api/permisos`       | JWT     |
+
+El inicio de sesión recibe:
+
+```         
+{   "identifier": "admin",   "password": "Admin123!" }
+```
+
+La respuesta contiene los tokens en formato `snake_case`:
+
+```         
+{   "access_token": "...",   
+"token_type": "Bearer",  
+"expires_in": 3600,   
+"refresh_token": "...",   
+"refresh_expires_in": 604800
+}
+```
+
+## 15.2. Activar Fase II
+
+Archivo:
+
+`src/environments/environment.ts`
+
+Debe quedar con:
+
+```         
+export const environment = {  
+production: false,   
+appName: 'CampusNube',   
+apiUrl: 'http://localhost:4000/api',   
+requireAuth: true,   
+primeUiLicense: '', 
+};  
+```
+
+## 15.3. Modelos de sesión
+
+`src/app/core/models/auth.model.ts`
+
+![](images/clipboard-750811491.png)
+
+## 15.3.1. Generar interceptores funcionales
+
+![](images/clipboard-3789457361.png)
+
+## 15.4. Registrar los interceptores HTTP
+
+Registrar los interceptores en `app.config.ts`
+
+![](images/clipboard-1876542606.png)
+
+## 15.5. Crear el SessionStore
+
+Este servicio manejará los tokens, el usuario, los permisos y la persistencia de sesión.
+
+![](images/clipboard-2369404713.png)
+
+## 15.6. Crear el AuthService
+
+Este servicio utilizará los endpoints reales del backend. El login recibe `identifier` y `password`; el refresh y logout reciben `refresh_token`.
+
+![](images/clipboard-2859495755.png)
+
+## 15.7. Implementar el authInterceptor
+
+![](images/clipboard-4218754360.png)
+
+## 15.7.1. Implementar el errorInterceptor
+
+![](images/clipboard-2593620005.png)
+
+## 15.8. Crear el componente de inicio de sesión (Login)
+
+## 15.8.1. Componente TypeScript
+
+![](images/clipboard-2625672562.png)
+
+## 15.8.2. Vista HTML
+
+![](images/clipboard-1585657141.png)
+
+## 15.8.3. Estilos CSS
+
+![](images/clipboard-2317071703.png)
+
+## 15.9. Implementar el perfil y cerrar sesión
+
+### 15.9.1. Componente TypeScript
+
+![](images/clipboard-4250946730.png)
+
+### 15.9.2. Vista HTML
+
+![](images/clipboard-3046635157.png)
+
+## 15.9.3. Estilos CSS
+
+![](images/clipboard-3251015481.png)
+
+## 15.10. Configurar las rutas de autenticación
+
+**Corregir el archivo profile.css**
+
+![](images/clipboard-2203950447.png)
+
+`app.routes.ts`
+
+- `/login`: inicio de sesión.
+
+- `/perfil`: perfil del usuario.
+
+![](images/clipboard-3714043919.png)
+
+## 15.11. Pruebas y validación
+
+Inicia el backend
+
+![](images/clipboard-3062067538.png)
+
+```         
+npm start
+```
+
+![](images/clipboard-943161844.png)
+
+![](images/clipboard-1696459153.png)
+
+![](images/clipboard-2764788545.png)
+
+## Commit del ISS-15
+
+```         
+git add .   
+git commit -m "feat(frontend): implementar autenticacion JWT, refresh token y cierre de sesion ISS-15"   
+git push origin main 
+```
+
 # 
+
+## 

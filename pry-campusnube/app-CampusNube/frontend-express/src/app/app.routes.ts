@@ -2,14 +2,26 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    title: 'Iniciar sesión · CampusNube',
+    loadComponent: () =>
+      import('./features/auth/login/login').then(
+        (m) => m.Login
+      ),
+  },
+  {
     path: 'construir',
     loadComponent: () =>
-      import('./construir/construir').then((m) => m.Construir),
+      import('./construir/construir').then(
+        (m) => m.Construir
+      ),
   },
   {
     path: '',
     loadComponent: () =>
-      import('./layout/shell/shell').then((m) => m.Shell),
+      import('./layout/shell/shell').then(
+        (m) => m.Shell
+      ),
     children: [
       {
         path: 'dashboard',
@@ -17,6 +29,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/dashboard/dashboard').then(
             (m) => m.Dashboard
+          ),
+      },
+      {
+        path: 'perfil',
+        title: 'Mi perfil · CampusNube',
+        loadComponent: () =>
+          import('./features/auth/profile/profile').then(
+            (m) => m.Profile
           ),
       },
       {
@@ -56,7 +76,7 @@ export const routes: Routes = [
         title: 'Lecciones · CampusNube',
         loadComponent: () =>
           import('./features/lessons/lesson-list/lesson-list').then(
-            (m) => m.LessonList,
+            (m) => m.LessonList
           ),
       },
       {
@@ -76,17 +96,13 @@ export const routes: Routes = [
           ),
       },
       {
-
         path: 'entregas',
-
+        title: 'Entregas · CampusNube',
         loadComponent: () =>
-
-          import('./features/submissions/submission-list/submission-list')
-
-            .then(m => m.SubmissionList)
-
+          import('./features/submissions/submission-list/submission-list').then(
+            (m) => m.SubmissionList
+          ),
       },
-
       {
         path: 'inscripciones',
         title: 'Inscripciones · CampusNube',

@@ -1,0 +1,71 @@
+:host {
+  display: block;
+}
+
+.profile-container {
+  padding: 32px;
+}
+
+.profile-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+}
+
+.profile-card h1 {
+  color: #0f766e;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 20px 0;
+  border-radius: 50%;
+  background: #ccfbf1;
+  color: #0f766e;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-data p {
+  padding: 10px 0;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.profile-actions button {
+  padding: 11px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #0f766e;
+  color: white;
+  cursor: pointer;
+}
+
+.profile-actions .logout-button {
+  background: #dc2626;
+}
+
+.error-message {
+  color: #b91c1c;
+}

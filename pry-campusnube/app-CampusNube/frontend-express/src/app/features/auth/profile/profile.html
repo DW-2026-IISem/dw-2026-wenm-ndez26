@@ -1,0 +1,47 @@
+<section class="profile-container">
+  <div class="profile-card">
+    <h1>Mi perfil</h1>
+
+    @if (store.user(); as user) {
+      <div class="profile-avatar">
+        @if (user.avatar) {
+          <img [src]="user.avatar" alt="Avatar del usuario" />
+        } @else {
+          <span>{{ user.username.charAt(0).toUpperCase() }}</span>
+        }
+      </div>
+
+      <div class="profile-data">
+        <p><strong>Usuario:</strong> {{ user.username }}</p>
+        <p><strong>Correo:</strong> {{ user.email }}</p>
+        <p><strong>Estado:</strong> {{ user.status }}</p>
+        <p><strong>Rol:</strong> {{ store.roleLabel() }}</p>
+        <p><strong>Permisos efectivos:</strong> {{ store.permissionCount() }}</p>
+      </div>
+    } @else {
+      <p>No hay información de usuario disponible.</p>
+    }
+
+    @if (errorMessage()) {
+      <p class="error-message">{{ errorMessage() }}</p>
+    }
+
+    <div class="profile-actions">
+      <button
+        type="button"
+        (click)="refreshProfile()"
+        [disabled]="loading()"
+      >
+        {{ loading() ? 'Actualizando...' : 'Actualizar perfil' }}
+      </button>
+
+      <button
+        type="button"
+        class="logout-button"
+        (click)="logout()"
+      >
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</section>

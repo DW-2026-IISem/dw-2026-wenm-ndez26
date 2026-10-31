@@ -1,0 +1,64 @@
+<main class="login-container">
+  <section class="login-card">
+    <header class="login-header">
+      <h1>CampusNube</h1>
+      <p>Plataforma de aprendizaje virtual</p>
+    </header>
+
+    <h2>Iniciar sesión</h2>
+
+    <p class="description">
+      Ingresa tus credenciales para acceder a la plataforma.
+    </p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label for="identifier">Usuario o identificador</label>
+
+        <input
+          id="identifier"
+          type="text"
+          formControlName="identifier"
+          placeholder="Ingresa tu usuario"
+          autocomplete="username"
+        />
+
+        @if (
+          form.controls.identifier.touched &&
+          form.controls.identifier.invalid
+        ) {
+          <small>El usuario es obligatorio.</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Ingresa tu contraseña"
+          autocomplete="current-password"
+        />
+
+        @if (
+          form.controls.password.touched &&
+          form.controls.password.invalid
+        ) {
+          <small>La contraseña es obligatoria.</small>
+        }
+      </div>
+
+      @if (errorMessage()) {
+        <div class="error-message" role="alert">
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <button type="submit" [disabled]="loading()">
+        {{ loading() ? 'Ingresando...' : 'Ingresar' }}
+      </button>
+    </form>
+  </section>
+</main>

@@ -3,7 +3,9 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth-interceptor';
+import { errorInterceptor } from './core/interceptors/error-interceptor';
 import {
   provideRouter,
   withComponentInputBinding,
@@ -28,7 +30,12 @@ export const appConfig: ApplicationConfig = {
 
     // Habilita HttpClient para los servicios *Api*.
     // Sin interceptores de sesión en esta fase.
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([
+        authInterceptor,
+        errorInterceptor
+      ])
+    ),
 
     // PrimeNG: tema Aura.
     providePrimeNG({
