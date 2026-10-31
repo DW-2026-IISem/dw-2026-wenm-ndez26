@@ -2681,6 +2681,211 @@ git commit -m "feat(frontend): implementar autenticacion JWT, refresh token y ci
 git push origin main 
 ```
 
-# 
+# Fase II: Auth con RBAC — ISS-16 — Guards y RBAC en las pantallas Business
 
-## 
+## 16.0. Generar guards y directiva
+
+Generar guards:
+
+![](images/clipboard-3187347436.png)
+
+Generar directiva:
+
+![](images/clipboard-3490235283.png)
+
+# 16.1. Implementar `authGuard`
+
+Archivo: `src/app/core/guards/auth-guard.ts`
+
+![](images/clipboard-1586359747.png)
+
+# 16.2. Implementar `guestGuard`
+
+Archivo: `src/app/core/guards/guest-guard.ts`
+
+![Funcionamiento:](images/clipboard-3110389208.png)
+
+- Usuario sin sesión: puede acceder al login.
+
+- Usuario autenticado: es redirigido al dashboard.
+
+- Autenticación desactivada: permite acceder al login en modo laboratorio.
+
+# 16.3. Implementar `permissionGuard`
+
+Archivo: `src/app/core/guards/permission-guard.ts`
+
+![](images/clipboard-2944633349.png)
+
+#  Implementar `authOnlyGuard`
+
+Archivo: `src/app/core/guards/auth-only-guard.ts`
+
+![](images/clipboard-99051587.png)
+
+# 16.4. Matriz de rutas de Fase II
+
+En este apartado vamos a adaptar las rutas existentes de CampusNube para que cada pantalla Business solicite el permiso correspondiente antes de permitir el acceso.
+
+## Matriz de rutas y permisos de CampusNube
+
+Esta es la adaptación de la matriz del profesor a tus pantallas:
+
+| Ruta del frontend | Permiso requerido |
+|----|----|
+| `/dashboard` | Acceso autenticado y consultas según permisos disponibles |
+| `/cursos` | `GET /api/cursos` |
+| `/docentes` | `GET /api/docentes` |
+| `/aprendices` | `GET /api/aprendices` |
+| `/modulos` | `GET /api/modulos` |
+| `/lecciones` | `GET /api/lecciones` |
+| `/evaluaciones` | `GET /api/evaluaciones` |
+| `/inscripciones` | `GET /api/inscripciones` |
+| `/intentos` | `GET /api/intentos` |
+| `/entregas` | `GET /api/entregas` |
+| `/progreso` | `GET /api/progress` |
+| `/certificados` | `GET /api/certificates` |
+
+## Adaptar las rutas existentes
+
+![](images/clipboard-709210079.png)
+
+## 16.5. Implementar la directiva `*appHasPermission`
+
+## 16.5.1. Crear la directiva
+
+Archivo: `src/app/shared/directives/has-permission.ts`
+
+![](images/clipboard-2254025221.png)
+
+## 16.5.2. ¿Cómo funciona la directiva?
+
+Ejemplo aplicado a CampusNube:
+
+```         
+<ng-container *appHasPermission="'POST /api/cursos'">   
+    <button pButton label="Nuevo curso" icon="pi pi-plus"></button> </ng-container>
+```
+
+Esto significa que el botón Nuevo curso solamente se mostrará cuando el usuario tenga el permiso `POST /api/cursos`.
+
+### Diferencia entre `@if` y `*appHasPermission`
+
+| `@if` | `*appHasPermission` |
+|----|----|
+| Evalúa una condición cualquiera. | Evalúa un permiso RBAC. |
+| Reacciona a las señales utilizadas en su condición. | Reacciona a los cambios de permisos mediante `effect()`. |
+| Controla la visualización según una expresión. | Crea o destruye la vista según la autorización. |
+
+## 16.5.3. Importar la directiva en los componentes
+
+Archivo: `src/app/features/courses/course-list/course-list.ts`
+
+![](images/clipboard-2836175234.png)
+
+## 16.6. Implementar el menú lateral con `computed()`
+
+En este apartado vamos a adaptar el menú dinámico de la guía del profesor a CampusNube.
+
+Objetivo:
+
+- Mostrar únicamente las opciones para las que el usuario tenga permisos.
+
+- Actualizar el menú cuando cambien los permisos de `SessionStore`.
+
+- Ocultar las opciones de administración cuando `authEnabled` esté desactivado.
+
+- Conservar el diseño y la navegación que ya tiene CampusNube.
+
+## 16.6.1. Crear el catálogo de navegación
+
+Archivo nuevo: `src/app/layout/shell/nav.config.ts`
+
+Este catálogo conservará las opciones que ya tienes: Dashboard, Mi perfil, Docentes, Aprendices, Cursos, Módulos, Lecciones, Evaluaciones, Inscripciones, Intentos, Entregas, Progreso, Certificados y Prototipo.
+
+Ejecuta este bloque completo desde la terminal. Creará `nav.config.ts`:
+
+![](images/clipboard-791949498.png)
+
+## 16.6.2. Adaptar `shell.ts` con `computed()`
+
+Ahora reemplazaremos `shell.ts` conservando la funcionalidad que me compartiste: menú móvil, menú de escritorio, cierre de sesión y datos de la sesión.
+
+Archivo: `src/app/layout/shell/shell.ts`
+
+![](images/clipboard-1612781766.png)
+
+## 16.6.3. Actualizar `shell.html`
+
+Como ahora `items` es un `computed()`, debemos invocarlo con `items()` en los dos lugares donde se envía al Aside.
+
+![](images/clipboard-1979407536.png)
+
+## 16.7 `/forbidden`: explicar el error 403 en CampusNube
+
+`/forbidden?permission=GET%20%2Fapi%2Fcursos`
+
+### 1. Crear el componente Forbidden
+
+![](images/clipboard-1817840557.png)
+
+## Configurar el componente
+
+![](images/clipboard-3466764724.png)
+
+## 16.8 Criterios de aceptación de la ISS-16
+
+1.  Sin sesión: cuando la autenticación está habilitada, cualquier ruta protegida redirige a `/login` y conserva la ruta solicitada mediante `returnUrl`.
+
+2.  Con sesión: si el usuario autenticado intenta ingresar a `/login`, `guestGuard` lo redirige a `/dashboard`.
+
+3.  ADMIN: visualiza las opciones de negocio para las que tiene permisos asignados en el backend.
+
+4.  DOCENTE: visualiza únicamente las opciones de negocio autorizadas por los permisos que tiene asignados. No se debe asumir una cantidad fija de permisos ni inventar restricciones.
+
+5.  Acceso por URL: si DOCENTE intenta ingresar manualmente a una ruta para la que no tiene autorización, debe ser redirigido a `/forbidden` y visualizar el permiso requerido.
+
+6.  Botones de escritura: las opciones para crear, editar, desactivar o eliminar registros deben ocultarse cuando el usuario no tenga el permiso correspondiente (`POST`, `PATCH`, `PUT` o `DELETE`).
+
+7.  Actualización de permisos: cuando se implemente la funcionalidad de actualización de permisos, el menú y los botones deberán reaccionar a los cambios sin recargar la aplicación.
+
+8.  Pantallas de negocio: las pantallas existentes de CampusNube deben conservar su funcionamiento. La implementación de RBAC no debe alterar la lógica de cursos, aprendices ni las demás entidades.
+
+9.  Respeto al backend: la interfaz solo debe mostrar las operaciones autorizadas por el catálogo real de recursos y permisos del backend (`resource-catalog.ts`). No se deben inventar endpoints ni métodos HTTP.
+
+10. Compilación: el proyecto debe compilar sin errores mediante:
+
+## 16.9 Comprobación al cerrar la ISS-16
+
+| Prueba | Resultado esperado |
+|----|----|
+| Ingresar sin sesión a una ruta protegida | Redirección a `/login` con `returnUrl` |
+| Ingresar a `/login` con sesión activa | Redirección a `/dashboard` |
+| Iniciar sesión como ADMIN | Menú según sus permisos de negocio |
+| Iniciar sesión como DOCENTE | Menú limitado a sus permisos |
+| Intentar abrir una ruta sin permiso | Redirección a `/forbidden` |
+| Revisar los botones de escritura | Solo aparecen cuando existe el permiso correspondiente |
+| Desactivar autenticación | Acceso de laboratorio sin mostrar opciones exclusivas de seguridad |
+| Ejecutar `npx ng build` | Compilación sin errores |
+
+**Redirección al login cuando no hay sesión**
+
+![](images/clipboard-1477883407.png)
+
+**Redirección al dashboard con sesión activa**
+
+![](images/clipboard-162404871.png)
+
+**Menú según los permisos del usuario**
+
+![](images/clipboard-4135499277.png)
+
+## Commit del ISS-16
+
+```         
+git add .    
+git commit -m "Fase II: Auth con RBAC — ISS-16 — Guards y RBAC en las pantallas Business"    
+git push origin main 
+```
+
+# 

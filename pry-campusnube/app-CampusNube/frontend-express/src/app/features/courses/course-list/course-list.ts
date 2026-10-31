@@ -21,9 +21,11 @@ import { CourseApi } from '../course-api';
 import { TeacherApi } from '../../teachers/teacher-api';
 import { CourseForm } from '../course-form/course-form';
 
+import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 @Component({
   selector: 'app-course-list',
   imports: [
+    HasPermissionDirective,
     ButtonModule,
     DialogModule,
     EmptyState,

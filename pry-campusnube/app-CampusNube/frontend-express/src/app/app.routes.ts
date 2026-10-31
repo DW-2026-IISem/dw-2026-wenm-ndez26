@@ -1,3 +1,4 @@
+import { permissionGuard } from './core/guards/permission-guard';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -41,6 +42,8 @@ export const routes: Routes = [
       },
       {
         path: 'cursos',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/cursos' },
         title: 'Cursos · CampusNube',
         loadComponent: () =>
           import('./features/courses/course-list/course-list').then(
@@ -49,6 +52,8 @@ export const routes: Routes = [
       },
       {
         path: 'docentes',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/docentes' },
         title: 'Docentes · CampusNube',
         loadComponent: () =>
           import('./features/teachers/teacher-list/teacher-list').then(
@@ -57,6 +62,8 @@ export const routes: Routes = [
       },
       {
         path: 'aprendices',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/aprendices' },
         title: 'Aprendices · CampusNube',
         loadComponent: () =>
           import('./features/learners/learner-list/learner-list').then(
@@ -65,6 +72,8 @@ export const routes: Routes = [
       },
       {
         path: 'modulos',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/modulos' },
         title: 'Módulos · CampusNube',
         loadComponent: () =>
           import('./features/modules/module-list/module-list').then(
@@ -73,6 +82,8 @@ export const routes: Routes = [
       },
       {
         path: 'lecciones',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/lecciones' },
         title: 'Lecciones · CampusNube',
         loadComponent: () =>
           import('./features/lessons/lesson-list/lesson-list').then(
@@ -81,6 +92,8 @@ export const routes: Routes = [
       },
       {
         path: 'evaluaciones',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/evaluaciones' },
         title: 'Evaluaciones · CampusNube',
         loadComponent: () =>
           import('./features/evaluations/evaluation-list/evaluation-list').then(
@@ -89,6 +102,8 @@ export const routes: Routes = [
       },
       {
         path: 'intentos',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/intentos' },
         title: 'Intentos · CampusNube',
         loadComponent: () =>
           import('./features/attempts/attempt-list/attempt-list').then(
@@ -97,6 +112,8 @@ export const routes: Routes = [
       },
       {
         path: 'entregas',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/entregas' },
         title: 'Entregas · CampusNube',
         loadComponent: () =>
           import('./features/submissions/submission-list/submission-list').then(
@@ -105,6 +122,8 @@ export const routes: Routes = [
       },
       {
         path: 'inscripciones',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/inscripciones' },
         title: 'Inscripciones · CampusNube',
         loadComponent: () =>
           import('./features/enrollments/enrollment-list/enrollment-list').then(
@@ -113,6 +132,8 @@ export const routes: Routes = [
       },
       {
         path: 'progreso',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/progress' },
         title: 'Progreso · CampusNube',
         loadComponent: () =>
           import('./features/progress/progress-list/progress-list').then(
@@ -121,6 +142,8 @@ export const routes: Routes = [
       },
       {
         path: 'certificados',
+        canActivate: [permissionGuard],
+        data: { permission: 'GET /api/certificates' },
         title: 'Certificados · CampusNube',
         loadComponent: () =>
           import('./features/certificates/certificate-list/certificate-list').then(

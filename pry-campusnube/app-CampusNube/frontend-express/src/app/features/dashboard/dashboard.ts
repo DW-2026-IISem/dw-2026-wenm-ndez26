@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 
 // Modelos
 import { Teacher } from '../../core/models/teacher.model';
@@ -22,6 +22,7 @@ import { Progress } from '../../core/models/progress.model';
 import { Certificate } from '../../core/models/certificate.model';
 
 // Servicios API
+import { SessionStore } from '../../core/auth/session.store';
 import { TeacherApi } from '../teachers/teacher-api';
 import { LearnerApi } from '../learners/learner-api';
 import { CourseApi } from '../courses/course-api';
@@ -42,6 +43,8 @@ import { CertificateApi } from '../certificates/certificate-api';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
+
+  private readonly session = inject(SessionStore);
 
   // Servicios
   private readonly teacherApi = inject(TeacherApi);
@@ -159,17 +162,17 @@ export class Dashboard {
     this.errorMessage.set(null);
 
     forkJoin({
-      teachers: this.teacherApi.list(),
-      learners: this.learnerApi.list(),
-      courses: this.courseApi.list(),
-      modules: this.moduleApi.list(),
-      lessons: this.lessonApi.list(),
-      evaluations: this.evaluationApi.list(),
-      enrollments: this.enrollmentApi.list(),
-      attempts: this.attemptApi.list(),
-      submissions: this.submissionApi.list(),
-      progresses: this.progressApi.list(),
-      certificates: this.certificateApi.list(),
+      teachers: this.session.canPermission('GET /api/docentes') ? this.teacherApi.list() : of([] as Teacher[]),
+      learners: this.session.canPermission('GET /api/aprendices') ? this.learnerApi.list() : of([] as Learner[]),
+      courses: this.session.canPermission('GET /api/cursos') ? this.courseApi.list() : of([] as Course[]),
+      modules: this.session.canPermission('GET /api/modulos') ? this.moduleApi.list() : of([] as Module[]),
+      lessons: this.session.canPermission('GET /api/lecciones') ? this.lessonApi.list() : of([] as Lesson[]),
+      evaluations: this.session.canPermission('GET /api/evaluaciones') ? this.evaluationApi.list() : of([] as Evaluation[]),
+      enrollments: this.session.canPermission('GET /api/inscripciones') ? this.enrollmentApi.list() : of([] as Enrollment[]),
+      attempts: this.session.canPermission('GET /api/intentos') ? this.attemptApi.list() : of([] as Attempt[]),
+      submissions: this.session.canPermission('GET /api/entregas') ? this.submissionApi.list() : of([] as Submission[]),
+      progresses: this.session.canPermission('GET /api/progress') ? this.progressApi.list() : of([] as Progress[]),
+      certificates: this.session.canPermission('GET /api/certificates') ? this.certificateApi.list() : of([] as Certificate[]),
     }).subscribe({
       next: (data) => {
         this.teachers.set(data.teachers);

@@ -79,6 +79,29 @@ export class SessionStore {
     return this.roleNames().includes(roleName);
   }
 
+  canPermission(permission: string): boolean {
+    if (!this.authEnabled) {
+      return true;
+    }
+
+    const separator = permission.indexOf(' ');
+
+    if (separator === -1) {
+      return false;
+    }
+
+    const method = permission.substring(0, separator).toUpperCase();
+    const path = permission.substring(separator + 1).trim();
+
+    const allowedMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+
+    if (!allowedMethods.includes(method) || !path.startsWith('/')) {
+      return false;
+    }
+
+    return this.can(method as SessionHttpMethod, path);
+  }
+
   can(method: SessionHttpMethod, path: string): boolean {
     if (!this.authEnabled) {
       return true;

@@ -1,0 +1,42 @@
+<section class="mx-auto flex min-h-[65vh] max-w-2xl items-center justify-center px-4 py-10">
+  <div class="w-full rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+    <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-3xl text-red-600">
+      <i class="pi pi-lock"></i>
+    </div>
+
+    <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-600">
+      Error 403 · Acceso denegado
+    </p>
+
+    <h1 class="mb-3 text-2xl font-bold text-slate-900">
+      No tienes permiso para acceder
+    </h1>
+
+    <p class="mx-auto mb-6 max-w-lg text-sm leading-6 text-slate-600">
+      Tu sesión está activa, pero tu usuario no cuenta con la autorización
+      necesaria para realizar esta acción o consultar este recurso.
+      Comunícate con el administrador de CampusNube para solicitar el acceso.
+    </p>
+
+    @if (permission) {
+      <div class="mb-6 rounded-xl bg-slate-900 px-4 py-3 text-left">
+        <p class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+          Permiso requerido
+        </p>
+        <code class="break-all text-sm text-emerald-300">{{ permission }}</code>
+      </div>
+    }
+
+    <p class="mb-6 text-sm text-slate-500">
+      El administrador debe verificar los permisos asociados al rol del usuario
+      en la configuración de seguridad de CampusNube.
+    </p>
+
+    <a
+      routerLink="/dashboard"
+      class="inline-flex items-center justify-center rounded-lg bg-sky-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-800"
+    >
+      Volver al inicio
+    </a>
+  </div>
+</section>

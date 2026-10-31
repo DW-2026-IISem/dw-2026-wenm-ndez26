@@ -8,10 +8,12 @@
     [rounded]="true"
   />
 
-  <button pButton type="button" (click)="openCreate()">
+  <ng-container *appHasPermission="'POST /api/cursos'">
+<button pButton type="button" (click)="openCreate()">
     <i pButtonIcon class="pi pi-plus"></i>
     <span pButtonLabel>Nuevo curso</span>
   </button>
+</ng-container>
 </app-page-header>
 
 @if (error()) {
@@ -89,7 +91,8 @@
 
         <td>
           <div class="flex justify-end gap-1">
-            <button
+            <ng-container *appHasPermission="'PATCH /api/cursos/:id'">
+<button
               pButton
               type="button"
               text
@@ -100,8 +103,10 @@
               pTooltip="Editar"
               (click)="openEdit(course)"
             ></button>
+</ng-container>
 
-            <button
+            <ng-container *appHasPermission="'PATCH /api/cursos/:id/deactivate'">
+<button
               pButton
               type="button"
               text
@@ -113,8 +118,10 @@
               [disabled]="!course.isActive"
               (click)="deactivate(course)"
             ></button>
+</ng-container>
 
-            <button
+            <ng-container *appHasPermission="'DELETE /api/cursos/:id'">
+<button
               pButton
               type="button"
               text
@@ -125,6 +132,7 @@
               pTooltip="Eliminar"
               (click)="remove(course)"
             ></button>
+</ng-container>
           </div>
         </td>
       </tr>
