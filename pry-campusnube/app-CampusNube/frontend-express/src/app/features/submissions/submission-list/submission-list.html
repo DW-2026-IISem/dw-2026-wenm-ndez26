@@ -66,6 +66,7 @@
           <th>Fecha de finalización</th>
           <th>Total</th>
           <th>Estado</th>
+          <th>Observaciones</th>
           <th class="text-center">Acciones</th>
         </tr>
       </ng-template>
@@ -87,6 +88,7 @@
               [severity]="submission.estado?.toLowerCase() === 'inactivo' ? 'danger' : 'success'"
             />
           </td>
+          <td class="max-w-xs truncate">{{ submission.observaciones || '—' }}</td>
           <td>
             <div class="flex justify-center gap-1">
               <p-button
@@ -126,7 +128,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="9" class="text-center py-6 text-gray-500">No se encontraron entregas.</td>
+          <td colspan="10" class="text-center py-6 text-gray-500">No se encontraron entregas.</td>
         </tr>
       </ng-template>
     </p-table>

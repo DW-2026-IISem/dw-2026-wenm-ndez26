@@ -2081,7 +2081,7 @@ El módulo permitirá crear, consultar, editar, desactivar y eliminar entregas, 
 La interfaz debe respetar estas reglas:
 
 | Campo           | Regla                                                   |
-|-------------------|-----------------------------------------------------|
+|--------------------|----------------------------------------------------|
 | `referencia_id` | Obligatorio, numérico                                   |
 | `lesson_id`     | Obligatorio, debe corresponder a una lección activa     |
 | `enrollment_id` | Obligatorio, debe corresponder a una inscripción activa |
@@ -2906,7 +2906,7 @@ La Fase I corresponde a la construcción inicial de las funcionalidades de Campu
 Hay **dos interruptores** que deben verificarse conjuntamente:
 
 | **Interruptor** | **Dónde** | **Qué controla** |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | `requireAuth` | `environment.ts` y `environment.development.ts` | Guards, `*appHasPermission`, menú y reintento de refresh. |
 | `AUTH_ENABLED` | `.env` del backend, si está implementado | Middlewares `authenticate` y `authorize` de las rutas protegidas. |
 
@@ -3071,7 +3071,7 @@ Todas estas pruebas funcionan correctamente
 Ejecutar `ng serve` con el backend activo y recorrer:
 
 | **\#** | **Acción** | **Resultado esperado** |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | 1 | `/dashboard` sin sesión | Redirige al login. |
 | 2 | Login ADMIN | Entra al dashboard; menú administrativo completo. |
 | 3 | CRUD docentes | Crear, editar, desactivar y buscar docentes. |
@@ -3120,7 +3120,7 @@ APRENDIZ
 
 CURSOS
 
-![MODULOS ](images/clipboard-1930562636.png)
+![MODULOS](images/clipboard-1930562636.png)
 
 ![](images/clipboard-3752031111.png)
 
@@ -3223,7 +3223,7 @@ La calidad del código de CampusNube se desarrolla siguiendo las convenciones es
 Se establecen las siguientes convenciones para el desarrollo:
 
 | Criterio | Convención |
-|----|----|
+|------------------------------------|------------------------------------|
 | Estado local y derivado | Utilizar Signals para administrar el estado local y derivado de los componentes. Emplear `computed()` en lugar de getters. |
 | Inyección de dependencias | Utilizar `inject()` en lugar de constructor injection. |
 | Servicios HTTP | Declarar los servicios con `@Injectable({ providedIn: 'root' })` y utilizar el sufijo `Api` para los servicios de comunicación HTTP. |
@@ -3305,7 +3305,7 @@ La verificación de estos criterios se realiza mediante la revisión de los form
 Resultado de la revisión de calidad
 
 | Aspecto evaluado | Resultado |
-|----|----|
+|------------------------------------|------------------------------------|
 | Formato del código con Prettier | Verificado. Todos los archivos revisados cumplen el formato. |
 | Tipado estricto de TypeScript | Habilitado mediante `strict: true`. |
 | Compilación del frontend | Ejecutada correctamente después del cambio de configuración. |
@@ -3322,7 +3322,7 @@ Resultado de la revisión de calidad
 
 ![](images/clipboard-693256082.png)
 
-## 18.8 Criterios de aceptación y cierre del proyecto 
+## 18.8 Criterios de aceptación y cierre del proyecto
 
 ### Criterios de aceptación
 
@@ -3343,7 +3343,7 @@ Resultado de la revisión de calidad
 ### Estado de verificación de los criterios
 
 | N.º | Criterio | Estado |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | 1 | Compilación de producción sin errores | Verificado mediante `npm run build`. |
 | 2 | Presupuestos de compilación | Verificado en la compilación realizada, sin advertencias de presupuesto. |
 | 3 | Los 15 puntos del checklist de humo | Pendiente de completar todas las pruebas. |
@@ -3475,3 +3475,19 @@ git add .
 git commit -m "Fase II: ISS-19 - Mejoras de interfaz y navegación por roles"    
 git push origin main 
 ```
+
+# Ajustes y modificaciones del frontend — ISS-19.1
+
+En este ISS se realizá la corrección para que las entidades y sus atributos councidan con el backend.
+
+![](images/clipboard-3517377336.png)
+
+## Commit del ISS-19.1
+
+```         
+git add .      
+git commit -m "Fase II: ISS-19 -"frontend: entidades alineadas con backend"
+git push origin main 
+```
+
+### 

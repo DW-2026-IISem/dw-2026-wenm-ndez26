@@ -7,6 +7,7 @@ export interface LearnerI {
   name: string;
   description: string;
   password: string;
+  user_id?: number | null;
   status: "active" | "inactive";
   createdAt?: Date;
   updatedAt?: Date;

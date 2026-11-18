@@ -8,6 +8,7 @@ export interface Learner extends Timestamps {
   id: number;
   name: string;
   description: string | null;
+  user_id?: number | null;
   status: 'active' | 'inactive';
 }
 
