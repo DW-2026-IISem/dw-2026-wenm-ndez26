@@ -17,6 +17,7 @@ export class Learner extends Model {
   public name!: string;
   public description!: string;
   public password!: string;
+  public user_id!: number | null;
   public status!: "active" | "inactive";
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -35,6 +36,11 @@ Learner.init(
     password: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      unique: "uq_learners_user_id",
     },
     status: {
       type: DataTypes.ENUM("active", "inactive"),

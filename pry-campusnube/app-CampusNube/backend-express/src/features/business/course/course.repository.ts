@@ -1,5 +1,14 @@
 import { Transaction } from "sequelize";
 import { Course, CourseI } from "./course.model";
+import { Teacher } from "../teacher/teacher.model";
+
+const withTeachers = [
+  {
+    model: Teacher,
+    as: "teachers",
+    through: { attributes: [] as string[] },
+  },
+];
 
 export class CourseRepository {
   async findAllActive(): Promise<CourseI[]> {
@@ -7,6 +16,7 @@ export class CourseRepository {
       where: {
         isActive: true,
       },
+      include: withTeachers,
     });
   }
 
@@ -20,6 +30,7 @@ export class CourseRepository {
         id,
         ...(onlyActive ? { isActive: true } : {}),
       },
+      include: withTeachers,
       transaction,
     });
   }
@@ -51,6 +62,16 @@ export class CourseRepository {
     });
 
     return course;
+  }
+
+  async setTeachers(
+    id: number,
+    teacherIds: number[],
+    transaction?: Transaction
+  ): Promise<void> {
+    const course = await Course.findByPk(id, { transaction });
+    if (!course) return;
+    await (course as any).setTeachers(teacherIds, { transaction });
   }
 
   async delete(

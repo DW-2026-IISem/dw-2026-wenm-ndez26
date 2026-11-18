@@ -16,6 +16,7 @@ export interface CertificatePayload {
 }
 
 export interface CertificateUpdatePayload {
+  enrollment_id?: number;
   name?: string;
   description?: string | null;
 }

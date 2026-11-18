@@ -161,3 +161,117 @@
     flex-direction: column;
   }
 }
+
+/* ISS-19: mejora visual de asignaciones usuario-rol */
+
+.assignment-page {
+  color: #1e293b;
+}
+
+.assignment-header h2 {
+  font-size: 1.65rem;
+  letter-spacing: -0.025em;
+}
+
+.assignment-toolbar {
+  padding: 1.35rem;
+  border-radius: 16px;
+  gap: 1.2rem;
+}
+
+.assignment-toolbar button {
+  min-height: 44px;
+  background: #059669;
+  border-radius: 9px;
+  white-space: nowrap;
+}
+
+.assignment-toolbar button:hover {
+  background: #047857;
+}
+
+.assignment-field label {
+  color: #334155;
+}
+
+.assignment-table-wrap {
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgb(15 23 42 / 5%);
+}
+
+.assignment-table th {
+  padding: 1.1rem 1rem;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.assignment-table td {
+  padding: 1rem;
+}
+
+.assignment-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.assignment-table tbody tr:hover {
+  background: #eff6ff;
+}
+
+.assignment-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.assignment-role {
+  padding: 0.4rem 0.8rem;
+  background: #ccfbf1;
+  color: #0f766e;
+  letter-spacing: 0.02em;
+}
+
+.assignment-remove {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.assignment-dialog-form {
+  gap: 1.3rem;
+  padding: 0.8rem 0;
+}
+
+.assignment-dialog-form label {
+  margin-bottom: 0.55rem;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.assignment-page [role='status'],
+.assignment-page [role='alert'] {
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+}
+
+.assignment-page [role='status'] {
+  border-color: #a7f3d0;
+}
+
+.assignment-page [role='alert'] {
+  border-color: #fecaca;
+}
+
+@media (max-width: 700px) {
+  .assignment-toolbar {
+    padding: 1rem;
+  }
+
+  .assignment-toolbar button {
+    width: 100%;
+  }
+
+  .assignment-header h2 {
+    font-size: 1.4rem;
+  }
+}

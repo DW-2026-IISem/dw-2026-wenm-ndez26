@@ -5,12 +5,16 @@
       <p>Consulta y administra los usuarios y sus permisos efectivos.</p>
     </div>
 
-    <div>
+    <div class="header-actions">
       @if (canCreate()) {
-        <button type="button" (click)="openCreate()">Crear usuario</button>
+        <button type="button" class="create-button" (click)="openCreate()">
+          <i class="pi pi-user-plus"></i> Crear usuario
+        </button>
       }
 
-      <button type="button" (click)="loadUsers()">Actualizar</button>
+      <button type="button" class="refresh-button" (click)="loadUsers()">
+        <i class="pi pi-refresh"></i> Actualizar
+      </button>
     </div>
   </header>
 
@@ -45,25 +49,44 @@
         <tbody>
           @for (user of users(); track user.id) {
             <tr>
-              <td>{{ user.username }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.status }}</td>
+              <td><strong class="username-cell">{{ user.username }}</strong></td>
+              <td class="email-cell">{{ user.email }}</td>
               <td>
+                <span class="status" [class.active]="user.status === 'active'"
+                  [class.inactive]="user.status !== 'active'">
+                  {{ user.status === 'active' ? 'Activo' : 'Inactivo' }}
+                </span>
+              </td>
+              <td>
+                <div class="row-actions">
                 @if (canEdit(user)) {
-                  <button type="button" (click)="openEdit(user)">Editar</button>
+                  <button type="button" class="edit-button" title="Editar usuario"
+                    (click)="openEdit(user)">
+                    <i class="pi pi-pencil"></i><span>Editar</span>
+                  </button>
                 }
 
                 @if (canViewPermissions(user)) {
-                  <button type="button" (click)="viewPermissions(user)">Ver permisos</button>
+                  <button type="button" class="permissions-button" title="Ver permisos"
+                    (click)="viewPermissions(user)">
+                    <i class="pi pi-shield"></i><span>Permisos</span>
+                  </button>
                 }
 
                 @if (canDeactivate(user)) {
-                  <button type="button" (click)="deactivate(user)">Desactivar</button>
+                  <button type="button" class="deactivate-button" title="Desactivar usuario"
+                    (click)="deactivate(user)">
+                    <i class="pi pi-ban"></i><span>Desactivar</span>
+                  </button>
                 }
 
                 @if (canDelete(user) && !isSelf(user)) {
-                  <button type="button" (click)="remove(user)">Eliminar</button>
+                  <button type="button" class="delete-button" title="Eliminar usuario"
+                    (click)="remove(user)">
+                    <i class="pi pi-trash"></i><span>Eliminar</span>
+                  </button>
                 }
+                </div>
               </td>
             </tr>
           } @empty {

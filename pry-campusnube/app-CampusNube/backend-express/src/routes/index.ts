@@ -9,6 +9,7 @@ import { CourseRoutes } from "../features/business/course/course.routes";
 import { ModuleRoutes } from "../features/business/module/module.routes";
 import { LessonRoutes } from "../features/business/lesson/lesson.routes";
 import { EnrollmentRoutes } from "../features/business/enrollment/enrollment.routes";
+import { MyEnrollmentRoutes } from "../features/business/my-enrollment/my-enrollment.routes";
 import { EvaluationRoutes } from "../features/business/evaluation/evaluation.routes";
 import { AttemptRoutes } from "../features/business/attempt/attempt.routes";
 import { SubmissionRoutes } from "../features/business/submission/submission.routes";
@@ -49,6 +50,7 @@ export class Routes {
   public moduleRoutes: ModuleRoutes = new ModuleRoutes();
   public lessonRoutes: LessonRoutes = new LessonRoutes();
   public enrollmentRoutes: EnrollmentRoutes = new EnrollmentRoutes();
+  public myEnrollmentRoutes: MyEnrollmentRoutes = new MyEnrollmentRoutes();
   public evaluationRoutes: EvaluationRoutes = new EvaluationRoutes();
   public attemptRoutes: AttemptRoutes = new AttemptRoutes();
   public submissionRoutes: SubmissionRoutes = new SubmissionRoutes();
@@ -84,6 +86,7 @@ export class Routes {
     this.moduleRoutes.routes(app);
     this.lessonRoutes.routes(app);
     this.enrollmentRoutes.routes(app);
+    this.myEnrollmentRoutes.routes(app);
     this.evaluationRoutes.routes(app);
     this.attemptRoutes.routes(app);
     this.submissionRoutes.routes(app);

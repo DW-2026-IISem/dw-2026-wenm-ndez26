@@ -302,4 +302,8 @@ export const RESOURCE_CATALOG: readonly CatalogResource[] = [
     path: "/api/concesiones-rol/:id/reactivate",
     description: "Reactivar recurso a rol",
   },
+
+  // ── Mis inscripciones (2) ──────────────────────────────────────
+  { method: "GET", path: "/api/mis-inscripciones", description: "Listar mis inscripciones" },
+  { method: "POST", path: "/api/mis-inscripciones", description: "Inscribirme a un curso" },
 ];

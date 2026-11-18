@@ -1,3 +1,4 @@
+import { authGuard } from './core/guards/auth-guard';
 import { permissionGuard } from './core/guards/permission-guard';
 import { Routes } from '@angular/router';
 
@@ -13,6 +14,7 @@ export const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [authGuard],
     loadComponent: () => import('./layout/shell/shell').then((m) => m.Shell),
     children: [
       {

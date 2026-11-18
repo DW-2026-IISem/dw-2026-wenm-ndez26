@@ -147,7 +147,7 @@
   background: #fef2f2;
   color: #b91c1c;
 }
-.roles-container .dialog-backdrop {
+:host .dialog-backdrop {
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -158,8 +158,8 @@
   background: rgb(15 23 42 / 55%);
   backdrop-filter: blur(3px);
 }
-.roles-container .role-dialog,
-.roles-container .resource-dialog {
+:host .role-dialog,
+:host .resource-dialog {
   width: min(620px, 100%);
   max-height: 90vh;
   overflow: auto;

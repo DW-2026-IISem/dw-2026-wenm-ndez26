@@ -24,8 +24,11 @@ export interface SubmissionPayload {
 }
 
 export interface SubmissionUpdatePayload {
+  referencia_id?: number;
+  lesson_id?: number;
+  enrollment_id?: number;
+  fecha_inicio?: string;
   fecha_fin?: string | null;
   total?: Money | null;
-  estado?: string;
   observaciones?: string | null;
 }

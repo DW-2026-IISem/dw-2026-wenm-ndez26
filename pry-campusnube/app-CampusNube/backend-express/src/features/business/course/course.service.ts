@@ -34,7 +34,7 @@ export class CourseService {
       isActive: dto.isActive ?? true,
     });
 
-    return toCourseResponseDto(course);
+    return this.syncTeachers(course.id as number, dto.teacherIds);
   }
 
   async updatePut(
@@ -52,7 +52,7 @@ export class CourseService {
       throw new AppError(404, "Course not found");
     }
 
-    return toCourseResponseDto(course);
+    return this.syncTeachers(course.id as number, dto.teacherIds);
   }
 
   async updatePatch(
@@ -61,15 +61,17 @@ export class CourseService {
   ): Promise<CourseResponseDto> {
     await this.findOrFail(id);
 
+    const { teacherIds, ...rest } = dto;
+
     const course = await this.courseRepository.update(id, {
-      ...dto,
+      ...rest,
     });
 
     if (!course) {
       throw new AppError(404, "Course not found");
     }
 
-    return toCourseResponseDto(course);
+    return this.syncTeachers(course.id as number, teacherIds);
   }
 
   async deletePhysical(id: number): Promise<void> {
@@ -86,6 +88,23 @@ export class CourseService {
     const course = await this.courseRepository.update(id, {
       isActive: false,
     });
+
+    if (!course) {
+      throw new AppError(404, "Course not found");
+    }
+
+    return toCourseResponseDto(course);
+  }
+
+  private async syncTeachers(
+    id: number,
+    teacherIds?: number[]
+  ): Promise<CourseResponseDto> {
+    if (teacherIds) {
+      await this.courseRepository.setTeachers(id, teacherIds);
+    }
+
+    const course = await this.courseRepository.findById(id, undefined, false);
 
     if (!course) {
       throw new AppError(404, "Course not found");

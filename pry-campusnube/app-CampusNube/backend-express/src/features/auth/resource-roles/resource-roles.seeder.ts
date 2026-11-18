@@ -86,8 +86,9 @@ export async function seedResourceRoles(): Promise<number> {
       roleName: "APRENDIZ",
       resources: catalog.filter(
         (resource) =>
-          resource.method === "GET" &&
-          belongsTo(resource.path, APRENDIZ_PATHS)
+          (resource.method === "GET" &&
+            belongsTo(resource.path, APRENDIZ_PATHS)) ||
+          resource.path === "/api/mis-inscripciones"
       ),
     },
     {
