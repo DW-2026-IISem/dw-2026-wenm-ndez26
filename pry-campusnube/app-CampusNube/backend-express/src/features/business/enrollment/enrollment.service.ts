@@ -34,6 +34,9 @@ export class EnrollmentService {
       course_id: dto.course_id,
       enrollment_date: dto.enrollment_date ?? new Date(),
       status: dto.status ?? "active",
+      name: dto.name ?? null,
+      description: dto.description ?? null,
+      isActive: dto.isActive ?? true,
     });
 
     return toEnrollmentResponseDto(enrollment);
@@ -50,6 +53,8 @@ export class EnrollmentService {
         learner_id: dto.learner_id,
         course_id: dto.course_id,
         enrollment_date: dto.enrollment_date,
+        name: dto.name,
+        description: dto.description,
       });
 
     if (!enrollment) {

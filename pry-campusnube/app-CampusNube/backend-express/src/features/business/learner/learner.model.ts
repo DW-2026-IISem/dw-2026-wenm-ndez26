@@ -8,6 +8,7 @@ export interface LearnerI {
   description: string;
   password: string;
   user_id?: number | null;
+  isActive?: boolean;
   status: "active" | "inactive";
   createdAt?: Date;
   updatedAt?: Date;
@@ -19,6 +20,7 @@ export class Learner extends Model {
   public description!: string;
   public password!: string;
   public user_id!: number | null;
+  public isActive!: boolean;
   public status!: "active" | "inactive";
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -42,6 +44,11 @@ Learner.init(
       type: DataTypes.INTEGER,
       allowNull: true,
       unique: "uq_learners_user_id",
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false,
     },
     status: {
       type: DataTypes.ENUM("active", "inactive"),
