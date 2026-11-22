@@ -1,3 +1,4 @@
+import { TextareaModule } from 'primeng/textarea';
 import { Component, effect, inject, input, output } from '@angular/core';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,7 +16,7 @@ import { Course } from '../../../core/models/course.model';
 @Component({
   selector: 'app-enrollment-form',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, SelectModule, MessageModule],
+  imports: [TextareaModule, ReactiveFormsModule, ButtonModule, InputTextModule, SelectModule, MessageModule],
   templateUrl: './enrollment-form.html',
   styleUrl: './enrollment-form.css',
 })
@@ -31,6 +32,8 @@ export class EnrollmentForm {
   readonly cancelled = output<void>();
 
   readonly form = this.fb.nonNullable.group({
+    name: ['', [Validators.maxLength(120)]],
+    description: [''],
     learner_id: [0, [Validators.required, Validators.min(1)]],
     course_id: [0, [Validators.required, Validators.min(1)]],
     enrollment_date: [''],
@@ -41,6 +44,8 @@ export class EnrollmentForm {
       const current = this.enrollment();
 
       this.form.reset({
+        name: current?.name ?? '',
+        description: current?.description ?? '',
         learner_id: current?.learner_id ?? 0,
         course_id: current?.course_id ?? 0,
         enrollment_date: current?.enrollment_date
@@ -59,10 +64,13 @@ export class EnrollmentForm {
     const value = this.form.getRawValue();
 
     const payload: EnrollmentPayload = {
+      name: value.name.trim() || null,
+      description: value.description.trim() || null,
       learner_id: Number(value.learner_id),
       course_id: Number(value.course_id),
       enrollment_date: value.enrollment_date || undefined,
       ...(this.enrollment() ? {} : { status: 'active' as const }),
+      ...(this.enrollment() ? {} : { isActive: true }),
     };
 
     this.saved.emit(payload);

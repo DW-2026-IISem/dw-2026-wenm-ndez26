@@ -35,6 +35,12 @@ export class Shell {
   readonly items = computed<MenuItem[]>(() =>
     NAV.filter((item) => !item.authOnly || this.session.authEnabled)
       .filter((item) => !item.permission || this.session.canPermission(item.permission))
+      .filter(
+        (item) =>
+          !item.anyPermission ||
+          !this.session.authEnabled ||
+          item.anyPermission.some((permission) => this.session.canPermission(permission)),
+      )
       .map((item) => ({
         label: item.label,
         icon: item.icon,

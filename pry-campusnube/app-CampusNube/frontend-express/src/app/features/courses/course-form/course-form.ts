@@ -55,6 +55,7 @@ export class CourseForm {
       name: value.name.trim(),
       description: value.description.trim() || null,
       teacherIds: value.teacherIds,
+      ...(this.course() ? {} : { isActive: true }),
     });
   }
 }

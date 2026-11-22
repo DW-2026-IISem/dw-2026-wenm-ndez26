@@ -2081,7 +2081,7 @@ El módulo permitirá crear, consultar, editar, desactivar y eliminar entregas, 
 La interfaz debe respetar estas reglas:
 
 | Campo           | Regla                                                   |
-|--------------------|----------------------------------------------------|
+|----------------------|--------------------------------------------------|
 | `referencia_id` | Obligatorio, numérico                                   |
 | `lesson_id`     | Obligatorio, debe corresponder a una lección activa     |
 | `enrollment_id` | Obligatorio, debe corresponder a una inscripción activa |
@@ -3490,4 +3490,72 @@ git commit -m "Fase II: ISS-19 -"frontend: entidades alineadas con backend"
 git push origin main 
 ```
 
-### 
+### 19.1.2.1 Mismo orden y Payloads completos
+
+Se reordenaron los campos de los 11 modelos del frontend (`core/models`) para que sigan el mismo orden que el backend, y se completaron los `UpdatePayload` con los campos editables (`isActive`, `status`, `estado`, `name`, `description`).
+
+`enrollment_date`, `createdAt` y `updatedAt` se tipan como `string` en el frontend porque por HTTP la fecha viaja en JSON como texto ISO; en el backend son `Date`.
+
+![](images/clipboard-1913435577.png)
+
+## Commit del ISS-19.1.2
+
+```         
+git add .     
+git commit -m "Fase II: ISS-19.1 - Modelos del frontend con el mismo orden y campos que el backend"
+ git push origin main 
+```
+
+# ISS-20 — Pantalla Unificada de Roles y Permisos 
+
+## 1. Se crea carpeta llamada crud en el backend
+
+Se crea `backend-express/src/features/crud/crud.routes.ts` y se registra en Express. El módulo agrupa las rutas existentes de asignaciones usuario–rol y concesiones rol–recurso. Así podremos conectarlas desde una sola pantalla usando los mismos endpoints y controles de acceso.
+
+![](images/clipboard-1393014785.png)
+
+## 2. Se crea carpeta llamada crud en el Frontend
+
+Se agrega el módulo `features/crud/` en Angular con una página, su plantilla y la configuración de sus secciones. El menú muestra una sola entrada, **Roles y permisos**. Dentro de ella, cada sección conserva su `permissionGuard` y reutiliza la lista que ya funciona en CampusNube.
+
+![](images/clipboard-2350334630.png)
+
+## ISS-20 · Retirar y reactivar concesiones
+
+Se agrega el estado y la acción correspondiente a cada fila. La pantalla solicita las concesiones inactivas para que puedan reactivarse incluso después de recargar.
+
+![](images/clipboard-2803508509.png)
+
+### ISS-20 · Retirar y reactivar asignaciones de roles
+
+La tabla muestra el estado de cada asignación y permite retirar o reactivar el rol desde la misma fila. El listado general de la API sigue devolviendo asignaciones activas por defecto.
+
+![](images/clipboard-1086141642.png)
+
+### ISS-20 · Agregar la prueba de navegación del CRUD
+
+Se agrega una prueba que abre la pantalla unificada y comprueba que los enlaces **Asignaciones de roles** y **Concesiones de permisos** carguen su sección dentro de la misma página. La prueba usa componentes de ejemplo para verificar la navegación sin consultar la base de datos.
+
+![](images/clipboard-1910671435.png)
+
+###  ISS-20 · Visibilidad de Roles y permisos según el acceso
+
+Se filtran la entrada del menú y los enlaces de Asignaciones y Concesiones usando los permisos efectivos de la sesión.
+
+![](images/clipboard-879088526.png)
+
+###  ISS-20 · Verificación final del CRUD
+
+![](images/clipboard-2537531530.png)
+
+![](images/clipboard-135437140.png)
+
+![](images/clipboard-1302981214.png)
+
+## ISS-20 · Commit de Roles y permisos
+
+```         
+gid add .
+git commit -m "ISS-20: Unificar la gestión de roles y permisos en CampusNube"
+git push origin main
+```

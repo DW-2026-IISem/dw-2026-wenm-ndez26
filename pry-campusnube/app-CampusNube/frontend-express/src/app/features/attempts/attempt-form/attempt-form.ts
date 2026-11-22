@@ -90,6 +90,7 @@ export class AttemptForm implements OnChanges {
       enrollment_id: Number(value.enrollment_id),
       name: value.name.trim(),
       description: value.description.trim() || null,
+      ...(this.attempt ? {} : { isActive: true }),
     };
 
     this.loading = true;

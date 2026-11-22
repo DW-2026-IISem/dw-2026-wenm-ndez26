@@ -9,9 +9,11 @@ export class RoleUserApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/asignaciones-rol`;
 
-  list(): Observable<RoleUser[]> {
+  list(includeInactive = false): Observable<RoleUser[]> {
     return this.http
-      .get<{ assignments: RoleUser[] }>(this.base)
+      .get<{ assignments: RoleUser[] }>(this.base, {
+        params: includeInactive ? { include_inactive: 'true' } : {},
+      })
       .pipe(map((response) => response.assignments));
   }
 

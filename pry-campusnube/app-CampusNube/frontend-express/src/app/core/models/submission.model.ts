@@ -30,5 +30,6 @@ export interface SubmissionUpdatePayload {
   fecha_inicio?: string;
   fecha_fin?: string | null;
   total?: Money | null;
+  estado?: string;
   observaciones?: string | null;
 }

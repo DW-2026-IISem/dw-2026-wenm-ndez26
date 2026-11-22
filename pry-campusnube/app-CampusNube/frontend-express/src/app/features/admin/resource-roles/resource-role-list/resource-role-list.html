@@ -5,7 +5,7 @@
       <p>Consulta y administra los permisos asignados a los roles.</p>
     </div>
 
-    <button type="button" (click)="openDialog()">Conceder permiso</button>
+    <button type="button" [disabled]="updatingStatus()" (click)="openDialog()">Conceder permiso</button>
   </header>
 
   @if (message()) {
@@ -58,6 +58,8 @@
             <th>Rol</th>
             <th>Método</th>
             <th>Path</th>
+            <th>Estado</th>
+            <th scope="col">Permitir</th>
           </tr>
         </thead>
 
@@ -79,10 +81,24 @@
               <td>
                 {{ resourceFor(row.resource_id)?.path }}
               </td>
+                <td>{{ row.status === 'active' ? 'Activo' : 'Inactivo' }}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="h-5 w-5 cursor-pointer accent-emerald-600 disabled:cursor-wait"
+                    [checked]="row.status === 'active'"
+                    [disabled]="updatingStatus() || saving()"
+                    [attr.aria-label]="
+                      'Permitir ' + (resourceFor(row.resource_id)?.method ?? '') + ' ' +
+                      (resourceFor(row.resource_id)?.path ?? '') + ' a ' + roleName(row.role_id)
+                    "
+                    (change)="togglePermission(row, $event)"
+                  />
+                </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="3">No hay concesiones para mostrar.</td>
+              <td colspan="5">No hay concesiones para mostrar.</td>
             </tr>
           }
         </tbody>

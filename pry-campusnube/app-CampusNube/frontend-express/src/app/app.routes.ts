@@ -150,24 +150,42 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'admin/permisos',
-        title: 'Concesiones · CampusNube',
-        canActivate: [permissionGuard],
-        data: { permission: 'GET /api/concesiones-rol' },
+        path: 'admin/roles-permisos',
+        title: 'Roles y permisos · CampusNube',
         loadComponent: () =>
-          import('./features/admin/resource-roles/resource-role-list/resource-role-list').then(
-            (m) => m.ResourceRoleList,
-          ),
+          import('./features/crud/roles-permissions-page').then((m) => m.RolesPermissionsPage),
+        children: [
+          {
+            path: 'asignaciones',
+            canActivate: [permissionGuard],
+            data: { permission: 'GET /api/asignaciones-rol' },
+            title: 'Asignaciones usuario-rol · CampusNube',
+            loadComponent: () =>
+              import('./features/admin/role-users/role-user-list/role-user-list').then(
+                (m) => m.RoleUserList,
+              ),
+          },
+          {
+            path: 'concesiones',
+            title: 'Concesiones · CampusNube',
+            canActivate: [permissionGuard],
+            data: { permission: 'GET /api/concesiones-rol' },
+            loadComponent: () =>
+              import('./features/admin/resource-roles/resource-role-list/resource-role-list').then(
+                (m) => m.ResourceRoleList,
+              ),
+          },
+        ],
+      },
+      {
+        path: 'admin/permisos',
+        pathMatch: 'full',
+        redirectTo: 'admin/roles-permisos/concesiones',
       },
       {
         path: 'admin/asignaciones',
-        canActivate: [permissionGuard],
-        data: { permission: 'GET /api/asignaciones-rol' },
-        title: 'Asignaciones usuario-rol · CampusNube',
-        loadComponent: () =>
-          import('./features/admin/role-users/role-user-list/role-user-list').then(
-            (m) => m.RoleUserList,
-          ),
+        pathMatch: 'full',
+        redirectTo: 'admin/roles-permisos/asignaciones',
       },
       {
         path: '',

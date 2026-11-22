@@ -60,6 +60,7 @@
         <th>Nombre</th>
         <th>Descripción</th>
         <th>Estado</th>
+        <th>Creado / Actualizado</th>
         <th>Acciones</th>
       </tr>
     </ng-template>
@@ -75,6 +76,10 @@
             [value]="certificate.isActive ? 'Activo' : 'Inactivo'"
             [severity]="certificate.isActive ? 'success' : 'secondary'"
           />
+        </td>
+        <td class="text-xs text-slate-500">
+          {{ certificate.createdAt | date: 'short' }}<br />
+          {{ certificate.updatedAt | date: 'short' }}
         </td>
         <td>
           <div class="flex gap-2">
@@ -111,7 +116,7 @@
 
     <ng-template #emptymessage>
       <tr>
-        <td colspan="6" class="text-center p-4">No se encontraron certificados registrados.</td>
+        <td colspan="7" class="text-center p-4">No se encontraron certificados registrados.</td>
       </tr>
     </ng-template>
   </p-table>

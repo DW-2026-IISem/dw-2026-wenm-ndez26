@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
@@ -24,7 +25,7 @@ import { CourseForm } from '../course-form/course-form';
 import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 @Component({
   selector: 'app-course-list',
-  imports: [
+  imports: [DatePipe, 
     HasPermissionDirective,
     ButtonModule,
     DialogModule,

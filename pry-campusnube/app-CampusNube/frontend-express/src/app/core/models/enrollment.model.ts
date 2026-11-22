@@ -6,6 +6,9 @@ export interface Enrollment extends Timestamps {
   learner_id: number;
   course_id: number;
   enrollment_date: string;
+  name?: string | null;
+  description?: string | null;
+  isActive?: boolean;
   status: Status;
 }
 
@@ -13,6 +16,9 @@ export interface EnrollmentPayload {
   learner_id: number;
   course_id: number;
   enrollment_date?: string;
+  name?: string | null;
+  description?: string | null;
+  isActive?: boolean;
   status?: Status;
 }
 
@@ -20,4 +26,8 @@ export interface EnrollmentUpdatePayload {
   learner_id?: number;
   course_id?: number;
   enrollment_date?: string;
+  name?: string | null;
+  description?: string | null;
+  isActive?: boolean;
+  status?: Status;
 }

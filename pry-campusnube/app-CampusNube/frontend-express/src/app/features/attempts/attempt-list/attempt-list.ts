@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { forkJoin } from 'rxjs';
 
@@ -22,7 +23,7 @@ import { AttemptForm } from '../attempt-form/attempt-form';
 @Component({
   selector: 'app-attempt-list',
   standalone: true,
-  imports: [
+  imports: [DatePipe, 
     ButtonModule,
     TableModule,
     DialogModule,

@@ -39,7 +39,7 @@ describe('Shell', () => {
     shell.session.clear();
 
     expect(shell.items().map((item) => item.label)).toEqual([
-      'Dashboard',
+      'Panel',
       'Docentes',
       'Aprendices',
       'Cursos',

@@ -65,6 +65,7 @@
           <th>Curso asociado</th>
           <th>Descripción</th>
           <th>Estado</th>
+          <th>Creado / Actualizado</th>
           <th style="width: 13rem">Acciones</th>
         </tr>
       </ng-template>
@@ -91,6 +92,14 @@
               [severity]="row.isActive ? 'success' : 'danger'"
               [rounded]="true"
             />
+          </td>
+
+          <td class="text-xs text-slate-500">
+
+            {{ row.createdAt | date: 'short' }}<br />
+
+            {{ row.updatedAt | date: 'short' }}
+
           </td>
 
           <td>
@@ -133,7 +142,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="6" class="text-center p-4">No se encontraron módulos registrados.</td>
+          <td colspan="7" class="text-center p-4">No se encontraron módulos registrados.</td>
         </tr>
       </ng-template>
     </p-table>

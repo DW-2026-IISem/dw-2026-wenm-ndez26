@@ -112,6 +112,7 @@ export class CertificateForm implements OnChanges {
       enrollment_id: value.enrollment_id,
       name: value.name!.trim(),
       description: value.description?.trim() || null,
+      ...(this.certificate ? {} : { isActive: true }),
     };
 
     if (!payload.name) {

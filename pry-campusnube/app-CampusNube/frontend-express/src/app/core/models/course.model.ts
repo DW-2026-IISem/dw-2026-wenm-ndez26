@@ -20,4 +20,5 @@ export interface CourseUpdatePayload {
   name?: string;
   description?: string | null;
   teacherIds?: number[];
+  isActive?: boolean;
 }

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
@@ -24,7 +25,7 @@ import { LessonForm } from '../lesson-form/lesson-form';
 @Component({
   selector: 'app-lesson-list',
   standalone: true,
-  imports: [
+  imports: [DatePipe, 
     FormsModule,
     ButtonModule,
     DialogModule,

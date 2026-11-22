@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
@@ -25,7 +26,7 @@ import { EvaluationForm } from '../evaluation-form/evaluation-form';
 @Component({
   selector: 'app-evaluation-list',
   standalone: true,
-  imports: [
+  imports: [DatePipe, 
     FormsModule,
     ButtonModule,
     DialogModule,

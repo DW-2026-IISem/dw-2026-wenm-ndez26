@@ -76,6 +76,10 @@
           <th>Curso</th>
           <th>Fecha de inscripción</th>
           <th>Estado</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Activo</th>
+          <th>Creado / Actualizado</th>
           <th style="width: 13rem">Acciones</th>
         </tr>
       </ng-template>
@@ -92,6 +96,13 @@
               [severity]="row.status === 'active' ? 'success' : 'danger'"
               [rounded]="true"
             />
+          </td>
+          <td>{{ row.name || '—' }}</td>
+          <td>{{ row.description || '—' }}</td>
+          <td>{{ row.isActive ? 'Sí' : 'No' }}</td>
+          <td class="text-xs text-slate-500">
+            {{ row.createdAt | date: 'short' }}<br />
+            {{ row.updatedAt | date: 'short' }}
           </td>
           <td>
             <div class="flex flex-wrap gap-2">
@@ -133,7 +144,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="6" class="text-center p-4">No se encontraron inscripciones registradas.</td>
+          <td colspan="10" class="text-center p-4">No se encontraron inscripciones registradas.</td>
         </tr>
       </ng-template>
     </p-table>

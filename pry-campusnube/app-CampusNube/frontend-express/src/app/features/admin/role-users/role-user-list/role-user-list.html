@@ -51,6 +51,7 @@
           <th>Correo electrónico</th>
           <th>Rol asignado</th>
           <th>Fecha</th>
+          <th>Estado</th>
           <th>Acción</th>
         </tr>
       </thead>
@@ -77,14 +78,26 @@
             <span class="assignment-role">{{ roleFor(row)?.name }}</span>
           </td>
           <td>{{ row.createdAt | date: 'short' }}</td>
+          <td>{{ row.status === 'active' ? 'Activo' : 'Inactivo' }}</td>
           <td>
-            <button class="assignment-remove" type="button" (click)="deactivate(row)">
-              Retirar rol
-            </button>
+            @if (row.status === 'active') {
+              <button
+                class="assignment-remove"
+                type="button"
+                [disabled]="reactivating()"
+                (click)="deactivate(row)"
+              >
+                Retirar rol
+              </button>
+            } @else if (row.status === 'inactive') {
+              <button type="button" [disabled]="reactivating()" (click)="reactivate(row)">
+                Reactivar rol
+              </button>
+            }
           </td>
         </tr>
         <tr *ngIf="visibleRows().length === 0">
-          <td colspan="5" style="text-align: center; padding: 2rem; color: #64748b">
+          <td colspan="6" style="text-align: center; padding: 2rem; color: #64748b">
             No hay asignaciones para mostrar.
           </td>
         </tr>

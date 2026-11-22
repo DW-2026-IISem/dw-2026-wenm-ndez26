@@ -29,6 +29,7 @@ export class RoleUserList {
   readonly roles = signal<Role[]>([]);
 
   readonly loading = signal(false);
+  readonly reactivating = signal(false);
   readonly error = signal('');
   readonly message = signal('');
 
@@ -59,7 +60,7 @@ export class RoleUserList {
     this.error.set('');
 
     forkJoin({
-      assignments: this.assignmentApi.list(),
+      assignments: this.assignmentApi.list(true),
       users: this.userApi.list(),
       roles: this.roleApi.list(),
     }).subscribe({
@@ -118,12 +119,33 @@ export class RoleUserList {
       });
   }
 
+  reactivate(row: RoleUser): void {
+    if (this.reactivating() || this.loading() || row.status !== 'inactive') return;
+
+    this.reactivating.set(true);
+    this.error.set('');
+    this.message.set('');
+
+    this.assignmentApi.reactivate(row.id).subscribe({
+      next: () => {
+        this.message.set('Asignación reactivada correctamente.');
+        this.loadData();
+        this.reactivating.set(false);
+      },
+      error: (err) => {
+        this.error.set(err.error?.message || 'No fue posible reactivar la asignación.');
+        this.reactivating.set(false);
+      },
+    });
+  }
+
   deactivate(row: RoleUser): void {
     const role = this.roleFor(row);
 
     if (
       role?.name === 'ADMIN' &&
-      this.rows().filter((item) => item.role_id === role.id).length <= 1
+      this.rows().filter((item) => item.role_id === role.id && item.status === 'active')
+          .length <= 1
     ) {
       this.error.set(
         'No puedes retirar el último rol ADMIN. Asigna y verifica primero otro administrador.',

@@ -9,6 +9,7 @@ export interface Learner extends Timestamps {
   name: string;
   description: string | null;
   user_id?: number | null;
+  isActive?: boolean;
   status: 'active' | 'inactive';
 }
 
@@ -20,6 +21,7 @@ export interface LearnerPayload {
   name: string;
   description?: string | null;
   password?: string;
+  isActive?: boolean;
   status?: 'active' | 'inactive';
 }
 
@@ -32,4 +34,6 @@ export interface LearnerUpdatePayload {
   name?: string;
   description?: string | null;
   password?: string;
+  isActive?: boolean;
+  status?: 'active' | 'inactive';
 }

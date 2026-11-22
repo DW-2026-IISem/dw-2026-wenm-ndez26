@@ -53,6 +53,8 @@
         </th>
         <th>Descripción</th>
         <th>Estado</th>
+        <th>Activo</th>
+        <th>Creado / Actualizado</th>
         <th class="w-40 text-right">Acciones</th>
       </tr>
     </ng-template>
@@ -66,6 +68,11 @@
         <td>{{ learner.description || '—' }}</td>
         <td>
           <app-status-tag [status]="learner.status" />
+        </td>
+          <td>{{ learner.isActive ? 'Sí' : 'No' }}</td>
+        <td class="text-xs text-slate-500">
+          {{ learner.createdAt | date: 'short' }}<br />
+          {{ learner.updatedAt | date: 'short' }}
         </td>
         <td>
           <div class="flex justify-end gap-1">
@@ -117,7 +124,7 @@
 
     <ng-template #emptymessage>
       <tr>
-        <td colspan="4">
+        <td colspan="6">
           @if (filter()) {
             <app-empty-state
               icon="pi pi-search"

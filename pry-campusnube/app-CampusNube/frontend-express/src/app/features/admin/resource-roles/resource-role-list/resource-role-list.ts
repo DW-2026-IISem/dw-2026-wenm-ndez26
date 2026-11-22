@@ -42,6 +42,7 @@ export class ResourceRoleList {
   readonly selectedRole = signal<Role | null>(null);
   readonly selectedResource = signal<Resource | null>(null);
   readonly saving = signal(false);
+  readonly updatingStatus = signal(false);
 
   readonly visibleRows = computed(() => {
     const roleId = this.filterRole();
@@ -72,7 +73,7 @@ export class ResourceRoleList {
     forkJoin({
       roles: this.roleApi.list(),
       resources: this.resourceApi.list(),
-      grants: this.resourceRoleApi.list(),
+      grants: this.resourceRoleApi.list({ includeInactive: true }),
     }).subscribe({
       next: (result) => {
         this.roles.set(result.roles);
@@ -130,6 +131,40 @@ export class ResourceRoleList {
           this.error.set(err.error?.message || 'No fue posible conceder el permiso.');
         },
       });
+  }
+
+  togglePermission(row: ResourceRole, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    checkbox.checked = row.status === 'active';
+    this.changeStatus(row);
+  }
+
+  private changeStatus(row: ResourceRole): void {
+    if (this.updatingStatus() || this.saving() || this.loading()) return;
+
+    const active = row.status === 'active';
+    const action = active ? 'retirar' : 'reactivar';
+    if (!window.confirm(`¿Deseas ${action} este permiso?`)) return;
+
+    this.updatingStatus.set(true);
+    this.error.set('');
+    this.message.set('');
+
+    const request = active
+      ? this.resourceRoleApi.deactivate(row.id)
+      : this.resourceRoleApi.reactivate(row.id);
+
+    request.subscribe({
+      next: () => {
+        this.message.set(active ? 'Permiso retirado.' : 'Permiso reactivado.');
+        this.loadData();
+        this.updatingStatus.set(false);
+      },
+      error: (err) => {
+        this.error.set(err.error?.message || `No fue posible ${action} el permiso.`);
+        this.updatingStatus.set(false);
+      },
+    });
   }
 
   roleName(id: number): string {

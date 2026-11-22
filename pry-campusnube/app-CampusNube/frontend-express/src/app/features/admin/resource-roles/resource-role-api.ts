@@ -9,8 +9,16 @@ export class ResourceRoleApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/concesiones-rol`;
 
-  list(filters?: { role_id?: number; resource_id?: number }): Observable<ResourceRole[]> {
+  list(filters?: {
+    role_id?: number;
+    resource_id?: number;
+    includeInactive?: boolean;
+  }): Observable<ResourceRole[]> {
     let params = new HttpParams();
+
+    if (filters?.includeInactive) {
+      params = params.set('include_inactive', 'true');
+    }
 
     if (filters?.role_id !== undefined) {
       params = params.set('role_id', filters.role_id);

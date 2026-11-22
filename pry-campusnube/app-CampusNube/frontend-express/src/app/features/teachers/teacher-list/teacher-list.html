@@ -48,6 +48,7 @@
         </th>
         <th>Descripción</th>
         <th>Estado</th>
+        <th>Creado / Actualizado</th>
         <th class="w-40 text-right">Acciones</th>
       </tr>
     </ng-template>
@@ -61,6 +62,10 @@
         <td>{{ teacher.description || '—' }}</td>
         <td>
           <app-status-tag [status]="teacher.isActive ? 'active' : 'inactive'" />
+        </td>
+        <td class="text-xs text-slate-500">
+          {{ teacher.createdAt | date: 'short' }}<br />
+          {{ teacher.updatedAt | date: 'short' }}
         </td>
         <td>
           <div class="flex justify-end gap-1">
@@ -110,7 +115,7 @@
 
     <ng-template #emptymessage>
       <tr>
-        <td colspan="4">
+        <td colspan="5">
           @if (filter()) {
             <app-empty-state
               icon="pi pi-search"

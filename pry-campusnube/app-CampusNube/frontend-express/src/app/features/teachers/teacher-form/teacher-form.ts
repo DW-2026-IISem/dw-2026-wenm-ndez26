@@ -50,6 +50,7 @@ export class TeacherForm {
     const payload: TeacherPayload = {
       name: value.name.trim(),
       description: value.description.trim() || null,
+      ...(this.teacher() ? {} : { isActive: true }),
     };
 
     this.saved.emit(payload);

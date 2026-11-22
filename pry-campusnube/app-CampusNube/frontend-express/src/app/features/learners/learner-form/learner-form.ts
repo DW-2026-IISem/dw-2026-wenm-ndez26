@@ -78,6 +78,7 @@ export class LearnerForm {
       description: value.description.trim() || null,
       ...(value.password.trim() ? { password: value.password.trim() } : {}),
       ...(this.learner() ? {} : { status: value.status }),
+      ...(this.learner() ? {} : { isActive: true }),
     };
 
     this.saved.emit(payload);

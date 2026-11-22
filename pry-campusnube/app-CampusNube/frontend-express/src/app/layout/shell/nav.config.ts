@@ -1,7 +1,10 @@
 import { MenuItem } from 'primeng/api';
 
+import { CRUD_RESOURCES } from '../../features/crud/crud-resources';
+
 export interface NavItem extends MenuItem {
   permission?: string;
+  anyPermission?: readonly string[];
   authOnly?: boolean;
 }
 
@@ -96,16 +99,10 @@ export const NAV: NavItem[] = [
     permission: 'GET /api/recursos',
   },
   {
-    label: 'Asignaciones',
-    icon: 'pi pi-user-plus',
-    routerLink: '/admin/asignaciones',
-    permission: 'GET /api/asignaciones-rol',
-  },
-  {
-    label: 'Permisos',
+    label: 'Roles y permisos',
     icon: 'pi pi-lock',
-    routerLink: '/admin/permisos',
-    permission: 'GET /api/concesiones-rol',
+    routerLink: '/admin/roles-permisos',
+    anyPermission: CRUD_RESOURCES.map((resource) => resource.permission),
   },
   {
     label: 'Prototipo',

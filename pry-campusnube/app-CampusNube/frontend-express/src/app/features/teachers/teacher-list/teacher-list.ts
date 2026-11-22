@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -20,7 +21,7 @@ import { TeacherForm } from '../teacher-form/teacher-form';
 
 @Component({
   selector: 'app-teacher-list',
-  imports: [
+  imports: [DatePipe, 
     ButtonModule,
     DialogModule,
     EmptyState,

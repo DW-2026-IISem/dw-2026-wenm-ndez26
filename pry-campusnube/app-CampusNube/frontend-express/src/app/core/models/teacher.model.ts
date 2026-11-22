@@ -16,4 +16,5 @@ export interface TeacherPayload {
 export interface TeacherUpdatePayload {
   name?: string;
   description?: string | null;
+  isActive?: boolean;
 }
