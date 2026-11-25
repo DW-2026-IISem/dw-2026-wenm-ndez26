@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
@@ -23,7 +24,7 @@ import { ProgressForm } from '../progress-form/progress-form';
 @Component({
   selector: 'app-progress-list',
   standalone: true,
-  imports: [
+  imports: [HasPermissionDirective, 
     CommonModule,
     ButtonModule,
     TableModule,
@@ -66,6 +67,14 @@ export class ProgressList {
 
   readonly activeCount = computed(() => this.progress().filter((item) => item.isActive).length);
 
+  readonly statusFilter = signal('active');
+
+  readonly rowsByStatus = computed(() => {
+    const rows = this.filteredProgress();
+    const status = this.statusFilter();
+    return status === 'all' ? rows : rows.filter((row) => (row.isActive ? 'active' : 'inactive') === status);
+  });
+
   readonly filteredProgress = computed(() => {
     const term = this.search().toLowerCase().trim();
 
@@ -95,7 +104,7 @@ export class ProgressList {
     this.loading.set(true);
 
     forkJoin({
-      progress: this.api.list(),
+      progress: this.api.list(true),
       enrollments: this.enrollmentApi.list(),
     }).subscribe({
       next: (response) => {

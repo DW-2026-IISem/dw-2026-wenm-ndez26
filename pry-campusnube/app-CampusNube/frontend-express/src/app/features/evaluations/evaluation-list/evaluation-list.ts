@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
@@ -26,7 +27,7 @@ import { EvaluationForm } from '../evaluation-form/evaluation-form';
 @Component({
   selector: 'app-evaluation-list',
   standalone: true,
-  imports: [DatePipe, 
+  imports: [HasPermissionDirective, DatePipe, 
     FormsModule,
     ButtonModule,
     DialogModule,
@@ -71,6 +72,14 @@ export class EvaluationList implements OnInit {
 
   readonly totalEvaluationCount = computed(() => this.rows().length);
 
+  readonly statusFilter = signal('active');
+
+  readonly rowsByStatus = computed(() => {
+    const rows = this.filteredRows();
+    const status = this.statusFilter();
+    return status === 'all' ? rows : rows.filter((row) => (row.isActive ? 'active' : 'inactive') === status);
+  });
+
   readonly filteredRows = computed(() => {
     const term = this.search().trim().toLowerCase();
 
@@ -98,7 +107,7 @@ export class EvaluationList implements OnInit {
     this.error.set(null);
 
     forkJoin({
-      evaluations: this.api.list(),
+      evaluations: this.api.list(true),
       courses: this.coursesApi.list(),
     }).subscribe({
       next: ({ evaluations, courses }) => {

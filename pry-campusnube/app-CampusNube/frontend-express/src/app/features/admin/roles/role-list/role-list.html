@@ -1,5 +1,7 @@
+<div class="campus-roles-page">
 <section class="roles-container">
-  <header class="roles-header">
+  <div class="campus-roles-banner">
+<header class="roles-header">
     <div>
       <h2>Administración de roles</h2>
       <p>Gestiona los roles y sus estados dentro de CampusNube.</p>
@@ -13,6 +15,7 @@
       <button type="button" class="secondary-button" (click)="loadRoles()">Actualizar</button>
     </div>
   </header>
+</div>
 
   @if (message()) {
     <p class="success-message">{{ message() }}</p>
@@ -98,3 +101,4 @@
     </section>
   </div>
 }
+</div>

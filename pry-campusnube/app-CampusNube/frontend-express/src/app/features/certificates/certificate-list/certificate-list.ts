@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +24,7 @@ import { CertificateForm } from '../certificate-form/certificate-form';
 @Component({
   selector: 'app-certificate-list',
   standalone: true,
-  imports: [
+  imports: [HasPermissionDirective, 
     CommonModule,
     FormsModule,
     ButtonModule,
@@ -65,7 +66,7 @@ export class CertificateList {
     this.errorMessage.set('');
 
     forkJoin({
-      certificates: this.api.list(),
+      certificates: this.api.list(true),
       enrollments: this.enrollmentApi.list(),
     }).subscribe({
       next: ({ certificates, enrollments }) => {
@@ -102,6 +103,14 @@ export class CertificateList {
   readonly activeCount = computed(
     () => this.certificates().filter((certificate) => certificate.isActive).length,
   );
+
+  readonly statusFilter = signal('active');
+
+  readonly rowsByStatus = computed(() => {
+    const rows = this.filteredCertificates();
+    const status = this.statusFilter();
+    return status === 'all' ? rows : rows.filter((row) => (row.isActive ? 'active' : 'inactive') === status);
+  });
 
   readonly filteredCertificates = computed(() => {
     const term = this.search().trim().toLowerCase();

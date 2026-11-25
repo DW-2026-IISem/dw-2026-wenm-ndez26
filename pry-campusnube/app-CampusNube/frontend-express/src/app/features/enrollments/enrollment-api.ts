@@ -11,9 +11,9 @@ export class EnrollmentApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/inscripciones`;
 
-  list(): Observable<Enrollment[]> {
+  list(includeInactive = false): Observable<Enrollment[]> {
     return this.http
-      .get<{ enrollments: Enrollment[] }>(this.base)
+      .get<{ enrollments: Enrollment[] }>(this.base, { params: includeInactive ? { include_inactive: 'true' } : {} })
       .pipe(map((response) => response.enrollments));
   }
 

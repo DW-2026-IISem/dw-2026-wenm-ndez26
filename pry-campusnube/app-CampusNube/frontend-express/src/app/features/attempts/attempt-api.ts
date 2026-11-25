@@ -10,8 +10,8 @@ export class AttemptApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/intentos`;
 
-  list(): Observable<Attempt[]> {
-    return this.http.get<Attempt[]>(this.base);
+  list(includeInactive = false): Observable<Attempt[]> {
+    return this.http.get<Attempt[]>(this.base, { params: includeInactive ? { include_inactive: 'true' } : {} });
   }
 
   get(id: number): Observable<Attempt> {

@@ -10,9 +10,9 @@ export class ProgressApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/progress`;
 
-  list(): Observable<Progress[]> {
+  list(includeInactive = false): Observable<Progress[]> {
     return this.http
-      .get<{ progress: Progress[] }>(this.base)
+      .get<{ progress: Progress[] }>(this.base, { params: includeInactive ? { include_inactive: 'true' } : {} })
       .pipe(map((response) => response.progress));
   }
 

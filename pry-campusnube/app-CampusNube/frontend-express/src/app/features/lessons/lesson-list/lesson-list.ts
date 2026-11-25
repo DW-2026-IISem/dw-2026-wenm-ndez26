@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
@@ -25,7 +26,7 @@ import { LessonForm } from '../lesson-form/lesson-form';
 @Component({
   selector: 'app-lesson-list',
   standalone: true,
-  imports: [DatePipe, 
+  imports: [HasPermissionDirective, DatePipe, 
     FormsModule,
     ButtonModule,
     DialogModule,
@@ -68,6 +69,14 @@ export class LessonList implements OnInit {
     return (id: number) => map.get(id) ?? `Módulo #${id}`;
   });
 
+  readonly statusFilter = signal('active');
+
+  readonly rowsByStatus = computed(() => {
+    const rows = this.filteredRows();
+    const status = this.statusFilter();
+    return status === 'all' ? rows : rows.filter((row) => (row.isActive ? 'active' : 'inactive') === status);
+  });
+
   readonly filteredRows = computed(() => {
     const term = this.search().trim().toLowerCase();
 
@@ -95,7 +104,7 @@ export class LessonList implements OnInit {
     this.error.set(null);
 
     forkJoin({
-      lessons: this.api.list(),
+      lessons: this.api.list(true),
       modules: this.modulesApi.list(),
     }).subscribe({
       next: ({ lessons, modules }) => {

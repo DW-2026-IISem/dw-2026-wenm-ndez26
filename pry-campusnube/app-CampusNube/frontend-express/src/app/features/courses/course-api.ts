@@ -9,9 +9,11 @@ export class CourseApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/cursos`;
 
-  list(): Observable<Course[]> {
+  list(includeInactive = false): Observable<Course[]> {
     return this.http
-      .get<{ courses: Course[] }>(this.base)
+      .get<{ courses: Course[] }>(this.base, {
+        params: includeInactive ? { include_inactive: 'true' } : {},
+      })
       .pipe(map((response) => response.courses));
   }
 

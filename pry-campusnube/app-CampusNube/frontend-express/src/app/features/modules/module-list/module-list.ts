@@ -1,3 +1,4 @@
+import { SessionStore } from '../../../core/auth/session.store';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
@@ -56,6 +57,7 @@ export class ModuleList implements OnInit {
 
   readonly search = signal('');
 
+  private readonly moduleSession = inject(SessionStore);
   readonly dialogVisible = signal(false);
   readonly selectedModule = signal<Module | null>(null);
 
@@ -72,14 +74,21 @@ export class ModuleList implements OnInit {
   });
 
   // Búsqueda por nombre, descripción y curso.
+  readonly statusFilter = signal('active');
+  readonly reactivating = signal(false);
+
   readonly filteredRows = computed(() => {
     const term = this.search().trim().toLowerCase();
+    const status = this.statusFilter();
+    const rows = this.rows().filter((row) =>
+      status === 'all' || row.isActive === (status === 'active'),
+    );
 
     if (!term) {
-      return this.rows();
+      return rows;
     }
 
-    return this.rows().filter((module) => {
+    return rows.filter((module) => {
       const course = this.courseName()(module.course_id);
 
       return (
@@ -100,7 +109,7 @@ export class ModuleList implements OnInit {
     this.error.set(null);
 
     forkJoin({
-      modules: this.api.list(),
+      modules: this.api.list(true),
       courses: this.coursesApi.list(),
     }).subscribe({
       next: ({ modules, courses }) => {
@@ -167,6 +176,35 @@ export class ModuleList implements OnInit {
           summary: 'Error',
           detail: 'No fue posible guardar el módulo.',
           life: 4000,
+        });
+      },
+    });
+  }
+
+  canReactivate(row: Module): boolean {
+    return !row.isActive && this.moduleSession.can('PATCH', '/api/modulos/' + row.id);
+  }
+
+  reactivate(row: Module): void {
+    if (!this.canReactivate(row) || this.reactivating()) return;
+
+    this.reactivating.set(true);
+    this.api.update(row.id, { isActive: true }).subscribe({
+      next: (updated) => {
+        this.rows.update((rows) => rows.map((item) => item.id === updated.id ? updated : item));
+        this.reactivating.set(false);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Módulo reactivado',
+          detail: 'El módulo vuelve a estar activo.',
+        });
+      },
+      error: (err) => {
+        this.reactivating.set(false);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'No se pudo reactivar',
+          detail: err.error?.message || 'Verifica que el curso asociado siga activo.',
         });
       },
     });

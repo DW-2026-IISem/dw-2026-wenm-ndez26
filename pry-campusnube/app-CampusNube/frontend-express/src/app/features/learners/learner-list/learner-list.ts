@@ -46,9 +46,15 @@ export class LearnerList {
   readonly saving = signal(false);
   readonly error = signal<string | null>(null);
   readonly filter = signal('');
+  readonly statusFilter = signal('active');
 
   readonly visibleRows = computed(() =>
-    filterRows(this.rows(), this.filter(), (learner) => [
+    filterRows(
+      this.rows().filter(
+        (learner) => this.statusFilter() === 'all' || learner.status === this.statusFilter(),
+      ),
+      this.filter(),
+      (learner) => [
       learner.id,
       learner.name,
       learner.description,
@@ -70,7 +76,7 @@ export class LearnerList {
     this.loading.set(true);
     this.error.set(null);
 
-    this.api.list().subscribe({
+    this.api.list(true).subscribe({
       next: (rows) => {
         this.rows.set(rows);
         this.loading.set(false);
@@ -116,6 +122,7 @@ export class LearnerList {
   }
 
   deactivate(learner: Learner): void {
+    if (learner.status !== 'active') return;
     this.confirmation.confirm({
       header: 'Baja lógica',
       message: `¿Desactivar a ${learner.name}?`,

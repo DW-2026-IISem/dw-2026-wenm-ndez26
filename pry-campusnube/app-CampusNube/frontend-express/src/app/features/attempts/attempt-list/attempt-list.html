@@ -2,7 +2,9 @@
 <p-confirmdialog />
 
 <div class="flex flex-col gap-5">
-  <div class="flex flex-wrap items-center justify-between gap-3">
+  <div class="campus-module-hero">
+  <div class="campus-module-hero-content">
+<div class="flex flex-wrap items-center justify-between gap-3">
     <div>
       <h1 class="text-2xl font-semibold">Intentos</h1>
       <p class="text-sm text-gray-500">Administración de intentos vinculados a inscripciones.</p>
@@ -10,6 +12,9 @@
 
     <p-button label="Nuevo intento" icon="pi pi-plus" (onClick)="newAttempt()" />
   </div>
+  </div>
+  <img class="campus-module-hero-photo" src="portadas/campusnube-intentos-ia.png" alt="" />
+</div>
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
     <div class="rounded-xl border p-4">
@@ -34,8 +39,21 @@
     />
   </div>
 
+  <label class="mb-3 flex flex-wrap items-center gap-2">
+    <span class="font-semibold">Estado</span>
+    <select
+      #listStatus
+      class="rounded-lg border border-slate-400 bg-white px-3 py-2"
+      [value]="statusFilter()"
+      (change)="statusFilter.set(listStatus.value)"
+    >
+      <option value="active">Activos</option>
+      <option value="inactive">Inactivos</option>
+      <option value="all">Todos</option>
+    </select>
+  </label>
   <p-table
-    [value]="filteredAttempts()"
+    [value]="rowsByStatus()"
     [loading]="loading()"
     [paginator]="true"
     [rows]="10"
@@ -83,23 +101,23 @@
               (onClick)="editAttempt(attempt)"
             />
 
-            <p-button
+            <ng-container *appHasPermission="'PATCH /api/intentos/:id/deactivate'"><p-button
               icon="pi pi-ban"
               severity="warn"
               [text]="true"
               [rounded]="true"
               pTooltip="Desactivar"
               (onClick)="deactivate(attempt)"
-            />
+            /></ng-container>
 
-            <p-button
+            <ng-container *appHasPermission="'DELETE /api/intentos/:id'"><p-button
               icon="pi pi-trash"
               severity="danger"
               [text]="true"
               [rounded]="true"
               pTooltip="Eliminar físicamente"
               (onClick)="remove(attempt)"
-            />
+            /></ng-container>
           </div>
         </td>
       </tr>

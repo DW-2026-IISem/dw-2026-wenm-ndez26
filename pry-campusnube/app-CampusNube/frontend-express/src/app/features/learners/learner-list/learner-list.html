@@ -1,3 +1,5 @@
+<div class="campus-learners-banner">
+  <div class="campus-learners-content">
 <app-page-header
   title="Aprendices"
   subtitle="Gestión y administración de aprendices de CampusNube."
@@ -9,6 +11,9 @@
     <span pButtonLabel>Nuevo aprendiz</span>
   </button>
 </app-page-header>
+  </div>
+  <img class="campus-learners-photo" src="campusnube-aprendices-portada.png" alt="" />
+</div>
 
 @if (error()) {
   <p-message severity="error" styleClass="mb-4 w-full">
@@ -17,6 +22,19 @@
 }
 
 <div class="rounded-xl border border-slate-200 bg-white">
+  <label class="mb-3 flex flex-wrap items-center gap-2">
+    <span class="font-semibold">Estado</span>
+    <select
+      #learnerStatus
+      class="rounded-lg border border-slate-400 bg-white px-3 py-2"
+      [value]="statusFilter()"
+      (change)="statusFilter.set(learnerStatus.value)"
+    >
+      <option value="active">Activos</option>
+      <option value="inactive">Inactivos</option>
+      <option value="all">Todos</option>
+    </select>
+  </label>
   <p-table
     [value]="visibleRows()"
     [loading]="loading()"
@@ -53,7 +71,6 @@
         </th>
         <th>Descripción</th>
         <th>Estado</th>
-        <th>Activo</th>
         <th>Creado / Actualizado</th>
         <th class="w-40 text-right">Acciones</th>
       </tr>
@@ -69,7 +86,6 @@
         <td>
           <app-status-tag [status]="learner.status" />
         </td>
-          <td>{{ learner.isActive ? 'Sí' : 'No' }}</td>
         <td class="text-xs text-slate-500">
           {{ learner.createdAt | date: 'short' }}<br />
           {{ learner.updatedAt | date: 'short' }}
@@ -90,7 +106,8 @@
               <span pButtonLabel>Editar</span>
             </button>
 
-            <button
+            @if (learner.status === 'active') {
+              <button
               pButton
               type="button"
               text
@@ -103,6 +120,7 @@
               <i pButtonIcon class="pi pi-ban"></i>
               <span pButtonLabel>Desactivar</span>
             </button>
+            }
 
             <button
               pButton
@@ -124,7 +142,7 @@
 
     <ng-template #emptymessage>
       <tr>
-        <td colspan="6">
+        <td colspan="5">
           @if (filter()) {
             <app-empty-state
               icon="pi pi-search"

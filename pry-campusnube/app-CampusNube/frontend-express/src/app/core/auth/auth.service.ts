@@ -45,13 +45,27 @@ export class AuthService {
     );
   }
 
+  updateAvatar(avatar: string | null): Observable<AccessPayload> {
+    return this.http.patch<void>(this.base + '/perfil/avatar', { avatar }).pipe(
+      switchMap(() => this.me()),
+    );
+  }
+
+  private resolveAvatar(avatar: string | null | undefined): string | null {
+    if (!avatar?.startsWith('/api/sesion/avatares/')) return avatar ?? null;
+    return this.base + avatar.slice('/api/sesion'.length);
+  }
+
   me(): Observable<AccessPayload> {
     return forkJoin({
       profile: this.http.get<ProfilePayload>(`${this.base}/perfil`),
       permissions: this.http.get<PermissionsPayload>(`${environment.apiUrl}/permisos`),
     }).pipe(
       map((response) => ({
-        user: response.profile.user,
+        user: {
+          ...response.profile.user,
+          avatar: this.resolveAvatar(response.profile.user.avatar),
+        },
         permissions: response.permissions.permissions,
       })),
       tap((access) => {

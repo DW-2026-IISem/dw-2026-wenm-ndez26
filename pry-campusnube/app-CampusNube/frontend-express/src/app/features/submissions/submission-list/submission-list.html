@@ -2,7 +2,9 @@
 <p-confirmdialog />
 
 <div class="flex flex-col gap-5">
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+  <div class="campus-module-hero">
+  <div class="campus-module-hero-content">
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
     <div>
       <h1 class="text-2xl font-bold">Gestión de Entregas</h1>
       <p class="text-gray-500">
@@ -12,15 +14,18 @@
 
     <p-button label="Nueva entrega" icon="pi pi-plus" (onClick)="create()" />
   </div>
+  </div>
+  <img class="campus-module-hero-photo" src="portadas/campusnube-entregas-ia.png" alt="" />
+</div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <div class="rounded-xl border border-gray-200 p-4">
-      <p class="text-sm text-gray-500">Total de entregas</p>
+      <p class="text-sm text-gray-500"><span class="campus-indicator-label">Total de entregas</span></p>
       <p class="text-2xl font-bold">{{ totalCount() }}</p>
     </div>
 
     <div class="rounded-xl border border-gray-200 p-4">
-      <p class="text-sm text-gray-500">Entregas activas</p>
+      <p class="text-sm text-gray-500"><span class="campus-indicator-label">Entregas activas</span></p>
       <p class="text-2xl font-bold">{{ activeCount() }}</p>
     </div>
   </div>
@@ -106,7 +111,7 @@
                 (onClick)="edit(submission)"
               />
 
-              <p-button
+              <ng-container *appHasPermission="'PATCH /api/entregas/:id/deactivate'"><p-button
                 icon="pi pi-ban"
                 severity="warn"
                 [text]="true"
@@ -115,9 +120,9 @@
                 tooltipPosition="top"
                 (onClick)="deactivate(submission)"
                 [disabled]="submission.estado?.toLowerCase() === 'inactivo'"
-              />
+              /></ng-container>
 
-              <p-button
+              <ng-container *appHasPermission="'DELETE /api/entregas/:id'"><p-button
                 icon="pi pi-trash"
                 severity="danger"
                 [text]="true"
@@ -125,7 +130,7 @@
                 pTooltip="Eliminar definitivamente"
                 tooltipPosition="top"
                 (onClick)="remove(submission)"
-              />
+              /></ng-container>
             </div>
           </td>
         </tr>

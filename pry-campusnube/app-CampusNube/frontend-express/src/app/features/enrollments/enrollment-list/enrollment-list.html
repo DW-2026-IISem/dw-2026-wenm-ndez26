@@ -2,14 +2,19 @@
 <p-confirmdialog />
 
 <section class="flex flex-col gap-4">
-  <div class="flex flex-wrap justify-between items-center gap-3">
+  <div class="campus-module-hero">
+  <div class="campus-module-hero-content">
+<div class="flex flex-wrap justify-between items-center gap-3">
     <div>
       <h2 class="text-2xl font-semibold">Gestión de inscripciones</h2>
       <p class="text-gray-500">Administración de las relaciones entre aprendices y cursos.</p>
     </div>
 
-    <p-button label="Nueva inscripción" icon="pi pi-plus" (onClick)="openCreate()" />
+    <ng-container *appHasPermission="'POST /api/inscripciones'"><p-button label="Nueva inscripción" icon="pi pi-plus" (onClick)="openCreate()" /></ng-container>
   </div>
+  </div>
+  <img class="campus-module-hero-photo" src="portadas/campusnube-inscripciones-ia.png" alt="" />
+</div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div class="rounded-lg border p-4">
@@ -57,8 +62,21 @@
   }
 
   @if (!loading() && !error()) {
+    <label class="mb-3 flex flex-wrap items-center gap-2">
+      <span class="font-semibold">Estado</span>
+      <select
+        #listStatus
+        class="rounded-lg border border-slate-400 bg-white px-3 py-2"
+        [value]="statusFilter()"
+        (change)="statusFilter.set(listStatus.value)"
+      >
+        <option value="active">Activos</option>
+        <option value="inactive">Inactivos</option>
+        <option value="all">Todos</option>
+      </select>
+    </label>
     <p-table
-      [value]="filteredRows()"
+      [value]="rowsByStatus()"
       [paginator]="true"
       [rows]="10"
       [rowsPerPageOptions]="[5, 10, 20]"
@@ -106,7 +124,7 @@
           </td>
           <td>
             <div class="flex flex-wrap gap-2">
-              <p-button
+              <ng-container *appHasPermission="'PATCH /api/inscripciones/:id'"><p-button
                 icon="pi pi-pencil"
                 severity="info"
                 [rounded]="true"
@@ -114,10 +132,10 @@
                 [raised]="true"
                 pTooltip="Editar inscripción"
                 (onClick)="openEdit(row)"
-              />
+              /></ng-container>
 
               @if (row.status === 'active') {
-                <p-button
+                <ng-container *appHasPermission="'PATCH /api/inscripciones/:id/deactivate'"><p-button
                   icon="pi pi-ban"
                   severity="warn"
                   [rounded]="true"
@@ -125,10 +143,10 @@
                   [raised]="true"
                   pTooltip="Desactivar inscripción"
                   (onClick)="deactivate(row)"
-                />
+                /></ng-container>
               }
 
-              <p-button
+              <ng-container *appHasPermission="'DELETE /api/inscripciones/:id'"><p-button
                 icon="pi pi-trash"
                 severity="danger"
                 [rounded]="true"
@@ -136,7 +154,7 @@
                 [raised]="true"
                 pTooltip="Eliminar inscripción"
                 (onClick)="remove(row)"
-              />
+              /></ng-container>
             </div>
           </td>
         </tr>

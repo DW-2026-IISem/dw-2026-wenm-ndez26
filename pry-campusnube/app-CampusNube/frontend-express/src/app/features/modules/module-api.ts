@@ -10,9 +10,11 @@ export class ModuleApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/modulos`;
 
-  list(): Observable<Module[]> {
+  list(includeInactive = false): Observable<Module[]> {
     return this.http
-      .get<{ modules: Module[] }>(this.base)
+      .get<{ modules: Module[] }>(this.base, {
+        params: includeInactive ? { include_inactive: 'true' } : {},
+      })
       .pipe(map((response) => response.modules));
   }
 

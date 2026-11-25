@@ -4,12 +4,32 @@
 
     @if (store.user(); as user) {
       <div class="profile-avatar">
-        @if (user.avatar) {
-          <img [src]="user.avatar" alt="Avatar del usuario" />
+        @if (avatarPreview() || user.avatar; as photo) {
+          <img [src]="photo" alt="Foto de perfil" />
         } @else {
           <span>{{ user.username.charAt(0).toUpperCase() }}</span>
         }
       </div>
+
+      <div class="profile-photo-actions" aria-label="Foto de perfil">
+        <input #photoInput type="file" accept="image/jpeg,image/png,image/webp"
+          hidden (change)="selectPhoto(photoInput)" />
+
+        <button type="button" (click)="photoInput.click()" [disabled]="photoBusy()">
+          Cambiar foto
+        </button>
+
+        @if (avatarPreview(); as preview) {
+          <button type="button" (click)="savePhoto(preview)" [disabled]="photoBusy()">Guardar foto</button>
+          <button type="button" (click)="avatarPreview.set(null)" [disabled]="photoBusy()">Cancelar</button>
+        } @else if (user.avatar) {
+          <button type="button" (click)="savePhoto(null)" [disabled]="photoBusy()">Quitar foto</button>
+        }
+      </div>
+
+      @if (photoMessage()) {
+        <p role="status">{{ photoMessage() }}</p>
+      }
 
       <div class="profile-data">
         <p><strong>Usuario:</strong> {{ user.username }}</p>
@@ -28,7 +48,7 @@
 
     <div class="profile-actions">
       <button type="button" (click)="refreshProfile()" [disabled]="loading()">
-        {{ loading() ? 'Actualizando...' : 'Actualizar perfil' }}
+        {{ loading() ? 'Recargando...' : 'Recargar datos' }}
       </button>
 
       <button type="button" class="logout-button" (click)="logout()">Cerrar sesión</button>

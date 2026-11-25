@@ -195,6 +195,12 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'forbidden',
+    title: 'Acceso denegado · CampusNube',
+    loadComponent: () =>
+      import('./features/forbidden/forbidden').then((m) => m.Forbidden),
+  },
+  {
     path: '**',
     redirectTo: 'aprendices',
   },

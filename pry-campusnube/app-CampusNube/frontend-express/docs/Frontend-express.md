@@ -2081,7 +2081,7 @@ El módulo permitirá crear, consultar, editar, desactivar y eliminar entregas, 
 La interfaz debe respetar estas reglas:
 
 | Campo           | Regla                                                   |
-|----------------------|--------------------------------------------------|
+|-----------------------|------------------------------------------------|
 | `referencia_id` | Obligatorio, numérico                                   |
 | `lesson_id`     | Obligatorio, debe corresponder a una lección activa     |
 | `enrollment_id` | Obligatorio, debe corresponder a una inscripción activa |
@@ -3506,7 +3506,7 @@ git commit -m "Fase II: ISS-19.1 - Modelos del frontend con el mismo orden y cam
  git push origin main 
 ```
 
-# ISS-20 — Pantalla Unificada de Roles y Permisos 
+# ISS-20 — Pantalla Unificada de Roles y Permisos
 
 ## 1. Se crea carpeta llamada crud en el backend
 
@@ -3538,13 +3538,13 @@ Se agrega una prueba que abre la pantalla unificada y comprueba que los enlaces 
 
 ![](images/clipboard-1910671435.png)
 
-###  ISS-20 · Visibilidad de Roles y permisos según el acceso
+### ISS-20 · Visibilidad de Roles y permisos según el acceso
 
 Se filtran la entrada del menú y los enlaces de Asignaciones y Concesiones usando los permisos efectivos de la sesión.
 
 ![](images/clipboard-879088526.png)
 
-###  ISS-20 · Verificación final del CRUD
+### ISS-20 · Verificación final del CRUD
 
 ![](images/clipboard-2537531530.png)
 
@@ -3559,3 +3559,109 @@ gid add .
 git commit -m "ISS-20: Unificar la gestión de roles y permisos en CampusNube"
 git push origin main
 ```
+
+## ISS-21 · Mejoras y Rediseño de Campus nube
+
+Se crea el logo, se usa como favicon y se incorpora junto al nombre en el inicio de sesión. El bloque también busca el nombre en el encabezado y el menú lateral para aplicarles la misma marca. Al terminar, la terminal te indica qué plantillas se actualizaron.
+
+![](images/clipboard-1081784260.png)
+
+### ISS 21.1 Rediseño del inicio de sesión de CampusNube
+
+![](images/clipboard-2244222254.png)
+
+![](images/clipboard-1105193052.png)
+
+### CampusNube · Rediseño del panel y la navegación
+
+![](images/clipboard-1722737369.png)
+
+## Diseño del módulo Docentes
+
+Se mejoró el módulo docentes
+
+![](images/clipboard-3098808594.png)
+
+## Diseño del módulo aprendices 
+
+Se realizó una mejora del módulo Aprendices
+
+![](images/clipboard-2056410697.png)
+
+![](images/clipboard-601272099.png)
+
+## Diseño del módulo cursos 
+
+Se realizó unan mejora del moduló Cursos
+
+![](images/clipboard-3417195232.png)
+
+## Diseño del módulo módulos 
+
+Se realizó unan mejora del moduló Módulos
+
+![](images/clipboard-1581929353.png)
+
+## Diseño del módulo Lecciones
+
+Se realizó unan mejora del moduló Lecciones
+
+![](images/clipboard-3060572872.png)
+
+## Diseño del módulo Evaluaciones
+
+Se realizó unan mejora del moduló Evaluaciones
+
+![](images/clipboard-3312704149.png)
+
+## Diseño del módulo Inscripciones
+
+Se realizó unan mejora del moduló Inscripciones
+
+![](images/clipboard-4202541012.png)
+
+## Diseño del módulo Intentos
+
+Se realizó unan mejora del moduló Intentos
+
+![](images/clipboard-3741025633.png)
+
+## Diseño del módulo Entegas
+
+Se realizó unan mejora del moduló Entregas
+
+![](images/clipboard-2188223658.png)
+
+## Diseño del módulo Progreso
+
+Se realizó unan mejora del moduló Progreso
+
+![](images/clipboard-2373074912.png)
+
+### Diseño del módulo Certificados
+
+Se realizó unan mejora del moduló Certificados
+
+![](images/clipboard-2983726856.png)
+
+### Diseño · Administración de usuarios
+
+![](images/clipboard-2620600791.png)
+
+### Diseño · Administración de roles
+
+![](images/clipboard-2148309015.png)
+
+### Recursos HTTP · Diseño y filtros combinables
+
+![](images/clipboard-751476947.png)
+
+## ISS-21· Modificaciones y Ajustes finales de CampusNube
+
+```         
+gid add . 
+git commit -m "ISS-21: Modificaciones y ajustes finales de CampusNube" 
+git push origin main
+```
+
+## 

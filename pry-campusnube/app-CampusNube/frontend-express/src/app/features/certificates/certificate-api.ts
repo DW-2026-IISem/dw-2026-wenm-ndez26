@@ -13,8 +13,8 @@ export class CertificateApi {
 
   private readonly base = `${environment.apiUrl}/certificates`;
 
-  list(): Observable<Certificate[]> {
-    return this.http.get<Certificate[]>(this.base);
+  list(includeInactive = false): Observable<Certificate[]> {
+    return this.http.get<Certificate[]>(this.base, { params: includeInactive ? { include_inactive: 'true' } : {} });
   }
 
   get(id: number): Observable<Certificate> {

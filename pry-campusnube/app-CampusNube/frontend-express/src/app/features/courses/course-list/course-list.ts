@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { SessionStore } from '../../../core/auth/session.store';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -45,6 +46,7 @@ import { HasPermissionDirective } from '../../../shared/directives/has-permissio
 export class CourseList {
   private readonly api = inject(CourseApi);
   private readonly teacherApi = inject(TeacherApi);
+  private readonly session = inject(SessionStore);
   private readonly notify = inject(NotificationService);
   private readonly confirmation = inject(ConfirmationService);
 
@@ -54,15 +56,21 @@ export class CourseList {
   readonly saving = signal(false);
   readonly error = signal<string | null>(null);
   readonly filter = signal('');
+  readonly statusFilter = signal('active');
 
-  readonly visibleRows = computed(() =>
-    filterRows(this.rows(), this.filter(), (course) => [
+  readonly visibleRows = computed(() => {
+    const status = this.statusFilter();
+    const rows = this.rows().filter(
+      (course) => status === 'all' || course.isActive === (status === 'active'),
+    );
+
+    return filterRows(rows, this.filter(), (course) => [
       course.id,
       course.name,
       course.description,
       course.isActive ? 'activo' : 'inactivo',
-    ]),
-  );
+    ]);
+  });
 
   readonly activeCourseCount = computed(
     () => this.rows().filter((course) => course.isActive).length,
@@ -88,8 +96,10 @@ export class CourseList {
     this.error.set(null);
 
     forkJoin({
-      courses: this.api.list(),
-      teachers: this.teacherApi.list(),
+      courses: this.api.list(true),
+      teachers: this.session.canPermission('GET /api/docentes')
+        ? this.teacherApi.list()
+        : of<Teacher[]>([]),
     }).subscribe({
       next: ({ courses, teachers }) => {
         this.rows.set(courses);

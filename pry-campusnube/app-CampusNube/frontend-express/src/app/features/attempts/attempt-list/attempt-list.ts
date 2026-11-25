@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { forkJoin } from 'rxjs';
@@ -23,7 +24,7 @@ import { AttemptForm } from '../attempt-form/attempt-form';
 @Component({
   selector: 'app-attempt-list',
   standalone: true,
-  imports: [DatePipe, 
+  imports: [HasPermissionDirective, DatePipe, 
     ButtonModule,
     TableModule,
     DialogModule,
@@ -61,6 +62,14 @@ export class AttemptList {
     return map;
   });
 
+  readonly statusFilter = signal('active');
+
+  readonly rowsByStatus = computed(() => {
+    const rows = this.filteredAttempts();
+    const status = this.statusFilter();
+    return status === 'all' ? rows : rows.filter((row) => (row.isActive ? 'active' : 'inactive') === status);
+  });
+
   filteredAttempts = computed(() => {
     const term = this.search().toLowerCase().trim();
 
@@ -92,7 +101,7 @@ export class AttemptList {
     this.loading.set(true);
 
     forkJoin({
-      attempts: this.api.list(),
+      attempts: this.api.list(true),
       enrollments: this.enrollmentApi.list(),
     }).subscribe({
       next: (response) => {

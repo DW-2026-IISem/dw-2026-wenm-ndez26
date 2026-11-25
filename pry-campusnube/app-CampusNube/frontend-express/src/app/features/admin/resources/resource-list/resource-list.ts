@@ -1,9 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
 import { ResourceApi } from '../resource-api';
 import { ResourceForm } from '../resource-form/resource-form';
 
 import {
+  HTTP_METHODS,
   Resource,
   ResourcePayload,
   ResourceUpdatePayload,
@@ -23,11 +24,49 @@ export class ResourceList {
   private readonly session = inject(SessionStore);
 
   readonly resources = signal<Resource[]>([]);
+  readonly methods = HTTP_METHODS;
+  readonly search = signal('');
+  readonly methodFilter = signal('');
+  readonly statusFilter = signal('');
+
+  readonly hasFilters = computed(
+    () => Boolean(this.search().trim() || this.methodFilter() || this.statusFilter()),
+  );
+
+  readonly visibleResources = computed(() => {
+    const terms = this.normalize(this.search()).split(/\s+/).filter(Boolean);
+    const method = this.methodFilter();
+    const status = this.statusFilter();
+
+    return this.resources().filter((resource) => {
+      const resourceMethod = resource.method.toUpperCase();
+      const resourceStatus = resource.status === 'active' ? 'active' : 'inactive';
+
+      if (method && method !== resourceMethod) return false;
+      if (status && status !== resourceStatus) return false;
+      if (!terms.length) return true;
+
+      const text = this.normalize(
+        [resourceMethod, resource.path, resource.description ?? ''].join(' '),
+      );
+      return terms.every((term) => text.includes(term));
+    });
+  });
   readonly loading = signal(false);
   readonly error = signal('');
   readonly message = signal('');
   readonly showForm = signal(false);
   readonly editingResource = signal<Resource | null>(null);
+
+  clearFilters(): void {
+    this.search.set('');
+    this.methodFilter.set('');
+    this.statusFilter.set('');
+  }
+
+  private normalize(value: string): string {
+    return value.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').trim();
+  }
 
   canList(): boolean {
     return this.session.can('GET', '/api/recursos');

@@ -1,4 +1,4 @@
-<section class="resources-container">
+<section class="resources-container campus-resources-page">
   <header class="resources-header">
     <div>
       <h2>Catálogo de recursos HTTP</h2>
@@ -28,6 +28,58 @@
     @if (loading()) {
       <p>Cargando recursos...</p>
     } @else {
+      <section class="campus-resource-filters" aria-label="Filtros de recursos HTTP">
+        <div class="campus-resource-fields">
+          <label for="resource-search">
+            Buscar recurso
+            <input
+              #query
+              id="resource-search"
+              type="search"
+              placeholder="Ejemplo: PATCH aprendices"
+              [value]="search()"
+              (input)="search.set(query.value)"
+            />
+          </label>
+
+          <label for="resource-method">
+            Método HTTP
+            <select
+              #method
+              id="resource-method"
+              [value]="methodFilter()"
+              (change)="methodFilter.set(method.value)"
+            >
+              <option value="">Todos los métodos</option>
+              @for (option of methods; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+          </label>
+
+          <label for="resource-status">
+            Estado
+            <select
+              #status
+              id="resource-status"
+              [value]="statusFilter()"
+              (change)="statusFilter.set(status.value)"
+            >
+              <option value="">Todos los estados</option>
+              <option value="active">Activo</option>
+              <option value="inactive">Inactivo</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="campus-resource-summary">
+          <span role="status">{{ visibleResources().length }} de {{ resources().length }} recursos</span>
+          @if (hasFilters()) {
+            <button type="button" (click)="clearFilters()">Limpiar filtros</button>
+          }
+        </div>
+      </section>
+
       <div class="table-container">
         <table>
           <thead>
@@ -41,7 +93,7 @@
           </thead>
 
           <tbody>
-            @for (resource of resources(); track resource.id) {
+            @for (resource of visibleResources(); track resource.id) {
               <tr>
                 <td>
                   <span class="method-tag">{{ resource.method }}</span>
@@ -87,7 +139,9 @@
               </tr>
             } @empty {
               <tr>
-                <td colspan="5">No hay recursos registrados.</td>
+                <td colspan="5">
+                  {{ hasFilters() ? 'No hay recursos que coincidan con los filtros.' : 'No hay recursos registrados.' }}
+                </td>
               </tr>
             }
           </tbody>

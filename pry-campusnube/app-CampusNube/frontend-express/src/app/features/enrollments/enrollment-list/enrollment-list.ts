@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
@@ -28,7 +29,7 @@ import { EnrollmentForm } from '../enrollment-form/enrollment-form';
 @Component({
   selector: 'app-enrollment-list',
   standalone: true,
-  imports: [
+  imports: [HasPermissionDirective, 
     FormsModule,
     DatePipe,
     ButtonModule,
@@ -83,6 +84,14 @@ export class EnrollmentList implements OnInit {
 
   readonly totalEnrollmentCount = computed(() => this.rows().length);
 
+  readonly statusFilter = signal('active');
+
+  readonly rowsByStatus = computed(() => {
+    const rows = this.filteredRows();
+    const status = this.statusFilter();
+    return status === 'all' ? rows : rows.filter((row) => row.status === status);
+  });
+
   readonly filteredRows = computed(() => {
     const term = this.search().trim().toLowerCase();
 
@@ -111,7 +120,7 @@ export class EnrollmentList implements OnInit {
     this.error.set(null);
 
     forkJoin({
-      enrollments: this.api.list(),
+      enrollments: this.api.list(true),
       learners: this.learnersApi.list(),
       courses: this.coursesApi.list(),
     }).subscribe({

@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from '../../../shared/directives/has-permission';
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
@@ -25,7 +26,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 @Component({
   selector: 'app-submission-list',
   standalone: true,
-  imports: [
+  imports: [HasPermissionDirective, 
     CommonModule,
     ButtonModule,
     TableModule,

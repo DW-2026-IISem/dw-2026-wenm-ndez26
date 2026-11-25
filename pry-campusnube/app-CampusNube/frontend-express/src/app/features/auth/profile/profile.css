@@ -69,3 +69,24 @@
 .error-message {
   color: #b91c1c;
 }
+
+.profile-photo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.75rem 1rem;
+}
+
+.profile-photo-actions button {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #b8cde8;
+  border-radius: 0.55rem;
+  background: #eef5ff;
+  color: #163b78;
+  font-weight: 600;
+}
+
+.profile-photo-actions button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

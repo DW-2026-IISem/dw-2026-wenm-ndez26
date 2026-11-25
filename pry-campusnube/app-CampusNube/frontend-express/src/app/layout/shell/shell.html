@@ -1,9 +1,9 @@
-<div class="flex min-h-screen flex-col bg-slate-100">
+<div class="campus-shell flex min-h-screen flex-col bg-slate-100">
   <app-header (menuRequested)="onMenuToggle()" />
 
   <div class="flex flex-1">
     @if (!sidebarCollapsed()) {
-      <aside class="sticky top-16 hidden h-[calc(100vh-4rem)] w-72 shrink-0 lg:block">
+      <aside class="sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 lg:block">
         <app-aside
           [items]="items()"
           [showSession]="session.isAuthenticated()"

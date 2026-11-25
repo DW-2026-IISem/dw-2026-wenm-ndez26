@@ -11,9 +11,9 @@ export class EvaluationApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/evaluaciones`;
 
-  list(): Observable<Evaluation[]> {
+  list(includeInactive = false): Observable<Evaluation[]> {
     return this.http
-      .get<{ evaluations: Evaluation[] }>(this.base)
+      .get<{ evaluations: Evaluation[] }>(this.base, { params: includeInactive ? { include_inactive: 'true' } : {} })
       .pipe(map((response) => response.evaluations));
   }
 

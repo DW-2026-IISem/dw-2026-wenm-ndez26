@@ -9,9 +9,11 @@ export class LearnerApi {
   private readonly http = inject(HttpClient);
   private readonly base = `${environment.apiUrl}/aprendices`;
 
-  list(): Observable<Learner[]> {
+  list(includeInactive = false): Observable<Learner[]> {
     return this.http
-      .get<{ learners: Learner[] }>(this.base)
+      .get<{ learners: Learner[] }>(this.base, {
+        params: includeInactive ? { include_inactive: 'true' } : {},
+      })
       .pipe(map((response) => response.learners));
   }
 

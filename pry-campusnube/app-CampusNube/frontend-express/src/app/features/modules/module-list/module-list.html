@@ -2,7 +2,9 @@
 <p-confirmdialog />
 
 <section class="flex flex-col gap-4">
-  <div class="flex flex-wrap justify-between items-center gap-3">
+  <div class="campus-module-hero">
+  <div class="campus-module-hero-content">
+<div class="flex flex-wrap justify-between items-center gap-3">
     <div>
       <h2 class="text-2xl font-semibold">Gestión de módulos</h2>
       <p class="text-gray-500">Administración de módulos y su relación con los cursos.</p>
@@ -10,12 +12,29 @@
 
     <p-button label="Nuevo módulo" icon="pi pi-plus" (onClick)="openCreate()" />
   </div>
+  </div>
+  <img class="campus-module-hero-photo" src="portadas/campusnube-modulos-ia.png" alt="" />
+</div>
 
   <div class="flex flex-wrap items-center justify-between gap-3">
     <p-tag [value]="activeModuleCount() + ' módulos activos'" severity="success" [rounded]="true" />
 
     <span class="text-sm text-gray-600"> Total de módulos: {{ rows().length }} </span>
   </div>
+
+  <label class="flex items-center gap-2">
+    <span class="font-semibold">Estado</span>
+    <select
+      #moduleStatus
+      class="rounded-lg border border-slate-400 bg-white px-3 py-2"
+      [value]="statusFilter()"
+      (change)="statusFilter.set(moduleStatus.value)"
+    >
+      <option value="active">Activos</option>
+      <option value="inactive">Inactivos</option>
+      <option value="all">Todos</option>
+    </select>
+  </label>
 
   <div class="w-full md:w-96">
     <input
@@ -123,6 +142,19 @@
                   [raised]="true"
                   pTooltip="Desactivar módulo"
                   (onClick)="deactivate(row)"
+                />
+              }
+
+              @if (canReactivate(row)) {
+                <p-button
+                  icon="pi pi-refresh"
+                  severity="success"
+                  [rounded]="true"
+                  [text]="true"
+                  [disabled]="reactivating()"
+                  pTooltip="Reactivar módulo"
+                  ariaLabel="Reactivar módulo"
+                  (onClick)="reactivate(row)"
                 />
               }
 

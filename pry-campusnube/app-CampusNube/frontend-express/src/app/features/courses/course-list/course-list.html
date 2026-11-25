@@ -1,3 +1,5 @@
+<div class="campus-courses-banner">
+  <div class="campus-courses-heading">
 <app-page-header title="Cursos" subtitle="Gestión y administración de cursos de CampusNube.">
   <p-tag [value]="activeCourseCount() + ' cursos activos'" severity="info" [rounded]="true" />
 
@@ -8,6 +10,9 @@
     </button>
   </ng-container>
 </app-page-header>
+  </div>
+  <img class="campus-courses-photo" src="portadas/campusnube-cursos-ia.png" alt="" />
+</div>
 
 @if (error()) {
   <p-message severity="error" styleClass="mb-4 w-full">
@@ -16,6 +21,19 @@
 }
 
 <div class="rounded-xl border border-slate-200 bg-white">
+  <label class="flex flex-wrap items-center gap-2 px-4 py-3">
+    <span class="font-semibold">Estado</span>
+    <select
+      #courseStatus
+      class="rounded-lg border border-slate-400 bg-white px-3 py-2"
+      [value]="statusFilter()"
+      (change)="statusFilter.set(courseStatus.value)"
+    >
+      <option value="active">Activos</option>
+      <option value="inactive">Inactivos</option>
+      <option value="all">Todos</option>
+    </select>
+  </label>
   <p-table
     [value]="visibleRows()"
     [loading]="loading()"

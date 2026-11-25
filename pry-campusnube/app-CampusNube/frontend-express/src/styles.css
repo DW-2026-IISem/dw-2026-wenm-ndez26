@@ -1,3 +1,1238 @@
 @layer theme, base, primeng, utilities;
 @import 'tailwindcss';
 @import 'primeicons/primeicons.css';
+
+@layer base {
+  :root {
+    --campusnube-navy: #122743;
+    --campusnube-teal: #0f766e;
+    --campusnube-mint: #5eead4;
+  }
+}
+
+.campusnube-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  vertical-align: middle;
+}
+
+.campusnube-mark {
+  display: block;
+  flex: none;
+  inline-size: 2rem;
+  block-size: 2rem;
+}
+
+.campusnube-brand--login {
+  gap: 0.75rem;
+}
+
+.campusnube-brand--login .campusnube-mark {
+  inline-size: 3rem;
+  block-size: 3rem;
+}
+
+/* CampusNube: acabado interior */
+app-header img[src="campusnube-logo.png"] {
+  height: 2.75rem;
+  width: min(11rem, 100%);
+  object-fit: contain;
+  object-position: left center;
+}
+
+app-aside img[src="campusnube-logo.png"] {
+  height: 2rem;
+  width: min(8rem, 100%);
+  object-fit: contain;
+  object-position: left center;
+}
+
+app-aside a[href] {
+  border-color: transparent;
+  border-radius: 0.65rem;
+}
+
+app-aside a[href]:hover {
+  background: #eef5ff;
+  color: #1749b0;
+}
+
+app-aside a[href]:is(.active, .router-link-active, [aria-current="page"]) {
+  background: #e4eeff;
+  color: #163ea1;
+  font-weight: 700;
+}
+
+app-aside a[href^="/admin/"] .pi {
+  color: #2158a5;
+}
+
+app-aside a:focus-visible {
+  outline: 2px solid #1654d1;
+  outline-offset: 2px;
+}
+
+/* CampusNube: estilos del Panel académico */
+app-dashboard:has(.dashboard) {
+  /* CampusNube: acabado del panel */
+  .dashboard {
+    color: #122743;
+  }
+
+  .dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: clamp(1.15rem, 3vw, 2rem);
+    border: 1px solid #cddff5;
+    border-radius: 1.15rem;
+    background: linear-gradient(115deg, #edf4ff, #e2f8fb);
+  }
+
+  .dashboard-header h1 {
+    color: #10294f;
+    font-size: clamp(1.75rem, 3vw, 2.65rem);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+
+  .dashboard-header p {
+    max-width: 65ch;
+    color: #405c78;
+  }
+
+  .dashboard-header .refresh-button {
+    min-height: 2.75rem;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid #9ebbea;
+    border-radius: 0.7rem;
+    background: #fff;
+    color: #1749a4;
+    font-weight: 700;
+  }
+
+  .dashboard-header .refresh-button:hover:not(:disabled) {
+    background: #e8f1ff;
+    color: #123979;
+  }
+
+  .section-heading h2 {
+    color: #173456;
+    font-size: 1.25rem;
+    font-weight: 750;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 0.9rem;
+  }
+
+  .dashboard .stat-card,
+  .dashboard .activity-card {
+    min-width: 0;
+    border: 1px solid #dbe6f5;
+    border-radius: 0.95rem;
+    background: #fff;
+    box-shadow: 0 4px 14px rgb(30 59 100 / 5%);
+  }
+
+  .dashboard .stat-card {
+    min-height: 6.75rem;
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .dashboard .stat-icon {
+    width: 2.65rem;
+    height: 2.65rem;
+    flex: 0 0 2.65rem;
+    border-radius: 0.7rem;
+    background: #e8f2ff;
+    color: #1854a8;
+  }
+
+  .stat-content strong {
+    color: #10294f;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .dashboard .stat-card-link:hover {
+    border-color: #8fb3f4;
+    box-shadow: 0 7px 18px rgb(30 59 100 / 10%);
+  }
+
+  .dashboard :is(.stat-card-link, .refresh-button):focus-visible {
+    outline: 3px solid #1654d1;
+    outline-offset: 3px;
+  }
+
+  .activity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 1rem;
+  }
+
+  .activity-card .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .activity-card th {
+    background: #edf4fc;
+    color: #234666;
+  }
+
+  .activity-card tbody tr:nth-child(even) {
+    background: #f8fbff;
+  }
+
+  .activity-card .status.active {
+    color: #115b52;
+    background: #ddf5ee;
+  }
+
+  @media (max-width: 560px) {
+    .dashboard-header .refresh-button {
+      width: 100%;
+    }
+  }
+}
+
+
+/* CampusNube: navegación y grupos académicos */
+.campus-nav .p-panelmenu {
+  gap: 0.2rem;
+}
+
+.campus-nav .p-panelmenu .p-panelmenu-panel {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.campus-nav .p-panelmenu a[href] {
+  min-height: 2.5rem;
+  padding: 0.6rem 0.75rem;
+  border: 0;
+  border-radius: 0.6rem;
+}
+
+.campus-nav .p-panelmenu a[href]:hover {
+  background: #edf5ff;
+  color: #1749a4;
+}
+
+.campus-nav .p-panelmenu :is(
+  a.active, a.router-link-active, a.p-panelmenu-item-link-active, a[aria-current='page']
+) {
+  background: #e2eeff;
+  color: #1749a4;
+  font-weight: 700;
+}
+
+.campus-nav .p-panelmenu-panel:nth-child(1 of :has(a[href^='/admin/'])) {
+  margin-block-start: 0.6rem;
+  padding-block-start: 0.6rem;
+  border-block-start: 1px solid #dbe6f5;
+}
+
+app-dashboard .dashboard .dashboard-header {
+  padding: clamp(1rem, 2.5vw, 1.65rem);
+}
+
+app-dashboard .dashboard .campus-metric-groups {
+  display: grid;
+  gap: 1.25rem;
+}
+
+app-dashboard .dashboard .campus-metric-group h3 {
+  margin: 0 0 0.65rem;
+  color: #234666;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+app-dashboard .dashboard .campus-metric-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  gap: 0.85rem;
+}
+
+app-dashboard .dashboard .campus-metric-grid .stat-card {
+  min-height: 5.75rem;
+  padding: 0.85rem 1rem;
+}
+
+app-dashboard .dashboard .campus-metric-group:nth-child(2) .stat-icon {
+  background: #e0f5f7;
+  color: #126579;
+}
+
+app-dashboard .dashboard .campus-metric-group:last-child .stat-icon {
+  background: #eef0ff;
+  color: #4443a0;
+}
+
+
+/* CampusNube: identidad del área interna */
+.campus-shell {
+  background: #edf3fc;
+}
+
+.campus-shell #contenido {
+  background:
+    radial-gradient(ellipse at top right, #d7f4f7, transparent 50%),
+    linear-gradient(155deg, #e9efff, #f3f7fd 65%);
+}
+
+.campus-shell app-header {
+  box-shadow: 0 1px 0 #cbdcf1;
+}
+
+.campus-shell app-aside > div,
+.p-drawer app-aside > div {
+  border-color: #263f66;
+  background: linear-gradient(165deg, #10254b, #182f58);
+  color: #eaf2ff;
+}
+
+:is(.campus-shell, .p-drawer) app-aside nav .p-panelmenu-panel,
+:is(.campus-shell, .p-drawer) app-aside nav .p-panelmenu-content {
+  border: 0;
+  background: transparent;
+}
+
+:is(.campus-shell, .p-drawer) app-aside nav a[href],
+:is(.campus-shell, .p-drawer) app-aside nav a[href] .pi {
+  color: #dceaff;
+}
+
+:is(.campus-shell, .p-drawer) app-aside nav a[href]:hover {
+  background: #263f66;
+  color: #fff;
+}
+
+:is(.campus-shell, .p-drawer) app-aside nav a[href]:is(
+  .active, .router-link-active, .p-panelmenu-item-link-active, [aria-current="page"]
+) {
+  background: #1e4776;
+  box-shadow: inset 3px 0 #60e6db;
+  color: #fff;
+}
+
+:is(.campus-shell, .p-drawer) app-aside nav a[href]:focus-visible {
+  outline: 2px solid #60e6db;
+  outline-offset: -2px;
+}
+
+:is(.campus-shell, .p-drawer) app-aside details {
+  border-radius: 0.8rem;
+  background: #f6f9ff;
+}
+
+.campus-shell app-dashboard:has(.dashboard) .dashboard-header {
+  border-color: #244a7b;
+  background: linear-gradient(110deg, #112957, #194879 72%, #126879);
+}
+
+.campus-shell app-dashboard:has(.dashboard) .dashboard-header h1 {
+  color: #fff;
+}
+
+.campus-shell app-dashboard:has(.dashboard) .dashboard-header p {
+  color: #e0edff;
+}
+
+.campus-shell #contenido .p-datatable {
+  border: 1px solid #cdddf3;
+  border-radius: 0.9rem;
+  background: #fff;
+  box-shadow: 0 6px 18px rgb(23 52 86 / 7%);
+}
+
+.campus-shell #contenido .p-datatable-header {
+  border-radius: 0.9rem 0.9rem 0 0;
+  background: #f3f8ff;
+}
+
+.campus-shell #contenido .p-datatable-thead > tr > th {
+  border-color: #cfddf0;
+  background: #e7f0fc;
+  color: #173b65;
+  font-weight: 700;
+}
+
+.campus-shell #contenido .p-datatable-tbody > tr:nth-child(even) {
+  background: #f5f9ff;
+}
+
+.campus-shell #contenido .p-datatable-tbody > tr:hover {
+  background: #eaf4ff;
+}
+
+
+/* CampusNube: módulo Docentes */
+.campus-teachers .campus-teachers-heading {
+  margin-block-end: 1.25rem;
+  padding: 1.1rem clamp(1rem, 3vw, 1.75rem);
+  border: 1px solid #c9dcf3;
+  border-inline-start: 4px solid #0c9caa;
+  border-radius: 0.95rem;
+  background: linear-gradient(115deg, #fff 30%, #e3f6fa);
+}
+
+.campus-teachers .campus-teachers-heading :is(h1, h2) {
+  color: #142e59;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+}
+
+.campus-teachers .campus-teachers-heading .p-button {
+  border-color: #1649bd;
+  border-radius: 0.65rem;
+  background: #1649bd;
+  color: white;
+}
+
+.campus-teachers .campus-teachers-heading .p-button:hover:not(:disabled) {
+  border-color: #113b9c;
+  background: #113b9c;
+}
+
+.campus-teachers .p-datatable-header {
+  padding: 0.85rem 1rem;
+}
+
+.campus-teachers .p-datatable-table-container {
+  overflow-x: auto;
+}
+
+.campus-teachers .p-datatable-tbody > tr > td {
+  padding-block: 0.65rem;
+  vertical-align: middle;
+}
+
+.campus-teachers .p-datatable-tbody > tr > td:last-child .p-button {
+  gap: 0.35rem;
+  padding: 0.45rem 0.55rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.campus-teachers :is(button, input, a):focus-visible {
+  outline: 2px solid #1654d1;
+  outline-offset: 2px;
+}
+
+
+/* CampusNube: foto del módulo Docentes */
+.campus-teachers .campus-teachers-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 28%);
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.campus-teachers .campus-teachers-photo {
+  order: 1;
+  display: block;
+  width: 100%;
+  height: clamp(8rem, 13vw, 11rem);
+  border-radius: 0.75rem;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+@media (max-width: 740px) {
+  .campus-teachers .campus-teachers-heading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.85rem;
+  }
+
+  .campus-teachers .campus-teachers-photo {
+    height: 8rem;
+  }
+}
+
+/* CampusNube: portada de Docentes */
+.campus-teachers .campus-teachers-heading {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 11rem;
+  overflow: hidden;
+  padding: clamp(1.15rem, 3vw, 2rem);
+  border-color: #233e67;
+  background: #10264b;
+  color: #fff;
+}
+
+.campus-teachers-heading > :not(.campus-teachers-photo) {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.campus-teachers .campus-teachers-photo {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: 0;
+  width: 58%;
+  height: 100%;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center 36%;
+}
+
+.campus-teachers-heading::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, #10264b 30%, #10264b 42%, rgb(16 38 75 / 12%) 100%);
+  pointer-events: none;
+  content: "";
+}
+
+.campus-teachers .campus-teachers-heading :is(h1, h2) {
+  color: #fff;
+}
+
+.campus-teachers .campus-teachers-heading p {
+  color: #e2edff;
+}
+
+.campus-teachers .campus-teachers-heading .p-button {
+  border-color: #fff;
+  background: #fff;
+  color: #163b78;
+}
+
+.campus-teachers .campus-teachers-heading .p-button:hover:not(:disabled) {
+  border-color: #e5efff;
+  background: #e5efff;
+  color: #163b78;
+}
+
+@media (max-width: 740px) {
+  .campus-teachers .campus-teachers-photo {
+    width: 100%;
+    object-position: 62% 35%;
+  }
+
+  .campus-teachers-heading::after {
+    background: linear-gradient(90deg, #10264b 8%, rgb(16 38 75 / 68%) 100%);
+  }
+}
+
+/* CampusNube: encuadre de la foto de Docentes */
+.campus-teachers .campus-teachers-photo {
+  object-position: center top;
+}
+
+.campus-teachers .campus-teachers-heading::after {
+  background: linear-gradient(
+    90deg,
+    #10264b 42%,
+    rgb(16 38 75 / 78%) 50%,
+    rgb(16 38 75 / 10%) 72%
+  );
+}
+
+@media (max-width: 740px) {
+  .campus-teachers .campus-teachers-photo {
+    object-position: 66% top;
+  }
+
+  .campus-teachers .campus-teachers-heading::after {
+    background: linear-gradient(
+      90deg,
+      #10264b 5%,
+      rgb(16 38 75 / 75%) 52%,
+      rgb(16 38 75 / 30%) 100%
+    );
+  }
+}
+
+
+/* CampusNube: portada de Aprendices */
+.campus-learners-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, 32%);
+  overflow: hidden;
+  margin-block-end: 1.25rem;
+  border-radius: 1rem;
+  background: #10264b;
+}
+
+.campus-learners-content {
+  align-self: center;
+  min-width: 0;
+  padding: clamp(1.1rem, 3vw, 2rem);
+}
+
+.campus-learners-banner :is(h1, h2) {
+  color: #fff;
+  font-size: clamp(1.55rem, 2.8vw, 2.2rem);
+  font-weight: 750;
+}
+
+.campus-learners-banner p {
+  color: #e2edff;
+}
+
+.campus-learners-banner .p-button {
+  border-color: #fff;
+  background: #fff;
+  color: #163b78;
+}
+
+.campus-learners-banner .p-button:hover:not(:disabled) {
+  border-color: #e5efff;
+  background: #e5efff;
+  color: #163b78;
+}
+
+.campus-learners-photo {
+  display: block;
+  width: 100%;
+  height: clamp(12rem, 18vw, 15rem);
+  min-height: 100%;
+  object-fit: cover;
+  object-position: 55% top;
+}
+
+@media (max-width: 740px) {
+  .campus-learners-banner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .campus-learners-photo {
+    height: 11rem;
+    min-height: 0;
+  }
+}
+
+/* CampusNube: foto de fondo en Aprendices */
+.campus-learners-banner {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 11rem;
+  border: 1px solid #233e67;
+  background: #10264b;
+}
+
+.campus-learners-banner .campus-learners-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: clamp(1.15rem, 3vw, 2rem);
+}
+
+.campus-learners-banner .campus-learners-photo {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: 0;
+  width: 58%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: 55% top;
+}
+
+.campus-learners-banner::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    #10264b 42%,
+    rgb(16 38 75 / 78%) 50%,
+    rgb(16 38 75 / 10%) 72%
+  );
+  pointer-events: none;
+  content: "";
+}
+
+@media (max-width: 740px) {
+  .campus-learners-banner .campus-learners-photo {
+    width: 100%;
+    object-position: 67% top;
+  }
+
+  .campus-learners-banner::after {
+    background: linear-gradient(
+      90deg,
+      #10264b 5%,
+      rgb(16 38 75 / 78%) 50%,
+      rgb(16 38 75 / 35%) 100%
+    );
+  }
+}
+
+
+/* CampusNube: portada de Cursos */
+.campus-courses-banner {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 11rem;
+  margin-block-end: 1.25rem;
+  overflow: hidden;
+  border: 1px solid #233e67;
+  border-radius: 1rem;
+  background: #10264b;
+}
+
+.campus-courses-heading {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-width: 0;
+  padding: clamp(1.15rem, 3vw, 2rem);
+}
+
+.campus-courses-banner .campus-courses-heading :is(h1, h2) {
+  color: #fff;
+  font-size: clamp(1.55rem, 2.8vw, 2.2rem);
+  font-weight: 750;
+}
+
+.campus-courses-banner .campus-courses-heading p {
+  color: #e2edff;
+}
+
+.campus-courses-banner .campus-courses-heading .p-button {
+  border-color: #fff;
+  background: #fff;
+  color: #163b78;
+}
+
+.campus-courses-banner .campus-courses-heading .p-button:hover:not(:disabled) {
+  border-color: #e5efff;
+  background: #e5efff;
+}
+
+.campus-courses-photo {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 58%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 57%;
+}
+
+.campus-courses-banner::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    #10264b 42%,
+    rgb(16 38 75 / 78%) 51%,
+    rgb(16 38 75 / 14%) 78%
+  );
+  pointer-events: none;
+  content: "";
+}
+
+@media (max-width: 740px) {
+  .campus-courses-photo {
+    width: 100%;
+  }
+
+  .campus-courses-banner::after {
+    background: linear-gradient(90deg, #10264b 5%, rgb(16 38 75 / 65%) 100%);
+  }
+}
+
+/* CampusNube: portadas de módulos académicos */
+.campus-module-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 11rem;
+  margin-block-end: 1.25rem;
+  overflow: hidden;
+  border: 1px solid #233e67;
+  border-radius: 1rem;
+  background: #10264b;
+}
+
+.campus-module-hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-width: 0;
+  padding: clamp(1.15rem, 3vw, 2rem);
+  color: #fff;
+}
+
+.campus-module-hero .campus-module-hero-content :is(h1, h2) {
+  color: #fff;
+  font-size: clamp(1.55rem, 2.8vw, 2.2rem);
+  font-weight: 750;
+}
+
+.campus-module-hero .campus-module-hero-content p {
+  color: #e2edff;
+}
+
+.campus-module-hero .campus-module-hero-content .p-button {
+  border-color: #fff;
+  background: #fff;
+  color: #163b78;
+}
+
+.campus-module-hero .campus-module-hero-content .p-button:hover:not(:disabled) {
+  border-color: #e5efff;
+  background: #e5efff;
+}
+
+.campus-module-hero-photo {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 58%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 65% 23%;
+}
+
+.campus-module-hero::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #10264b 42%,
+    rgb(16 38 75 / 78%) 50%,
+    rgb(16 38 75 / 18%) 75%
+  );
+  pointer-events: none;
+  content: "";
+}
+
+@media (max-width: 740px) {
+  .campus-module-hero-photo {
+    width: 100%;
+    object-position: 68% 24%;
+  }
+
+  .campus-module-hero::after {
+    background: linear-gradient(90deg, #10264b 5%, rgb(16 38 75 / 65%) 100%);
+  }
+}
+
+/* CampusNube: contraste de indicadores */
+#contenido .campus-indicator-label {
+  color: #234361;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+#contenido :is(div, article, section):has(
+  > :is(p, span, div, small, label) > .campus-indicator-label
+) {
+  padding: 1rem 1.15rem;
+  border: 1px solid #cadbf0;
+  border-radius: 0.85rem;
+  background: #fff;
+  color: #10294f;
+  box-shadow: 0 4px 14px rgb(30 59 100 / 6%);
+  font-variant-numeric: tabular-nums;
+}
+
+/* CampusNube: contraste de toda el área interna */
+#contenido {
+  color: #17324f;
+}
+
+/* Texto secundario sobre superficies claras. */
+#contenido :is(.text-slate-400, .text-slate-500, .text-gray-400, .text-gray-500):not(
+  :is(.campus-module-hero, .campus-teachers-heading, .campus-learners-banner, .campus-courses-banner) *
+) {
+  color: #435b76;
+}
+
+/* Indicadores que usan una tarjeta con borde y un número destacado. */
+#contenido :is(div, article):is([class*="rounded"][class*="border"]):has(
+  > :is(p, span, strong, div):is([class*="text-2xl"], [class*="text-3xl"], [class*="text-4xl"])
+):not(:is(.campus-module-hero, .campus-teachers-heading, .campus-learners-banner, .campus-courses-banner) *) {
+  border-color: #cadbf0;
+  background-color: #fff;
+  color: #17324f;
+}
+
+#contenido .campus-indicator-label {
+  color: #234361;
+  font-weight: 700;
+}
+
+/* Buscadores y campos. */
+#contenido :is(input[type="text"], input[type="search"], .p-inputtext)::placeholder,
+#contenido .p-select-label.p-placeholder {
+  color: #526984;
+  opacity: 1;
+}
+
+#contenido :is(input[type="text"], input[type="search"], .p-inputtext):not(:disabled) {
+  color: #17324f;
+  border-color: #8fa7c2;
+}
+
+/* Tablas de PrimeNG y tablas HTML de los módulos. */
+#contenido table > thead > tr > th {
+  background-color: #e1ecfa;
+  color: #18395d;
+  font-weight: 700;
+}
+
+#contenido table > tbody > tr > td {
+  color: #233c57;
+}
+
+/* Texto de las portadas sobre el degradado oscuro. */
+#contenido :is(
+  .campus-module-hero-content,
+  .campus-teachers-heading,
+  .campus-learners-content,
+  .campus-courses-heading
+) :is(h1, h2) {
+  color: #fff;
+}
+
+#contenido :is(
+  .campus-module-hero-content,
+  .campus-teachers-heading,
+  .campus-learners-content,
+  .campus-courses-heading
+) p {
+  color: #eef5ff;
+}
+
+#contenido :is(
+  .campus-module-hero-content,
+  .campus-teachers-heading,
+  .campus-learners-content,
+  .campus-courses-heading
+) :is(h1, h2, p) {
+  text-shadow: 0 1px 3px rgb(8 23 49 / 85%);
+}
+
+
+/* CampusNube: administración de usuarios */
+:is(.campus-users-page, .campus-roles-page) :is(.campus-users-banner, .campus-roles-banner) {
+  margin-block-end: 1.25rem;
+  padding: clamp(1.15rem, 3vw, 1.85rem);
+  border-radius: 1rem;
+  background: linear-gradient(115deg, #10264b 35%, #194978 78%, #126579);
+  color: #fff;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) :is(.campus-users-banner, .campus-roles-banner) :is(h1, h2) {
+  color: #fff;
+  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
+  line-height: 1.15;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) :is(.campus-users-banner, .campus-roles-banner) p {
+  color: #e3efff;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) :is(.campus-users-banner, .campus-roles-banner) button:not(:disabled) {
+  border: 1px solid #fff;
+  background: #fff;
+  color: #163b78;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) :is(.campus-users-banner, .campus-roles-banner) button:not(:disabled):hover {
+  background: #e7f2ff;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) table {
+  width: 100%;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) :is(.p-datatable-table-container, .p-datatable-wrapper) {
+  overflow-x: auto;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) tbody td {
+  padding-block: 0.7rem;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) tbody td:nth-child(2) {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) tbody td:last-child button:not(:disabled) {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid #c5d8ef;
+  border-radius: 0.55rem;
+  background: #eff6ff;
+  color: #234d82;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) tbody td:last-child button:not(:disabled):hover {
+  background: #dfeeff;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) tbody td:last-child button:not(:disabled):has(.pi-ban) {
+  border-color: #efd19b;
+  background: #fff5e5;
+  color: #844509;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) tbody td:last-child button:not(:disabled):has(.pi-trash) {
+  border-color: #efc0c3;
+  background: #fff0f1;
+  color: #a32430;
+}
+
+#contenido :is(.campus-users-page, .campus-roles-page) :is(button, a, input):focus-visible {
+  outline: 2px solid #1654d1;
+  outline-offset: 3px;
+}
+
+
+/* CampusNube: acciones de Administración de roles */
+#contenido .campus-roles-page tbody td:last-child button:not(:disabled):is(
+  [class*="bg-amber"], [class*="bg-orange"], [aria-label="Dar de baja"]
+) {
+  border-color: #efd19b;
+  background: #fff5e5;
+  color: #844509;
+}
+
+#contenido .campus-roles-page tbody td:last-child button:not(:disabled):is(
+  [class*="bg-red"], [aria-label="Eliminar"]
+) {
+  border-color: #efc0c3;
+  background: #fff0f1;
+  color: #a32430;
+}
+
+
+/* CampusNube: catálogo de recursos HTTP */
+#contenido .campus-resources-page .resources-header {
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: clamp(1.15rem, 3vw, 1.85rem);
+  border-radius: 1rem;
+  background: linear-gradient(115deg, #10264b 35%, #194978 78%, #126579);
+}
+
+#contenido .campus-resources-page .resources-header h2 {
+  color: #fff;
+  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
+}
+
+#contenido .campus-resources-page .resources-header p {
+  color: #e3efff;
+}
+
+#contenido .campus-resources-page .resources-header button {
+  border: 1px solid #fff;
+  background: #fff;
+  color: #163b78;
+}
+
+#contenido .campus-resources-page .resources-header .secondary-button {
+  background: transparent;
+  color: #fff;
+}
+
+#contenido .campus-resource-filters {
+  margin-block: 1rem;
+  padding: 1rem;
+  border: 1px solid #cadbf0;
+  border-radius: 0.85rem;
+  background: #fff;
+  color: #17324f;
+}
+
+.campus-resource-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.campus-resource-fields label {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+#contenido .campus-resource-fields :is(input, select) {
+  width: 100%;
+  min-height: 2.65rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #8fa7c2;
+  border-radius: 0.55rem;
+  background: #f8fbff;
+  color: #17324f;
+  font: inherit;
+  font-weight: 400;
+}
+
+.campus-resource-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+  font-size: 0.9rem;
+}
+
+#contenido .campus-resource-summary button {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #c5d8ef;
+  border-radius: 0.55rem;
+  background: #eff6ff;
+  color: #234d82;
+}
+
+#contenido .campus-resources-page .table-container {
+  overflow-x: auto;
+}
+
+#contenido .campus-resources-page .table-container table {
+  width: 100%;
+}
+
+#contenido .campus-resources-page .row-actions button {
+  padding: 0.4rem 0.65rem;
+  border: 1px solid #c5d8ef;
+  background: #eff6ff;
+  color: #234d82;
+}
+
+#contenido .campus-resources-page .row-actions .deactivate-button {
+  border-color: #efd19b;
+  background: #fff5e5;
+  color: #844509;
+}
+
+#contenido .campus-resources-page .row-actions .delete-button {
+  border-color: #efc0c3;
+  background: #fff0f1;
+  color: #a32430;
+}
+
+#contenido .campus-resources-page :is(button, input, select):focus-visible {
+  outline: 2px solid #1654d1;
+  outline-offset: 2px;
+}
+
+#contenido .campus-resources-page .resources-header button:focus-visible {
+  outline-color: #8fe9e0;
+}
+
+@media (max-width: 700px) {
+  .campus-resource-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+/* CampusNube: fondo del Panel académico */
+#contenido app-dashboard .dashboard-header {
+  position: relative;
+  isolation: isolate;
+  min-height: 11rem;
+  overflow: hidden;
+  background: #10264b;
+}
+
+#contenido app-dashboard .campus-dashboard-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right 57%;
+}
+
+#contenido app-dashboard .dashboard-header::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, #10264b 18%, rgb(16 38 75 / 85%) 46%, rgb(16 38 75 / 20%) 100%);
+  pointer-events: none;
+  content: "";
+}
+
+#contenido app-dashboard .dashboard-header > :not(.campus-dashboard-photo) {
+  position: relative;
+  z-index: 2;
+}
+
+#contenido app-dashboard .dashboard-header h1 {
+  color: #fff;
+}
+
+#contenido app-dashboard .dashboard-header p {
+  color: #eaf3ff;
+}
+
+@media (max-width: 740px) {
+  #contenido app-dashboard .dashboard-header::after {
+    background: linear-gradient(90deg, #10264b 8%, rgb(16 38 75 / 77%) 100%);
+  }
+}
+
+
+/* CampusNube: foto de fondo del tablero completo */
+#contenido app-dashboard .dashboard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  border: 1px solid #cddff5;
+  border-radius: 1.25rem;
+  background: #edf4fc;
+}
+
+#contenido app-dashboard .campus-dashboard-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  pointer-events: none;
+}
+
+#contenido app-dashboard .dashboard::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, #eef4fd 4%, rgb(238 244 253 / 95%) 42%, rgb(238 244 253 / 70%) 100%),
+    linear-gradient(0deg, #eef4fd, transparent 65%);
+  pointer-events: none;
+  content: "";
+}
+
+#contenido app-dashboard .dashboard :is(.stat-card, .activity-card) {
+  background-color: #fff;
+}
+
+@media (max-width: 740px) {
+  #contenido app-dashboard .dashboard::before {
+    background: rgb(238 244 253 / 90%);
+  }
+}
