@@ -5,7 +5,21 @@
       <p>Consulta y administra los permisos asignados a los roles.</p>
     </div>
 
-    <button type="button" [disabled]="updatingStatus()" (click)="openDialog()">Conceder permiso</button>
+    <div class="campus-batch-actions">
+      @if (canAddBatch()) {
+        <button type="button" class="campus-batch-primary" (click)="openBatch()" [disabled]="batchBusy()">
+          <i class="pi pi-plus" aria-hidden="true"></i> Conceder permisos
+        </button>
+      } @else {
+        <button type="button" [disabled]="updatingStatus()" (click)="openDialog()">Conceder permiso</button>
+      }
+      @if (canWithdrawBatch() && selectedVisibleIds().length) {
+        <button type="button" class="campus-batch-withdraw" (click)="withdrawBatch()"
+          [disabled]="batchBusy() || selectedVisibleIds().length > 200">
+          Retirar {{ selectedVisibleIds().length }}
+        </button>
+      }
+    </div>
   </header>
 
   @if (message()) {
@@ -55,6 +69,14 @@
       <table>
         <thead>
           <tr>
+            @if (canWithdrawBatch()) {
+              <th scope="col"><input #batchAll type="checkbox"
+                aria-label="Seleccionar filas activas visibles"
+                [checked]="visibleActiveIds().length > 0 && selectedVisibleIds().length === visibleActiveIds().length"
+                [indeterminate]="selectedVisibleIds().length > 0 && selectedVisibleIds().length < visibleActiveIds().length"
+                [disabled]="batchBusy() || !visibleActiveIds().length"
+                (change)="toggleVisibleBatchRows(batchAll.checked)" /></th>
+            }
             <th>Rol</th>
             <th>Método</th>
             <th>Path</th>
@@ -66,6 +88,13 @@
         <tbody>
           @for (row of visibleRows(); track row.id) {
             <tr>
+            @if (canWithdrawBatch()) {
+              <td><input #batchRow type="checkbox"
+                [attr.aria-label]="'Seleccionar registro ' + row.id"
+                [checked]="batchRows().includes(row.id) && row.status === 'active'"
+                [disabled]="batchBusy() || row.status !== 'active'"
+                (change)="toggleBatchRow(row.id, batchRow.checked)" /></td>
+            }
               <td>{{ roleName(row.role_id) }}</td>
 
               <td>
@@ -98,7 +127,7 @@
             </tr>
           } @empty {
             <tr>
-              <td colspan="5">No hay concesiones para mostrar.</td>
+              <td [attr.colspan]="canWithdrawBatch() ? 6 : 5">No hay concesiones para mostrar.</td>
             </tr>
           }
         </tbody>
@@ -112,59 +141,53 @@
   [visible]="dialogVisible()"
   (visibleChange)="dialogVisible.set($event)"
   [modal]="true"
-  [style]="{ width: '35rem', maxWidth: '95vw' }"
+  [style]="{ width: '46rem', maxWidth: 'calc(100vw - 2rem)' }"
 >
   <div class="grant-form">
     <div>
       <label for="grant-role">Rol</label>
 
-      <p-select
-        inputId="grant-role"
-        [fluid]="true"
-        [options]="roles()"
-        optionLabel="name"
-        [filter]="true"
-        placeholder="Seleccionar rol"
-        [ngModel]="selectedRole()"
-        (ngModelChange)="selectedRole.set($event)"
-      />
+      <select
+          #grantRole
+          id="grant-role"
+          class="campus-grant-picker"
+          size="5"
+          [value]="selectedRole()?.id ?? ''"
+          (change)="selectGrantRole(grantRole.value)"
+        >
+          @for (role of roles(); track role.id) {
+            <option [value]="role.id">{{ role.name }}</option>
+          }
+        </select>
     </div>
 
     <div>
       <label for="grant-resource">Recurso</label>
 
-      <p-select
-        inputId="grant-resource"
-        [fluid]="true"
-        [options]="resources()"
-        [filter]="true"
-        filterBy="path,method"
-        placeholder="Seleccionar recurso"
-        [ngModel]="selectedResource()"
-        (ngModelChange)="selectedResource.set($event)"
-      >
-        <ng-template #selectedItem let-resource>
-          <span class="flex items-center gap-2">
-            <p-tag
-              [value]="resource.method"
-              [severity]="methodSeverity(resource.method)"
-              [rounded]="true"
-            />
-            <code class="text-xs">{{ resource.path }}</code>
-          </span>
-        </ng-template>
-
-        <ng-template #item let-resource>
-          <span class="flex items-center gap-2">
-            <p-tag
-              [value]="resource.method"
-              [severity]="methodSeverity(resource.method)"
-              [rounded]="true"
-            />
-            <code class="text-xs">{{ resource.path }}</code>
-          </span>
-        </ng-template>
-      </p-select>
+      <div class="campus-grant-resource">
+          <input
+            #grantSearch
+            type="search"
+            aria-label="Buscar por método o ruta"
+            placeholder="Ejemplo: GET /api/cursos"
+            [value]="grantQuery()"
+            (input)="grantQuery.set(grantSearch.value)"
+          />
+          <select
+            #grantResource
+            id="grant-resource"
+            class="campus-grant-picker"
+            size="6"
+            [value]="selectedResource()?.id ?? ''"
+            (change)="selectGrantResource(grantResource.value)"
+          >
+            @for (resource of grantOptions(); track resource.id) {
+              <option [value]="resource.id">{{ resource.method }} {{ resource.path }}</option>
+            } @empty {
+              <option disabled>No hay recursos que coincidan.</option>
+            }
+          </select>
+        </div>
     </div>
   </div>
 
@@ -177,6 +200,67 @@
       (click)="createGrant()"
     >
       {{ saving() ? 'Guardando...' : 'Conceder permiso' }}
+    </button>
+  </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Conceder permisos" [visible]="batchVisible()"
+  (visibleChange)="batchVisible.set($event)" [modal]="true"
+  [style]="{ width: '46rem', maxWidth: 'calc(100vw - 2rem)' }">
+  <div class="campus-batch-form">
+    <label>
+      Rol
+      <select #batchTargetSelect [value]="batchTarget()?.id ?? ''"
+        [disabled]="batchBusy()" (change)="chooseBatchTarget(batchTargetSelect.value)">
+        <option value="">Seleccionar rol</option>
+        @for (item of availableTargets(); track item.id) {
+          <option [value]="item.id">{{ item.name }}</option>
+        }
+      </select>
+    </label>
+    <details class="campus-batch-picker">
+      <summary>
+        <span>{{ batchOptions().length ? batchOptions().length + ' seleccionados' : 'Seleccionar recursos' }}</span>
+        <i class="pi pi-chevron-down" aria-hidden="true"></i>
+      </summary>
+
+      <div class="campus-batch-picker-body">
+        <div class="campus-batch-picker-toolbar">
+          <input #batchAllOptions type="checkbox" aria-label="Seleccionar resultados visibles"
+            [checked]="allBatchOptionsSelected()"
+            [disabled]="batchBusy() || !visibleBatchOptions().length"
+            (change)="toggleVisibleBatchOptions(batchAllOptions.checked)" />
+          <input #batchSearch type="search" aria-label="Buscar recursos"
+            placeholder="Buscar por método, ruta o descripción" [value]="batchQuery()"
+            (input)="batchQuery.set(batchSearch.value)" />
+        </div>
+
+        <div class="campus-batch-options" role="group" aria-label="recursos disponibles">
+          @for (option of visibleBatchOptions(); track option.id) {
+            <label class="campus-batch-option">
+              <input #batchOption type="checkbox" [checked]="batchOptions().includes(option.id)"
+                [disabled]="batchBusy() || (batchOptions().length >= 200 && !batchOptions().includes(option.id))"
+                (change)="toggleBatchOption(option.id, batchOption.checked)" />
+            <span class="campus-batch-method" [attr.data-method]="option.method">{{ option.method }}</span>
+            <code>{{ option.path }}</code>
+            @if (option.description) {
+              <small>{{ option.description }}</small>
+            }
+            </label>
+          } @empty {
+            <p>No hay coincidencias.</p>
+          }
+        </div>
+      </div>
+    </details>
+    @if (batchError()) { <p class="error-message" role="alert">{{ batchError() }}</p> }
+  </div>
+  <ng-template #footer>
+    <button type="button" (click)="batchVisible.set(false)" [disabled]="batchBusy()">Cancelar</button>
+    <button type="button" class="campus-batch-primary" (click)="saveBatch()"
+      [disabled]="!batchTarget() || !batchOptions().length || batchBusy()">
+      {{ batchBusy() ? 'Guardando…' : 'Conceder permisos' }}
     </button>
   </ng-template>
 </p-dialog>

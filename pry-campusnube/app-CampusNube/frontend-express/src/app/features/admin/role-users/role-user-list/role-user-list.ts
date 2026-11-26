@@ -1,3 +1,4 @@
+import { SessionStore } from '../../../../core/auth/session.store';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -170,6 +171,126 @@ export class RoleUserList {
       },
       error: (err) => {
         this.error.set(err.error?.message || 'No fue posible retirar el rol.');
+      },
+    });
+  }
+
+  private readonly batchSession = inject(SessionStore);
+  readonly batchVisible = signal(false);
+  readonly batchBusy = signal(false);
+  readonly batchError = signal('');
+  readonly batchTarget = signal<User | null>(null);
+  readonly batchQuery = signal('');
+  readonly batchOptions = signal<number[]>([]);
+  readonly batchRows = signal<number[]>([]);
+  readonly canAddBatch = computed(() =>
+    this.batchSession.canExact('POST', '/api/asignaciones-rol/lote'),
+  );
+  readonly canWithdrawBatch = computed(() =>
+    this.batchSession.canExact('PATCH', '/api/asignaciones-rol/lote/deactivate'),
+  );
+  readonly availableTargets = computed(() =>
+    this.users().filter((item) => item.status === 'active'),
+  );
+  readonly visibleBatchOptions = computed(() => {
+    const query = this.batchQuery().trim().toLowerCase();
+    return this.roles()
+      .filter((item) => item.status === 'active')
+      .map((item) => ({ id: item.id, label: item.name }))
+      .filter((item) => item.label.toLowerCase().includes(query));
+  });
+  readonly visibleActiveIds = computed(() =>
+    this.visibleRows().filter((row) => row.status === 'active').map((row) => row.id),
+  );
+  readonly selectedVisibleIds = computed(() => {
+    const selected = new Set(this.batchRows());
+    return this.visibleActiveIds().filter((id) => selected.has(id));
+  });
+
+  openBatch(): void {
+    if (!this.canAddBatch() || this.batchBusy()) return;
+    this.batchTarget.set(null);
+    this.batchOptions.set([]);
+    this.batchQuery.set('');
+    this.batchError.set('');
+    this.batchVisible.set(true);
+  }
+
+  chooseBatchTarget(value: string): void {
+    this.batchTarget.set(this.availableTargets().find((item) => String(item.id) === value) ?? null);
+  }
+
+  readonly allBatchOptionsSelected = computed(() => {
+    const visible = this.visibleBatchOptions();
+    const selected = new Set(this.batchOptions());
+    return visible.length > 0 && visible.every((option) => selected.has(option.id));
+  });
+
+  toggleVisibleBatchOptions(checked: boolean): void {
+    if (this.batchBusy()) return;
+    const visible = new Set(this.visibleBatchOptions().map((option) => option.id));
+    this.batchOptions.update((selected) => checked
+      ? [...new Set([...selected, ...visible])].slice(0, 200)
+      : selected.filter((id) => !visible.has(id)));
+  }
+
+  toggleBatchOption(id: number, checked: boolean): void {
+    this.batchOptions.update((items) => checked
+      ? [...new Set([...items, id])]
+      : items.filter((item) => item !== id));
+  }
+
+  toggleBatchRow(id: number, checked: boolean): void {
+    this.batchRows.update((items) => checked
+      ? [...new Set([...items, id])]
+      : items.filter((item) => item !== id));
+  }
+
+  toggleVisibleBatchRows(checked: boolean): void {
+    const visible = this.visibleActiveIds();
+    this.batchRows.update((items) => checked
+      ? [...new Set([...items, ...visible])]
+      : items.filter((id) => !visible.includes(id)));
+  }
+
+  saveBatch(): void {
+    const target = this.batchTarget();
+    const ids = this.batchOptions();
+    if (!target || !ids.length || ids.length > 200 || this.batchBusy() || !this.canAddBatch()) return;
+
+    this.batchBusy.set(true);
+    this.batchError.set('');
+    this.assignmentApi.createBatch(target.id, ids).subscribe({
+      next: (result) => {
+        this.batchBusy.set(false);
+        this.batchVisible.set(false);
+        this.message.set('Registros procesados: ' + result.processed + '.');
+        this.loadData();
+      },
+      error: (err) => {
+        this.batchError.set(err.error?.error || err.error?.message || 'No se pudo guardar el lote.');
+        this.batchBusy.set(false);
+      },
+    });
+  }
+
+  withdrawBatch(): void {
+    const ids = this.selectedVisibleIds();
+    if (!ids.length || ids.length > 200 || this.batchBusy() || !this.canWithdrawBatch()) return;
+    if (!window.confirm('¿Retirar los ' + ids.length + ' registros seleccionados?')) return;
+
+    this.batchBusy.set(true);
+    this.error.set('');
+    this.assignmentApi.deactivateBatch(ids).subscribe({
+      next: (result) => {
+        this.batchBusy.set(false);
+        this.batchRows.set([]);
+        this.message.set('Registros retirados: ' + result.processed + '.');
+        this.loadData();
+      },
+      error: (err) => {
+        this.error.set(err.error?.error || err.error?.message || 'No se pudo retirar el lote.');
+        this.batchBusy.set(false);
       },
     });
   }

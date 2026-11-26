@@ -1236,3 +1236,190 @@ app-dashboard .dashboard .campus-metric-group:last-child .stat-icon {
     background: rgb(238 244 253 / 90%);
   }
 }
+
+
+/* CampusNube: listas del diálogo de concesiones */
+.p-dialog-content:has(.campus-grant-picker) {
+  max-height: 65dvh;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
+.campus-grant-resource {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.campus-grant-picker,
+.campus-grant-resource input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #a5bad5;
+  border-radius: 0.55rem;
+  background: #fff;
+  color: #17324f;
+}
+
+.campus-grant-picker option {
+  padding: 0.4rem 0.55rem;
+}
+
+.campus-grant-picker:focus-visible,
+.campus-grant-resource input:focus-visible {
+  outline: 2px solid #1654d1;
+  outline-offset: 2px;
+}
+
+/* CampusNube: gestión de accesos por lote */
+.campus-batch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.campus-batch-actions .campus-batch-primary,
+.p-dialog .campus-batch-primary { background: #0f7169; color: #fff; }
+.campus-batch-actions .campus-batch-withdraw { background: #fff2dc; color: #783d0f; }
+.campus-batch-actions button,
+.p-dialog .campus-batch-primary {
+  border-radius: .6rem;
+  padding: .6rem .85rem;
+  font-weight: 650;
+}
+.campus-batch-actions button:disabled,
+.p-dialog .campus-batch-primary:disabled { opacity: .55; }
+.campus-batch-form { display: grid; gap: .75rem; color: #17324f; }
+.campus-batch-form > label { display: grid; gap: .35rem; font-weight: 650; }
+.campus-batch-form :is(select, input[type='search']) {
+  width: 100%;
+  padding: .55rem .7rem;
+  border: 1px solid #a5bad5;
+  border-radius: .55rem;
+  background: #fff;
+}
+.campus-batch-form fieldset { min-width: 0; margin: 0; }
+.campus-batch-form legend { font-weight: 650; }
+.campus-batch-options {
+  max-height: min(35dvh, 17rem);
+  margin-block-start: .35rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #cadbf0;
+  border-radius: .55rem;
+}
+.campus-batch-options label {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .55rem .7rem;
+  border-bottom: 1px solid #e7eef8;
+  overflow-wrap: anywhere;
+}
+.campus-batch-options p { padding: .55rem .7rem; }
+.campus-batch-form input[type='checkbox'] { flex: none; accent-color: #0f7169; }
+.p-dialog-content:has(.campus-batch-form) { max-height: 68dvh; overflow-y: auto; }
+
+/* CampusNube: acabado del selector múltiple */
+.campus-batch-form {
+  font-size: .95rem;
+}
+
+.campus-batch-picker {
+  border: 1px solid #adc4de;
+  border-radius: .75rem;
+  background: #fff;
+}
+
+.campus-batch-picker summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem;
+  min-height: 2.7rem;
+  padding: .55rem .8rem;
+  list-style: none;
+  cursor: pointer;
+  color: #173b65;
+  font-weight: 650;
+}
+
+.campus-batch-picker summary::-webkit-details-marker {
+  display: none;
+}
+
+.campus-batch-picker[open] summary {
+  border-bottom: 1px solid #dbe6f5;
+  background: #f1f7ff;
+  border-radius: .75rem .75rem 0 0;
+}
+
+.campus-batch-picker[open] summary .pi {
+  transform: rotate(180deg);
+}
+
+.campus-batch-picker-toolbar {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .55rem .7rem;
+}
+
+.campus-batch-picker .campus-batch-options {
+  margin: 0;
+  max-height: min(33dvh, 15rem);
+  border: 0;
+  border-top: 1px solid #e7eef8;
+  border-radius: 0 0 .75rem .75rem;
+}
+
+.campus-batch-picker .campus-batch-option {
+  min-height: 2.4rem;
+  flex-wrap: wrap;
+  gap: .35rem .6rem;
+  padding: .45rem .7rem;
+  cursor: pointer;
+}
+
+.campus-batch-option:hover {
+  background: #f2f7fd;
+}
+
+.campus-batch-option:has(input:checked) {
+  background: #e6f6f2;
+}
+
+.campus-batch-option code {
+  color: #173b65;
+  font-size: .85rem;
+  overflow-wrap: anywhere;
+}
+
+.campus-batch-option small {
+  color: #526983;
+  font-size: .8rem;
+}
+
+.campus-batch-method {
+  padding: .15rem .45rem;
+  border-radius: 999px;
+  background: #e5effc;
+  color: #174a8b;
+  font-size: .72rem;
+  font-weight: 750;
+}
+
+.campus-batch-method[data-method="POST"] {
+  background: #dcf5e7;
+  color: #17603e;
+}
+
+.campus-batch-method:is([data-method="PUT"], [data-method="PATCH"]) {
+  background: #fff1d8;
+  color: #834a14;
+}
+
+.campus-batch-method[data-method="DELETE"] {
+  background: #fee9eb;
+  color: #9d2b39;
+}
+
+.campus-batch-picker :is(summary, input):focus-visible {
+  outline: 2px solid #1660ba;
+  outline-offset: 2px;
+}

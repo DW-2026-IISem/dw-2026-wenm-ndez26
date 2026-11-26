@@ -30,4 +30,15 @@ export class RoleUserApi {
   reactivate(id: number): Observable<unknown> {
     return this.http.patch(`${this.base}/${id}/reactivate`, {});
   }
+
+  createBatch(targetId: number, optionIds: number[]): Observable<{ processed: number }> {
+    return this.http.post<{ processed: number }>(this.base + '/lote', {
+      user_id: targetId,
+      role_ids: optionIds,
+    });
+  }
+
+  deactivateBatch(ids: number[]): Observable<{ processed: number }> {
+    return this.http.patch<{ processed: number }>(this.base + '/lote/deactivate', { ids });
+  }
 }

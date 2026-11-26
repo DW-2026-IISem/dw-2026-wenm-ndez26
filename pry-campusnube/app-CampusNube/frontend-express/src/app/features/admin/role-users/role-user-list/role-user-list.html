@@ -38,7 +38,21 @@
       />
     </div>
 
-    <button type="button" (click)="openDialog()">Asignar rol</button>
+    <div class="campus-batch-actions">
+      @if (canAddBatch()) {
+        <button type="button" class="campus-batch-primary" (click)="openBatch()" [disabled]="batchBusy()">
+          <i class="pi pi-plus" aria-hidden="true"></i> Asignar roles
+        </button>
+      } @else {
+        <button type="button" (click)="openDialog()">Asignar rol</button>
+      }
+      @if (canWithdrawBatch() && selectedVisibleIds().length) {
+        <button type="button" class="campus-batch-withdraw" (click)="withdrawBatch()"
+          [disabled]="batchBusy() || selectedVisibleIds().length > 200">
+          Retirar {{ selectedVisibleIds().length }}
+        </button>
+      }
+    </div>
   </div>
 
   <p *ngIf="loading()">Cargando asignaciones...</p>
@@ -47,6 +61,14 @@
     <table class="assignment-table">
       <thead>
         <tr>
+            @if (canWithdrawBatch()) {
+              <th scope="col"><input #batchAll type="checkbox"
+                aria-label="Seleccionar filas activas visibles"
+                [checked]="visibleActiveIds().length > 0 && selectedVisibleIds().length === visibleActiveIds().length"
+                [indeterminate]="selectedVisibleIds().length > 0 && selectedVisibleIds().length < visibleActiveIds().length"
+                [disabled]="batchBusy() || !visibleActiveIds().length"
+                (change)="toggleVisibleBatchRows(batchAll.checked)" /></th>
+            }
           <th>Usuario</th>
           <th>Correo electrónico</th>
           <th>Rol asignado</th>
@@ -57,6 +79,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let row of visibleRows()">
+            @if (canWithdrawBatch()) {
+              <td><input #batchRow type="checkbox"
+                [attr.aria-label]="'Seleccionar registro ' + row.id"
+                [checked]="batchRows().includes(row.id) && row.status === 'active'"
+                [disabled]="batchBusy() || row.status !== 'active'"
+                (change)="toggleBatchRow(row.id, batchRow.checked)" /></td>
+            }
           <td>
             <div style="display: flex; align-items: center; gap: 0.7rem">
               <img
@@ -97,7 +126,7 @@
           </td>
         </tr>
         <tr *ngIf="visibleRows().length === 0">
-          <td colspan="6" style="text-align: center; padding: 2rem; color: #64748b">
+          <td [attr.colspan]="canWithdrawBatch() ? 7 : 6" style="text-align: center; padding: 2rem; color: #64748b">
             No hay asignaciones para mostrar.
           </td>
         </tr>
@@ -145,5 +174,62 @@
   <ng-template #footer>
     <button type="button" class="p-button p-button-text" (click)="closeDialog()">Cancelar</button>
     <button type="button" [disabled]="!canSave()" (click)="save()">Guardar asignación</button>
+  </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Asignar roles" [visible]="batchVisible()"
+  (visibleChange)="batchVisible.set($event)" [modal]="true"
+  [style]="{ width: '46rem', maxWidth: 'calc(100vw - 2rem)' }">
+  <div class="campus-batch-form">
+    <label>
+      Usuario
+      <select #batchTargetSelect [value]="batchTarget()?.id ?? ''"
+        [disabled]="batchBusy()" (change)="chooseBatchTarget(batchTargetSelect.value)">
+        <option value="">Seleccionar usuario</option>
+        @for (item of availableTargets(); track item.id) {
+          <option [value]="item.id">{{ item.username }}</option>
+        }
+      </select>
+    </label>
+    <details class="campus-batch-picker">
+      <summary>
+        <span>{{ batchOptions().length ? batchOptions().length + ' seleccionados' : 'Seleccionar roles' }}</span>
+        <i class="pi pi-chevron-down" aria-hidden="true"></i>
+      </summary>
+
+      <div class="campus-batch-picker-body">
+        <div class="campus-batch-picker-toolbar">
+          <input #batchAllOptions type="checkbox" aria-label="Seleccionar resultados visibles"
+            [checked]="allBatchOptionsSelected()"
+            [disabled]="batchBusy() || !visibleBatchOptions().length"
+            (change)="toggleVisibleBatchOptions(batchAllOptions.checked)" />
+          <input #batchSearch type="search" aria-label="Buscar roles"
+            placeholder="Buscar por nombre" [value]="batchQuery()"
+            (input)="batchQuery.set(batchSearch.value)" />
+        </div>
+
+        <div class="campus-batch-options" role="group" aria-label="roles disponibles">
+          @for (option of visibleBatchOptions(); track option.id) {
+            <label class="campus-batch-option">
+              <input #batchOption type="checkbox" [checked]="batchOptions().includes(option.id)"
+                [disabled]="batchBusy() || (batchOptions().length >= 200 && !batchOptions().includes(option.id))"
+                (change)="toggleBatchOption(option.id, batchOption.checked)" />
+            <span>{{ option.label }}</span>
+            </label>
+          } @empty {
+            <p>No hay coincidencias.</p>
+          }
+        </div>
+      </div>
+    </details>
+    @if (batchError()) { <p class="error-message" role="alert">{{ batchError() }}</p> }
+  </div>
+  <ng-template #footer>
+    <button type="button" (click)="batchVisible.set(false)" [disabled]="batchBusy()">Cancelar</button>
+    <button type="button" class="campus-batch-primary" (click)="saveBatch()"
+      [disabled]="!batchTarget() || !batchOptions().length || batchBusy()">
+      {{ batchBusy() ? 'Guardando…' : 'Asignar roles' }}
+    </button>
   </ng-template>
 </p-dialog>

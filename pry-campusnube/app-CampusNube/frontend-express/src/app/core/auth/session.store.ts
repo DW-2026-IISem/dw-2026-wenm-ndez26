@@ -101,6 +101,12 @@ export class SessionStore {
     );
   }
 
+  canExact(method: SessionHttpMethod, path: string): boolean {
+    return !this.authEnabled || this._permissions().some(
+      (permission) => permission.method === method && permission.path === path,
+    );
+  }
+
   private pathMatches(pattern: string, path: string): boolean {
     const normalizedPattern = pattern.split('?')[0].replace(/\/$/, '');
     const normalizedPath = path.split('?')[0].replace(/\/$/, '');

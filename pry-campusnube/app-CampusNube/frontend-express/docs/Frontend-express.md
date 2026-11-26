@@ -296,7 +296,7 @@ CampusNube - Aprendizaje virtual
 ### 1.9.4 Las cuatro formas de conectar la clase con el HTML
 
 | Forma            | Sintaxis                  | Ejemplo en CampusNube          |
-|------------------|-------------------------|-----------------------------|
+|------------------|---------------------------|--------------------------------|
 | Interpolación    | `{{ expresión }}`         | `{{ curso().nombre }}`         |
 | Property binding | `[propiedad]="expresión"` | `[value]="curso().nombre"`     |
 | Event binding    | `(evento)="método()"`     | `(click)="variarPrecio(1000)"` |
@@ -2081,7 +2081,7 @@ El módulo permitirá crear, consultar, editar, desactivar y eliminar entregas, 
 La interfaz debe respetar estas reglas:
 
 | Campo           | Regla                                                   |
-|-----------------------|------------------------------------------------|
+|-----------------|---------------------------------------------------------|
 | `referencia_id` | Obligatorio, numérico                                   |
 | `lesson_id`     | Obligatorio, debe corresponder a una lección activa     |
 | `enrollment_id` | Obligatorio, debe corresponder a una inscripción activa |
@@ -2436,7 +2436,7 @@ Reemplaza `certificate-list.spec.ts`:
 ## Criterios de aceptación
 
 | N.º | Criterio | Resultado esperado |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | 1 | Consulta de certificados | Visualiza los certificados activos |
 | 2 | Registro | Permite crear certificados |
 | 3 | Vinculación | Asocia el certificado a una inscripción |
@@ -2470,7 +2470,7 @@ Objetivo: Implementar un Dashboard académico que consolide la información de l
 ## Estructura de actividades
 
 | Actividad | Descripción |
-|------------------------------------|------------------------------------|
+|----|----|
 | 14.1 | Crear el componente Dashboard académico. |
 | 14.2 | Integrar las once API existentes mediante `forkJoin`. |
 | 14.3 | Implementar señales (`signals`) para almacenar la información. |
@@ -2732,7 +2732,7 @@ En este apartado vamos a adaptar las rutas existentes de CampusNube para que cad
 Esta es la adaptación de la matriz del profesor a tus pantallas:
 
 | Ruta del frontend | Permiso requerido |
-|------------------------------------|------------------------------------|
+|----|----|
 | `/dashboard` | Acceso autenticado y consultas según permisos disponibles |
 | `/cursos` | `GET /api/cursos` |
 | `/docentes` | `GET /api/docentes` |
@@ -2772,7 +2772,7 @@ Esto significa que el botón Nuevo curso solamente se mostrará cuando el usuari
 ### Diferencia entre `@if` y `*appHasPermission`
 
 | `@if` | `*appHasPermission` |
-|------------------------------------|------------------------------------|
+|----|----|
 | Evalúa una condición cualquiera. | Evalúa un permiso RBAC. |
 | Reacciona a las señales utilizadas en su condición. | Reacciona a los cambios de permisos mediante `effect()`. |
 | Controla la visualización según una expresión. | Crea o destruye la vista según la autorización. |
@@ -2858,7 +2858,7 @@ Como ahora `items` es un `computed()`, debemos invocarlo con `items()` en los do
 ## 16.9 Comprobación al cerrar la ISS-16
 
 | Prueba | Resultado esperado |
-|------------------------------------|------------------------------------|
+|----|----|
 | Ingresar sin sesión a una ruta protegida | Redirección a `/login` con `returnUrl` |
 | Ingresar a `/login` con sesión activa | Redirección a `/dashboard` |
 | Iniciar sesión como ADMIN | Menú según sus permisos de negocio |
@@ -2906,7 +2906,7 @@ La Fase I corresponde a la construcción inicial de las funcionalidades de Campu
 Hay **dos interruptores** que deben verificarse conjuntamente:
 
 | **Interruptor** | **Dónde** | **Qué controla** |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | `requireAuth` | `environment.ts` y `environment.development.ts` | Guards, `*appHasPermission`, menú y reintento de refresh. |
 | `AUTH_ENABLED` | `.env` del backend, si está implementado | Middlewares `authenticate` y `authorize` de las rutas protegidas. |
 
@@ -3071,7 +3071,7 @@ Todas estas pruebas funcionan correctamente
 Ejecutar `ng serve` con el backend activo y recorrer:
 
 | **\#** | **Acción** | **Resultado esperado** |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | 1 | `/dashboard` sin sesión | Redirige al login. |
 | 2 | Login ADMIN | Entra al dashboard; menú administrativo completo. |
 | 3 | CRUD docentes | Crear, editar, desactivar y buscar docentes. |
@@ -3223,7 +3223,7 @@ La calidad del código de CampusNube se desarrolla siguiendo las convenciones es
 Se establecen las siguientes convenciones para el desarrollo:
 
 | Criterio | Convención |
-|------------------------------------|------------------------------------|
+|----|----|
 | Estado local y derivado | Utilizar Signals para administrar el estado local y derivado de los componentes. Emplear `computed()` en lugar de getters. |
 | Inyección de dependencias | Utilizar `inject()` en lugar de constructor injection. |
 | Servicios HTTP | Declarar los servicios con `@Injectable({ providedIn: 'root' })` y utilizar el sufijo `Api` para los servicios de comunicación HTTP. |
@@ -3305,7 +3305,7 @@ La verificación de estos criterios se realiza mediante la revisión de los form
 Resultado de la revisión de calidad
 
 | Aspecto evaluado | Resultado |
-|------------------------------------|------------------------------------|
+|----|----|
 | Formato del código con Prettier | Verificado. Todos los archivos revisados cumplen el formato. |
 | Tipado estricto de TypeScript | Habilitado mediante `strict: true`. |
 | Compilación del frontend | Ejecutada correctamente después del cambio de configuración. |
@@ -3343,7 +3343,7 @@ Resultado de la revisión de calidad
 ### Estado de verificación de los criterios
 
 | N.º | Criterio | Estado |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | 1 | Compilación de producción sin errores | Verificado mediante `npm run build`. |
 | 2 | Presupuestos de compilación | Verificado en la compilación realizada, sin advertencias de presupuesto. |
 | 3 | Los 15 puntos del checklist de humo | Pendiente de completar todas las pruebas. |
@@ -3582,7 +3582,7 @@ Se mejoró el módulo docentes
 
 ![](images/clipboard-3098808594.png)
 
-## Diseño del módulo aprendices 
+## Diseño del módulo aprendices
 
 Se realizó una mejora del módulo Aprendices
 
@@ -3590,13 +3590,13 @@ Se realizó una mejora del módulo Aprendices
 
 ![](images/clipboard-601272099.png)
 
-## Diseño del módulo cursos 
+## Diseño del módulo cursos
 
 Se realizó unan mejora del moduló Cursos
 
 ![](images/clipboard-3417195232.png)
 
-## Diseño del módulo módulos 
+## Diseño del módulo módulos
 
 Se realizó unan mejora del moduló Módulos
 
@@ -3665,3 +3665,21 @@ git push origin main
 ```
 
 ## 
+
+## ISS-21 · Asignaciones y concesiones por lote
+
+**Descripción.** Se habilitó la selección múltiple en Roles y permisos. En Asignaciones se pueden elegir varios roles para un usuario. En Concesiones se pueden elegir varios recursos para un rol. En ambas tablas se pueden marcar filas activas y retirarlas juntas. Cada guardado o retiro envía una sola solicitud HTTP y el backend procesa el lote en una transacción.
+
+### Evidencia de selección de roles
+
+Se marcaron DOCENTE y APRENDIZ. El selector mostró dos roles seleccionados.
+
+![Dos roles seleccionados en el diálogo Asignar roles](images/iss21-lote-asignaciones.jpg)
+
+### Evidencia de selección de recursos
+
+Se marcaron dos recursos GET. La lista muestra el método, la ruta y la descripción de cada recurso.
+
+![Dos recursos seleccionados en el diálogo Conceder permisos](images/iss21-lote-concesiones.jpg)
+
+**Alcance de las capturas.** Se comprobó la selección múltiple en ambos diálogos. Se cerraron con Cancelar y no se enviaron cambios de acceso.
